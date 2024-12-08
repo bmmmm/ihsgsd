@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDEKA Angebote</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        img { max-width: 100px; }
+    </style>
+</head>
+<body>
+    <h1>EDEKA Wochenangebote</h1>
+    <button id="update-data">Daten aktualisieren</button>
+    <p>Diese Tabelle zeigt die aktuellen Angebote der Woche.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Produkt</th>
+                <th>Kategorie</th>
+                <th>Preis</th>
+                <th>Beschreibung</th>
+                <th>Bild</th>
+            </tr>
+        </thead>
+        <tbody id="offer-table">
+            <!-- Dynamische Inhalte werden hier eingefügt -->
+        </tbody>
+    </table>
+    <script src="script.js"></script>
+</body>
+</html>
