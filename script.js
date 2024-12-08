@@ -11,7 +11,7 @@ async function fetchOffers() {
         document.getElementById('page-title').textContent = `EDEKA Angebote (${dateRange})`;
         document.getElementById('offer-info').textContent = `${itemCount} Angebote verfügbar`;
 
-        // Populate the table
+        // Populate the table without images
         const tableBody = document.getElementById('offer-table');
         tableBody.innerHTML = ""; // Clear the table
 
@@ -23,30 +23,44 @@ async function fetchOffers() {
                 <td>${offer.category.name}</td>
                 <td>${offer.price.value} €</td>
                 <td>${offer.description}</td>
-                <td class="image-cell"><img src="${offer.images.app}" alt="${offer.title}"></td>
+                <td class="image-cell hidden" data-image-url="${offer.images.app}"></td>
             `;
             tableBody.appendChild(row);
         });
 
         // Attach event listeners for new functionalities
-        attachEventListeners();
+        attachEventListeners(data);
     } catch (error) {
         console.error("Fehler beim Abrufen der Daten:", error);
     }
 }
 
 // Attach event listeners for toggling images and copying products
-function attachEventListeners() {
+function attachEventListeners(data) {
     const toggleImagesButton = document.getElementById('toggle-images');
     const copyProductsButton = document.getElementById('copy-products');
-    let imagesVisible = true;
+    let imagesLoaded = false;
 
-    // Toggle the entire image column
+    // Load and show images when the button is clicked
     toggleImagesButton.addEventListener('click', () => {
-        const imageCells = document.querySelectorAll('.image-cell, #image-column');
-        imageCells.forEach(cell => cell.classList.toggle('hidden'));
-        imagesVisible = !imagesVisible;
-        toggleImagesButton.textContent = imagesVisible ? 'Bilder ausblenden' : 'Bilder einblenden';
+        const imageCells = document.querySelectorAll('.image-cell');
+
+        if (!imagesLoaded) {
+            // Populate images for the first time
+            imageCells.forEach(cell => {
+                const imgUrl = cell.getAttribute('data-image-url');
+                if (imgUrl) {
+                    cell.innerHTML = `<img src="${imgUrl}" alt="Produktbild">`;
+                    cell.classList.remove('hidden');
+                }
+            });
+            toggleImagesButton.textContent = 'Bilder ausblenden';
+            imagesLoaded = true;
+        } else {
+            // Toggle visibility of the image column
+            imageCells.forEach(cell => cell.classList.toggle('hidden'));
+            toggleImagesButton.textContent = imageCells[0].classList.contains('hidden') ? 'Bilder einblenden' : 'Bilder ausblenden';
+        }
     });
 
     // Copy products to clipboard
