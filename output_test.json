@@ -1,0 +1,24 @@
+{
+    "offers": [
+        {
+            "id": 5138596,
+            "title": "Peru - Driscolls - Kulturheidelbeeren",
+            "price": { "value": "3.49", "currency": "EUR" },
+            "description": "Klasse I, 500 g Schale (1 kg = € 6.98)",
+            "category": { "name": "Obst & Gemüse" },
+            "images": {
+                "app": "https://offer-images.api.edeka/c2d4ec23-f445-4893-ad49-5f6d66676e08_Heidelbeeren_Lose_Shooting.jpg"
+            }
+        },
+        {
+            "id": 5138601,
+            "title": "Milka Schokolade",
+            "price": { "value": "0.79", "currency": "EUR" },
+            "description": "versch. Sorten, je 87 g - 100 g Tafel (1 kg = ab € 7.90)",
+            "category": { "name": "Knabbern & Naschen" },
+            "images": {
+                "app": "https://offer-images.api.edeka/e562a856-0882-4796-8801-e04e05f443f3_Milka_Alpenmilch_100g_01_120761001.jpg"
+            }
+        }
+    ]
+}
