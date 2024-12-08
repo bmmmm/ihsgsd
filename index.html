@@ -44,7 +44,7 @@
             max-width: 60px; /* Smaller images */
             max-height: 40px;
         }
-        button {
+        button, select {
             background-color: #333333;
             color: #e0e0e0;
             border: 1px solid #444;
@@ -53,7 +53,7 @@
             margin-right: 10px;
             cursor: pointer;
         }
-        button:hover {
+        button:hover, select:hover {
             background-color: #444;
         }
     </style>
@@ -61,6 +61,10 @@
 <body>
     <h1 id="page-title">EDEKA Wochenangebote</h1>
     <p id="offer-info">Lade aktuelle Informationen...</p>
+    <select id="category-filter">
+        <option value="all">Alle Kategorien</option>
+    </select>
+    <button id="filter-category">Kategorie filtern</button>
     <button id="toggle-images">Bilder laden</button>
     <button id="copy-products">Produkte kopieren</button>
     <table>
