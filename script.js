@@ -87,7 +87,7 @@ function attachEventListeners(offers) {
     const copyProductsButton = document.getElementById('copy-products');
     const searchInput = document.getElementById('search-input');
     const deselectCategoriesButton = document.getElementById('deselect-categories');
-    const viewSelectedCategoriesButton = document.getElementById('view-selected-categories');
+    const hideSelectedCategoriesButton = document.getElementById('hide-selected-categories');
     const categoryFilter = document.getElementById('category-filter');
     const imagePreview = document.getElementById('image-preview');
     let imagesLoaded = false;
@@ -99,10 +99,9 @@ function attachEventListeners(offers) {
         });
     });
 
-    // View selected categories
-    viewSelectedCategoriesButton.addEventListener('click', () => {
-        const selectedCategories = Array.from(categoryFilter.selectedOptions).map(option => option.value);
-        alert(`Ausgewählte Kategorien:\n${selectedCategories.join('\n')}`);
+    // Hide selected categories in the table
+    hideSelectedCategoriesButton.addEventListener('click', () => {
+        hideSelectedCategories();
     });
 
     // Load and show images when the button is clicked
