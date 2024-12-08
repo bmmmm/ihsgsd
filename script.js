@@ -8,8 +8,10 @@ async function fetchOffers() {
         const itemCount = data.totalCount;
 
         // Update the page title and offer info
-        document.getElementById('page-title').textContent = `EDEKA Angebote (${dateRange})`;
-        document.getElementById('offer-info').textContent = `${itemCount} Angebote verfügbar`;
+        const pageTitle = document.getElementById('page-title');
+        const offerInfo = document.getElementById('offer-info');
+        if (pageTitle) pageTitle.textContent = `EDEKA Angebote (${dateRange})`;
+        if (offerInfo) offerInfo.textContent = `${itemCount} Angebote verfügbar`;
 
         // Populate the table without images
         populateTable(data.offers);
@@ -30,6 +32,7 @@ async function fetchOffers() {
 // Populate the table with offers
 function populateTable(offers) {
     const tableBody = document.getElementById('offer-table');
+    if (!tableBody) return; // Ensure the table body exists
     tableBody.innerHTML = ""; // Clear the table
 
     offers.forEach(offer => {
@@ -50,6 +53,7 @@ function populateTable(offers) {
 // Populate the category dropdown with counts and preselect specific categories
 function populateCategoryDropdown(offers) {
     const categoryFilter = document.getElementById('category-filter');
+    if (!categoryFilter) return; // Ensure the dropdown exists
     const categoryCounts = offers.reduce((counts, offer) => {
         counts[offer.category.name] = (counts[offer.category.name] || 0) + 1;
         return counts;
@@ -69,6 +73,7 @@ function populateCategoryDropdown(offers) {
 // Automatically hide selected categories
 function hideSelectedCategories() {
     const categoryFilter = document.getElementById('category-filter');
+    if (!categoryFilter) return; // Ensure the dropdown exists
     const selectedCategories = Array.from(categoryFilter.selectedOptions).map(option => option.value);
     const rows = document.querySelectorAll('#offer-table tr');
 
@@ -90,94 +95,101 @@ function attachEventListeners(offers) {
     const hideSelectedCategoriesButton = document.getElementById('hide-selected-categories');
     const categoryFilter = document.getElementById('category-filter');
     const imagePreview = document.getElementById('image-preview');
-    let imagesLoaded = false;
 
-    // Deselect all categories
-    deselectCategoriesButton.addEventListener('click', () => {
-        Array.from(categoryFilter.options).forEach(option => {
-            option.selected = false;
-        });
-    });
+    // Attach only if the elements exist
+    if (toggleImagesButton) {
+        let imagesLoaded = false;
+        toggleImagesButton.addEventListener('click', () => {
+            const imageHeader = document.getElementById('image-column-header');
+            const imageCells = document.querySelectorAll('.image-cell');
 
-    // Hide selected categories in the table
-    hideSelectedCategoriesButton.addEventListener('click', () => {
-        hideSelectedCategories();
-    });
-
-    // Load and show images when the button is clicked
-    toggleImagesButton.addEventListener('click', () => {
-        const imageHeader = document.getElementById('image-column-header');
-        const imageCells = document.querySelectorAll('.image-cell');
-
-        if (!imagesLoaded) {
-            // Populate images for the first time
-            imageCells.forEach(cell => {
-                const imgUrl = cell.getAttribute('data-image-url');
-                if (imgUrl) {
-                    cell.innerHTML = `<img src="${imgUrl}" alt="Produktbild">`;
-                    cell.addEventListener('mouseenter', () => showImagePreview(imgUrl, imagePreview));
-                    cell.addEventListener('mouseleave', () => hideImagePreview(imagePreview));
-                }
-                cell.classList.remove('hidden');
-            });
-            imageHeader.classList.remove('hidden');
-            toggleImagesButton.textContent = 'Bilder ausblenden';
-            imagesLoaded = true;
-        } else {
-            // Toggle visibility of the image column
-            imageCells.forEach(cell => cell.classList.toggle('hidden'));
-            imageHeader.classList.toggle('hidden');
-            toggleImagesButton.textContent = imageCells[0].classList.contains('hidden') ? 'Bilder einblenden' : 'Bilder ausblenden';
-        }
-    });
-
-    // Search in all table cells
-    searchInput.addEventListener('input', () => {
-        const searchTerm = searchInput.value.toLowerCase();
-        const rows = document.querySelectorAll('#offer-table tr');
-
-        rows.forEach(row => {
-            const cells = Array.from(row.querySelectorAll('td'));
-            const matches = cells.some(cell => cell.textContent.toLowerCase().includes(searchTerm));
-            if (matches) {
-                row.classList.remove('hidden');
+            if (!imagesLoaded) {
+                // Populate images for the first time
+                imageCells.forEach(cell => {
+                    const imgUrl = cell.getAttribute('data-image-url');
+                    if (imgUrl) {
+                        cell.innerHTML = `<img src="${imgUrl}" alt="Produktbild">`;
+                        cell.addEventListener('mouseenter', () => showImagePreview(imgUrl, imagePreview));
+                        cell.addEventListener('mouseleave', () => hideImagePreview(imagePreview));
+                    }
+                    cell.classList.remove('hidden');
+                });
+                if (imageHeader) imageHeader.classList.remove('hidden');
+                toggleImagesButton.textContent = 'Bilder ausblenden';
+                imagesLoaded = true;
             } else {
-                row.classList.add('hidden');
+                // Toggle visibility of the image column
+                imageCells.forEach(cell => cell.classList.toggle('hidden'));
+                if (imageHeader) imageHeader.classList.toggle('hidden');
+                toggleImagesButton.textContent = imageCells[0].classList.contains('hidden') ? 'Bilder einblenden' : 'Bilder ausblenden';
             }
         });
-    });
+    }
 
-    // Copy visible products to clipboard in JSON format
-    copyProductsButton.addEventListener('click', () => {
-        const rows = document.querySelectorAll('#offer-table tr:not(.hidden)');
-        const products = [];
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            const rows = document.querySelectorAll('#offer-table tr');
 
-        rows.forEach(row => {
-            const cells = row.querySelectorAll('td');
-            if (cells.length) {
-                const product = {
-                    id: cells[0].textContent.trim(),
-                    title: cells[1].textContent.trim(),
-                    category: cells[2].textContent.trim(),
-                    price: cells[3].textContent.trim(),
-                    description: cells[4].textContent.trim()
-                };
-                products.push(product);
-            }
+            rows.forEach(row => {
+                const cells = Array.from(row.querySelectorAll('td'));
+                const matches = cells.some(cell => cell.textContent.toLowerCase().includes(searchTerm));
+                if (matches) {
+                    row.classList.remove('hidden');
+                } else {
+                    row.classList.add('hidden');
+                }
+            });
         });
+    }
 
-        const jsonString = JSON.stringify(products, null, 2);
-
-        navigator.clipboard.writeText(jsonString).then(() => {
-            alert('Sichtbare Produkte wurden als JSON kopiert!');
-        }).catch(err => {
-            console.error('Fehler beim Kopieren der JSON-Daten:', err);
+    if (deselectCategoriesButton) {
+        deselectCategoriesButton.addEventListener('click', () => {
+            Array.from(categoryFilter.options).forEach(option => {
+                option.selected = false;
+            });
         });
-    });
+    }
+
+    if (hideSelectedCategoriesButton) {
+        hideSelectedCategoriesButton.addEventListener('click', () => {
+            hideSelectedCategories();
+        });
+    }
+
+    if (copyProductsButton) {
+        copyProductsButton.addEventListener('click', () => {
+            const rows = document.querySelectorAll('#offer-table tr:not(.hidden)');
+            const products = [];
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length) {
+                    const product = {
+                        id: cells[0].textContent.trim(),
+                        title: cells[1].textContent.trim(),
+                        category: cells[2].textContent.trim(),
+                        price: cells[3].textContent.trim(),
+                        description: cells[4].textContent.trim()
+                    };
+                    products.push(product);
+                }
+            });
+
+            const jsonString = JSON.stringify(products, null, 2);
+
+            navigator.clipboard.writeText(jsonString).then(() => {
+                alert('Sichtbare Produkte wurden als JSON kopiert!');
+            }).catch(err => {
+                console.error('Fehler beim Kopieren der JSON-Daten:', err);
+            });
+        });
+    }
 }
 
 // Show a larger preview of the image in the top-right corner
 function showImagePreview(imgUrl, previewContainer) {
+    if (!previewContainer) return;
     previewContainer.style.display = 'block';
     previewContainer.style.backgroundImage = `url(${imgUrl})`;
     previewContainer.style.backgroundSize = 'contain';
@@ -188,6 +200,7 @@ function showImagePreview(imgUrl, previewContainer) {
 
 // Hide the image preview
 function hideImagePreview(previewContainer) {
+    if (!previewContainer) return;
     previewContainer.style.display = 'none';
 }
 
