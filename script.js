@@ -43,6 +43,7 @@ function attachEventListeners(data) {
 
     // Load and show images when the button is clicked
     toggleImagesButton.addEventListener('click', () => {
+        const imageHeader = document.getElementById('image-column-header');
         const imageCells = document.querySelectorAll('.image-cell');
 
         if (!imagesLoaded) {
@@ -51,14 +52,16 @@ function attachEventListeners(data) {
                 const imgUrl = cell.getAttribute('data-image-url');
                 if (imgUrl) {
                     cell.innerHTML = `<img src="${imgUrl}" alt="Produktbild">`;
-                    cell.classList.remove('hidden');
                 }
+                cell.classList.remove('hidden');
             });
+            imageHeader.classList.remove('hidden');
             toggleImagesButton.textContent = 'Bilder ausblenden';
             imagesLoaded = true;
         } else {
             // Toggle visibility of the image column
             imageCells.forEach(cell => cell.classList.toggle('hidden'));
+            imageHeader.classList.toggle('hidden');
             toggleImagesButton.textContent = imageCells[0].classList.contains('hidden') ? 'Bilder einblenden' : 'Bilder ausblenden';
         }
     });
