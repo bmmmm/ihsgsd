@@ -86,10 +86,24 @@ function attachEventListeners(offers) {
     const toggleImagesButton = document.getElementById('toggle-images');
     const copyProductsButton = document.getElementById('copy-products');
     const searchInput = document.getElementById('search-input');
-    const removeCategoriesButton = document.getElementById('remove-categories');
+    const deselectCategoriesButton = document.getElementById('deselect-categories');
+    const viewSelectedCategoriesButton = document.getElementById('view-selected-categories');
     const categoryFilter = document.getElementById('category-filter');
     const imagePreview = document.getElementById('image-preview');
     let imagesLoaded = false;
+
+    // Deselect all categories
+    deselectCategoriesButton.addEventListener('click', () => {
+        Array.from(categoryFilter.options).forEach(option => {
+            option.selected = false;
+        });
+    });
+
+    // View selected categories
+    viewSelectedCategoriesButton.addEventListener('click', () => {
+        const selectedCategories = Array.from(categoryFilter.selectedOptions).map(option => option.value);
+        alert(`Ausgewählte Kategorien:\n${selectedCategories.join('\n')}`);
+    });
 
     // Load and show images when the button is clicked
     toggleImagesButton.addEventListener('click', () => {
@@ -134,21 +148,7 @@ function attachEventListeners(offers) {
         });
     });
 
-    // Remove selected categories
-    removeCategoriesButton.addEventListener('click', () => {
-        const selectedCategories = Array.from(categoryFilter.selectedOptions).map(option => option.value);
-
-        selectedCategories.forEach(category => {
-            const option = Array.from(categoryFilter.options).find(opt => opt.value === category);
-            if (option) {
-                option.remove();
-            }
-        });
-
-        hideSelectedCategories();
-    });
-
-    // Copy visible products to clipboard
+    // Copy visible products to clipboard in JSON format
     copyProductsButton.addEventListener('click', () => {
         const rows = document.querySelectorAll('#offer-table tr:not(.hidden)');
         const products = [];
@@ -172,8 +172,7 @@ function attachEventListeners(offers) {
         navigator.clipboard.writeText(jsonString).then(() => {
             alert('Sichtbare Produkte wurden als JSON kopiert!');
         }).catch(err => {
-            console.error
-            ('Fehler beim Kopieren der JSON-Daten:', err);
+            console.error('Fehler beim Kopieren der JSON-Daten:', err);
         });
     });
 }
