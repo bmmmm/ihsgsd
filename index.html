@@ -12,45 +12,49 @@
             color: #e0e0e0; /* Light text */
         }
         h1 {
-            color: #ffffff; /* Pure white for header */
+            color: #ffffff;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            background-color: #1e1e1e; /* Darker table background */
-            color: #e0e0e0; /* Light text in table */
+            background-color: #1e1e1e;
+            color: #e0e0e0;
         }
         th, td {
-            border: 1px solid #333; /* Subtle border for table cells */
+            border: 1px solid #333;
             padding: 5px;
             text-align: left;
         }
         th {
-            background-color: #2c2c2c; /* Slightly lighter header background */
+            background-color: #2c2c2c;
             font-weight: bold;
-            color: #ffffff; /* White text for header */
+            color: #ffffff;
         }
         tr:nth-child(even) {
-            background-color: #202020; /* Alternate row color */
+            background-color: #202020;
         }
         tr:hover {
-            background-color: #333333; /* Highlight row on hover */
+            background-color: #333333;
         }
         .hidden {
-            display: none; /* Class to hide the column */
+            display: none;
+        }
+        img {
+            max-width: 60px; /* Smaller images */
+            max-height: 40px;
         }
         button {
-            background-color: #333333; /* Darker button background */
-            color: #e0e0e0; /* Light text for buttons */
-            border: 1px solid #444; /* Subtle border for buttons */
+            background-color: #333333;
+            color: #e0e0e0;
+            border: 1px solid #444;
             padding: 8px 12px;
             font-size: 14px;
             margin-right: 10px;
             cursor: pointer;
         }
         button:hover {
-            background-color: #444; /* Slightly lighter on hover */
+            background-color: #444;
         }
     </style>
 </head>
@@ -62,6 +66,7 @@
     <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Produkt</th>
                 <th>Kategorie</th>
                 <th>Preis</th>

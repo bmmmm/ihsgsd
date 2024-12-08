@@ -18,6 +18,7 @@ async function fetchOffers() {
         data.offers.forEach(offer => {
             const row = document.createElement('tr');
             row.innerHTML = `
+                <td>${offer.id}</td>
                 <td>${offer.title}</td>
                 <td>${offer.category.name}</td>
                 <td>${offer.price.value} €</td>
@@ -57,15 +58,16 @@ function attachEventListeners() {
             const cells = row.querySelectorAll('td');
             if (cells.length) {
                 const product = {
-                    Produkt: cells[0].textContent,
-                    Kategorie: cells[1].textContent,
-                    Preis: cells[2].textContent,
+                    ID: cells[0].textContent,
+                    Produkt: cells[1].textContent,
+                    Kategorie: cells[2].textContent,
+                    Preis: cells[3].textContent,
                 };
                 products.push(product);
             }
         });
 
-        const productText = products.map(p => `Produkt: ${p.Produkt}, Kategorie: ${p.Kategorie}, Preis: ${p.Preis}`).join('\n');
+        const productText = products.map(p => `ID: ${p.ID}, Produkt: ${p.Produkt}, Kategorie: ${p.Kategorie}, Preis: ${p.Preis}`).join('\n');
         navigator.clipboard.writeText(productText).then(() => {
             alert('Produkte wurden kopiert!');
         }).catch(err => {
