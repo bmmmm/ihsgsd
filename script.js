@@ -3,13 +3,12 @@ async function fetchOffers() {
         const response = await fetch('output_raw.json'); // Fetch data from the local JSON file
         const data = await response.json();
 
-        // Extract date range, item count, and regional/national status
+        // Extract date range and item count
         const dateRange = `${data.validFrom} - ${data.validTill}`;
         const itemCount = data.totalCount;
-        const isNational = data.national ? "National" : "Regional";
 
         // Update the page title and offer info
-        document.getElementById('page-title').textContent = `EDEKA Angebote (${dateRange}, ${isNational})`;
+        document.getElementById('page-title').textContent = `EDEKA Angebote (${dateRange})`;
         document.getElementById('offer-info').textContent = `${itemCount} Angebote verfügbar`;
 
         // Populate the table
@@ -23,7 +22,7 @@ async function fetchOffers() {
                 <td>${offer.category.name}</td>
                 <td>${offer.price.value} €</td>
                 <td>${offer.description}</td>
-                <td><img src="${offer.images.app}" alt="${offer.title}" class="product-image"></td>
+                <td class="image-cell"><img src="${offer.images.app}" alt="${offer.title}"></td>
             `;
             tableBody.appendChild(row);
         });
@@ -41,10 +40,10 @@ function attachEventListeners() {
     const copyProductsButton = document.getElementById('copy-products');
     let imagesVisible = true;
 
-    // Toggle image visibility
+    // Toggle the entire image column
     toggleImagesButton.addEventListener('click', () => {
-        const images = document.querySelectorAll('.product-image');
-        images.forEach(img => img.classList.toggle('hidden'));
+        const imageCells = document.querySelectorAll('.image-cell, #image-column');
+        imageCells.forEach(cell => cell.classList.toggle('hidden'));
         imagesVisible = !imagesVisible;
         toggleImagesButton.textContent = imagesVisible ? 'Bilder ausblenden' : 'Bilder einblenden';
     });
