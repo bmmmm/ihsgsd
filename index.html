@@ -44,6 +44,13 @@
             max-width: 60px; /* Smaller images */
             max-height: 40px;
         }
+        .image-preview {
+            position: absolute;
+            display: none;
+            border: 1px solid #333;
+            background-color: #1e1e1e;
+            padding: 5px;
+        }
         button, select {
             background-color: #333333;
             color: #e0e0e0;
@@ -70,6 +77,7 @@
     <button id="filter-category">Ausgewählte Kategorien ausblenden</button>
     <button id="toggle-images">Bilder laden</button>
     <button id="copy-products">Produkte kopieren</button>
+    <div id="image-preview" class="image-preview"></div>
     <table>
         <thead>
             <tr>

@@ -69,6 +69,7 @@ function attachEventListeners(offers) {
     const copyProductsButton = document.getElementById('copy-products');
     const filterCategoryButton = document.getElementById('filter-category');
     const categoryFilter = document.getElementById('category-filter');
+    const imagePreview = document.getElementById('image-preview');
     let imagesLoaded = false;
 
     // Load and show images when the button is clicked
@@ -82,6 +83,8 @@ function attachEventListeners(offers) {
                 const imgUrl = cell.getAttribute('data-image-url');
                 if (imgUrl) {
                     cell.innerHTML = `<img src="${imgUrl}" alt="Produktbild">`;
+                    cell.addEventListener('mouseenter', () => showImagePreview(imgUrl, imagePreview));
+                    cell.addEventListener('mouseleave', () => hideImagePreview(imagePreview));
                 }
                 cell.classList.remove('hidden');
             });
@@ -123,18 +126,35 @@ function attachEventListeners(offers) {
                     Produkt: cells[1].textContent,
                     Kategorie: cells[2].textContent,
                     Preis: cells[3].textContent,
+                    Beschreibung: cells[4].textContent,
                 };
                 products.push(product);
             }
         });
 
-        const productText = products.map(p => `ID: ${p.ID}, Produkt: ${p.Produkt}, Kategorie: ${p.Kategorie}, Preis: ${p.Preis}`).join('\n');
+        const productText = products.map(p => `ID: ${p.ID}, Produkt: ${p.Produkt}, Kategorie: ${p.Kategorie}, Preis: ${p.Preis}, Beschreibung: ${p.Beschreibung}`).join('\n');
         navigator.clipboard.writeText(productText).then(() => {
             alert('Sichtbare Produkte wurden kopiert!');
         }).catch(err => {
             console.error('Fehler beim Kopieren der Produkte:', err);
         });
     });
+}
+
+// Show a larger preview of the image on hover
+function showImagePreview(imgUrl, previewContainer) {
+    previewContainer.style.display = 'block';
+    previewContainer.style.backgroundImage = `url(${imgUrl})`;
+    previewContainer.style.backgroundSize = 'contain';
+    previewContainer.style.backgroundRepeat = 'no-repeat';
+    previewContainer.style.width = '200px';
+    previewContainer.style.height = '200px';
+    previewContainer.style.position = 'absolute';
+}
+
+// Hide the image preview
+function hideImagePreview(previewContainer) {
+    previewContainer.style.display = 'none';
 }
 
 // Fetch data on page load
