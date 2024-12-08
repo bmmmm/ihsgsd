@@ -114,6 +114,7 @@ function attachEventListeners(offers) {
     });
 
     // Copy visible products to clipboard
+    // Copy visible products to clipboard in JSON format
     copyProductsButton.addEventListener('click', () => {
         const rows = document.querySelectorAll('#offer-table tr:not(.hidden)');
         const products = [];
@@ -122,26 +123,27 @@ function attachEventListeners(offers) {
             const cells = row.querySelectorAll('td');
             if (cells.length) {
                 const product = {
-                    ID: cells[0].textContent,
-                    Produkt: cells[1].textContent,
-                    Kategorie: cells[2].textContent,
-                    Preis: cells[3].textContent,
-                    Beschreibung: cells[4].textContent,
+                    id: cells[0].textContent.trim(),
+                    title: cells[1].textContent.trim(),
+                    category: cells[2].textContent.trim(),
+                    price: cells[3].textContent.trim(),
+                    description: cells[4].textContent.trim()
                 };
                 products.push(product);
             }
         });
 
-        const productText = products.map(p => `ID: ${p.ID}, Produkt: ${p.Produkt}, Kategorie: ${p.Kategorie}, Preis: ${p.Preis}, Beschreibung: ${p.Beschreibung}`).join('\n');
-        navigator.clipboard.writeText(productText).then(() => {
-            alert('Sichtbare Produkte wurden kopiert!');
+        const jsonString = JSON.stringify(products, null, 2); // Convert to JSON string with pretty formatting
+
+        navigator.clipboard.writeText(jsonString).then(() => {
+            alert('Sichtbare Produkte wurden als JSON kopiert!');
         }).catch(err => {
-            console.error('Fehler beim Kopieren der Produkte:', err);
+            console.error('Fehler beim Kopieren der JSON-Daten:', err);
         });
     });
 }
 
-// Show a larger preview of the image on hover
+// Show a larger preview of the image in the top-right corner
 function showImagePreview(imgUrl, previewContainer) {
     previewContainer.style.display = 'block';
     previewContainer.style.backgroundImage = `url(${imgUrl})`;
@@ -149,7 +151,6 @@ function showImagePreview(imgUrl, previewContainer) {
     previewContainer.style.backgroundRepeat = 'no-repeat';
     previewContainer.style.width = '200px';
     previewContainer.style.height = '200px';
-    previewContainer.style.position = 'absolute';
 }
 
 // Hide the image preview
