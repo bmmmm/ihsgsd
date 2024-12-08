@@ -31,18 +31,16 @@
             font-weight: bold;
             color: #ffffff;
         }
-        tr:nth-child(even) {
-            background-color: #202020;
-        }
-        tr:hover {
-            background-color: #333333;
+        tr {
+            height: 60px; /* Fixed row height to stabilize layout */
         }
         .hidden {
             display: none;
         }
         img {
-            max-width: 60px; /* Smaller images */
+            max-width: 60px;
             max-height: 40px;
+            display: block; /* Prevents layout shift when images are hidden */
         }
         .image-preview {
             position: fixed;
@@ -64,6 +62,8 @@
             font-size: 14px;
             margin-right: 10px;
             cursor: pointer;
+            height: 40px; /* Fixed height to prevent CLS */
+            min-width: 150px; /* Fixed width for consistency */
         }
         button:hover, select:hover, input:hover {
             background-color: #444;
