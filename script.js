@@ -25,37 +25,40 @@ async function fetchOffers() {
 }
 
 // Populate the table with offers
-function populateTable(offers, filterCategory = "all") {
+function populateTable(offers) {
     const tableBody = document.getElementById('offer-table');
     tableBody.innerHTML = ""; // Clear the table
 
     offers.forEach(offer => {
-        if (filterCategory === "all" || offer.category.name === filterCategory) {
-            const row = document.createElement('tr');
-            row.dataset.category = offer.category.name; // Add category for filtering
-            row.innerHTML = `
-                <td>${offer.id}</td>
-                <td>${offer.title}</td>
-                <td>${offer.category.name}</td>
-                <td>${offer.price.value} €</td>
-                <td>${offer.description}</td>
-                <td class="image-cell hidden" data-image-url="${offer.images.app}"></td>
-            `;
-            tableBody.appendChild(row);
-        }
+        const row = document.createElement('tr');
+        row.dataset.category = offer.category.name; // Add category for filtering
+        row.innerHTML = `
+            <td>${offer.id}</td>
+            <td>${offer.title}</td>
+            <td>${offer.category.name}</td>
+            <td>${offer.price.value} €</td>
+            <td>${offer.description}</td>
+            <td class="image-cell hidden" data-image-url="${offer.images.app}"></td>
+        `;
+        tableBody.appendChild(row);
     });
 }
 
-// Populate the category dropdown
+// Populate the category dropdown with counts and preselect specific categories
 function populateCategoryDropdown(offers) {
     const categoryFilter = document.getElementById('category-filter');
-    const categories = Array.from(new Set(offers.map(offer => offer.category.name)));
-    categories.sort();
+    const categoryCounts = offers.reduce((counts, offer) => {
+        counts[offer.category.name] = (counts[offer.category.name] || 0) + 1;
+        return counts;
+    }, {});
 
-    categories.forEach(category => {
+    Object.entries(categoryCounts).forEach(([category, count]) => {
         const option = document.createElement('option');
         option.value = category;
-        option.textContent = category;
+        option.textContent = `${category} (${count})`;
+        if (category === "Fleisch & Wurst" || category === "Tiernahrung") {
+            option.selected = true; // Preselect specific categories
+        }
         categoryFilter.appendChild(option);
     });
 }
@@ -93,15 +96,23 @@ function attachEventListeners(offers) {
         }
     });
 
-    // Filter products by selected category
+    // Hide selected categories
     filterCategoryButton.addEventListener('click', () => {
-        const selectedCategory = categoryFilter.value;
-        populateTable(offers, selectedCategory);
+        const selectedCategories = Array.from(categoryFilter.selectedOptions).map(option => option.value);
+        const rows = document.querySelectorAll('#offer-table tr');
+
+        rows.forEach(row => {
+            if (selectedCategories.includes(row.dataset.category)) {
+                row.classList.add('hidden');
+            } else {
+                row.classList.remove('hidden');
+            }
+        });
     });
 
     // Copy visible products to clipboard
     copyProductsButton.addEventListener('click', () => {
-        const rows = document.querySelectorAll('#offer-table tr');
+        const rows = document.querySelectorAll('#offer-table tr:not(.hidden)');
         const products = [];
 
         rows.forEach(row => {
