@@ -56,7 +56,7 @@
             max-width: 200px;
             max-height: 200px;
         }
-        button, select {
+        button, select, input {
             background-color: #333333;
             color: #e0e0e0;
             border: 1px solid #444;
@@ -65,21 +65,25 @@
             margin-right: 10px;
             cursor: pointer;
         }
-        button:hover, select:hover {
+        button:hover, select:hover, input:hover {
             background-color: #444;
         }
         select {
             height: auto;
+        }
+        input {
+            padding: 6px;
         }
     </style>
 </head>
 <body>
     <h1 id="page-title">EDEKA Wochenangebote</h1>
     <p id="offer-info">Lade aktuelle Informationen...</p>
+    <input id="search-input" type="text" placeholder="Suche in allen Zellen...">
     <select id="category-filter" multiple>
         <!-- Categories populated dynamically -->
     </select>
-    <button id="filter-category">Ausgewählte Kategorien ausblenden</button>
+    <button id="remove-categories">Ausgewählte Kategorien entfernen</button>
     <button id="toggle-images">Bilder laden</button>
     <button id="copy-products">Produkte kopieren</button>
     <div id="image-preview" class="image-preview"></div>

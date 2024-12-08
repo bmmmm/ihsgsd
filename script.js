@@ -17,6 +17,9 @@ async function fetchOffers() {
         // Populate the category dropdown
         populateCategoryDropdown(data.offers);
 
+        // Automatically hide preselected categories
+        hideSelectedCategories();
+
         // Attach event listeners for new functionalities
         attachEventListeners(data.offers);
     } catch (error) {
@@ -63,11 +66,27 @@ function populateCategoryDropdown(offers) {
     });
 }
 
-// Attach event listeners for toggling images, filtering categories, and copying products
+// Automatically hide selected categories
+function hideSelectedCategories() {
+    const categoryFilter = document.getElementById('category-filter');
+    const selectedCategories = Array.from(categoryFilter.selectedOptions).map(option => option.value);
+    const rows = document.querySelectorAll('#offer-table tr');
+
+    rows.forEach(row => {
+        if (selectedCategories.includes(row.dataset.category)) {
+            row.classList.add('hidden');
+        } else {
+            row.classList.remove('hidden');
+        }
+    });
+}
+
+// Attach event listeners for toggling images, searching, and category actions
 function attachEventListeners(offers) {
     const toggleImagesButton = document.getElementById('toggle-images');
     const copyProductsButton = document.getElementById('copy-products');
-    const filterCategoryButton = document.getElementById('filter-category');
+    const searchInput = document.getElementById('search-input');
+    const removeCategoriesButton = document.getElementById('remove-categories');
     const categoryFilter = document.getElementById('category-filter');
     const imagePreview = document.getElementById('image-preview');
     let imagesLoaded = false;
@@ -99,22 +118,37 @@ function attachEventListeners(offers) {
         }
     });
 
-    // Hide selected categories
-    filterCategoryButton.addEventListener('click', () => {
-        const selectedCategories = Array.from(categoryFilter.selectedOptions).map(option => option.value);
+    // Search in all table cells
+    searchInput.addEventListener('input', () => {
+        const searchTerm = searchInput.value.toLowerCase();
         const rows = document.querySelectorAll('#offer-table tr');
 
         rows.forEach(row => {
-            if (selectedCategories.includes(row.dataset.category)) {
-                row.classList.add('hidden');
-            } else {
+            const cells = Array.from(row.querySelectorAll('td'));
+            const matches = cells.some(cell => cell.textContent.toLowerCase().includes(searchTerm));
+            if (matches) {
                 row.classList.remove('hidden');
+            } else {
+                row.classList.add('hidden');
             }
         });
     });
 
+    // Remove selected categories
+    removeCategoriesButton.addEventListener('click', () => {
+        const selectedCategories = Array.from(categoryFilter.selectedOptions).map(option => option.value);
+
+        selectedCategories.forEach(category => {
+            const option = Array.from(categoryFilter.options).find(opt => opt.value === category);
+            if (option) {
+                option.remove();
+            }
+        });
+
+        hideSelectedCategories();
+    });
+
     // Copy visible products to clipboard
-    // Copy visible products to clipboard in JSON format
     copyProductsButton.addEventListener('click', () => {
         const rows = document.querySelectorAll('#offer-table tr:not(.hidden)');
         const products = [];
@@ -133,12 +167,13 @@ function attachEventListeners(offers) {
             }
         });
 
-        const jsonString = JSON.stringify(products, null, 2); // Convert to JSON string with pretty formatting
+        const jsonString = JSON.stringify(products, null, 2);
 
         navigator.clipboard.writeText(jsonString).then(() => {
             alert('Sichtbare Produkte wurden als JSON kopiert!');
         }).catch(err => {
-            console.error('Fehler beim Kopieren der JSON-Daten:', err);
+            console.error
+            ('Fehler beim Kopieren der JSON-Daten:', err);
         });
     });
 }
