@@ -21,7 +21,7 @@
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 5px; /* Reduced padding for compact design */
+            padding: 5px;
             text-align: left;
         }
         th {
@@ -29,25 +29,30 @@
             font-weight: bold;
         }
         tr:nth-child(even) {
-            background-color: #f9f9f9; /* Alternate row color for readability */
+            background-color: #f9f9f9;
         }
         tr:hover {
-            background-color: #f1f1f1; /* Highlight row on hover */
+            background-color: #f1f1f1;
         }
         img {
-            max-width: 80px; /* Reduced image size */
-            max-height: 50px; /* Ensure images fit compactly */
+            max-width: 80px;
+            max-height: 50px;
         }
         #offer-info {
             font-size: 1rem;
             margin-top: 10px;
             color: #666;
         }
+        .hidden {
+            display: none; /* Class to hide images */
+        }
     </style>
 </head>
 <body>
     <h1 id="page-title">EDEKA Wochenangebote</h1>
     <p id="offer-info">Lade aktuelle Informationen...</p>
+    <button id="toggle-images">Bilder ausblenden</button>
+    <button id="copy-products">Produkte kopieren</button>
     <table>
         <thead>
             <tr>
