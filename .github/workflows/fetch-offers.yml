@@ -7,7 +7,7 @@ on:
 
 jobs:
   fetch-and-store:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout repository
@@ -24,13 +24,11 @@ jobs:
           API_URL="https://www.edeka.de/api/auth-proxy/?path=api%2Foffers%3Flimit%3D999%26marketId%3D5625811"
           RESPONSE=$(curl -s "$API_URL")
           echo "$RESPONSE" > data.json
-          
+
       - name: Sort JSON by category
         run: |
           RAW_JSON=$(cat data.json)
-          SORTED_JSON=$(echo "$RAW_JSON" | jq '.
-            offers |= sort_by(.category.name)
-          ')
+          SORTED_JSON=$(echo "$RAW_JSON" | jq '.offers |= sort_by(.category.name)')
           echo "$SORTED_JSON" > data.json
 
       - name: Determine folder and file structure
