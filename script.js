@@ -1,44 +1,6 @@
-// Function to check API status
-async function checkApiStatus() {
-    const apiEndpoint = "https://www.edeka.de/api/auth-proxy/?path=api%2Foffers%3Flimit%3D999%26marketId%3D5625811";
-    const statusButton = document.getElementById('api-status-button');
-
-    try {
-        const response = await fetch(apiEndpoint, { method: 'HEAD' }); // Use HEAD to check connectivity
-        if (response.ok) {
-            updateButtonStatus('API is reachable', 'green');
-        } else {
-            updateButtonStatus('API not reachable', 'red');
-        }
-    } catch (error) {
-        updateButtonStatus('API not reachable', 'red');
-    }
-}
-
-// Update button text and color
-function updateButtonStatus(message, color) {
-    const statusButton = document.getElementById('api-status-button');
-    if (!statusButton) return;
-    statusButton.textContent = message;
-    statusButton.style.backgroundColor = color;
-    statusButton.style.color = 'white';
-    statusButton.disabled = true; // Prevent interaction
-}
-
 async function fetchOffers() {
     try {
-        // Construct the path to the JSON file based on the current date
-        const currentDate = new Date();
-        const year = currentDate.getFullYear();
-        const week = `KW${getISOWeek(currentDate)}`;
-        const dateString = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD
-        const filePath = `data/${year}/${week}/${dateString}.json`;
-
-        const response = await fetch(filePath); // Fetch data from the generated JSON file
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
+        const response = await fetch('output_raw.json'); // Fetch data from the local JSON file
         const data = await response.json();
 
         // Extract date range and item count
@@ -242,19 +204,5 @@ function hideImagePreview(previewContainer) {
     previewContainer.style.display = 'none';
 }
 
-// Helper function to calculate ISO week number
-function getISOWeek(date) {
-    const target = new Date(date.valueOf());
-    const dayNr = (date.getDay() + 6) % 7; // ISO week starts on Monday
-    target.setDate(target.getDate() - dayNr + 3); // Move to Thursday in the same week
-    const firstThursday = new Date(target.getFullYear(), 0, 4); // 4th January is always in week 1
-    const diff = target - firstThursday;
-    return Math.floor(diff / (7 * 24 * 60 * 60 * 1000)) + 1; // Calculate the week number
-}
-
-
-// Automatically check API status and fetch offers on page load
-document.addEventListener('DOMContentLoaded', () => {
-    checkApiStatus();
-    fetchOffers();
-});
+// Fetch data on page load
+document.addEventListener('DOMContentLoaded', fetchOffers);
