@@ -1,6 +1,17 @@
 async function fetchOffers() {
     try {
-        const response = await fetch('output_raw.json'); // Fetch data from the local JSON file
+        // Construct the path to the JSON file based on the current date
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const week = `KW${getISOWeek(currentDate)}`;
+        const dateString = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD
+        const filePath = `data/${year}/${week}/${dateString}.json`;
+
+        const response = await fetch(filePath); // Fetch data from the generated JSON file
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
         const data = await response.json();
 
         // Extract date range and item count
@@ -202,6 +213,16 @@ function showImagePreview(imgUrl, previewContainer) {
 function hideImagePreview(previewContainer) {
     if (!previewContainer) return;
     previewContainer.style.display = 'none';
+}
+
+// Helper function to calculate ISO week number
+function getISOWeek(date) {
+    const target = new Date(date.valueOf());
+    const dayNr = (date.getDay() + 6) % 7; // ISO week starts on Monday
+    target.setDate(target.getDate() - dayNr + 3); // Move to Thursday in the same week
+    const firstThursday = new Date(target.getFullYear(), 0, 4); // 4th January is always in week 1
+    const diff = target - firstThursday;
+    return Math.floor(diff / (7 * 24 * 60 * 60 * 1000)) + 1; // Calculate the week number
 }
 
 // Fetch data on page load
