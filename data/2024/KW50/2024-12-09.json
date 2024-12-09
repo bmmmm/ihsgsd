@@ -28,8 +28,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/4dcc863c-ec4d-49ec-808d-6c4b76612c58_Perwoll_Renew_Color_Waschmittel_27WL_1_35l_6160280003.jpg",
         "original": "https://offer-images.api.edeka/66388df7-680d-4586-9c3e-5bf4a3f73f8a_Perwoll_Renew_Color_Waschmittel_27WL_1_35l_6160280003.png",
-        "web90": "https://offer-images.api.edeka/60ff3933-e9d2-49a5-83d9-77a13646567f_Perwoll_Renew_Color_Waschmittel_27WL_1_35l_6160280003.jpg",
-        "web130": "https://offer-images.api.edeka/d799b021-ba2a-4f4f-9967-2e689082cb4a_Perwoll_Renew_Color_Waschmittel_27WL_1_35l_6160280003.jpg"
+        "web130": "https://offer-images.api.edeka/d799b021-ba2a-4f4f-9967-2e689082cb4a_Perwoll_Renew_Color_Waschmittel_27WL_1_35l_6160280003.jpg",
+        "web90": "https://offer-images.api.edeka/60ff3933-e9d2-49a5-83d9-77a13646567f_Perwoll_Renew_Color_Waschmittel_27WL_1_35l_6160280003.jpg"
       },
       "titleApp": "Perwoll Waschmittel",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -118,8 +118,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/e4a46002-9a21-4793-85b7-00f492fe48af_Elnett_LOreal_Paris_Elnett_Haarspray_Normaler_Halt_300g.jpg",
         "original": "https://offer-images.api.edeka/aeb54246-6cfd-41a6-addb-dad07dd2c29b_Elnett_LOreal_Paris_Elnett_Haarspray_Normaler_Halt_300g.png",
-        "web130": "https://offer-images.api.edeka/cee2ad85-18b4-4e0b-a36f-3845d14d7d58_Elnett_LOreal_Paris_Elnett_Haarspray_Normaler_Halt_300g.jpg",
-        "web90": "https://offer-images.api.edeka/c63d1117-7792-44ed-9699-033cf8c05e11_Elnett_LOreal_Paris_Elnett_Haarspray_Normaler_Halt_300g.jpg"
+        "web90": "https://offer-images.api.edeka/c63d1117-7792-44ed-9699-033cf8c05e11_Elnett_LOreal_Paris_Elnett_Haarspray_Normaler_Halt_300g.jpg",
+        "web130": "https://offer-images.api.edeka/cee2ad85-18b4-4e0b-a36f-3845d14d7d58_Elnett_LOreal_Paris_Elnett_Haarspray_Normaler_Halt_300g.jpg"
       },
       "titleApp": "L’Oréal Paris Elnett Haarspray",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -148,8 +148,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/b7a76f88-da6e-4b26-87a3-ebea1dd2c576_Sensodyne_MultiCare_Intensivreinigung_Zahncreme_75ml_5730499005.jpg",
         "original": "https://offer-images.api.edeka/df9f998e-efaa-42f0-ac44-4a1283fe1d99_Sensodyne_MultiCare_Intensivreinigung_Zahncreme_75ml_5730499005.png",
-        "web130": "https://offer-images.api.edeka/05cc1a0c-76eb-4a73-82bd-1672cc11f09e_Sensodyne_MultiCare_Intensivreinigung_Zahncreme_75ml_5730499005.jpg",
-        "web90": "https://offer-images.api.edeka/2618fe28-2173-45bf-a4b3-997415741bf8_Sensodyne_MultiCare_Intensivreinigung_Zahncreme_75ml_5730499005.jpg"
+        "web90": "https://offer-images.api.edeka/2618fe28-2173-45bf-a4b3-997415741bf8_Sensodyne_MultiCare_Intensivreinigung_Zahncreme_75ml_5730499005.jpg",
+        "web130": "https://offer-images.api.edeka/05cc1a0c-76eb-4a73-82bd-1672cc11f09e_Sensodyne_MultiCare_Intensivreinigung_Zahncreme_75ml_5730499005.jpg"
       },
       "titleApp": "Sensodyne MultiCare Zahnpasta",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -268,8 +268,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/fc17eb27-d7e2-4506-819d-658657f0c962_Hakle_Traumweich_Toilettenpapier_weiss_4_lagig_8x130Blatt_2516328001.jpg",
         "original": "https://offer-images.api.edeka/b8faed5c-3b56-41a6-a8be-85c3a2986097_Hakle_Traumweich_Toilettenpapier_weiss_4_lagig_8x130Blatt_2516328001.png",
-        "web130": "https://offer-images.api.edeka/4968b5d9-fd9c-4d9d-b939-32ef3a508bd8_Hakle_Traumweich_Toilettenpapier_weiss_4_lagig_8x130Blatt_2516328001.jpg",
-        "web90": "https://offer-images.api.edeka/bc260c7e-09d6-44ed-a8b0-2402dd916a65_Hakle_Traumweich_Toilettenpapier_weiss_4_lagig_8x130Blatt_2516328001.jpg"
+        "web90": "https://offer-images.api.edeka/bc260c7e-09d6-44ed-a8b0-2402dd916a65_Hakle_Traumweich_Toilettenpapier_weiss_4_lagig_8x130Blatt_2516328001.jpg",
+        "web130": "https://offer-images.api.edeka/4968b5d9-fd9c-4d9d-b939-32ef3a508bd8_Hakle_Traumweich_Toilettenpapier_weiss_4_lagig_8x130Blatt_2516328001.jpg"
       },
       "titleApp": "Hakle Toilettenpapier",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -304,8 +304,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/3910d53b-32a0-43a2-9b3c-5307bd3a4451_Rinder_Rouladen_1b_PL.jpg",
         "original": "https://offer-images.api.edeka/b389ba4c-e295-4ed8-8656-8a31b4707c88_Rinder_Rouladen_1b_PL.png",
-        "web90": "https://offer-images.api.edeka/919005ff-ac60-4b1b-9ed0-b379098c4063_Rinder_Rouladen_1b_PL.jpg",
-        "web130": "https://offer-images.api.edeka/1216adc4-9ba0-4237-8621-83fce013d8f2_Rinder_Rouladen_1b_PL.jpg"
+        "web130": "https://offer-images.api.edeka/1216adc4-9ba0-4237-8621-83fce013d8f2_Rinder_Rouladen_1b_PL.jpg",
+        "web90": "https://offer-images.api.edeka/919005ff-ac60-4b1b-9ed0-b379098c4063_Rinder_Rouladen_1b_PL.jpg"
       },
       "titleApp": "Zarte Rouladen",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -430,8 +430,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/bd84f284-8305-4882-a1ee-ac4b43615025_Hamburger_Kalb_03.jpg",
         "original": "https://offer-images.api.edeka/dc54429d-45b2-488c-8b7a-ecbe9a274957_Hamburger_Kalb_03.png",
-        "web130": "https://offer-images.api.edeka/be3aee9b-63f8-47be-af5c-c4fb0234cea5_Hamburger_Kalb_03.jpg",
-        "web90": "https://offer-images.api.edeka/9bb12b3b-828f-4b99-be9c-f6f9e096f137_Hamburger_Kalb_03.jpg"
+        "web90": "https://offer-images.api.edeka/9bb12b3b-828f-4b99-be9c-f6f9e096f137_Hamburger_Kalb_03.jpg",
+        "web130": "https://offer-images.api.edeka/be3aee9b-63f8-47be-af5c-c4fb0234cea5_Hamburger_Kalb_03.jpg"
       },
       "titleApp": "Kalbs-Burgerpatty",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -460,8 +460,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/e42b36da-f650-4f22-a063-b3c4ab178597_Rindergehacktes_2_PL.jpg",
         "original": "https://offer-images.api.edeka/e839ebfa-e1c6-42fa-9118-3beb338f639e_Rindergehacktes_2_PL.png",
-        "web90": "https://offer-images.api.edeka/041307b7-a03f-4976-bba4-e857619a28df_Rindergehacktes_2_PL.jpg",
-        "web130": "https://offer-images.api.edeka/e1c15bcc-6879-47c5-a362-aff01d5a6c2c_Rindergehacktes_2_PL.jpg"
+        "web130": "https://offer-images.api.edeka/e1c15bcc-6879-47c5-a362-aff01d5a6c2c_Rindergehacktes_2_PL.jpg",
+        "web90": "https://offer-images.api.edeka/041307b7-a03f-4976-bba4-e857619a28df_Rindergehacktes_2_PL.jpg"
       },
       "titleApp": "Frisches Rinderhackfleisch",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -490,8 +490,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/c1fe2cac-5249-4bba-ae22-87fef847d917_Schweinenackenbraten_m_Knochen_1_PL.jpg",
         "original": "https://offer-images.api.edeka/457238e6-c26c-485d-898d-02c183c267d3_Schweinenackenbraten_m_Knochen_1_PL.png",
-        "web130": "https://offer-images.api.edeka/9ad36762-a919-41f7-91e3-f76723e517a6_Schweinenackenbraten_m_Knochen_1_PL.jpg",
-        "web90": "https://offer-images.api.edeka/5e4ea041-e65c-47d9-8867-d253723c42e2_Schweinenackenbraten_m_Knochen_1_PL.jpg"
+        "web90": "https://offer-images.api.edeka/5e4ea041-e65c-47d9-8867-d253723c42e2_Schweinenackenbraten_m_Knochen_1_PL.jpg",
+        "web130": "https://offer-images.api.edeka/9ad36762-a919-41f7-91e3-f76723e517a6_Schweinenackenbraten_m_Knochen_1_PL.jpg"
       },
       "titleApp": "meinLand - Frischer Schweinenackenbraten",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -520,8 +520,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/9434b059-1b73-4de9-a135-d22e36cdaf2c_Rinder_Rouladen_1_PL.jpg",
         "original": "https://offer-images.api.edeka/48b540b5-3428-478c-b8d2-5a623f27c5a9_Rinder_Rouladen_1_PL.png",
-        "web130": "https://offer-images.api.edeka/d0f2f1b6-1084-4e4f-b1de-23b1b3e8c9e6_Rinder_Rouladen_1_PL.jpg",
-        "web90": "https://offer-images.api.edeka/647f32ad-6c35-4abd-b052-b8c608bf92ae_Rinder_Rouladen_1_PL.jpg"
+        "web90": "https://offer-images.api.edeka/647f32ad-6c35-4abd-b052-b8c608bf92ae_Rinder_Rouladen_1_PL.jpg",
+        "web130": "https://offer-images.api.edeka/d0f2f1b6-1084-4e4f-b1de-23b1b3e8c9e6_Rinder_Rouladen_1_PL.jpg"
       },
       "titleApp": "Zarte Rouladen \"Unsere Besten\"",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -550,8 +550,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/b287930e-42c8-4e72-9191-981b01b09691_Rasting_Hackbaellchen_Cevapcici_2525_4313712025251_frei.jpg",
         "original": "https://offer-images.api.edeka/487755e6-1826-4aed-aa68-cbb3e6a49ab3_Rasting_Hackbaellchen_Cevapcici_2525_4313712025251_frei.png",
-        "web130": "https://offer-images.api.edeka/c4ecf941-1cec-43ee-9b7f-d545fab4bb99_Rasting_Hackbaellchen_Cevapcici_2525_4313712025251_frei.jpg",
-        "web90": "https://offer-images.api.edeka/7f3f2228-e159-424e-9347-9c5ab9cda59a_Rasting_Hackbaellchen_Cevapcici_2525_4313712025251_frei.jpg"
+        "web90": "https://offer-images.api.edeka/7f3f2228-e159-424e-9347-9c5ab9cda59a_Rasting_Hackbaellchen_Cevapcici_2525_4313712025251_frei.jpg",
+        "web130": "https://offer-images.api.edeka/c4ecf941-1cec-43ee-9b7f-d545fab4bb99_Rasting_Hackbaellchen_Cevapcici_2525_4313712025251_frei.jpg"
       },
       "titleApp": "Rasting - Hackbällchen",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -580,8 +580,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/6ed19318-61ff-4fe1-96b2-887cba5422b0_Putenoberkeule_roh_1_PL.jpg",
         "original": "https://offer-images.api.edeka/2e36533f-7005-4bd1-8aba-695d51af6825_Putenoberkeule_roh_1_PL.png",
-        "web130": "https://offer-images.api.edeka/cb4bb3f6-5ac7-468a-9ce0-b0f6caadec03_Putenoberkeule_roh_1_PL.jpg",
-        "web90": "https://offer-images.api.edeka/84dcf2ea-3adc-41c7-9130-dd5af1fe2ccb_Putenoberkeule_roh_1_PL.jpg"
+        "web90": "https://offer-images.api.edeka/84dcf2ea-3adc-41c7-9130-dd5af1fe2ccb_Putenoberkeule_roh_1_PL.jpg",
+        "web130": "https://offer-images.api.edeka/cb4bb3f6-5ac7-468a-9ce0-b0f6caadec03_Putenoberkeule_roh_1_PL.jpg"
       },
       "titleApp": "Frische Putenoberkeulen",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -610,8 +610,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/330730c2-5532-4697-b254-426f980d418d_Schweine_Bauchrippe_St_Louis_Cut_gegart_5916317006.jpg",
         "original": "https://offer-images.api.edeka/3e188349-563e-4442-9ca3-26da8d580e09_Schweine_Bauchrippe_St_Louis_Cut_gegart_5916317006.png",
-        "web130": "https://offer-images.api.edeka/7dbcfc0d-3403-447a-9c32-5a1f6c14ffb3_Schweine_Bauchrippe_St_Louis_Cut_gegart_5916317006.jpg",
-        "web90": "https://offer-images.api.edeka/3555d475-affc-417d-a261-cb83cf4f4502_Schweine_Bauchrippe_St_Louis_Cut_gegart_5916317006.jpg"
+        "web90": "https://offer-images.api.edeka/3555d475-affc-417d-a261-cb83cf4f4502_Schweine_Bauchrippe_St_Louis_Cut_gegart_5916317006.jpg",
+        "web130": "https://offer-images.api.edeka/7dbcfc0d-3403-447a-9c32-5a1f6c14ffb3_Schweine_Bauchrippe_St_Louis_Cut_gegart_5916317006.jpg"
       },
       "titleApp": "meinLand - St. Louis Cut",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -669,8 +669,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/3079226b-7894-4fc3-b0ae-691b603833e9_Haehncheninnenfilet_5_PL.jpg",
         "original": "https://offer-images.api.edeka/fa474755-b4cd-440b-947b-639c1a278a8a_Haehncheninnenfilet_5_PL.png",
-        "web90": "https://offer-images.api.edeka/4b6d2f43-000e-42aa-8feb-bdefb91882ac_Haehncheninnenfilet_5_PL.jpg",
-        "web130": "https://offer-images.api.edeka/d2ca65c7-c81d-4493-a7e0-f6db42c57e58_Haehncheninnenfilet_5_PL.jpg"
+        "web130": "https://offer-images.api.edeka/d2ca65c7-c81d-4493-a7e0-f6db42c57e58_Haehncheninnenfilet_5_PL.jpg",
+        "web90": "https://offer-images.api.edeka/4b6d2f43-000e-42aa-8feb-bdefb91882ac_Haehncheninnenfilet_5_PL.jpg"
       },
       "titleApp": "Frisches Hähncheninnenfilet",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -735,8 +735,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/1a9a0ee0-6de0-4143-9e9c-89ebbeab718f_4246939005.jpg",
         "original": "https://offer-images.api.edeka/179b28ec-223a-4bdf-86c6-94a7d499d459_4246939005.png",
-        "web90": "https://offer-images.api.edeka/095cd9a7-08db-408f-a16e-7c445f8123ed_4246939005.jpg",
-        "web130": "https://offer-images.api.edeka/7ebf0a61-6e37-49e5-8395-c9136624f146_4246939005.jpg"
+        "web130": "https://offer-images.api.edeka/7ebf0a61-6e37-49e5-8395-c9136624f146_4246939005.jpg",
+        "web90": "https://offer-images.api.edeka/095cd9a7-08db-408f-a16e-7c445f8123ed_4246939005.jpg"
       },
       "titleApp": "Rasting - Grünkohl mit Mettwurst",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -807,8 +807,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/b0a10e3d-da94-4183-81a7-32b502f5eb60_Roastbeef_1_PL.jpg",
         "original": "https://offer-images.api.edeka/c332653e-d941-4210-920c-66f55b481ea3_Roastbeef_1_PL.png",
-        "web130": "https://offer-images.api.edeka/7065cc8a-c764-4b3f-ba6c-89bc18aeef92_Roastbeef_1_PL.jpg",
-        "web90": "https://offer-images.api.edeka/357b2403-e798-4a6b-af54-5d165f5eec65_Roastbeef_1_PL.jpg"
+        "web90": "https://offer-images.api.edeka/357b2403-e798-4a6b-af54-5d165f5eec65_Roastbeef_1_PL.jpg",
+        "web130": "https://offer-images.api.edeka/7065cc8a-c764-4b3f-ba6c-89bc18aeef92_Roastbeef_1_PL.jpg"
       },
       "titleApp": "Roastbeef auch als Rumpsteak",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -873,8 +873,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/1284a948-b4ae-4fc5-be33-d74dc90fb03d_Rasting_Winter_Krakauer_5x120g_2990246004_frei.jpg",
         "original": "https://offer-images.api.edeka/7a48658b-6f3f-41df-933e-5fcd6fb22cef_Rasting_Winter_Krakauer_5x120g_2990246004_frei.png",
-        "web130": "https://offer-images.api.edeka/ae6178d4-aabc-4a95-ac15-9826e71093b2_Rasting_Winter_Krakauer_5x120g_2990246004_frei.jpg",
-        "web90": "https://offer-images.api.edeka/cc9b5461-15c3-4ec5-8033-d470c9a09691_Rasting_Winter_Krakauer_5x120g_2990246004_frei.jpg"
+        "web90": "https://offer-images.api.edeka/cc9b5461-15c3-4ec5-8033-d470c9a09691_Rasting_Winter_Krakauer_5x120g_2990246004_frei.jpg",
+        "web130": "https://offer-images.api.edeka/ae6178d4-aabc-4a95-ac15-9826e71093b2_Rasting_Winter_Krakauer_5x120g_2990246004_frei.jpg"
       },
       "titleApp": "Rasting - Winterkrakauer oder Bratwürstchen fein gebrüht",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1029,8 +1029,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/665d48a8-ae6b-4c1f-afc7-efa83ff12f98_Kochhinterschinken_1_PL.jpg",
         "original": "https://offer-images.api.edeka/c905028d-0f1e-44be-87d4-f770303d9a28_Kochhinterschinken_1_PL.png",
-        "web130": "https://offer-images.api.edeka/26b6e386-8f11-4b4c-9859-a678f6d4c09c_Kochhinterschinken_1_PL.jpg",
-        "web90": "https://offer-images.api.edeka/a219139d-32f4-4976-9521-0f5626cd3ba2_Kochhinterschinken_1_PL.jpg"
+        "web90": "https://offer-images.api.edeka/a219139d-32f4-4976-9521-0f5626cd3ba2_Kochhinterschinken_1_PL.jpg",
+        "web130": "https://offer-images.api.edeka/26b6e386-8f11-4b4c-9859-a678f6d4c09c_Kochhinterschinken_1_PL.jpg"
       },
       "titleApp": "Rasting - Gekochter Hinterschinken",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1089,8 +1089,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/54b56fd1-651d-4493-a792-1c42de9adb79_Bille_Chickensalami_Abb_getrennt_44382.jpg",
         "original": "https://offer-images.api.edeka/1beba6cf-a83a-47cb-9d4d-beb3e82ca8fd_Bille_Chickensalami_Abb_getrennt_44382.png",
-        "web90": "https://offer-images.api.edeka/3d3a8d7b-e472-4f17-bd9d-7fd0321f33f0_Bille_Chickensalami_Abb_getrennt_44382.jpg",
-        "web130": "https://offer-images.api.edeka/d1ca5e91-ad2f-407e-a08c-4a48a3d8dec2_Bille_Chickensalami_Abb_getrennt_44382.jpg"
+        "web130": "https://offer-images.api.edeka/d1ca5e91-ad2f-407e-a08c-4a48a3d8dec2_Bille_Chickensalami_Abb_getrennt_44382.jpg",
+        "web90": "https://offer-images.api.edeka/3d3a8d7b-e472-4f17-bd9d-7fd0321f33f0_Bille_Chickensalami_Abb_getrennt_44382.jpg"
       },
       "titleApp": "Bille - Chicken Salami",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1149,8 +1149,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/99701d2b-738e-44ce-9920-4d0741774bab_RM_Pomm_Leberw_Schnittlauch.jpg",
         "original": "https://offer-images.api.edeka/44cb72f7-82a1-4711-bbaa-db307a95a6be_RM_Pomm_Leberw_Schnittlauch.png",
-        "web130": "https://offer-images.api.edeka/02eb6560-f1b8-48f3-a95a-5f4e9c3bc683_RM_Pomm_Leberw_Schnittlauch.jpg",
-        "web90": "https://offer-images.api.edeka/c753d42a-9b6a-404c-9619-6e2d7fb4cd6f_RM_Pomm_Leberw_Schnittlauch.jpg"
+        "web90": "https://offer-images.api.edeka/c753d42a-9b6a-404c-9619-6e2d7fb4cd6f_RM_Pomm_Leberw_Schnittlauch.jpg",
+        "web130": "https://offer-images.api.edeka/02eb6560-f1b8-48f3-a95a-5f4e9c3bc683_RM_Pomm_Leberw_Schnittlauch.jpg"
       },
       "titleApp": "Rügenwalder Mühle - Pommersche Gutsleberwurst",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1185,8 +1185,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/8b4be137-548c-4c9a-bc2a-344c17406033_9301_Erbseneintopf.jpg",
         "original": "https://offer-images.api.edeka/312737a4-f454-4cf4-a852-eef4a2320973_9301_Erbseneintopf.png",
-        "web130": "https://offer-images.api.edeka/8b83d5d8-dd0c-4e36-8c2e-3872aebbbd47_9301_Erbseneintopf.jpg",
-        "web90": "https://offer-images.api.edeka/8735c682-0c6b-4a03-8939-e9f9922e69e2_9301_Erbseneintopf.jpg"
+        "web90": "https://offer-images.api.edeka/8735c682-0c6b-4a03-8939-e9f9922e69e2_9301_Erbseneintopf.jpg",
+        "web130": "https://offer-images.api.edeka/8b83d5d8-dd0c-4e36-8c2e-3872aebbbd47_9301_Erbseneintopf.jpg"
       },
       "titleApp": "Rasting - Traditionelle Eintöpfe",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1245,8 +1245,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/77528c36-f099-4461-9372-70b60f34bb5d_Schinkenspeck_gerauchert_1_PL.jpg",
         "original": "https://offer-images.api.edeka/e54b3415-c9be-45bc-a478-da758c24f0de_Schinkenspeck_gerauchert_1_PL.png",
-        "web90": "https://offer-images.api.edeka/84533920-5135-437f-a32e-2b07e88d629f_Schinkenspeck_gerauchert_1_PL.jpg",
-        "web130": "https://offer-images.api.edeka/0f3d28fa-d885-4cbb-981b-e86bf357f4e1_Schinkenspeck_gerauchert_1_PL.jpg"
+        "web130": "https://offer-images.api.edeka/0f3d28fa-d885-4cbb-981b-e86bf357f4e1_Schinkenspeck_gerauchert_1_PL.jpg",
+        "web90": "https://offer-images.api.edeka/84533920-5135-437f-a32e-2b07e88d629f_Schinkenspeck_gerauchert_1_PL.jpg"
       },
       "titleApp": "Rasting - Schinkenspeck",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1275,8 +1275,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/7c63f5dd-4260-494f-af27-67646bc8e713_Pfitscher_Merano_Schinken_47421.jpg",
         "original": "https://offer-images.api.edeka/450a3f60-23c5-4229-8d4c-0c61309b0f4c_Pfitscher_Merano_Schinken_47421.png",
-        "web90": "https://offer-images.api.edeka/b212b4ea-c8ad-42b9-9c78-e16e110b607e_Pfitscher_Merano_Schinken_47421.jpg",
-        "web130": "https://offer-images.api.edeka/dce310e7-32d2-4a5b-8f43-24cd2f6b52f9_Pfitscher_Merano_Schinken_47421.jpg"
+        "web130": "https://offer-images.api.edeka/dce310e7-32d2-4a5b-8f43-24cd2f6b52f9_Pfitscher_Merano_Schinken_47421.jpg",
+        "web90": "https://offer-images.api.edeka/b212b4ea-c8ad-42b9-9c78-e16e110b607e_Pfitscher_Merano_Schinken_47421.jpg"
       },
       "titleApp": "Pfitscher - Original Meraner Schinken",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1305,8 +1305,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/f53c9cc5-f214-4610-98bd-9b80958e9c17_Kalbsleberwurst_Golddarm_3_PL.jpg",
         "original": "https://offer-images.api.edeka/037ed310-69ac-4b5c-9665-c29fd7bb05cc_Kalbsleberwurst_Golddarm_3_PL.png",
-        "web130": "https://offer-images.api.edeka/7ac471c1-3b1d-4cbe-aef0-5372e9cbfc02_Kalbsleberwurst_Golddarm_3_PL.jpg",
-        "web90": "https://offer-images.api.edeka/0d482065-9815-48d1-b832-4786a72abdb6_Kalbsleberwurst_Golddarm_3_PL.jpg"
+        "web90": "https://offer-images.api.edeka/0d482065-9815-48d1-b832-4786a72abdb6_Kalbsleberwurst_Golddarm_3_PL.jpg",
+        "web130": "https://offer-images.api.edeka/7ac471c1-3b1d-4cbe-aef0-5372e9cbfc02_Kalbsleberwurst_Golddarm_3_PL.jpg"
       },
       "titleApp": "Rasting - Delikatess Leberwurst mit Kalbfleisch im Golddarm oder grobe Leberwurst nach Probsteier Art,",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1341,8 +1341,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/b45599cf-5c26-404c-ab24-8b1ef31bdd50_Rasting_Schinkenwurst_7070772.jpg",
         "original": "https://offer-images.api.edeka/afe298cd-23e2-4f1b-ae31-8fe5972a6753_Rasting_Schinkenwurst_7070772.png",
-        "web90": "https://offer-images.api.edeka/6377a715-1103-45d6-9262-ed3756b44b96_Rasting_Schinkenwurst_7070772.jpg",
-        "web130": "https://offer-images.api.edeka/ea9acba6-ba45-4a07-b1e7-ba7dbf0b2160_Rasting_Schinkenwurst_7070772.jpg"
+        "web130": "https://offer-images.api.edeka/ea9acba6-ba45-4a07-b1e7-ba7dbf0b2160_Rasting_Schinkenwurst_7070772.jpg",
+        "web90": "https://offer-images.api.edeka/6377a715-1103-45d6-9262-ed3756b44b96_Rasting_Schinkenwurst_7070772.jpg"
       },
       "titleApp": "Rasting - Rheinische Schinkenwurst oder Jagdwurst",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1407,8 +1407,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/44c29d6a-d33e-4777-aaff-d49b54bf61b2_Rotkaeppchen_Sekt_halbtrocken_0_75l_33213.jpg",
         "original": "https://offer-images.api.edeka/269e024d-29a8-474b-ab8c-8b961afe41a5_Rotkaeppchen_Sekt_halbtrocken_0_75l_33213.png",
-        "web90": "https://offer-images.api.edeka/2e355210-c5b9-46b1-b705-89bfdf0e0065_Rotkaeppchen_Sekt_halbtrocken_0_75l_33213.jpg",
-        "web130": "https://offer-images.api.edeka/eb81bf88-e700-4e61-aec2-75784c2a33f0_Rotkaeppchen_Sekt_halbtrocken_0_75l_33213.jpg"
+        "web130": "https://offer-images.api.edeka/eb81bf88-e700-4e61-aec2-75784c2a33f0_Rotkaeppchen_Sekt_halbtrocken_0_75l_33213.jpg",
+        "web90": "https://offer-images.api.edeka/2e355210-c5b9-46b1-b705-89bfdf0e0065_Rotkaeppchen_Sekt_halbtrocken_0_75l_33213.jpg"
       },
       "titleApp": "Rotkäppchen Sekt oder Fruchtsecco",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1605,8 +1605,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/efbbce89-4b29-428d-8084-ebc28f0cc314_Paulaner_Muenchner_Hell_20x0_5l.jpg",
         "original": "https://offer-images.api.edeka/51715cc3-a0e8-4bc4-be41-becf284f3258_Paulaner_Muenchner_Hell_20x0_5l.png",
-        "web130": "https://offer-images.api.edeka/1cccc853-c915-448d-b234-f54eb41f9267_Paulaner_Muenchner_Hell_20x0_5l.jpg",
-        "web90": "https://offer-images.api.edeka/ccdfbbb5-e080-458b-b46f-cac58632aefa_Paulaner_Muenchner_Hell_20x0_5l.jpg"
+        "web90": "https://offer-images.api.edeka/ccdfbbb5-e080-458b-b46f-cac58632aefa_Paulaner_Muenchner_Hell_20x0_5l.jpg",
+        "web130": "https://offer-images.api.edeka/1cccc853-c915-448d-b234-f54eb41f9267_Paulaner_Muenchner_Hell_20x0_5l.jpg"
       },
       "titleApp": "Paulaner Münchner Hell",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1635,8 +1635,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/1cc7ca61-de4c-40fd-855e-ad4485db347f_Coca_Cola_2l_EW_PET.jpg",
         "original": "https://offer-images.api.edeka/8ea8a4de-bef5-48a0-afcc-c327816908fd_Coca_Cola_2l_EW_PET.png",
-        "web90": "https://offer-images.api.edeka/3dce39a0-ab68-4fc8-8c87-4cd393001f25_Coca_Cola_2l_EW_PET.jpg",
-        "web130": "https://offer-images.api.edeka/07f30d63-53ca-41d0-aea2-e048a48ff173_Coca_Cola_2l_EW_PET.jpg"
+        "web130": "https://offer-images.api.edeka/07f30d63-53ca-41d0-aea2-e048a48ff173_Coca_Cola_2l_EW_PET.jpg",
+        "web90": "https://offer-images.api.edeka/3dce39a0-ab68-4fc8-8c87-4cd393001f25_Coca_Cola_2l_EW_PET.jpg"
       },
       "titleApp": "Coca-Cola, Fanta, Sprite",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1725,8 +1725,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/d82385f5-94a0-4fe1-8682-0c3b2cfd05e8_Vitrex_Naturelle_6x1_5l.jpg",
         "original": "https://offer-images.api.edeka/ff0d771f-c7a9-40c1-b28b-50b412d00204_Vitrex_Naturelle_6x1_5l.png",
-        "web130": "https://offer-images.api.edeka/476804fd-b12a-4f5f-9832-22363c42f2fc_Vitrex_Naturelle_6x1_5l.jpg",
-        "web90": "https://offer-images.api.edeka/ce7b3b08-1c4e-4f9d-9a50-7220ffcfbbc2_Vitrex_Naturelle_6x1_5l.jpg"
+        "web90": "https://offer-images.api.edeka/ce7b3b08-1c4e-4f9d-9a50-7220ffcfbbc2_Vitrex_Naturelle_6x1_5l.jpg",
+        "web130": "https://offer-images.api.edeka/476804fd-b12a-4f5f-9832-22363c42f2fc_Vitrex_Naturelle_6x1_5l.jpg"
       },
       "titleApp": "Vitrex Mineralwasser",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1755,8 +1755,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/8fb4fc0b-6e74-41e6-8ff5-c73aef42aff9_San_Pallegrino_6x1l.jpg",
         "original": "https://offer-images.api.edeka/b4c51b49-f1ad-48f2-bc02-6850021e3c11_San_Pallegrino_6x1l.png",
-        "web130": "https://offer-images.api.edeka/7305be2d-75f2-4372-a688-4f92b030734e_San_Pallegrino_6x1l.jpg",
-        "web90": "https://offer-images.api.edeka/be208217-3bda-4905-b368-c7de712755ae_San_Pallegrino_6x1l.jpg"
+        "web90": "https://offer-images.api.edeka/be208217-3bda-4905-b368-c7de712755ae_San_Pallegrino_6x1l.jpg",
+        "web130": "https://offer-images.api.edeka/7305be2d-75f2-4372-a688-4f92b030734e_San_Pallegrino_6x1l.jpg"
       },
       "titleApp": "San Pellegrino Mineralwasser",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1785,8 +1785,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/a9ff20a9-f7cc-4fd6-b3e3-00b8a11284ad_Fuze_Tea_Pfirsich_1_25l_4104026005.jpg",
         "original": "https://offer-images.api.edeka/57540088-30f9-45ad-a467-a5d0d699357e_Fuze_Tea_Pfirsich_1_25l_4104026005.png",
-        "web90": "https://offer-images.api.edeka/2010b4a0-fb95-41e9-96a8-015f640c2ad3_Fuze_Tea_Pfirsich_1_25l_4104026005.jpg",
-        "web130": "https://offer-images.api.edeka/49032ff0-6d38-4ebc-8f9b-c82ef1b9c5f4_Fuze_Tea_Pfirsich_1_25l_4104026005.jpg"
+        "web130": "https://offer-images.api.edeka/49032ff0-6d38-4ebc-8f9b-c82ef1b9c5f4_Fuze_Tea_Pfirsich_1_25l_4104026005.jpg",
+        "web90": "https://offer-images.api.edeka/2010b4a0-fb95-41e9-96a8-015f640c2ad3_Fuze_Tea_Pfirsich_1_25l_4104026005.jpg"
       },
       "titleApp": "fuze tea",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1815,8 +1815,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/a9ae431f-7030-41c8-94c9-61fa7f398555_Bionade_Holunder_12x0_33l_97580.jpg",
         "original": "https://offer-images.api.edeka/4e09b9be-c901-4889-999c-68c5143090ef_Bionade_Holunder_12x0_33l_97580.png",
-        "web130": "https://offer-images.api.edeka/60ec3cb9-15c5-4b0d-83a6-2972d5c3f01f_Bionade_Holunder_12x0_33l_97580.jpg",
-        "web90": "https://offer-images.api.edeka/3eb323ce-8212-4455-8158-d22f818eef79_Bionade_Holunder_12x0_33l_97580.jpg"
+        "web90": "https://offer-images.api.edeka/3eb323ce-8212-4455-8158-d22f818eef79_Bionade_Holunder_12x0_33l_97580.jpg",
+        "web130": "https://offer-images.api.edeka/60ec3cb9-15c5-4b0d-83a6-2972d5c3f01f_Bionade_Holunder_12x0_33l_97580.jpg"
       },
       "titleApp": "Bionade",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1881,8 +1881,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/cd0ac5d6-1ad4-47b8-92e3-8d4dfa6fac80_Ballantines_Scotch_Whisky_40Prz_0_7l.jpg",
         "original": "https://offer-images.api.edeka/b3231e60-2612-4fa3-90ed-810af70ebbf7_Ballantines_Scotch_Whisky_40Prz_0_7l.png",
-        "web130": "https://offer-images.api.edeka/46744882-c426-4972-8a45-6f416490479b_Ballantines_Scotch_Whisky_40Prz_0_7l.jpg",
-        "web90": "https://offer-images.api.edeka/815d64c9-e0d1-434b-bb1d-5427b8fe28cc_Ballantines_Scotch_Whisky_40Prz_0_7l.jpg"
+        "web90": "https://offer-images.api.edeka/815d64c9-e0d1-434b-bb1d-5427b8fe28cc_Ballantines_Scotch_Whisky_40Prz_0_7l.jpg",
+        "web130": "https://offer-images.api.edeka/46744882-c426-4972-8a45-6f416490479b_Ballantines_Scotch_Whisky_40Prz_0_7l.jpg"
       },
       "titleApp": "Ballantine’s Finest",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1941,8 +1941,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/61077ada-18da-4393-b0b1-a217d88f7e76_Glenfiddich_12J_40Prz_0_7l.jpg",
         "original": "https://offer-images.api.edeka/df16d34b-e66c-441c-8e48-1aa806f2d44a_Glenfiddich_12J_40Prz_0_7l.png",
-        "web90": "https://offer-images.api.edeka/650b0b3e-284a-4e98-bc04-7d64fc8f623d_Glenfiddich_12J_40Prz_0_7l.jpg",
-        "web130": "https://offer-images.api.edeka/e9960e87-02ee-4517-9237-cafaee7fcc25_Glenfiddich_12J_40Prz_0_7l.jpg"
+        "web130": "https://offer-images.api.edeka/e9960e87-02ee-4517-9237-cafaee7fcc25_Glenfiddich_12J_40Prz_0_7l.jpg",
+        "web90": "https://offer-images.api.edeka/650b0b3e-284a-4e98-bc04-7d64fc8f623d_Glenfiddich_12J_40Prz_0_7l.jpg"
       },
       "titleApp": "Glenfiddich 12 Jahre",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -1971,8 +1971,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/07b67803-ddc9-4b20-8887-7f2689078c40_Thomas_Henry_Tonic_Water_4x0_2l_MW_6209132009_frei.jpg",
         "original": "https://offer-images.api.edeka/e077fac9-a1fb-4f5e-8db9-4539a4ef7aae_Thomas_Henry_Tonic_Water_4x0_2l_MW_6209132009_frei.png",
-        "web130": "https://offer-images.api.edeka/882bb6dc-0a35-416a-877f-b07ca350a591_Thomas_Henry_Tonic_Water_4x0_2l_MW_6209132009_frei.jpg",
-        "web90": "https://offer-images.api.edeka/9070b828-0d5d-4b69-a799-8c0ee4586917_Thomas_Henry_Tonic_Water_4x0_2l_MW_6209132009_frei.jpg"
+        "web90": "https://offer-images.api.edeka/9070b828-0d5d-4b69-a799-8c0ee4586917_Thomas_Henry_Tonic_Water_4x0_2l_MW_6209132009_frei.jpg",
+        "web130": "https://offer-images.api.edeka/882bb6dc-0a35-416a-877f-b07ca350a591_Thomas_Henry_Tonic_Water_4x0_2l_MW_6209132009_frei.jpg"
       },
       "titleApp": "Thomas Henry Bitter-Getränke",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -2001,8 +2001,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/b93d1a20-09aa-475f-8476-8889aafe82dd_Brut_Dargent_Chardonnay_blanc_0_75l.jpg",
         "original": "https://offer-images.api.edeka/a7526d78-0dcf-4e9c-8ded-2f26bc1dd0b0_Brut_Dargent_Chardonnay_blanc_0_75l.png",
-        "web130": "https://offer-images.api.edeka/f44fc119-6364-4e8b-8772-aecedebc0bba_Brut_Dargent_Chardonnay_blanc_0_75l.jpg",
-        "web90": "https://offer-images.api.edeka/846f194d-966d-465b-9168-f835cfec4d4f_Brut_Dargent_Chardonnay_blanc_0_75l.jpg"
+        "web90": "https://offer-images.api.edeka/846f194d-966d-465b-9168-f835cfec4d4f_Brut_Dargent_Chardonnay_blanc_0_75l.jpg",
+        "web130": "https://offer-images.api.edeka/f44fc119-6364-4e8b-8772-aecedebc0bba_Brut_Dargent_Chardonnay_blanc_0_75l.jpg"
       },
       "titleApp": "Brut Dargent",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -2091,8 +2091,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/9794caaa-f065-449b-b7de-a775d8cbcc79_Moet_Chandon_Rose_Imperial_0_75l_6101880008.jpg",
         "original": "https://offer-images.api.edeka/fe9bcc9e-9215-4384-b38f-bd5b30fe3ee0_Moet_Chandon_Rose_Imperial_0_75l_6101880008.png",
-        "web90": "https://offer-images.api.edeka/afef15ac-beda-4bc9-b8c7-5259cfe97888_Moet_Chandon_Rose_Imperial_0_75l_6101880008.jpg",
-        "web130": "https://offer-images.api.edeka/cc297e59-c17b-4cfd-a0f3-16eb1650564a_Moet_Chandon_Rose_Imperial_0_75l_6101880008.jpg"
+        "web130": "https://offer-images.api.edeka/cc297e59-c17b-4cfd-a0f3-16eb1650564a_Moet_Chandon_Rose_Imperial_0_75l_6101880008.jpg",
+        "web90": "https://offer-images.api.edeka/afef15ac-beda-4bc9-b8c7-5259cfe97888_Moet_Chandon_Rose_Imperial_0_75l_6101880008.jpg"
       },
       "titleApp": "Moët & Chandon Rosé Impérial oder Veuve Clicquot Brut",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -2163,8 +2163,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/3caffe61-7aca-4f48-9da9-2d9630b68c86_Chantre_Weinbrand_36Prz_0_7l_135196005.jpg",
         "original": "https://offer-images.api.edeka/c7b51eec-edb9-41be-ac49-d7b31144a5cd_Chantre_Weinbrand_36Prz_0_7l_135196005.png",
-        "web90": "https://offer-images.api.edeka/2c2706d2-181b-422d-bcde-2eac97ccffd8_Chantre_Weinbrand_36Prz_0_7l_135196005.jpg",
-        "web130": "https://offer-images.api.edeka/a5e728fe-623c-4e91-878d-0b47e37ac355_Chantre_Weinbrand_36Prz_0_7l_135196005.jpg"
+        "web130": "https://offer-images.api.edeka/a5e728fe-623c-4e91-878d-0b47e37ac355_Chantre_Weinbrand_36Prz_0_7l_135196005.jpg",
+        "web90": "https://offer-images.api.edeka/2c2706d2-181b-422d-bcde-2eac97ccffd8_Chantre_Weinbrand_36Prz_0_7l_135196005.jpg"
       },
       "titleApp": "Chantré Weinbrand, Crème oder Cuvée Rouge",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -2193,8 +2193,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/b2573d0e-95b1-4eca-bd0e-87570524c490_Cocktail_Plant_Zombie_0_2L.jpg",
         "original": "https://offer-images.api.edeka/2c6da79f-e661-46d2-957d-318a8c81206c_Cocktail_Plant_Zombie_0_2L.png",
-        "web130": "https://offer-images.api.edeka/666d878c-c485-4234-a9c2-9d80a776ff4b_Cocktail_Plant_Zombie_0_2L.jpg",
-        "web90": "https://offer-images.api.edeka/27c59c1d-18f0-4e02-8792-34cd4385a46d_Cocktail_Plant_Zombie_0_2L.jpg"
+        "web90": "https://offer-images.api.edeka/27c59c1d-18f0-4e02-8792-34cd4385a46d_Cocktail_Plant_Zombie_0_2L.jpg",
+        "web130": "https://offer-images.api.edeka/666d878c-c485-4234-a9c2-9d80a776ff4b_Cocktail_Plant_Zombie_0_2L.jpg"
       },
       "titleApp": "Cocktail Plant",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -2223,8 +2223,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/bc7b73e0-efcb-492b-ae74-115db836b98e_BOMBAY_SAPPHIRE_London_Dry_Gin_40Proz_0_75l.jpg",
         "original": "https://offer-images.api.edeka/dcffcb28-0b7e-4387-bc06-3306201bd15c_BOMBAY_SAPPHIRE_London_Dry_Gin_40Proz_0_75l.png",
-        "web130": "https://offer-images.api.edeka/11445389-9b28-4161-8066-98766f49bc7c_BOMBAY_SAPPHIRE_London_Dry_Gin_40Proz_0_75l.jpg",
-        "web90": "https://offer-images.api.edeka/1b78b0aa-86c5-4374-bb12-888d0141b33f_BOMBAY_SAPPHIRE_London_Dry_Gin_40Proz_0_75l.jpg"
+        "web90": "https://offer-images.api.edeka/1b78b0aa-86c5-4374-bb12-888d0141b33f_BOMBAY_SAPPHIRE_London_Dry_Gin_40Proz_0_75l.jpg",
+        "web130": "https://offer-images.api.edeka/11445389-9b28-4161-8066-98766f49bc7c_BOMBAY_SAPPHIRE_London_Dry_Gin_40Proz_0_75l.jpg"
       },
       "titleApp": "Bombay Sapphire",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -2253,8 +2253,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/8e7f5a53-5394-418e-a60b-945a6a0b2260_Leonardi_Pinot_Grigio_Delle_Venezie_0_75l_12523.jpg",
         "original": "https://offer-images.api.edeka/3d50f8c0-d65b-4c8e-beae-f819a419ea11_Leonardi_Pinot_Grigio_Delle_Venezie_0_75l_12523.png",
-        "web130": "https://offer-images.api.edeka/e5115fdf-0ef3-4c2a-8e64-0edf97ff4193_Leonardi_Pinot_Grigio_Delle_Venezie_0_75l_12523.jpg",
-        "web90": "https://offer-images.api.edeka/5c6db86b-4f2c-44e4-9e4c-384cd226f6f5_Leonardi_Pinot_Grigio_Delle_Venezie_0_75l_12523.jpg"
+        "web90": "https://offer-images.api.edeka/5c6db86b-4f2c-44e4-9e4c-384cd226f6f5_Leonardi_Pinot_Grigio_Delle_Venezie_0_75l_12523.jpg",
+        "web130": "https://offer-images.api.edeka/e5115fdf-0ef3-4c2a-8e64-0edf97ff4193_Leonardi_Pinot_Grigio_Delle_Venezie_0_75l_12523.jpg"
       },
       "titleApp": "Leonardi",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -2553,8 +2553,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/c64d73c3-dd9b-4457-a259-63f4adfedda9_EDEKA_Deutsche_Spargelspitzen_280g_314ml_56247.jpg",
         "original": "https://offer-images.api.edeka/d23a67c1-9890-486e-9a19-7eaaf1c88c65_EDEKA_Deutsche_Spargelspitzen_280g_314ml_56247.png",
-        "web130": "https://offer-images.api.edeka/859149d9-9a07-4daa-8147-43ed3a55fc22_EDEKA_Deutsche_Spargelspitzen_280g_314ml_56247.jpg",
-        "web90": "https://offer-images.api.edeka/d65c98e8-75b1-4325-b2d1-3ebbbe7467c0_EDEKA_Deutsche_Spargelspitzen_280g_314ml_56247.jpg"
+        "web90": "https://offer-images.api.edeka/d65c98e8-75b1-4325-b2d1-3ebbbe7467c0_EDEKA_Deutsche_Spargelspitzen_280g_314ml_56247.jpg",
+        "web130": "https://offer-images.api.edeka/859149d9-9a07-4daa-8147-43ed3a55fc22_EDEKA_Deutsche_Spargelspitzen_280g_314ml_56247.jpg"
       },
       "titleApp": "EDEKA - Erlesene Spargel Spitzen",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -2643,8 +2643,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/66e9b79b-71c8-45a7-897f-e8c1326a2f33_Like_Meat_Gyros_180g_6632_5757106001.jpg",
         "original": "https://offer-images.api.edeka/7d22957b-00a2-458d-9ab8-42a291ac15bb_Like_Meat_Gyros_180g_6632_5757106001.png",
-        "web90": "https://offer-images.api.edeka/3dc97053-d971-43a8-b493-b94d3a9bef78_Like_Meat_Gyros_180g_6632_5757106001.jpg",
-        "web130": "https://offer-images.api.edeka/c96d0ff6-c94f-444d-83d4-ab5bd684c7dc_Like_Meat_Gyros_180g_6632_5757106001.jpg"
+        "web130": "https://offer-images.api.edeka/c96d0ff6-c94f-444d-83d4-ab5bd684c7dc_Like_Meat_Gyros_180g_6632_5757106001.jpg",
+        "web90": "https://offer-images.api.edeka/3dc97053-d971-43a8-b493-b94d3a9bef78_Like_Meat_Gyros_180g_6632_5757106001.jpg"
       },
       "titleApp": "Like Meat - Rein pflanzlich aus Soja",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -2673,8 +2673,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/a4b0d5f4-a618-4fad-b002-1ab965a3162f_Maggi_Guten_Appetit_Rindfleisch_Suppe_85g_2876585001.jpg",
         "original": "https://offer-images.api.edeka/20c0cffe-25dc-48b7-a82d-368d1bb4d9d1_Maggi_Guten_Appetit_Rindfleisch_Suppe_85g_2876585001.png",
-        "web90": "https://offer-images.api.edeka/532328d2-6484-4dd8-a035-c426b1a31ab1_Maggi_Guten_Appetit_Rindfleisch_Suppe_85g_2876585001.jpg",
-        "web130": "https://offer-images.api.edeka/d690ad58-a831-421c-9de9-accccece0464_Maggi_Guten_Appetit_Rindfleisch_Suppe_85g_2876585001.jpg"
+        "web130": "https://offer-images.api.edeka/d690ad58-a831-421c-9de9-accccece0464_Maggi_Guten_Appetit_Rindfleisch_Suppe_85g_2876585001.jpg",
+        "web90": "https://offer-images.api.edeka/532328d2-6484-4dd8-a035-c426b1a31ab1_Maggi_Guten_Appetit_Rindfleisch_Suppe_85g_2876585001.jpg"
       },
       "titleApp": "Maggi Guten Appetit Suppe",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -2703,8 +2703,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/e2481372-32b7-486e-adc0-849faedfe872_Knorr_Asia_Snack_Becher_Huhn_65g_4417431006.jpg",
         "original": "https://offer-images.api.edeka/427de9db-4a58-4ee1-8228-b4e4682c5012_Knorr_Asia_Snack_Becher_Huhn_65g_4417431006.png",
-        "web90": "https://offer-images.api.edeka/fcd29699-2977-4603-9b06-ea9f9b15e31a_Knorr_Asia_Snack_Becher_Huhn_65g_4417431006.jpg",
-        "web130": "https://offer-images.api.edeka/2ebd64ce-52bb-4673-9505-6b6b3aa3ecf8_Knorr_Asia_Snack_Becher_Huhn_65g_4417431006.jpg"
+        "web130": "https://offer-images.api.edeka/2ebd64ce-52bb-4673-9505-6b6b3aa3ecf8_Knorr_Asia_Snack_Becher_Huhn_65g_4417431006.jpg",
+        "web90": "https://offer-images.api.edeka/fcd29699-2977-4603-9b06-ea9f9b15e31a_Knorr_Asia_Snack_Becher_Huhn_65g_4417431006.jpg"
       },
       "titleApp": "Knorr Snackbar",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -2733,8 +2733,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/ccb845e1-f4f1-4a3d-b920-444e4a7fec3d_Loewensenf_Mittelscharf_250ml_147952000.jpg",
         "original": "https://offer-images.api.edeka/dfef0697-8ce7-4107-b26c-213ec0f6f67f_Loewensenf_Mittelscharf_250ml_147952000.png",
-        "web90": "https://offer-images.api.edeka/c6486d01-1d2f-423d-840a-9868d4743c17_Loewensenf_Mittelscharf_250ml_147952000.jpg",
-        "web130": "https://offer-images.api.edeka/619e66a8-ac12-40cf-a476-a156cc87c59b_Loewensenf_Mittelscharf_250ml_147952000.jpg"
+        "web130": "https://offer-images.api.edeka/619e66a8-ac12-40cf-a476-a156cc87c59b_Loewensenf_Mittelscharf_250ml_147952000.jpg",
+        "web90": "https://offer-images.api.edeka/c6486d01-1d2f-423d-840a-9868d4743c17_Loewensenf_Mittelscharf_250ml_147952000.jpg"
       },
       "titleApp": "Löwensenf",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -2763,8 +2763,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/8567190a-c927-443b-820d-b0d20ef74604_Bio_EDEKA_Gemuesemais_330g_4130277000.jpg",
         "original": "https://offer-images.api.edeka/abd4cf3c-f9c5-4e42-acc7-e238e4266c2f_Bio_EDEKA_Gemuesemais_330g_4130277000.png",
-        "web90": "https://offer-images.api.edeka/1dd2956b-7741-44ba-b65f-4d1d15d9e58b_Bio_EDEKA_Gemuesemais_330g_4130277000.jpg",
-        "web130": "https://offer-images.api.edeka/0b458be9-1ede-4b88-ab0a-bcdb1af9f92e_Bio_EDEKA_Gemuesemais_330g_4130277000.jpg"
+        "web130": "https://offer-images.api.edeka/0b458be9-1ede-4b88-ab0a-bcdb1af9f92e_Bio_EDEKA_Gemuesemais_330g_4130277000.jpg",
+        "web90": "https://offer-images.api.edeka/1dd2956b-7741-44ba-b65f-4d1d15d9e58b_Bio_EDEKA_Gemuesemais_330g_4130277000.jpg"
       },
       "titleApp": "EDEKA Bio - Gemüsemais",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -2835,8 +2835,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/855e214c-ba93-40da-9c8c-3af4417cfe1b_012454327E_3F.jpg",
         "original": "https://offer-images.api.edeka/0727c736-3587-406c-a7a8-5bd504f12286_012454327E_3F.png",
-        "web130": "https://offer-images.api.edeka/e476ffe1-0809-44ab-8981-fa138408862a_012454327E_3F.jpg",
-        "web90": "https://offer-images.api.edeka/fd3e6e47-ce03-4ee7-89b2-d51c43d4e1f1_012454327E_3F.jpg"
+        "web90": "https://offer-images.api.edeka/fd3e6e47-ce03-4ee7-89b2-d51c43d4e1f1_012454327E_3F.jpg",
+        "web130": "https://offer-images.api.edeka/e476ffe1-0809-44ab-8981-fa138408862a_012454327E_3F.jpg"
       },
       "titleApp": "Maggi Fix",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -2871,8 +2871,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/b37c01ba-bdf3-42dd-9ce9-315a0e1bdc48_Bens_Original_Express_Basmati_Reis_220g_Beutel_5841286000.jpg",
         "original": "https://offer-images.api.edeka/fd10f31b-b694-4b7c-987c-93f878c8b940_Bens_Original_Express_Basmati_Reis_220g_Beutel_5841286000.png",
-        "web130": "https://offer-images.api.edeka/735be6db-bdc7-4d5e-962a-cfbc47e76bde_Bens_Original_Express_Basmati_Reis_220g_Beutel_5841286000.jpg",
-        "web90": "https://offer-images.api.edeka/8201881c-4673-4c65-8fe9-9c5e2a2cba2b_Bens_Original_Express_Basmati_Reis_220g_Beutel_5841286000.jpg"
+        "web90": "https://offer-images.api.edeka/8201881c-4673-4c65-8fe9-9c5e2a2cba2b_Bens_Original_Express_Basmati_Reis_220g_Beutel_5841286000.jpg",
+        "web130": "https://offer-images.api.edeka/735be6db-bdc7-4d5e-962a-cfbc47e76bde_Bens_Original_Express_Basmati_Reis_220g_Beutel_5841286000.jpg"
       },
       "titleApp": "Ben’s Original Express Reis",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -2931,8 +2931,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/f6d1a7a3-30cf-4a5a-badd-eb55ea098ec2_Oro_di_Parma_Pesto_Verde_135g_3644840003.jpg",
         "original": "https://offer-images.api.edeka/c54f116f-8747-4172-9316-ddcb1be156f9_Oro_di_Parma_Pesto_Verde_135g_3644840003.png",
-        "web130": "https://offer-images.api.edeka/babd568c-19b0-474f-92cc-a7a59947ed37_Oro_di_Parma_Pesto_Verde_135g_3644840003.jpg",
-        "web90": "https://offer-images.api.edeka/cff6862f-8a5b-47d5-9588-503de7954726_Oro_di_Parma_Pesto_Verde_135g_3644840003.jpg"
+        "web90": "https://offer-images.api.edeka/cff6862f-8a5b-47d5-9588-503de7954726_Oro_di_Parma_Pesto_Verde_135g_3644840003.jpg",
+        "web130": "https://offer-images.api.edeka/babd568c-19b0-474f-92cc-a7a59947ed37_Oro_di_Parma_Pesto_Verde_135g_3644840003.jpg"
       },
       "titleApp": "Oro di Parma Pesto Verde",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -2997,8 +2997,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/3a8a0164-2edf-4731-b0ff-601afaeff5aa_Kuehne_Apfelrotkohl_680g_650g_145382001.jpg",
         "original": "https://offer-images.api.edeka/3203fe15-3b5e-4cdd-aab5-1ace9e0b79ed_Kuehne_Apfelrotkohl_680g_650g_145382001.png",
-        "web90": "https://offer-images.api.edeka/c3575075-e746-4b9b-8292-c948564f9a09_Kuehne_Apfelrotkohl_680g_650g_145382001.jpg",
-        "web130": "https://offer-images.api.edeka/cfee8289-fd2c-41a9-8be4-3880ecb89886_Kuehne_Apfelrotkohl_680g_650g_145382001.jpg"
+        "web130": "https://offer-images.api.edeka/cfee8289-fd2c-41a9-8be4-3880ecb89886_Kuehne_Apfelrotkohl_680g_650g_145382001.jpg",
+        "web90": "https://offer-images.api.edeka/c3575075-e746-4b9b-8292-c948564f9a09_Kuehne_Apfelrotkohl_680g_650g_145382001.jpg"
       },
       "titleApp": "Kühne Rotkohl",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -3033,8 +3033,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/67417268-2479-4874-8b77-58c38f8caa3f_Tassimo_Caffe_Crema_Classico_16St_112g.jpg",
         "original": "https://offer-images.api.edeka/c268937b-61d7-4cf2-a347-5567e199d557_Tassimo_Caffe_Crema_Classico_16St_112g.png",
-        "web130": "https://offer-images.api.edeka/8a6fbd75-3290-4b6c-963c-3fe3af603163_Tassimo_Caffe_Crema_Classico_16St_112g.jpg",
-        "web90": "https://offer-images.api.edeka/aa6766ee-d0a7-4564-9267-506adebb86bb_Tassimo_Caffe_Crema_Classico_16St_112g.jpg"
+        "web90": "https://offer-images.api.edeka/aa6766ee-d0a7-4564-9267-506adebb86bb_Tassimo_Caffe_Crema_Classico_16St_112g.jpg",
+        "web130": "https://offer-images.api.edeka/8a6fbd75-3290-4b6c-963c-3fe3af603163_Tassimo_Caffe_Crema_Classico_16St_112g.jpg"
       },
       "titleApp": "Jacobs Tassimo",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -3063,8 +3063,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/9442dd48-0a01-4909-a147-a8c82de58204_Langnese_Flotte_Biene_Wildblueten_Honig_500g_129521002.jpg",
         "original": "https://offer-images.api.edeka/0066cd6c-6dd9-4eba-9c2a-4b33dc5fc037_Langnese_Flotte_Biene_Wildblueten_Honig_500g_129521002.png",
-        "web130": "https://offer-images.api.edeka/8a66c964-c21b-4407-ade5-ef1883ecfdff_Langnese_Flotte_Biene_Wildblueten_Honig_500g_129521002.jpg",
-        "web90": "https://offer-images.api.edeka/f1607b72-8ea9-4cd5-b189-acdfca800115_Langnese_Flotte_Biene_Wildblueten_Honig_500g_129521002.jpg"
+        "web90": "https://offer-images.api.edeka/f1607b72-8ea9-4cd5-b189-acdfca800115_Langnese_Flotte_Biene_Wildblueten_Honig_500g_129521002.jpg",
+        "web130": "https://offer-images.api.edeka/8a66c964-c21b-4407-ade5-ef1883ecfdff_Langnese_Flotte_Biene_Wildblueten_Honig_500g_129521002.jpg"
       },
       "titleApp": "Langnese Flotte Biene Honig",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -3159,8 +3159,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/4c925803-be67-4d4b-8210-22a2aa9c56e4_Wasa_Delicate_Thin_Crackers_Sea_Salt_180g_2328976009.jpg",
         "original": "https://offer-images.api.edeka/d6da5630-5cea-4d80-bce8-97598797dcef_Wasa_Delicate_Thin_Crackers_Sea_Salt_180g_2328976009.png",
-        "web130": "https://offer-images.api.edeka/1b6043f4-a626-4d38-aa1b-3c0d9c66241e_Wasa_Delicate_Thin_Crackers_Sea_Salt_180g_2328976009.jpg",
-        "web90": "https://offer-images.api.edeka/28d5d7e3-ca95-4a8c-a599-4766941c66f1_Wasa_Delicate_Thin_Crackers_Sea_Salt_180g_2328976009.jpg"
+        "web90": "https://offer-images.api.edeka/28d5d7e3-ca95-4a8c-a599-4766941c66f1_Wasa_Delicate_Thin_Crackers_Sea_Salt_180g_2328976009.jpg",
+        "web130": "https://offer-images.api.edeka/1b6043f4-a626-4d38-aa1b-3c0d9c66241e_Wasa_Delicate_Thin_Crackers_Sea_Salt_180g_2328976009.jpg"
       },
       "titleApp": "Wasa Tasty Snacks oder Sandwich",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -3261,8 +3261,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/fc915455-2f1c-4baf-b56a-496771841ace_Merci_Finest_Selection_Grosse_Vielfalt_250g.jpg",
         "original": "https://offer-images.api.edeka/ee7e5576-0418-4e8c-b49b-dc365de9e203_Merci_Finest_Selection_Grosse_Vielfalt_250g.png",
-        "web130": "https://offer-images.api.edeka/ea14b0e1-39f3-4778-89b0-d4ec986a1ca7_Merci_Finest_Selection_Grosse_Vielfalt_250g.jpg",
-        "web90": "https://offer-images.api.edeka/3a3a3875-1b8b-4774-a581-bc121ea0e638_Merci_Finest_Selection_Grosse_Vielfalt_250g.jpg"
+        "web90": "https://offer-images.api.edeka/3a3a3875-1b8b-4774-a581-bc121ea0e638_Merci_Finest_Selection_Grosse_Vielfalt_250g.jpg",
+        "web130": "https://offer-images.api.edeka/ea14b0e1-39f3-4778-89b0-d4ec986a1ca7_Merci_Finest_Selection_Grosse_Vielfalt_250g.jpg"
       },
       "titleApp": "merci Finest Selection",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -3291,8 +3291,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/f0e1b2aa-8dd5-4442-ac1c-88ef2f2d58d6_Milka_Nussini_157_5g_68395.jpg",
         "original": "https://offer-images.api.edeka/c2ab0760-c1d2-4453-9788-1e378826772c_Milka_Nussini_157_5g_68395.png",
-        "web90": "https://offer-images.api.edeka/041f6fc1-4d47-4710-b2a0-0c8602622d13_Milka_Nussini_157_5g_68395.jpg",
-        "web130": "https://offer-images.api.edeka/c47f311f-4ab8-4156-8d64-78bcbb8f9c87_Milka_Nussini_157_5g_68395.jpg"
+        "web130": "https://offer-images.api.edeka/c47f311f-4ab8-4156-8d64-78bcbb8f9c87_Milka_Nussini_157_5g_68395.jpg",
+        "web90": "https://offer-images.api.edeka/041f6fc1-4d47-4710-b2a0-0c8602622d13_Milka_Nussini_157_5g_68395.jpg"
       },
       "titleApp": "Milka Nussini, Cadbury Wunderbar oder Cadbury Picnic",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -3321,8 +3321,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/67723a6c-adcd-4a39-91d8-38c5431575ff_Trumpf_Edle_Tropfen_in_Nuss_Obstbrand_250g_120994009.jpg",
         "original": "https://offer-images.api.edeka/5a53146a-8215-4c0c-9c9c-3e089c244cf1_Trumpf_Edle_Tropfen_in_Nuss_Obstbrand_250g_120994009.png",
-        "web130": "https://offer-images.api.edeka/d893a316-06e4-453f-a600-174bc66852b7_Trumpf_Edle_Tropfen_in_Nuss_Obstbrand_250g_120994009.jpg",
-        "web90": "https://offer-images.api.edeka/c1474a24-f894-417b-982c-c24940406c0e_Trumpf_Edle_Tropfen_in_Nuss_Obstbrand_250g_120994009.jpg"
+        "web90": "https://offer-images.api.edeka/c1474a24-f894-417b-982c-c24940406c0e_Trumpf_Edle_Tropfen_in_Nuss_Obstbrand_250g_120994009.jpg",
+        "web130": "https://offer-images.api.edeka/d893a316-06e4-453f-a600-174bc66852b7_Trumpf_Edle_Tropfen_in_Nuss_Obstbrand_250g_120994009.jpg"
       },
       "titleApp": "Trumpf Edle Tropfen in Nuss",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -3459,8 +3459,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/f8f4df48-5c64-4ec4-9080-7e66a645e0cf_Milka_Pralines_Alles_Gute_110g_3908054001.jpg",
         "original": "https://offer-images.api.edeka/12a064ca-1981-4173-856f-560f259542ce_Milka_Pralines_Alles_Gute_110g_3908054001.png",
-        "web90": "https://offer-images.api.edeka/e9a392c4-8bdb-4aa7-b575-3a0a6f26a140_Milka_Pralines_Alles_Gute_110g_3908054001.jpg",
-        "web130": "https://offer-images.api.edeka/7358bd33-7e2b-47a2-b95d-be7acc650872_Milka_Pralines_Alles_Gute_110g_3908054001.jpg"
+        "web130": "https://offer-images.api.edeka/7358bd33-7e2b-47a2-b95d-be7acc650872_Milka_Pralines_Alles_Gute_110g_3908054001.jpg",
+        "web90": "https://offer-images.api.edeka/e9a392c4-8bdb-4aa7-b575-3a0a6f26a140_Milka_Pralines_Alles_Gute_110g_3908054001.jpg"
       },
       "titleApp": "Milka Pralinés oder Hauchzarte Herzen",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -3657,8 +3657,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/da9b4ebb-9207-4e0e-b65b-1f923f09ae20_Milram_Burlander_nussig_30Prz_ca_3kg_223370007.jpg",
         "original": "https://offer-images.api.edeka/0361daa6-20a3-4bfc-bfe6-73257099dc4f_Milram_Burlander_nussig_30Prz_ca_3kg_223370007.png",
-        "web90": "https://offer-images.api.edeka/a40498c9-2f59-46d9-a3be-04d627d8a101_Milram_Burlander_nussig_30Prz_ca_3kg_223370007.jpg",
-        "web130": "https://offer-images.api.edeka/4891d860-3426-4fbb-a9a1-83630a187ba9_Milram_Burlander_nussig_30Prz_ca_3kg_223370007.jpg"
+        "web130": "https://offer-images.api.edeka/4891d860-3426-4fbb-a9a1-83630a187ba9_Milram_Burlander_nussig_30Prz_ca_3kg_223370007.jpg",
+        "web90": "https://offer-images.api.edeka/a40498c9-2f59-46d9-a3be-04d627d8a101_Milram_Burlander_nussig_30Prz_ca_3kg_223370007.jpg"
       },
       "titleApp": "Milram Burlander oder Sylter",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -3687,8 +3687,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/6f6751ee-3909-41a0-b577-0cd5c8bb6b09_Appenzeller_3b_PL.jpg",
         "original": "https://offer-images.api.edeka/e592a43d-2bce-49c3-9bdc-f8447cc5b520_Appenzeller_3b_PL.png",
-        "web90": "https://offer-images.api.edeka/243c3060-5fab-4476-9c18-cd4d3d662ab8_Appenzeller_3b_PL.jpg",
-        "web130": "https://offer-images.api.edeka/7f0c19ae-16ef-41da-96dd-72f32ae7c482_Appenzeller_3b_PL.jpg"
+        "web130": "https://offer-images.api.edeka/7f0c19ae-16ef-41da-96dd-72f32ae7c482_Appenzeller_3b_PL.jpg",
+        "web90": "https://offer-images.api.edeka/243c3060-5fab-4476-9c18-cd4d3d662ab8_Appenzeller_3b_PL.jpg"
       },
       "titleApp": "Switzerland Appenzeller",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -3717,8 +3717,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/f0146ba2-5af3-4f1c-aac7-7221df76e089_Bauer_Butterkaese_45_Prz_ca_2_5kg_4118690009.jpg",
         "original": "https://offer-images.api.edeka/32a5d16c-3982-4072-9f6d-6243a551b781_Bauer_Butterkaese_45_Prz_ca_2_5kg_4118690009.png",
-        "web130": "https://offer-images.api.edeka/4714c633-6775-4d76-8443-c0c16868600d_Bauer_Butterkaese_45_Prz_ca_2_5kg_4118690009.jpg",
-        "web90": "https://offer-images.api.edeka/d21c432f-cdd6-4960-9b3f-9eb537366b55_Bauer_Butterkaese_45_Prz_ca_2_5kg_4118690009.jpg"
+        "web90": "https://offer-images.api.edeka/d21c432f-cdd6-4960-9b3f-9eb537366b55_Bauer_Butterkaese_45_Prz_ca_2_5kg_4118690009.jpg",
+        "web130": "https://offer-images.api.edeka/4714c633-6775-4d76-8443-c0c16868600d_Bauer_Butterkaese_45_Prz_ca_2_5kg_4118690009.jpg"
       },
       "titleApp": "Bauer Butterkäse",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -3777,8 +3777,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/f4105a20-bf68-4819-93a9-5b91dfc15f12_Rochebaron_m_Blauschimmel_55Prz.jpg",
         "original": "https://offer-images.api.edeka/3497a031-c13b-4a59-af28-cec05a9e4252_Rochebaron_m_Blauschimmel_55Prz.png",
-        "web130": "https://offer-images.api.edeka/7c2cc298-e33c-44e9-8f14-da9da2dc0dba_Rochebaron_m_Blauschimmel_55Prz.jpg",
-        "web90": "https://offer-images.api.edeka/6e396851-b775-448a-b39c-db3b6e0c161a_Rochebaron_m_Blauschimmel_55Prz.jpg"
+        "web90": "https://offer-images.api.edeka/6e396851-b775-448a-b39c-db3b6e0c161a_Rochebaron_m_Blauschimmel_55Prz.jpg",
+        "web130": "https://offer-images.api.edeka/7c2cc298-e33c-44e9-8f14-da9da2dc0dba_Rochebaron_m_Blauschimmel_55Prz.jpg"
       },
       "titleApp": "Rochebaron oder Peyrigoux",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -3807,8 +3807,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/5645818e-57b3-4eaa-8b20-725198d38cb6_Gwitterchaes_schweizer_Hartkaese_56Prz_Laib.jpg",
         "original": "https://offer-images.api.edeka/7c0e40a4-a385-456e-835b-832552cacd88_Gwitterchaes_schweizer_Hartkaese_56Prz_Laib.png",
-        "web90": "https://offer-images.api.edeka/f51a56d6-1ea3-464f-bd69-80411d52d5fd_Gwitterchaes_schweizer_Hartkaese_56Prz_Laib.jpg",
-        "web130": "https://offer-images.api.edeka/4de42233-bb8e-4ab5-b160-87654f30f267_Gwitterchaes_schweizer_Hartkaese_56Prz_Laib.jpg"
+        "web130": "https://offer-images.api.edeka/4de42233-bb8e-4ab5-b160-87654f30f267_Gwitterchaes_schweizer_Hartkaese_56Prz_Laib.jpg",
+        "web90": "https://offer-images.api.edeka/f51a56d6-1ea3-464f-bd69-80411d52d5fd_Gwitterchaes_schweizer_Hartkaese_56Prz_Laib.jpg"
       },
       "titleApp": "Gwitterchäs oder Potzblitz",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -3837,8 +3837,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/6cb88c50-2d16-499b-96ce-73ae611f5600_Der_Freche_Maxx_58Prz_Laib_53295.jpg",
         "original": "https://offer-images.api.edeka/bacb2332-97a8-4a3d-a4f2-44ee292064ac_Der_Freche_Maxx_58Prz_Laib_53295.png",
-        "web130": "https://offer-images.api.edeka/5733f867-70ec-498a-86d2-76ffeff817f7_Der_Freche_Maxx_58Prz_Laib_53295.jpg",
-        "web90": "https://offer-images.api.edeka/fc8617c2-1714-479e-8dad-23f3e42c7c48_Der_Freche_Maxx_58Prz_Laib_53295.jpg"
+        "web90": "https://offer-images.api.edeka/fc8617c2-1714-479e-8dad-23f3e42c7c48_Der_Freche_Maxx_58Prz_Laib_53295.jpg",
+        "web130": "https://offer-images.api.edeka/5733f867-70ec-498a-86d2-76ffeff817f7_Der_Freche_Maxx_58Prz_Laib_53295.jpg"
       },
       "titleApp": "Der freche Maxx",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -3897,8 +3897,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/55151cb8-4a07-4cf8-a815-52ad32cf148f_Butaris_Butterschmalz_250g.jpg",
         "original": "https://offer-images.api.edeka/ecfb60ca-a9dc-4136-a3d9-18abbc068a50_Butaris_Butterschmalz_250g.png",
-        "web90": "https://offer-images.api.edeka/330c40e3-dcac-42ec-bd76-09b77f9321f2_Butaris_Butterschmalz_250g.jpg",
-        "web130": "https://offer-images.api.edeka/c8edb0f5-eb07-4732-a20c-ec00b662fb1a_Butaris_Butterschmalz_250g.jpg"
+        "web130": "https://offer-images.api.edeka/c8edb0f5-eb07-4732-a20c-ec00b662fb1a_Butaris_Butterschmalz_250g.jpg",
+        "web90": "https://offer-images.api.edeka/330c40e3-dcac-42ec-bd76-09b77f9321f2_Butaris_Butterschmalz_250g.jpg"
       },
       "titleApp": "Butaris Butterschmalz",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -3927,8 +3927,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/546ea13e-f15d-4b92-8540-463a93e7e305_BerchtesgadenerLand_Topfen_250g_15897.jpg",
         "original": "https://offer-images.api.edeka/75867a56-065e-493e-9abb-716a61185070_BerchtesgadenerLand_Topfen_250g_15897.png",
-        "web130": "https://offer-images.api.edeka/b5cf2f6e-7410-45b6-b0d3-bf9fa80d7c84_BerchtesgadenerLand_Topfen_250g_15897.jpg",
-        "web90": "https://offer-images.api.edeka/4d93e7eb-2b9d-4519-bfcd-1fc4c68a5646_BerchtesgadenerLand_Topfen_250g_15897.jpg"
+        "web90": "https://offer-images.api.edeka/4d93e7eb-2b9d-4519-bfcd-1fc4c68a5646_BerchtesgadenerLand_Topfen_250g_15897.jpg",
+        "web130": "https://offer-images.api.edeka/b5cf2f6e-7410-45b6-b0d3-bf9fa80d7c84_BerchtesgadenerLand_Topfen_250g_15897.jpg"
       },
       "titleApp": "Berchtesgadener Land Topfen",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -3957,8 +3957,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/651e3b80-a640-4ec6-8500-a3f78db6cd15_Alpro_Barista_Haferdrink_1l_4040854009.jpg",
         "original": "https://offer-images.api.edeka/ba1df817-f037-4c1e-a2a2-fb2c17a4fec5_Alpro_Barista_Haferdrink_1l_4040854009.png",
-        "web130": "https://offer-images.api.edeka/b3568afa-98a7-49fe-ad58-527f6539feef_Alpro_Barista_Haferdrink_1l_4040854009.jpg",
-        "web90": "https://offer-images.api.edeka/5b6af139-2483-47ca-94bf-24bf23264f2d_Alpro_Barista_Haferdrink_1l_4040854009.jpg"
+        "web90": "https://offer-images.api.edeka/5b6af139-2483-47ca-94bf-24bf23264f2d_Alpro_Barista_Haferdrink_1l_4040854009.jpg",
+        "web130": "https://offer-images.api.edeka/b3568afa-98a7-49fe-ad58-527f6539feef_Alpro_Barista_Haferdrink_1l_4040854009.jpg"
       },
       "titleApp": "alpro Hafer oder Soya Drink",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -4107,8 +4107,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/674c1936-a932-4f5a-bd20-dfcb042b457a_Moevenpick_Feinjoghurt_Erdbeere_150g_14343.jpg",
         "original": "https://offer-images.api.edeka/58705aa8-8da1-4df1-8cdf-73dcd82d8b4b_Moevenpick_Feinjoghurt_Erdbeere_150g_14343.png",
-        "web130": "https://offer-images.api.edeka/de2d3029-333d-4c85-a99a-8d16fa92ac0b_Moevenpick_Feinjoghurt_Erdbeere_150g_14343.jpg",
-        "web90": "https://offer-images.api.edeka/6b4caf53-cdd6-4b33-9d46-0b0595c25035_Moevenpick_Feinjoghurt_Erdbeere_150g_14343.jpg"
+        "web90": "https://offer-images.api.edeka/6b4caf53-cdd6-4b33-9d46-0b0595c25035_Moevenpick_Feinjoghurt_Erdbeere_150g_14343.jpg",
+        "web130": "https://offer-images.api.edeka/de2d3029-333d-4c85-a99a-8d16fa92ac0b_Moevenpick_Feinjoghurt_Erdbeere_150g_14343.jpg"
       },
       "titleApp": "Mövenpick Feinjoghurt oder Pudding Intense",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -4173,8 +4173,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/f0de9a91-f1c0-4426-a224-1c0c1bd0401b_Landliebe_Haltbare_Landmilch_1_5_1l_6009312005.jpg",
         "original": "https://offer-images.api.edeka/da0f3554-eb14-4a04-9aa9-a4cc7074f12f_Landliebe_Haltbare_Landmilch_1_5_1l_6009312005.png",
-        "web90": "https://offer-images.api.edeka/d9c11ab2-613b-4d41-a53d-5832d3220da3_Landliebe_Haltbare_Landmilch_1_5_1l_6009312005.jpg",
-        "web130": "https://offer-images.api.edeka/f2c1cb10-3fac-4b05-b301-aeee7f9c86ce_Landliebe_Haltbare_Landmilch_1_5_1l_6009312005.jpg"
+        "web130": "https://offer-images.api.edeka/f2c1cb10-3fac-4b05-b301-aeee7f9c86ce_Landliebe_Haltbare_Landmilch_1_5_1l_6009312005.jpg",
+        "web90": "https://offer-images.api.edeka/d9c11ab2-613b-4d41-a53d-5832d3220da3_Landliebe_Haltbare_Landmilch_1_5_1l_6009312005.jpg"
       },
       "titleApp": "Landliebe haltbare Landmilch",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -4329,8 +4329,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/4bcc7188-9573-4b0a-8566-c2d656d39e5b_Aepfel_Sorte_Boskoop_22720790.jpg",
         "original": "https://offer-images.api.edeka/d8dd7de1-a6d9-451b-aa49-99395ce0796c_Aepfel_Sorte_Boskoop_22720790.png",
-        "web90": "https://offer-images.api.edeka/1e6e6da4-e6ce-4fd4-88a3-abc23df7d549_Aepfel_Sorte_Boskoop_22720790.jpg",
-        "web130": "https://offer-images.api.edeka/7765cfd8-ec83-4a80-8785-501918958b49_Aepfel_Sorte_Boskoop_22720790.jpg"
+        "web130": "https://offer-images.api.edeka/7765cfd8-ec83-4a80-8785-501918958b49_Aepfel_Sorte_Boskoop_22720790.jpg",
+        "web90": "https://offer-images.api.edeka/1e6e6da4-e6ce-4fd4-88a3-abc23df7d549_Aepfel_Sorte_Boskoop_22720790.jpg"
       },
       "titleApp": "Tafeläpfel",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -4425,8 +4425,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/08abab9f-c1fb-442f-8b7e-952ed3be1e2a_Porree_2_PL.jpg",
         "original": "https://offer-images.api.edeka/42ce0738-03b1-4ee5-a7b8-ad9b20c002dd_Porree_2_PL.png",
-        "web130": "https://offer-images.api.edeka/37a7a879-1d07-4982-9915-8622b1ff84e3_Porree_2_PL.jpg",
-        "web90": "https://offer-images.api.edeka/161576fb-5883-4ab4-95de-13528330d6cd_Porree_2_PL.jpg"
+        "web90": "https://offer-images.api.edeka/161576fb-5883-4ab4-95de-13528330d6cd_Porree_2_PL.jpg",
+        "web130": "https://offer-images.api.edeka/37a7a879-1d07-4982-9915-8622b1ff84e3_Porree_2_PL.jpg"
       },
       "titleApp": "Deutschland - meinLand Bio - Bio-Porree",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -4485,8 +4485,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/942726f6-7fc1-4fa4-a62b-67b1f77ce651_Spargel_gruen_F_8315292.jpg",
         "original": "https://offer-images.api.edeka/3ed179e9-47d8-484a-9940-004b33b35e91_Spargel_gruen_F_8315292.png",
-        "web90": "https://offer-images.api.edeka/349607c2-2d1e-4915-9f44-39f3299559a9_Spargel_gruen_F_8315292.jpg",
-        "web130": "https://offer-images.api.edeka/58837274-7f04-411c-ad18-b04942a39800_Spargel_gruen_F_8315292.jpg"
+        "web130": "https://offer-images.api.edeka/58837274-7f04-411c-ad18-b04942a39800_Spargel_gruen_F_8315292.jpg",
+        "web90": "https://offer-images.api.edeka/349607c2-2d1e-4915-9f44-39f3299559a9_Spargel_gruen_F_8315292.jpg"
       },
       "titleApp": "Mexiko - Spargel",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -4515,8 +4515,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/2324db68-9824-4c86-a479-d5e74d1b999f_4311527113712.jpg",
         "original": "https://offer-images.api.edeka/ba908d49-ca23-48dc-a3a8-58edd306d186_4311527113712.png",
-        "web130": "https://offer-images.api.edeka/cce07032-c26c-46ff-891d-595f8519ed01_4311527113712.jpg",
-        "web90": "https://offer-images.api.edeka/c8a35d1f-6f94-4efe-8a1b-71e139ce7375_4311527113712.jpg"
+        "web90": "https://offer-images.api.edeka/c8a35d1f-6f94-4efe-8a1b-71e139ce7375_4311527113712.jpg",
+        "web130": "https://offer-images.api.edeka/cce07032-c26c-46ff-891d-595f8519ed01_4311527113712.jpg"
       },
       "titleApp": "HoneyCrunch - Tafeläpfel",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -4665,8 +4665,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/a3ff95e6-905a-477e-a350-9372d8aa3e6d_Lauchzwiebeln_1b_PL.jpg",
         "original": "https://offer-images.api.edeka/7b958e06-f27d-4dcb-b197-c2cb8a20b2e6_Lauchzwiebeln_1b_PL.png",
-        "web90": "https://offer-images.api.edeka/b3b4fb24-d9f1-45c3-bdf0-b523397dec76_Lauchzwiebeln_1b_PL.jpg",
-        "web130": "https://offer-images.api.edeka/62afcfb6-c3f4-4520-988f-96e70f262886_Lauchzwiebeln_1b_PL.jpg"
+        "web130": "https://offer-images.api.edeka/62afcfb6-c3f4-4520-988f-96e70f262886_Lauchzwiebeln_1b_PL.jpg",
+        "web90": "https://offer-images.api.edeka/b3b4fb24-d9f1-45c3-bdf0-b523397dec76_Lauchzwiebeln_1b_PL.jpg"
       },
       "titleApp": "Ägypten - Lauchzwiebeln",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -4695,8 +4695,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/d60618b7-3688-43b6-8fc7-cee816a53458_Ackergold_Kartoffeln_1_PL.jpg",
         "original": "https://offer-images.api.edeka/e747294c-9213-4517-9708-4805e3394401_Ackergold_Kartoffeln_1_PL.png",
-        "web130": "https://offer-images.api.edeka/1af0f726-865f-41a2-99db-82184a3824f4_Ackergold_Kartoffeln_1_PL.jpg",
-        "web90": "https://offer-images.api.edeka/29144054-d018-4729-b9a4-ceb7f8022493_Ackergold_Kartoffeln_1_PL.jpg"
+        "web90": "https://offer-images.api.edeka/29144054-d018-4729-b9a4-ceb7f8022493_Ackergold_Kartoffeln_1_PL.jpg",
+        "web130": "https://offer-images.api.edeka/1af0f726-865f-41a2-99db-82184a3824f4_Ackergold_Kartoffeln_1_PL.jpg"
       },
       "titleApp": "Deutschland - Speisekartoffeln",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -4755,8 +4755,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/ad971ef7-3188-4f73-a52d-2da9b1312652_Pink_Lady_27880461_A.jpg",
         "original": "https://offer-images.api.edeka/7e911686-d669-45c0-ae29-0d87360eea18_Pink_Lady_27880461_A.png",
-        "web90": "https://offer-images.api.edeka/c8ed768b-371a-4172-bc63-17a7003242c7_Pink_Lady_27880461_A.jpg",
-        "web130": "https://offer-images.api.edeka/f7531848-4d4b-46ed-9809-e0d14b62d307_Pink_Lady_27880461_A.jpg"
+        "web130": "https://offer-images.api.edeka/f7531848-4d4b-46ed-9809-e0d14b62d307_Pink_Lady_27880461_A.jpg",
+        "web90": "https://offer-images.api.edeka/c8ed768b-371a-4172-bc63-17a7003242c7_Pink_Lady_27880461_A.jpg"
       },
       "titleApp": "Neuseeland - Tafeläpfel",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -4815,8 +4815,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/f94a785b-e582-4c87-a09b-c680922d8bf3_Orangen_1_PL.jpg",
         "original": "https://offer-images.api.edeka/3895a109-168e-4a29-ac8c-29085ebb2374_Orangen_1_PL.png",
-        "web90": "https://offer-images.api.edeka/e7a47352-2e66-45b3-8ddc-b607768accd7_Orangen_1_PL.jpg",
-        "web130": "https://offer-images.api.edeka/3013f3c5-64e3-40fd-ae7e-68819da5e84e_Orangen_1_PL.jpg"
+        "web130": "https://offer-images.api.edeka/3013f3c5-64e3-40fd-ae7e-68819da5e84e_Orangen_1_PL.jpg",
+        "web90": "https://offer-images.api.edeka/e7a47352-2e66-45b3-8ddc-b607768accd7_Orangen_1_PL.jpg"
       },
       "titleApp": "Spanien - Demeter - Bio-Orangen",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -4845,8 +4845,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/c2d6ea12-9d79-48f0-850f-6ce576f643e4_Sellerie_Knolle_F_32837742.jpg",
         "original": "https://offer-images.api.edeka/57ecb80c-62ed-4bb0-a692-9b3d0e73e16d_Sellerie_Knolle_F_32837742.png",
-        "web130": "https://offer-images.api.edeka/5eb5ff9b-807f-4722-b8b0-2a8e1ab433ea_Sellerie_Knolle_F_32837742.jpg",
-        "web90": "https://offer-images.api.edeka/3da40343-32aa-4797-a769-69258a6e9d3e_Sellerie_Knolle_F_32837742.jpg"
+        "web90": "https://offer-images.api.edeka/3da40343-32aa-4797-a769-69258a6e9d3e_Sellerie_Knolle_F_32837742.jpg",
+        "web130": "https://offer-images.api.edeka/5eb5ff9b-807f-4722-b8b0-2a8e1ab433ea_Sellerie_Knolle_F_32837742.jpg"
       },
       "titleApp": "Deutschland - meinLand - Knollensellerie",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -4911,8 +4911,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/e1c9e016-dbda-4a30-be90-7d688da9831a_Langnese_Cremissimo_Amarena_Kirsch_Eis_825ml_6134528003.jpg",
         "original": "https://offer-images.api.edeka/dbaa5920-1a42-44a1-be64-b5e9b35f3412_Langnese_Cremissimo_Amarena_Kirsch_Eis_825ml_6134528003.png",
-        "web90": "https://offer-images.api.edeka/acc37c7f-50b6-459e-846c-08503274d712_Langnese_Cremissimo_Amarena_Kirsch_Eis_825ml_6134528003.jpg",
-        "web130": "https://offer-images.api.edeka/c56b9fea-63b2-4971-ae9d-e0849d6c60c0_Langnese_Cremissimo_Amarena_Kirsch_Eis_825ml_6134528003.jpg"
+        "web130": "https://offer-images.api.edeka/c56b9fea-63b2-4971-ae9d-e0849d6c60c0_Langnese_Cremissimo_Amarena_Kirsch_Eis_825ml_6134528003.jpg",
+        "web90": "https://offer-images.api.edeka/acc37c7f-50b6-459e-846c-08503274d712_Langnese_Cremissimo_Amarena_Kirsch_Eis_825ml_6134528003.jpg"
       },
       "titleApp": "Langnese Cremissimo",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -5013,8 +5013,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/fa464f58-3d2d-4c96-8e9e-d3be5330e83e_MSC_Iglo_Fischstaebchen_300g_1524569008.jpg",
         "original": "https://offer-images.api.edeka/696e6262-8f5d-45f5-8768-b2a03456b616_MSC_Iglo_Fischstaebchen_300g_1524569008.png",
-        "web90": "https://offer-images.api.edeka/54d3eea0-eb53-4786-8c89-993eb1a3468d_MSC_Iglo_Fischstaebchen_300g_1524569008.jpg",
-        "web130": "https://offer-images.api.edeka/069c2b2a-9197-4e9c-9b2c-3bc2ae24811b_MSC_Iglo_Fischstaebchen_300g_1524569008.jpg"
+        "web130": "https://offer-images.api.edeka/069c2b2a-9197-4e9c-9b2c-3bc2ae24811b_MSC_Iglo_Fischstaebchen_300g_1524569008.jpg",
+        "web90": "https://offer-images.api.edeka/54d3eea0-eb53-4786-8c89-993eb1a3468d_MSC_Iglo_Fischstaebchen_300g_1524569008.jpg"
       },
       "titleApp": "iglo 10 Fischstäbchen",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -5043,8 +5043,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/64fde28b-6a43-44b0-9cb6-0a9df95b7b00_nutella_eis_750ml_8000500425183_frei.jpg",
         "original": "https://offer-images.api.edeka/2806100f-bbf9-467a-b989-2411505a5ca1_nutella_eis_750ml_8000500425183_frei.png",
-        "web90": "https://offer-images.api.edeka/0a6031b8-6e56-4d23-b8c3-b4a65bf77da2_nutella_eis_750ml_8000500425183_frei.jpg",
-        "web130": "https://offer-images.api.edeka/1044cd01-1ae3-4151-aba9-8a5cf69450ce_nutella_eis_750ml_8000500425183_frei.jpg"
+        "web130": "https://offer-images.api.edeka/1044cd01-1ae3-4151-aba9-8a5cf69450ce_nutella_eis_750ml_8000500425183_frei.jpg",
+        "web90": "https://offer-images.api.edeka/0a6031b8-6e56-4d23-b8c3-b4a65bf77da2_nutella_eis_750ml_8000500425183_frei.jpg"
       },
       "titleApp": "nutella Ice Cream",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
@@ -5103,8 +5103,8 @@
       "images": {
         "app": "https://offer-images.api.edeka/f9f6ae8d-208b-40d8-ad08-a05324f23eff_Perfect_Fit_Indoor_1plus_Huhn_750g_6059296009.jpg",
         "original": "https://offer-images.api.edeka/dcf33d1d-1f75-4148-a00b-e6a1f9138eb2_Perfect_Fit_Indoor_1plus_Huhn_750g_6059296009.png",
-        "web130": "https://offer-images.api.edeka/cec09ce3-db15-419f-9bf9-f06c0acef248_Perfect_Fit_Indoor_1plus_Huhn_750g_6059296009.jpg",
-        "web90": "https://offer-images.api.edeka/5a4fa338-b58d-42ed-ab00-744a9e0e430d_Perfect_Fit_Indoor_1plus_Huhn_750g_6059296009.jpg"
+        "web90": "https://offer-images.api.edeka/5a4fa338-b58d-42ed-ab00-744a9e0e430d_Perfect_Fit_Indoor_1plus_Huhn_750g_6059296009.jpg",
+        "web130": "https://offer-images.api.edeka/cec09ce3-db15-419f-9bf9-f06c0acef248_Perfect_Fit_Indoor_1plus_Huhn_750g_6059296009.jpg"
       },
       "titleApp": "Perfect Fit Trockenfutter",
       "additionalTextApp": "Dieser Artikel ist in den mit dieser Werbung gekennzeichneten Märkten erhältlich. Nur solange der Vorrat reicht. Für Schreibfehler übernehmen wir keine Haftung. EDEKA Rhein-Ruhr Stiftung & Co. KG, Chemnitzer Straße 24, 47441 Moers",
