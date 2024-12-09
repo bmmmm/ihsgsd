@@ -46,10 +46,16 @@ jobs:
           echo "folder=$FOLDER" >> $GITHUB_OUTPUT
           echo "file=$FOLDER/$FILE" >> $GITHUB_OUTPUT
 
+      - name: Generate folder-structure.json
+        id: generate-structure
+        run: |
+          # Find all JSON files in the data directory and generate folder-structure.json
+          find data -type f -name "*.json" | sort | jq -R -s -c 'split("\n") | map(select(length > 0))' > data/folder-structure.json
+
       - name: Commit and push data
         run: |
           git add data/
-          git commit -m "Add data for ${{ steps.structure.outputs.file }}"
+          git commit -m "Add data for ${{ steps.structure.outputs.file }} and update folder structure"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.ABUFS_AJUN13_TOKEN }}
