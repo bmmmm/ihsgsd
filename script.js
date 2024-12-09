@@ -1,3 +1,30 @@
+// Function to check API status
+async function checkApiStatus() {
+    const apiEndpoint = "https://www.edeka.de/api/auth-proxy/?path=api%2Foffers%3Flimit%3D999%26marketId%3D5625811";
+    const statusButton = document.getElementById('api-status-button');
+
+    try {
+        const response = await fetch(apiEndpoint, { method: 'HEAD' }); // Use HEAD to check connectivity
+        if (response.ok) {
+            updateButtonStatus('API is reachable', 'green');
+        } else {
+            updateButtonStatus('API not reachable', 'red');
+        }
+    } catch (error) {
+        updateButtonStatus('API not reachable', 'red');
+    }
+}
+
+// Update button text and color
+function updateButtonStatus(message, color) {
+    const statusButton = document.getElementById('api-status-button');
+    if (!statusButton) return;
+    statusButton.textContent = message;
+    statusButton.style.backgroundColor = color;
+    statusButton.style.color = 'white';
+    statusButton.disabled = true; // Prevent interaction
+}
+
 async function fetchOffers() {
     try {
         // Construct the path to the JSON file based on the current date
@@ -225,5 +252,9 @@ function getISOWeek(date) {
     return Math.floor(diff / (7 * 24 * 60 * 60 * 1000)) + 1; // Calculate the week number
 }
 
-// Fetch data on page load
-document.addEventListener('DOMContentLoaded', fetchOffers);
+
+// Automatically check API status and fetch offers on page load
+document.addEventListener('DOMContentLoaded', () => {
+    checkApiStatus();
+    fetchOffers();
+});
