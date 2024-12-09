@@ -1,0 +1,44 @@
+name: Fetch EDEKA Offers
+
+on:
+  schedule:
+    - cron: "0 0 * * 1" # Runs every Monday at midnight
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  fetch-and-store:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Fetch data from EDEKA API
+        id: fetch-data
+        run: |
+          API_URL="https://www.edeka.de/api/auth-proxy/?path=api%2Foffers%3Flimit%3D999%26marketId%3D5625811"
+          RESPONSE=$(curl -s "$API_URL")
+          echo "$RESPONSE" > data.json
+
+      - name: Determine folder and file structure
+        id: structure
+        run: |
+          CURRENT_DATE=$(date -u +"%Y-%m-%d")
+          YEAR=$(date -u +"%Y")
+          WEEK=$(date -u +"%V")
+          FOLDER="data/$YEAR/KW$WEEK"
+          FILE="$CURRENT_DATE.json"
+          mkdir -p "$FOLDER"
+          mv data.json "$FOLDER/$FILE"
+          echo "::set-output name=folder::$FOLDER"
+          echo "::set-output name=file::$FOLDER/$FILE"
+
+      - name: Commit and push data
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add data/
+          git commit -m "Add data for ${{ steps.structure.outputs.file }}"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.ABUFS_AJUN13_TOKEN }}
