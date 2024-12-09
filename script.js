@@ -32,11 +32,17 @@ async function initializePage() {
 
 // Fetch the folder structure (simulate with a static file or server-side API)
 async function fetchFolderStructure() {
-    const response = await fetch('/data/folder-structure.json'); // Example static structure file
-    if (!response.ok) {
-        throw new Error(`Failed to fetch folder structure: ${response.status}`);
+    try {
+        const response = await fetch('data/folder-structure.json');
+        if (!response.ok) {
+            throw new Error(`Failed to fetch folder structure: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching folder structure:", error);
+        alert("Fehler: Die Ordnerstruktur konnte nicht geladen werden.");
+        return [];
     }
-    return await response.json(); // Expected format: ["2024/KW01/2024-01-01.json", ...]
 }
 
 // Populate the dropdown with folder and file options
