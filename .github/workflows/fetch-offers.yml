@@ -48,7 +48,7 @@ jobs:
         id: generate-structure
         run: |
           # Find all JSON files excluding folder-structure.json
-          find data -type f -name "*.json" ! -name "folder-structure.json" | sort | jq -R -s -c 'split("\n") | map(select(length > 0))' > data/folder-structure.json
+          find data -type f -name "*.json" ! -name "folder-structure.json" | sed 's|^data/||' | sort | jq -R -s -c 'split("\n") | map(select(length > 0))' > data/folder-structure.json
 
       - name: Commit and push data
         run: |

@@ -58,11 +58,12 @@ function populateDropdown(dropdown, files) {
 
 // Fetch offers from the selected file and populate the table
 async function fetchOffers(filePath) {
+    const fullPath = `data/${filePath}`; // Prepend 'data/' to paths from folder-structure.json
     const tableBody = document.getElementById('offer-table');
     const offerInfo = document.getElementById('offer-info');
 
     try {
-        const response = await fetch(`/data/${filePath}`);
+        const response = await fetch(fullPath);
         if (!response.ok) {
             throw new Error(`Failed to fetch file: ${response.status}`);
         }
