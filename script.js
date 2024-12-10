@@ -299,7 +299,7 @@ function attachImageHoverPreview() {
 
     img.addEventListener("mouseover", () => {
       if (originalUrl) {
-        imagePreview.innerHTML = `<img src="${originalUrl}" alt="Vorschau" style="max-width: 200px; max-height: 200px;">`;
+        imagePreview.innerHTML = `<img src="${originalUrl}" alt="Vorschau" style="max-width: 350px; max-height: 350px;">`;
         imagePreview.style.display = "block";
       }
     });
