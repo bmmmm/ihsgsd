@@ -75,7 +75,7 @@ async function fetchOffers(filePath) {
 
       // Use web90 for the thumbnail and original for the hover image
       const web90Url = offer.images.web90 || "";
-      const originalUrl = offer.images.original || web90Url; // fallback if original not found
+      const originalUrl = offer.images.original || ""; // fallback if original not found
 
       row.innerHTML = `
                 <td>${offer.id}</td>
