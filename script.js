@@ -217,13 +217,30 @@ function copyVisibleProducts() {
 
   const jsonString = JSON.stringify(products, null, 2);
 
+  // Add LLM-friendly instructions and formatting
+  const promptString = `
+[LLM PROMPT START]
+Below is a JSON list of filtered products. Use this data to answer questions, generate summaries, or provide insights based on the product information.
+
+\`\`\`json
+${jsonString}
+\`\`\`
+
+Please follow the steps below in your response:
+1. Reference product data by 'id' or 'title'.
+2. If you need to provide reasoning, consider the context of 'category', 'price', and 'description'.
+3. Keep answers factual and based on the provided data.
+
+[LLM PROMPT END]
+`;
+
   navigator.clipboard
-    .writeText(jsonString)
+    .writeText(promptString)
     .then(() => {
-      alert("Sichtbare Produkte wurden als JSON kopiert!");
+      alert("Sichtbare Produkte wurden als strukturierte LLM-Prompt kopiert!");
     })
     .catch((err) => {
-      console.error("Fehler beim Kopieren der JSON-Daten:", err);
+      console.error("Fehler beim Kopieren der Daten:", err);
     });
 }
 
