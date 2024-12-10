@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EDEKA Angebote</title>
     <style>
         body {
@@ -11,37 +11,54 @@
             background-color: #121212; /* Dark background */
             color: #e0e0e0; /* Light text */
         }
+
         h1 {
             color: #ffffff;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
             background-color: #1e1e1e;
             color: #e0e0e0;
+            table-layout: fixed; /* Helps stabilize layout */
         }
+
         th, td {
             border: 1px solid #333;
             padding: 5px;
             text-align: left;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
+
+        tr {
+            height: 60px; /* Fixed row height */
+        }
+
         th {
             background-color: #2c2c2c;
             font-weight: bold;
             color: #ffffff;
         }
-        tr {
-            height: 60px; /* Fixed row height to stabilize layout */
+
+        #image-column-header,
+        .image-cell {
+            width: 70px;
         }
+
         .hidden {
             display: none;
         }
+
         img {
-            max-width: 60px;
-            max-height: 40px;
-            display: block; /* Prevents layout shift when images are hidden */
+            width: 60px;
+            height: 40px;
+            display: block; /* Prevent layout shift when hiding images */
         }
+
         .image-preview {
             position: fixed;
             top: 20px;
@@ -54,6 +71,7 @@
             max-width: 200px;
             max-height: 200px;
         }
+
         button, select, input {
             background-color: #333333;
             color: #e0e0e0;
@@ -65,14 +83,45 @@
             height: 40px; /* Fixed height to prevent CLS */
             min-width: 150px; /* Fixed width for consistency */
         }
+
         button:hover, select:hover, input:hover {
             background-color: #444;
         }
+
         select {
             height: auto;
         }
+
         input {
             padding: 6px;
+        }
+
+        /* Responsive adjustments for mobile */
+        @media (max-width: 600px) {
+            body {
+                font-size: 12px;
+            }
+
+            button, select, input {
+                min-width: auto;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            table, th, td {
+                font-size: 12px;
+            }
+
+            .image-preview {
+                width: 150px;
+                height: 150px;
+            }
+
+            /* Allow horizontal scroll for smaller screens */
+            table {
+                display: block;
+                overflow-x: auto;
+            }
         }
     </style>
 </head>
@@ -81,20 +130,18 @@
 
     <!-- Dropdown for selecting JSON file -->
     <label for="file-dropdown">Wählen Sie eine Datei:</label>
-    <select id="file-dropdown">
-        <!-- Dynamically populated file options -->
-    </select>
+    <select id="file-dropdown"></select>
 
     <p id="offer-info">Lade aktuelle Informationen...</p>
     <input id="search-input" type="text" placeholder="Suche in allen Zellen...">
-    <select id="category-filter" multiple>
-        <!-- Categories populated dynamically -->
-    </select>
+    <select id="category-filter" multiple></select>
     <button id="deselect-categories">Auswahl aufheben</button>
     <button id="hide-selected-categories">Ausgewählte Kategorien ausblenden</button>
     <button id="toggle-images">Bilder laden</button>
     <button id="copy-products">Produkte kopieren</button>
+
     <div id="image-preview" class="image-preview"></div>
+
     <table>
         <thead>
             <tr>
@@ -110,6 +157,7 @@
             <!-- Dynamische Inhalte werden hier eingefügt -->
         </tbody>
     </table>
+
     <script src="script.js"></script>
 </body>
 </html>

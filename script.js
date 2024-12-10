@@ -5,11 +5,9 @@ async function initializePage() {
     const copyProductsButton = document.getElementById('copy-products');
 
     try {
-        // Fetch the file and folder structure dynamically
         const files = await fetchFolderStructure();
         populateDropdown(dropdown, files);
 
-        // Add event listener to load selected file
         dropdown.addEventListener('change', () => {
             const selectedFile = dropdown.value;
             if (selectedFile) {
@@ -17,22 +15,19 @@ async function initializePage() {
             }
         });
 
-        // Auto-load the first file in the dropdown, if available
         if (files.length > 0) {
             dropdown.value = files[0];
-            fetchOffers(files[0]);
+            await fetchOffers(files[0]);
         }
 
-        // Attach copy button functionality
         copyProductsButton.addEventListener('click', copyVisibleProducts);
-        attachEventListeners();   // For deselect/hide categories if defined here
-        toggleImages();           // For loading/toggling images
+
+        attachEventListeners();
     } catch (error) {
         console.error("Error initializing page:", error);
     }
 }
 
-// Fetch the folder structure (simulate with a static file or server-side API)
 async function fetchFolderStructure() {
     try {
         const response = await fetch('data/folder-structure.json');
@@ -47,20 +42,18 @@ async function fetchFolderStructure() {
     }
 }
 
-// Populate the dropdown with folder and file options
 function populateDropdown(dropdown, files) {
-    dropdown.innerHTML = ""; // Clear existing options
+    dropdown.innerHTML = "";
     files.forEach(file => {
         const option = document.createElement('option');
         option.value = file;
-        option.textContent = file; // Display the full path
+        option.textContent = file;
         dropdown.appendChild(option);
     });
 }
 
-// Fetch offers from the selected file and populate the table
 async function fetchOffers(filePath) {
-    const fullPath = `data/${filePath}`; // Prepend 'data/' to paths from folder-structure.json
+    const fullPath = `data/${filePath}`;
     const tableBody = document.getElementById('offer-table');
     const offerInfo = document.getElementById('offer-info');
 
@@ -73,14 +66,12 @@ async function fetchOffers(filePath) {
         const data = await response.json();
         const { validFrom, validTill, totalCount, offers } = data;
 
-        // Update info section
         offerInfo.textContent = `${totalCount} Angebote vom ${validFrom} bis ${validTill}`;
 
-        // Populate the table
-        tableBody.innerHTML = ""; // Clear existing rows
+        tableBody.innerHTML = "";
         offers.forEach(offer => {
             const row = document.createElement('tr');
-            row.dataset.category = offer.category.name; // Add category for filtering
+            row.dataset.category = offer.category.name;
             row.innerHTML = `
                 <td>${offer.id}</td>
                 <td>${offer.title}</td>
@@ -92,88 +83,86 @@ async function fetchOffers(filePath) {
             tableBody.appendChild(row);
         });
 
-        populateCategoryDropdown(offers); // Populate the category filter
-        attachSearchFunctionality(); // Reattach search functionality after new data
+        populateCategoryDropdown(offers);
+        attachSearchFunctionality();
     } catch (error) {
         console.error("Error fetching offers:", error);
         offerInfo.textContent = "Fehler beim Laden der Angebote.";
-        tableBody.innerHTML = ""; // Clear the table on error
+        tableBody.innerHTML = "";
     }
+
+    // After offers are loaded and image cells exist, set up image toggling
+    toggleImages();
 }
 
-// Populate the category dropdown with counts and preselect specific categories
 function populateCategoryDropdown(offers) {
     const categoryFilter = document.getElementById('category-filter');
-    if (!categoryFilter) return; // Ensure the dropdown exists
+    if (!categoryFilter) return;
 
-    // Clear existing options
     categoryFilter.innerHTML = "";
 
-    // Count offers by category
     const categoryCounts = offers.reduce((counts, offer) => {
         counts[offer.category.name] = (counts[offer.category.name] || 0) + 1;
         return counts;
     }, {});
 
-    // Populate the dropdown
     Object.entries(categoryCounts).forEach(([category, count]) => {
         const option = document.createElement('option');
         option.value = category;
         option.textContent = `${category} (${count})`;
         if (category === "Fleisch & Wurst" || category === "Tiernahrung") {
-            option.selected = true; // Preselect specific categories
+            option.selected = true;
         }
         categoryFilter.appendChild(option);
     });
 }
 
-// Automatically hide selected categories
 function hideSelectedCategories() {
     const categoryFilter = document.getElementById('category-filter');
-    if (!categoryFilter) return; // Ensure the dropdown exists
+    if (!categoryFilter) return;
 
-    const selectedCategories = Array.from(categoryFilter.selectedOptions).map(option => option.value); // Get selected categories
-    const rows = document.querySelectorAll('#offer-table tr'); // Get all table rows
+    const selectedCategories = Array.from(categoryFilter.selectedOptions).map(o => o.value);
+    const rows = document.querySelectorAll('#offer-table tr');
 
     rows.forEach(row => {
         if (selectedCategories.includes(row.dataset.category)) {
-            row.classList.add('hidden'); // Hide rows for selected categories
+            row.classList.add('hidden');
         } else {
-            row.classList.remove('hidden'); // Show rows for non-selected categories
+            row.classList.remove('hidden');
         }
     });
 }
 
-// Deselect all categories
 function deselectAllCategories() {
     const categoryFilter = document.getElementById('category-filter');
     if (!categoryFilter) return;
 
     Array.from(categoryFilter.options).forEach(option => {
-        option.selected = false; // Deselect all options
+        option.selected = false;
     });
 
-    hideSelectedCategories(); // Show all rows
+    hideSelectedCategories(); 
 }
 
-// Attach event listeners for category selection
-function attachCategoryEventListeners() {
+function attachEventListeners() {
     const deselectCategoriesButton = document.getElementById('deselect-categories');
     const hideSelectedCategoriesButton = document.getElementById('hide-selected-categories');
 
     if (deselectCategoriesButton) {
         deselectCategoriesButton.addEventListener('click', deselectAllCategories);
+    } else {
+        console.warn("Deselect Categories button not found.");
     }
 
     if (hideSelectedCategoriesButton) {
         hideSelectedCategoriesButton.addEventListener('click', hideSelectedCategories);
+    } else {
+        console.warn("Hide Selected Categories button not found.");
     }
 }
 
-// Attach event listener for search functionality
 function attachSearchFunctionality() {
     const searchInput = document.getElementById('search-input');
-
     if (searchInput) {
         searchInput.addEventListener('input', () => {
             const searchTerm = searchInput.value.toLowerCase();
@@ -183,16 +172,15 @@ function attachSearchFunctionality() {
                 const cells = Array.from(row.querySelectorAll('td'));
                 const matches = cells.some(cell => cell.textContent.toLowerCase().includes(searchTerm));
                 if (matches) {
-                    row.classList.remove('hidden'); // Show matching rows
+                    row.classList.remove('hidden');
                 } else {
-                    row.classList.add('hidden'); // Hide non-matching rows
+                    row.classList.add('hidden');
                 }
             });
         });
     }
 }
 
-// Copy visible products to clipboard
 function copyVisibleProducts() {
     const rows = document.querySelectorAll('#offer-table tr:not(.hidden)');
     const products = [];
@@ -221,52 +209,37 @@ function copyVisibleProducts() {
             console.error('Fehler beim Kopieren der JSON-Daten:', err);
         });
 }
-// Toggle the visibility of images
+
 function toggleImages() {
     const toggleImagesButton = document.getElementById('toggle-images');
     const imageCells = document.querySelectorAll('.image-cell');
     const imageHeader = document.getElementById('image-column-header');
     let imagesLoaded = false;
 
-    if (!toggleImagesButton || !imageCells.length) return;
+    if (!toggleImagesButton || imageCells.length === 0 || !imageHeader) return;
 
-    toggleImagesButton.addEventListener('click', () => {
+    // Remove any existing listeners to prevent duplicates when re-calling toggleImages()
+    toggleImagesButton.replaceWith(toggleImagesButton.cloneNode(true));
+    const newToggleImagesButton = document.getElementById('toggle-images');
+
+    newToggleImagesButton.addEventListener('click', () => {
         if (!imagesLoaded) {
             // Load images for the first time
             imageCells.forEach(cell => {
                 const imgUrl = cell.getAttribute('data-image-url');
                 if (imgUrl) {
-                    cell.innerHTML = `<img src="${imgUrl}" alt="Produktbild" style="max-width: 60px; max-height: 40px;">`;
+                    cell.innerHTML = `<img src="${imgUrl}" alt="Produktbild">`;
                 }
                 cell.classList.remove('hidden');
             });
+            imageHeader.classList.remove('hidden');
             imagesLoaded = true;
-            toggleImagesButton.textContent = 'Bilder ausblenden';
+            newToggleImagesButton.textContent = 'Bilder ausblenden';
         } else {
             // Toggle visibility of the image column
             imageCells.forEach(cell => cell.classList.toggle('hidden'));
             imageHeader.classList.toggle('hidden');
-            toggleImagesButton.textContent = imageCells[0].classList.contains('hidden') ? 'Bilder einblenden' : 'Bilder ausblenden';
+            newToggleImagesButton.textContent = imageCells[0].classList.contains('hidden') ? 'Bilder laden' : 'Bilder ausblenden';
         }
     });
-}
-// Attach functionality for buttons and dropdowns
-function attachEventListeners() {
-    // Get buttons for deselecting and hiding categories
-    const deselectCategoriesButton = document.getElementById('deselect-categories');
-    const hideSelectedCategoriesButton = document.getElementById('hide-selected-categories');
-
-    // Attach event listener to "Deselect All Categories" button
-    if (deselectCategoriesButton) {
-        deselectCategoriesButton.addEventListener('click', deselectAllCategories);
-    } else {
-        console.warn("Deselect Categories button not found.");
-    }
-
-    // Attach event listener to "Hide Selected Categories" button
-    if (hideSelectedCategoriesButton) {
-        hideSelectedCategoriesButton.addEventListener('click', hideSelectedCategories);
-    } else {
-        console.warn("Hide Selected Categories button not found.");
-    }
 }
