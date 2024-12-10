@@ -245,84 +245,77 @@ Please follow the steps below in your response:
 }
 
 function toggleImages() {
-  const toggleImagesButton = document.getElementById("toggle-images");
-  const imageCells = document.querySelectorAll(".image-cell");
-  const imageHeader = document.getElementById("image-column-header");
-  let imagesLoaded = false;
-
-  if (!toggleImagesButton || imageCells.length === 0 || !imageHeader) return;
-
-  // Attach event listener to the button
-  toggleImagesButton.addEventListener("click", () => {
-    if (!imagesLoaded) {
-      // Load web90 images as thumbnails and display them
+    const toggleImagesButton = document.getElementById("toggle-images");
+    const imageCells = document.querySelectorAll(".image-cell");
+    const imageHeader = document.getElementById("image-column-header");
+  
+    if (!toggleImagesButton || imageCells.length === 0 || !imageHeader) return;
+  
+    toggleImagesButton.addEventListener("click", () => {
+      const isHidden = imageHeader.classList.contains("hidden");
+  
       imageCells.forEach((cell) => {
-        const imgUrl = cell.getAttribute("data-image-url");
-        if (imgUrl && !cell.querySelector("img")) {
-          // Only load if not already loaded
-          const img = document.createElement("img");
-          img.src = imgUrl;
-          img.alt = "Produktbild";
-          img.style.cursor = "zoom-in";
-          cell.appendChild(img);
+        if (isHidden) {
+          // Show images
+          const imgUrl = cell.getAttribute("data-image-url");
+          if (imgUrl && !cell.querySelector("img")) {
+            const img = document.createElement("img");
+            img.src = imgUrl;
+            img.alt = "Produktbild";
+            img.style.cursor = "zoom-in";
+            cell.appendChild(img);
+          }
+          cell.classList.remove("hidden");
+        } else {
+          // Hide images
+          if (cell.querySelector("img")) {
+            cell.querySelector("img").remove();
+          }
+          cell.classList.add("hidden");
         }
-        cell.classList.remove("hidden");
       });
-
-      imageHeader.classList.remove("hidden");
-      imagesLoaded = true;
-      toggleImagesButton.textContent = "Bilder ausblenden";
-
-      // Attach hover preview functionality
-      attachImageHoverPreview();
-    } else {
-      // Toggle visibility of the image column
-      const isHidden = imageCells[0].classList.contains("hidden");
-      imageCells.forEach((cell) => cell.classList.toggle("hidden"));
-      imageHeader.classList.toggle("hidden", isHidden);
-      toggleImagesButton.textContent = isHidden
-        ? "Bilder ausblenden"
-        : "Bilder laden";
-    }
-  });
-}
+  
+      imageHeader.classList.toggle("hidden", !isHidden);
+      toggleImagesButton.textContent = isHidden ? "Bilder ausblenden" : "Bilder laden";
+  
+      // Attach hover preview if images are shown
+      if (isHidden) attachImageHoverPreview();
+    });
+  }
 
 function attachImageHoverPreview() {
-  const imagePreview = document.getElementById("image-preview");
-  const images = document.querySelectorAll(".image-cell img");
-
-  if (!imagePreview) return;
-
-  images.forEach((img) => {
-    const parentCell = img.closest(".image-cell");
-    if (!parentCell) return;
-
-    const originalUrl = parentCell.getAttribute("data-original-url");
-
-    img.addEventListener("mouseover", (event) => {
+    const table = document.getElementById("offer-table");
+    const imagePreview = document.getElementById("image-preview");
+  
+    if (!table || !imagePreview) return;
+  
+    table.addEventListener("mouseover", (event) => {
+      const imgCell = event.target.closest(".image-cell img");
+      if (!imgCell) return;
+  
+      const originalUrl = imgCell.closest(".image-cell").dataset.originalUrl || "";
       if (originalUrl) {
-        imagePreview.innerHTML = `<img src="${originalUrl}" alt="Produktvorschau">`;
+        imagePreview.innerHTML = `<img src="${originalUrl}" alt="Vorschau">`;
         imagePreview.style.display = "block";
       }
     });
-
-    img.addEventListener("mousemove", (event) => {
-      const previewWidth = imagePreview.offsetWidth;
-      const previewHeight = imagePreview.offsetHeight;
-
-      imagePreview.style.left = `${Math.min(
-        event.pageX + 15,
-        window.innerWidth - previewWidth - 15
-      )}px`;
-      imagePreview.style.top = `${Math.min(
-        event.pageY + 15,
-        window.innerHeight - previewHeight - 15
-      )}px`;
+  
+    table.addEventListener("mousemove", (event) => {
+      if (imagePreview.style.display === "block") {
+        const previewWidth = imagePreview.offsetWidth;
+  
+        imagePreview.style.left = `${Math.max(
+          event.pageX - previewWidth - 15,
+          15 // Ensure it doesn’t go off-screen
+        )}px`;
+        imagePreview.style.top = `${event.pageY + 15}px`;
+      }
     });
-
-    img.addEventListener("mouseout", () => {
-      imagePreview.style.display = "none";
-      imagePreview.innerHTML = "";
+  
+    table.addEventListener("mouseout", (event) => {
+      if (event.target.closest(".image-cell img")) {
+        imagePreview.style.display = "none";
+        imagePreview.innerHTML = "";
+      }
     });
-  });
-}
+  }
