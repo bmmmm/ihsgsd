@@ -299,11 +299,25 @@ function attachImageHoverPreview() {
 
     const originalUrl = parentCell.getAttribute("data-original-url");
 
-    img.addEventListener("mouseover", () => {
+    img.addEventListener("mouseover", (event) => {
       if (originalUrl) {
-        imagePreview.innerHTML = `<img src="${originalUrl}" alt="Vorschau" style="max-width: 400px; max-height: 400px;">`;
+        imagePreview.innerHTML = `<img src="${originalUrl}" alt="Produktvorschau">`;
         imagePreview.style.display = "block";
       }
+    });
+
+    img.addEventListener("mousemove", (event) => {
+      const previewWidth = imagePreview.offsetWidth;
+      const previewHeight = imagePreview.offsetHeight;
+
+      imagePreview.style.left = `${Math.min(
+        event.pageX + 15,
+        window.innerWidth - previewWidth - 15
+      )}px`;
+      imagePreview.style.top = `${Math.min(
+        event.pageY + 15,
+        window.innerHeight - previewHeight - 15
+      )}px`;
     });
 
     img.addEventListener("mouseout", () => {
