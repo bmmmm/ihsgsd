@@ -94,12 +94,6 @@
             width: 60px;
             height: 60px;
             display: block;
-        }
-
-        img {
-            width: 60px;
-            height: 60px;
-            display: block;
             /* Prevent layout shift when hiding images */
         }
 
@@ -189,7 +183,7 @@
 
     <p id="offer-info">Lade aktuelle Informationen...</p>
     <input id="search-input" type="text" placeholder="Suche in allen Zellen...">
-    <select id="category-filter" multiple></select>
+    <select id="category-filter" multiple aria-label="Kategorie-Filter"></select>
     <button id="deselect-categories">Auswahl aufheben</button>
     <button id="hide-selected-categories">Ausgewählte Kategorien ausblenden</button>
     <button id="toggle-images">Bilder laden</button>
