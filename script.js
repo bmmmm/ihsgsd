@@ -245,77 +245,89 @@ Please follow the steps below in your response:
 }
 
 function toggleImages() {
-    const toggleImagesButton = document.getElementById("toggle-images");
-    const imageCells = document.querySelectorAll(".image-cell");
-    const imageHeader = document.getElementById("image-column-header");
-  
-    if (!toggleImagesButton || imageCells.length === 0 || !imageHeader) return;
-  
-    toggleImagesButton.addEventListener("click", () => {
-      const isHidden = imageHeader.classList.contains("hidden");
-  
-      imageCells.forEach((cell) => {
-        if (isHidden) {
-          // Show images
-          const imgUrl = cell.getAttribute("data-image-url");
-          if (imgUrl && !cell.querySelector("img")) {
-            const img = document.createElement("img");
-            img.src = imgUrl;
-            img.alt = "Produktbild";
-            img.style.cursor = "zoom-in";
-            cell.appendChild(img);
-          }
-          cell.classList.remove("hidden");
-        } else {
-          // Hide images
-          if (cell.querySelector("img")) {
-            cell.querySelector("img").remove();
-          }
-          cell.classList.add("hidden");
+  const toggleImagesButton = document.getElementById("toggle-images");
+  const imageCells = document.querySelectorAll(".image-cell");
+  const imageHeader = document.getElementById("image-column-header");
+
+  if (!toggleImagesButton || imageCells.length === 0 || !imageHeader) return;
+
+  toggleImagesButton.addEventListener("click", () => {
+    const isHidden = imageHeader.classList.contains("hidden");
+
+    imageCells.forEach((cell) => {
+      if (isHidden) {
+        // Show images
+        const imgUrl = cell.getAttribute("data-image-url");
+        if (imgUrl && !cell.querySelector("img")) {
+          const img = document.createElement("img");
+          img.src = imgUrl;
+          img.alt = "Produktbild";
+          img.style.cursor = "zoom-in";
+          cell.appendChild(img);
         }
-      });
-  
-      imageHeader.classList.toggle("hidden", !isHidden);
-      toggleImagesButton.textContent = isHidden ? "Bilder ausblenden" : "Bilder laden";
-  
-      // Attach hover preview if images are shown
-      if (isHidden) attachImageHoverPreview();
+        cell.classList.remove("hidden");
+      } else {
+        // Hide images
+        if (cell.querySelector("img")) {
+          cell.querySelector("img").remove();
+        }
+        cell.classList.add("hidden");
+      }
     });
-  }
+
+    imageHeader.classList.toggle("hidden", !isHidden);
+    toggleImagesButton.textContent = isHidden
+      ? "Bilder ausblenden"
+      : "Bilder laden";
+
+    // Attach hover preview if images are shown
+    if (isHidden) attachImageHoverPreview();
+  });
+}
 
 function attachImageHoverPreview() {
-    const table = document.getElementById("offer-table");
-    const imagePreview = document.getElementById("image-preview");
-  
-    if (!table || !imagePreview) return;
-  
-    table.addEventListener("mouseover", (event) => {
-      const imgCell = event.target.closest(".image-cell img");
-      if (!imgCell) return;
-  
-      const originalUrl = imgCell.closest(".image-cell").dataset.originalUrl || "";
-      if (originalUrl) {
-        imagePreview.innerHTML = `<img src="${originalUrl}" alt="Vorschau">`;
-        imagePreview.style.display = "block";
+  const table = document.getElementById("offer-table");
+  const imagePreview = document.getElementById("image-preview");
+
+  if (!table || !imagePreview) return;
+
+  table.addEventListener("mouseover", (event) => {
+    const imgCell = event.target.closest(".image-cell img");
+    if (!imgCell) return;
+
+    const originalUrl =
+      imgCell.closest(".image-cell").dataset.originalUrl || "";
+    if (originalUrl) {
+      imagePreview.innerHTML = `<img src="${originalUrl}" alt="Vorschau">`;
+      imagePreview.style.display = "block";
+    }
+  });
+
+  table.addEventListener("mousemove", (event) => {
+    if (imagePreview.style.display === "block") {
+      const previewWidth = imagePreview.offsetWidth;
+      const previewHeight = imagePreview.offsetHeight;
+
+      // Calculate positions
+      let left = Math.max(event.pageX - previewWidth - 15, 15); // Left side of the cursor
+      let top = event.pageY + 15; // Below the cursor
+
+      // Check if the preview exceeds the bottom of the window
+      const viewportHeight = window.innerHeight;
+      if (top + previewHeight > viewportHeight) {
+        top = viewportHeight - previewHeight - 15; // Adjust to stay within the viewport
       }
-    });
-  
-    table.addEventListener("mousemove", (event) => {
-      if (imagePreview.style.display === "block") {
-        const previewWidth = imagePreview.offsetWidth;
-  
-        imagePreview.style.left = `${Math.max(
-          event.pageX - previewWidth - 15,
-          15 // Ensure it doesn’t go off-screen
-        )}px`;
-        imagePreview.style.top = `${event.pageY + 15}px`;
-      }
-    });
-  
-    table.addEventListener("mouseout", (event) => {
-      if (event.target.closest(".image-cell img")) {
-        imagePreview.style.display = "none";
-        imagePreview.innerHTML = "";
-      }
-    });
-  }
+
+      // Apply calculated positions
+      imagePreview.style.left = `${left}px`;
+      imagePreview.style.top = `${top}px`;
+    }
+  });
+
+  table.addEventListener("mouseout", (event) => {
+    if (event.target.closest(".image-cell img")) {
+      imagePreview.style.display = "none";
+      imagePreview.innerHTML = "";
+    }
+  });
+}
