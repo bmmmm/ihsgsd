@@ -25,6 +25,8 @@ async function initializePage() {
 
         // Attach copy button functionality
         copyProductsButton.addEventListener('click', copyVisibleProducts);
+        attachEventListeners();   // For deselect/hide categories if defined here
+        toggleImages();           // For loading/toggling images
     } catch (error) {
         console.error("Error initializing page:", error);
     }
