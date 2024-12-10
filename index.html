@@ -10,15 +10,11 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             background-color: #121212;
-            /* Dark background */
             color: #e0e0e0;
-            /* Light text */
         }
-
         h1 {
             color: #ffffff;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
@@ -26,77 +22,22 @@
             background-color: #1e1e1e;
             color: #e0e0e0;
             table-layout: fixed;
-            /* Helps stabilize layout */
         }
-
-        /* Assign widths to specific columns by index:
-   1: ID, 2: Produkt, 3: Kategorie, 4: Preis, 5: Beschreibung, 6: Bild */
-        /* Make ID narrower */
-        th:nth-child(1),
-        td:nth-child(1) {
-            width: 80px;
-        }
-        /* Kategorie (Produkt) narrower */
-        th:nth-child(2),
-        td:nth-child(2) {
-            width: 350px;
-        }
-        /* Kategorie (category) narrower */
-        th:nth-child(3),
-        td:nth-child(3) {
-            width: 125px;
-        }
-
-        /* Preis narrower */
-        th:nth-child(4),
-        td:nth-child(4) {
-            width: 80px;
-        }
-
-        /* Beschreibung (description) much wider */
-        th:nth-child(5),
-        td:nth-child(5) {
-            width: 350px;
-            /* Adjust as needed */
-            white-space: normal;
-            /* Allow wrapping for long text */
-            word-wrap: break-word;
-            /* Ensure text breaks correctly */
-        }
-
-        /* Bild column can remain as is, since it was already given a fixed width */
-        #image-column-header,
-        .image-cell {
-            width: 70px;
-        }
-
-        tr {
-            height: 60px;
-            /* Fixed row height */
-        }
-
-        th,
-        td {
+        th, td {
             border: 1px solid #333;
             padding: 5px;
             text-align: left;
-            overflow: hidden;
+            word-break: break-word;
             text-overflow: ellipsis;
-            /* We keep white-space: nowrap; for other columns for consistency,
-       but removed for description so it can wrap */
         }
-
         .hidden {
             display: none;
         }
-
         img {
             width: 60px;
             height: 60px;
             display: block;
-            /* Prevent layout shift when hiding images */
         }
-
         .image-preview {
             position: fixed;
             top: 20px;
@@ -108,13 +49,8 @@
             z-index: 1000;
             width: 350px;
             height: 350px;
-            max-width: 350px;
-            max-height: 350px;
         }
-
-        button,
-        select,
-        input {
+        button, select, input {
             background-color: #333333;
             color: #e0e0e0;
             border: 1px solid #444;
@@ -122,93 +58,38 @@
             font-size: 14px;
             margin-right: 10px;
             cursor: pointer;
-            height: 40px;
-            /* Fixed height to prevent CLS */
-            min-width: 150px;
-            /* Fixed width for consistency */
         }
-
-        button:hover,
-        select:hover,
-        input:hover {
+        button:hover, select:hover, input:hover {
             background-color: #444;
-        }
-
-        select {
-            height: auto;
-        }
-
-        input {
-            padding: 6px;
-        }
-
-        /* Responsive adjustments for mobile */
-        @media (max-width: 600px) {
-            body {
-                font-size: 12px;
-            }
-
-            button,
-            select,
-            input {
-                min-width: auto;
-                width: 100%;
-                margin-bottom: 10px;
-            }
-
-            table,
-            th,
-            td {
-                font-size: 12px;
-            }
-
-            .image-preview {
-                width: 150px;
-                height: 150px;
-            }
-
-            /* Allow horizontal scroll for smaller screens */
-            table {
-                display: block;
-                overflow-x: auto;
-            }
         }
     </style>
 </head>
 
 <body>
     <h1 id="page-title">EDEKA Wochenangebote</h1>
-
-    <!-- Dropdown for selecting JSON file -->
     <label for="file-dropdown">Wählen Sie eine Datei:</label>
     <select id="file-dropdown"></select>
-
     <p id="offer-info">Lade aktuelle Informationen...</p>
-    <input id="search-input" type="text" placeholder="Suche in allen Zellen...">
+    <input id="search-input" type="text" placeholder="Suchen..." />
     <select id="category-filter" multiple aria-label="Kategorie-Filter"></select>
-    <button id="deselect-categories">Auswahl aufheben</button>
-    <button id="hide-selected-categories">Ausgewählte Kategorien ausblenden</button>
-    <button id="toggle-images">Bilder laden</button>
-    <button id="copy-products">Produkte kopieren</button>
-
+    <button id="deselect-categories" aria-label="Auswahl aufheben">Auswahl aufheben</button>
+    <button id="hide-selected-categories" aria-label="Ausgewählte Kategorien ausblenden">Ausgewählte Kategorien ausblenden</button>
+    <button id="toggle-images" aria-label="Bilder anzeigen oder ausblenden">Bilder laden</button>
+    <button id="copy-products" aria-label="Sichtbare Produkte kopieren">Produkte kopieren</button>
     <div id="image-preview" class="image-preview"></div>
-
     <table>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Produkt</th>
-                <th>Kategorie</th>
-                <th>Preis</th>
-                <th>Beschreibung</th>
-                <th id="image-column-header" class="hidden">Bild</th>
+                <th scope="col">ID</th>
+                <th scope="col">Produkt</th>
+                <th scope="col">Kategorie</th>
+                <th scope="col">Preis</th>
+                <th scope="col">Beschreibung</th>
+                <th scope="col" id="image-column-header" class="hidden">Bild</th>
             </tr>
         </thead>
-        <tbody id="offer-table">
-            <!-- Dynamische Inhalte werden hier eingefügt -->
-        </tbody>
+        <tbody id="offer-table"></tbody>
     </table>
-
     <script src="script.js"></script>
 </body>
 
