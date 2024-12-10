@@ -291,11 +291,6 @@ function attachImageHoverPreview() {
 
   if (!table || !imagePreview) return;
 
-  // Position the preview in the top-right corner of the window
-  imagePreview.style.position = "fixed";
-  imagePreview.style.top = "10px"; // Add some padding from the top
-  imagePreview.style.right = "10px"; // Add some padding from the right
-
   table.addEventListener("mouseover", (event) => {
     const imgCell = event.target.closest(".image-cell img");
     if (!imgCell) return;
@@ -303,15 +298,20 @@ function attachImageHoverPreview() {
     const originalUrl =
       imgCell.closest(".image-cell").dataset.originalUrl || "";
     if (originalUrl) {
-      imagePreview.innerHTML = `<img src="${originalUrl}" alt="Vorschau">`;
-      imagePreview.style.display = "block";
+      const imgElement = `<img src="${originalUrl}" alt="Vorschau" loading="lazy">`;
+      if (imagePreview.innerHTML !== imgElement) {
+        imagePreview.innerHTML = imgElement; // Replace placeholder message
+      }
+      imagePreview.style.visibility = "visible";
+      imagePreview.style.opacity = "1";
     }
   });
 
   table.addEventListener("mouseout", (event) => {
     if (event.target.closest(".image-cell img")) {
-      imagePreview.style.display = "none";
-      imagePreview.innerHTML = "";
+      imagePreview.innerHTML = `<p style="text-align: center; color: #888;">Hover over a product to preview its image.</p>`;
+      imagePreview.style.opacity = "0";
+      imagePreview.style.visibility = "hidden";
     }
   });
 }

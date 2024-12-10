@@ -43,7 +43,10 @@
             position: fixed;
             top: 10px;
             right: 10px;
-            display: none;
+            width: 350px;
+            /* Fixed width */
+            height: 350px;
+            /* Fixed height */
             border: 2px solid #444;
             background-color: #1e1e1e;
             padding: 10px;
@@ -52,6 +55,10 @@
             max-width: 350px;
             max-height: 350px;
             overflow: hidden;
+            visibility: hidden;
+            /* Keeps the placeholder visible but hides content */
+            transition: opacity 0.2s ease-in-out;
+            /* Smooth transition for visibility changes */
         }
 
         .image-preview img {
@@ -90,6 +97,9 @@
 </head>
 
 <body>
+    <div id="image-preview" class="image-preview">
+        <p style="text-align: center; color: #888;">Hover over a product to preview its image.</p>
+    </div>
     <h1 id="page-title">EDEKA Wochenangebote</h1>
     <label for="file-dropdown">Wählen Sie eine Datei:</label>
     <select id="file-dropdown"></select>
