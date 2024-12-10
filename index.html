@@ -40,8 +40,9 @@
         }
 
         .image-preview {
-            position: absolute;
-            /* Use absolute for better placement control */
+            position: fixed;
+            top: 10px;
+            right: 10px;
             display: none;
             border: 2px solid #444;
             background-color: #1e1e1e;
@@ -55,7 +56,6 @@
 
         .image-preview img {
             width: 100%;
-            /* Scale the image to fit the preview box */
             height: auto;
             max-height: 100%;
         }

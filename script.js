@@ -291,6 +291,11 @@ function attachImageHoverPreview() {
 
   if (!table || !imagePreview) return;
 
+  // Position the preview in the top-right corner of the window
+  imagePreview.style.position = "fixed";
+  imagePreview.style.top = "10px"; // Add some padding from the top
+  imagePreview.style.right = "10px"; // Add some padding from the right
+
   table.addEventListener("mouseover", (event) => {
     const imgCell = event.target.closest(".image-cell img");
     if (!imgCell) return;
@@ -300,27 +305,6 @@ function attachImageHoverPreview() {
     if (originalUrl) {
       imagePreview.innerHTML = `<img src="${originalUrl}" alt="Vorschau">`;
       imagePreview.style.display = "block";
-    }
-  });
-
-  table.addEventListener("mousemove", (event) => {
-    if (imagePreview.style.display === "block") {
-      const previewWidth = imagePreview.offsetWidth;
-      const previewHeight = imagePreview.offsetHeight;
-
-      // Calculate positions
-      let left = Math.max(event.pageX - previewWidth - 15, 15); // Left side of the cursor
-      let top = event.pageY + 15; // Below the cursor
-
-      // Check if the preview exceeds the bottom of the window
-      const viewportHeight = window.innerHeight;
-      if (top + previewHeight > viewportHeight) {
-        top = viewportHeight - previewHeight - 15; // Adjust to stay within the viewport
-      }
-
-      // Apply calculated positions
-      imagePreview.style.left = `${left}px`;
-      imagePreview.style.top = `${top}px`;
     }
   });
 
