@@ -130,8 +130,8 @@ function hideSelectedCategories() {
     const categoryFilter = document.getElementById('category-filter');
     if (!categoryFilter) return; // Ensure the dropdown exists
 
-    const selectedCategories = Array.from(categoryFilter.selectedOptions).map(option => option.value);
-    const rows = document.querySelectorAll('#offer-table tr');
+    const selectedCategories = Array.from(categoryFilter.selectedOptions).map(option => option.value); // Get selected categories
+    const rows = document.querySelectorAll('#offer-table tr'); // Get all table rows
 
     rows.forEach(row => {
         if (selectedCategories.includes(row.dataset.category)) {
@@ -152,6 +152,20 @@ function deselectAllCategories() {
     });
 
     hideSelectedCategories(); // Show all rows
+}
+
+// Attach event listeners for category selection
+function attachCategoryEventListeners() {
+    const deselectCategoriesButton = document.getElementById('deselect-categories');
+    const hideSelectedCategoriesButton = document.getElementById('hide-selected-categories');
+
+    if (deselectCategoriesButton) {
+        deselectCategoriesButton.addEventListener('click', deselectAllCategories);
+    }
+
+    if (hideSelectedCategoriesButton) {
+        hideSelectedCategoriesButton.addEventListener('click', hideSelectedCategories);
+    }
 }
 
 // Attach event listener for search functionality
@@ -205,17 +219,52 @@ function copyVisibleProducts() {
             console.error('Fehler beim Kopieren der JSON-Daten:', err);
         });
 }
+// Toggle the visibility of images
+function toggleImages() {
+    const toggleImagesButton = document.getElementById('toggle-images');
+    const imageCells = document.querySelectorAll('.image-cell');
+    const imageHeader = document.getElementById('image-column-header');
+    let imagesLoaded = false;
 
+    if (!toggleImagesButton || !imageCells.length) return;
+
+    toggleImagesButton.addEventListener('click', () => {
+        if (!imagesLoaded) {
+            // Load images for the first time
+            imageCells.forEach(cell => {
+                const imgUrl = cell.getAttribute('data-image-url');
+                if (imgUrl) {
+                    cell.innerHTML = `<img src="${imgUrl}" alt="Produktbild" style="max-width: 60px; max-height: 40px;">`;
+                }
+                cell.classList.remove('hidden');
+            });
+            imagesLoaded = true;
+            toggleImagesButton.textContent = 'Bilder ausblenden';
+        } else {
+            // Toggle visibility of the image column
+            imageCells.forEach(cell => cell.classList.toggle('hidden'));
+            imageHeader.classList.toggle('hidden');
+            toggleImagesButton.textContent = imageCells[0].classList.contains('hidden') ? 'Bilder einblenden' : 'Bilder ausblenden';
+        }
+    });
+}
 // Attach functionality for buttons and dropdowns
 function attachEventListeners() {
+    // Get buttons for deselecting and hiding categories
     const deselectCategoriesButton = document.getElementById('deselect-categories');
     const hideSelectedCategoriesButton = document.getElementById('hide-selected-categories');
 
+    // Attach event listener to "Deselect All Categories" button
     if (deselectCategoriesButton) {
         deselectCategoriesButton.addEventListener('click', deselectAllCategories);
+    } else {
+        console.warn("Deselect Categories button not found.");
     }
 
+    // Attach event listener to "Hide Selected Categories" button
     if (hideSelectedCategoriesButton) {
         hideSelectedCategoriesButton.addEventListener('click', hideSelectedCategories);
+    } else {
+        console.warn("Hide Selected Categories button not found.");
     }
 }
