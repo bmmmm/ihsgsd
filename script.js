@@ -228,18 +228,50 @@ function toggleImages() {
             imageCells.forEach(cell => {
                 const imgUrl = cell.getAttribute('data-image-url');
                 if (imgUrl) {
-                    cell.innerHTML = `<img src="${imgUrl}" alt="Produktbild">`;
+                    cell.innerHTML = `<img src="${imgUrl}" alt="Produktbild" style="cursor: zoom-in;">`;
                 }
                 cell.classList.remove('hidden');
             });
             imageHeader.classList.remove('hidden');
             imagesLoaded = true;
             newToggleImagesButton.textContent = 'Bilder ausblenden';
+
+            // Attach hover preview functionality now that images are loaded
+            attachImageHoverPreview();
         } else {
             // Toggle visibility of the image column
             imageCells.forEach(cell => cell.classList.toggle('hidden'));
             imageHeader.classList.toggle('hidden');
             newToggleImagesButton.textContent = imageCells[0].classList.contains('hidden') ? 'Bilder laden' : 'Bilder ausblenden';
         }
+    });
+}
+
+function attachImageHoverPreview() {
+    const imagePreview = document.getElementById('image-preview');
+    const images = document.querySelectorAll('.image-cell img');
+
+    if (!imagePreview) return;
+
+    images.forEach(img => {
+        img.addEventListener('mouseover', () => {
+            const src = img.getAttribute('src');
+            imagePreview.innerHTML = `<img src="${src}" alt="Vorschau" style="max-width: 200px; max-height: 200px;">`;
+            imagePreview.style.display = 'block';
+        });
+
+        img.addEventListener('mousemove', (e) => {
+            // Optionally position preview dynamically, if you prefer a fixed position, omit this
+            // This is optional. If you want a fixed top-right corner always, you can skip repositioning.
+            // imagePreview.style.top = (e.pageY + 20) + 'px';
+            // imagePreview.style.left = (e.pageX + 20) + 'px';
+            // Since requirement says top right corner, let's keep it fixed as given by CSS:
+            // no changes needed, just showing you how it would be done.
+        });
+
+        img.addEventListener('mouseout', () => {
+            imagePreview.style.display = 'none';
+            imagePreview.innerHTML = '';
+        });
     });
 }

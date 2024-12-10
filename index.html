@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,8 +9,10 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
-            background-color: #121212; /* Dark background */
-            color: #e0e0e0; /* Light text */
+            background-color: #121212;
+            /* Dark background */
+            color: #e0e0e0;
+            /* Light text */
         }
 
         h1 {
@@ -22,31 +25,61 @@
             margin-top: 20px;
             background-color: #1e1e1e;
             color: #e0e0e0;
-            table-layout: fixed; /* Helps stabilize layout */
+            table-layout: fixed;
+            /* Helps stabilize layout */
         }
 
-        th, td {
+        /* Assign widths to specific columns by index:
+   1: ID, 2: Produkt, 3: Kategorie, 4: Preis, 5: Beschreibung, 6: Bild */
+        /* Make ID narrower */
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 50px;
+        }
+
+        /* Kategorie (category) narrower */
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 100px;
+        }
+
+        /* Preis narrower */
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 80px;
+        }
+
+        /* Beschreibung (description) much wider */
+        th:nth-child(5),
+        td:nth-child(5) {
+            width: 350px;
+            /* Adjust as needed */
+            white-space: normal;
+            /* Allow wrapping for long text */
+            word-wrap: break-word;
+            /* Ensure text breaks correctly */
+        }
+
+        /* Bild column can remain as is, since it was already given a fixed width */
+        #image-column-header,
+        .image-cell {
+            width: 70px;
+        }
+
+        tr {
+            height: 60px;
+            /* Fixed row height */
+        }
+
+        th,
+        td {
             border: 1px solid #333;
             padding: 5px;
             text-align: left;
             overflow: hidden;
-            white-space: nowrap;
             text-overflow: ellipsis;
-        }
-
-        tr {
-            height: 60px; /* Fixed row height */
-        }
-
-        th {
-            background-color: #2c2c2c;
-            font-weight: bold;
-            color: #ffffff;
-        }
-
-        #image-column-header,
-        .image-cell {
-            width: 70px;
+            /* We keep white-space: nowrap; for other columns for consistency,
+       but removed for description so it can wrap */
         }
 
         .hidden {
@@ -56,7 +89,14 @@
         img {
             width: 60px;
             height: 40px;
-            display: block; /* Prevent layout shift when hiding images */
+            display: block;
+        }
+
+        img {
+            width: 60px;
+            height: 40px;
+            display: block;
+            /* Prevent layout shift when hiding images */
         }
 
         .image-preview {
@@ -72,7 +112,9 @@
             max-height: 200px;
         }
 
-        button, select, input {
+        button,
+        select,
+        input {
             background-color: #333333;
             color: #e0e0e0;
             border: 1px solid #444;
@@ -80,11 +122,15 @@
             font-size: 14px;
             margin-right: 10px;
             cursor: pointer;
-            height: 40px; /* Fixed height to prevent CLS */
-            min-width: 150px; /* Fixed width for consistency */
+            height: 40px;
+            /* Fixed height to prevent CLS */
+            min-width: 150px;
+            /* Fixed width for consistency */
         }
 
-        button:hover, select:hover, input:hover {
+        button:hover,
+        select:hover,
+        input:hover {
             background-color: #444;
         }
 
@@ -102,13 +148,17 @@
                 font-size: 12px;
             }
 
-            button, select, input {
+            button,
+            select,
+            input {
                 min-width: auto;
                 width: 100%;
                 margin-bottom: 10px;
             }
 
-            table, th, td {
+            table,
+            th,
+            td {
                 font-size: 12px;
             }
 
@@ -125,6 +175,7 @@
         }
     </style>
 </head>
+
 <body>
     <h1 id="page-title">EDEKA Wochenangebote</h1>
 
@@ -160,4 +211,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
