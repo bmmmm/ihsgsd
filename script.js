@@ -252,35 +252,37 @@ function toggleImages() {
 
   if (!toggleImagesButton || imageCells.length === 0 || !imageHeader) return;
 
-  // Remove any existing listeners
-  toggleImagesButton.replaceWith(toggleImagesButton.cloneNode(true));
-  const newToggleImagesButton = document.getElementById("toggle-images");
-
-  newToggleImagesButton.addEventListener("click", () => {
+  // Attach event listener to the button
+  toggleImagesButton.addEventListener("click", () => {
     if (!imagesLoaded) {
-      // Load web90 images as thumbnails
+      // Load web90 images as thumbnails and display them
       imageCells.forEach((cell) => {
         const imgUrl = cell.getAttribute("data-image-url");
-        if (imgUrl) {
-          cell.innerHTML = `<img src="${imgUrl}" alt="Produktbild" style="cursor: zoom-in;">`;
+        if (imgUrl && !cell.querySelector("img")) {
+          // Only load if not already loaded
+          const img = document.createElement("img");
+          img.src = imgUrl;
+          img.alt = "Produktbild";
+          img.style.cursor = "zoom-in";
+          cell.appendChild(img);
         }
         cell.classList.remove("hidden");
       });
+
       imageHeader.classList.remove("hidden");
       imagesLoaded = true;
-      newToggleImagesButton.textContent = "Bilder ausblenden";
+      toggleImagesButton.textContent = "Bilder ausblenden";
 
-      // Attach hover preview functionality now that images are loaded
+      // Attach hover preview functionality
       attachImageHoverPreview();
     } else {
       // Toggle visibility of the image column
+      const isHidden = imageCells[0].classList.contains("hidden");
       imageCells.forEach((cell) => cell.classList.toggle("hidden"));
-      imageHeader.classList.toggle("hidden");
-      newToggleImagesButton.textContent = imageCells[0].classList.contains(
-        "hidden"
-      )
-        ? "Bilder laden"
-        : "Bilder ausblenden";
+      imageHeader.classList.toggle("hidden", isHidden);
+      toggleImagesButton.textContent = isHidden
+        ? "Bilder ausblenden"
+        : "Bilder laden";
     }
   });
 }
@@ -299,18 +301,9 @@ function attachImageHoverPreview() {
 
     img.addEventListener("mouseover", () => {
       if (originalUrl) {
-        imagePreview.innerHTML = `<img src="${originalUrl}" alt="Vorschau" style="max-width: 350px; max-height: 350px;">`;
+        imagePreview.innerHTML = `<img src="${originalUrl}" alt="Vorschau" style="max-width: 400px; max-height: 400px;">`;
         imagePreview.style.display = "block";
       }
-    });
-
-    img.addEventListener("mousemove", (e) => {
-      // Optionally position preview dynamically, if you prefer a fixed position, omit this
-      // This is optional. If you want a fixed top-right corner always, you can skip repositioning.
-      // imagePreview.style.top = (e.pageY + 20) + 'px';
-      // imagePreview.style.left = (e.pageX + 20) + 'px';
-      // Since requirement says top right corner, let's keep it fixed as given by CSS:
-      // no changes needed, just showing you how it would be done.
     });
 
     img.addEventListener("mouseout", () => {
