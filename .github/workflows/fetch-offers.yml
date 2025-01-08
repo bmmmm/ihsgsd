@@ -2,7 +2,7 @@ name: Fetch EDEKA Offers
 
 on:
   schedule:
-    - cron: "0 21 * * 0" # Runs every Sunday at 9 PM UTC (11 PM Berlin time)
+    - cron: "0 5 * * 1" # Runs every Monday at 5 AM GMT+1
   workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
