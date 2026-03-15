@@ -1,0 +1,21 @@
+# Screenshots and snapshots (debug artifacts)
+screenshot-*.png
+snapshot*.md
+
+# Playwright MCP
+.playwright-mcp/
+
+# Raw/test output files
+output.json
+output_raw.json
+output_test.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo

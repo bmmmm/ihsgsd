@@ -6,6 +6,7 @@ async function initializePage() {
 
   try {
     const files = await fetchFolderStructure();
+    files.reverse(); // Neueste Dateien zuerst
     populateDropdown(dropdown, files);
 
     dropdown.addEventListener("change", () => {
@@ -23,6 +24,8 @@ async function initializePage() {
     copyProductsButton.addEventListener("click", copyVisibleProducts);
 
     attachEventListeners();
+    attachSearchFunctionality();
+    setupToggleImages();
   } catch (error) {
     console.error("Error initializing page:", error);
   }
@@ -89,15 +92,11 @@ async function fetchOffers(filePath) {
     });
 
     populateCategoryDropdown(offers);
-    attachSearchFunctionality();
   } catch (error) {
     console.error("Error fetching offers:", error);
     offerInfo.textContent = "Fehler beim Laden der Angebote.";
     tableBody.innerHTML = "";
   }
-
-  // After offers are loaded, set up image toggling
-  toggleImages();
 }
 
 function populateCategoryDropdown(offers) {
@@ -244,14 +243,14 @@ Please follow the steps below in your response:
     });
 }
 
-function toggleImages() {
+function setupToggleImages() {
   const toggleImagesButton = document.getElementById("toggle-images");
-  const imageCells = document.querySelectorAll(".image-cell");
   const imageHeader = document.getElementById("image-column-header");
 
-  if (!toggleImagesButton || imageCells.length === 0 || !imageHeader) return;
+  if (!toggleImagesButton || !imageHeader) return;
 
   toggleImagesButton.addEventListener("click", () => {
+    const imageCells = document.querySelectorAll(".image-cell");
     const isHidden = imageHeader.classList.contains("hidden");
 
     imageCells.forEach((cell) => {

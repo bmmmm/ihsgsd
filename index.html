@@ -23,7 +23,6 @@
             margin-top: 20px;
             background-color: #1e1e1e;
             color: #e0e0e0;
-            table-layout: fixed;
         }
 
         th,
@@ -34,6 +33,14 @@
             word-break: break-word;
             text-overflow: ellipsis;
         }
+
+        /* Column widths */
+        col.col-id { width: 7%; }
+        col.col-produkt { width: 20%; }
+        col.col-kategorie { width: 13%; }
+        col.col-preis { width: 8%; }
+        col.col-beschreibung { width: 40%; }
+        col.col-bild { width: 12%; }
 
         .hidden {
             display: none;
@@ -111,8 +118,15 @@
         ausblenden</button>
     <button id="toggle-images" aria-label="Bilder anzeigen oder ausblenden">Bilder laden</button>
     <button id="copy-products" aria-label="Sichtbare Produkte kopieren">Produkte kopieren</button>
-    <div id="image-preview" class="image-preview"></div>
     <table>
+        <colgroup>
+            <col class="col-id">
+            <col class="col-produkt">
+            <col class="col-kategorie">
+            <col class="col-preis">
+            <col class="col-beschreibung">
+            <col class="col-bild">
+        </colgroup>
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -125,7 +139,6 @@
         </thead>
         <tbody id="offer-table"></tbody>
     </table>
-    <div id="image-preview" class="image-preview"></div>
     <script src="script.js"></script>
 </body>
 

@@ -7,11 +7,11 @@ on:
 
 jobs:
   fetch-and-store:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Configure Git
         run: |
