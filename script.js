@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", initializePage);
 
+const HIDDEN_CATEGORIES_DEFAULT = ["Fleisch & Wurst", "Drogerie", "Tiernahrung"];
+
 async function initializePage() {
   const dropdown = document.getElementById("file-dropdown");
   const copyProductsButton = document.getElementById("copy-products");
@@ -23,7 +25,6 @@ async function initializePage() {
 
     copyProductsButton.addEventListener("click", copyVisibleProducts);
 
-    attachEventListeners();
     attachSearchFunctionality();
     setupToggleImages();
   } catch (error) {
@@ -107,7 +108,7 @@ async function fetchOffers(filePath) {
     });
     tableBody.appendChild(fragment);
 
-    populateCategoryDropdown(offers);
+    populateCategoryCheckboxes(offers);
   } catch (error) {
     console.error("Error fetching offers:", error);
     offerInfo.textContent = "Fehler beim Laden der Angebote.";
@@ -122,11 +123,11 @@ function formatDate(dateStr) {
   return dateStr;
 }
 
-function populateCategoryDropdown(offers) {
-  const categoryFilter = document.getElementById("category-filter");
-  if (!categoryFilter) return;
+function populateCategoryCheckboxes(offers) {
+  const container = document.getElementById("category-filters");
+  if (!container) return;
 
-  categoryFilter.innerHTML = "";
+  container.innerHTML = "";
 
   const categoryCounts = offers.reduce((counts, offer) => {
     counts[offer.category.name] = (counts[offer.category.name] || 0) + 1;
@@ -134,67 +135,45 @@ function populateCategoryDropdown(offers) {
   }, {});
 
   Object.entries(categoryCounts).forEach(([category, count]) => {
-    const option = document.createElement("option");
-    option.value = category;
-    option.textContent = `${category} (${count})`;
-    if (category === "Fleisch & Wurst" || category === "Tiernahrung") {
-      option.selected = true;
-    }
-    categoryFilter.appendChild(option);
+    const label = document.createElement("label");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.value = category;
+
+    // Default: show all except hidden categories
+    const isVisible = !HIDDEN_CATEGORIES_DEFAULT.includes(category);
+    checkbox.checked = isVisible;
+    if (isVisible) label.classList.add("checked");
+
+    checkbox.addEventListener("change", () => {
+      label.classList.toggle("checked", checkbox.checked);
+      applyCategoryFilter();
+    });
+
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(` ${category} (${count})`));
+    container.appendChild(label);
   });
+
+  // Apply initial filter
+  applyCategoryFilter();
 }
 
-function hideSelectedCategories() {
-  const categoryFilter = document.getElementById("category-filter");
-  if (!categoryFilter) return;
+function applyCategoryFilter() {
+  const checkboxes = document.querySelectorAll("#category-filters input[type='checkbox']");
+  const visibleCategories = [];
+  checkboxes.forEach((cb) => {
+    if (cb.checked) visibleCategories.push(cb.value);
+  });
 
-  const selectedCategories = Array.from(categoryFilter.selectedOptions).map(
-    (o) => o.value
-  );
   const rows = document.querySelectorAll("#offer-table tr");
-
   rows.forEach((row) => {
-    if (selectedCategories.includes(row.dataset.category)) {
-      row.classList.add("hidden");
-    } else {
+    if (visibleCategories.includes(row.dataset.category)) {
       row.classList.remove("hidden");
+    } else {
+      row.classList.add("hidden");
     }
   });
-}
-
-function deselectAllCategories() {
-  const categoryFilter = document.getElementById("category-filter");
-  if (!categoryFilter) return;
-
-  Array.from(categoryFilter.options).forEach((option) => {
-    option.selected = false;
-  });
-
-  hideSelectedCategories();
-}
-
-function attachEventListeners() {
-  const deselectCategoriesButton = document.getElementById(
-    "deselect-categories"
-  );
-  const hideSelectedCategoriesButton = document.getElementById(
-    "hide-selected-categories"
-  );
-
-  if (deselectCategoriesButton) {
-    deselectCategoriesButton.addEventListener("click", deselectAllCategories);
-  } else {
-    console.warn("Deselect Categories button not found.");
-  }
-
-  if (hideSelectedCategoriesButton) {
-    hideSelectedCategoriesButton.addEventListener(
-      "click",
-      hideSelectedCategories
-    );
-  } else {
-    console.warn("Hide Selected Categories button not found.");
-  }
 }
 
 function attachSearchFunctionality() {
@@ -203,6 +182,12 @@ function attachSearchFunctionality() {
     searchInput.addEventListener("input", () => {
       const searchTerm = searchInput.value.toLowerCase();
       const rows = document.querySelectorAll("#offer-table tr");
+
+      if (!searchTerm) {
+        // Reset to category filter state
+        applyCategoryFilter();
+        return;
+      }
 
       rows.forEach((row) => {
         const cells = Array.from(row.querySelectorAll("td"));
@@ -272,6 +257,8 @@ function setupToggleImages() {
 
   if (!toggleImagesButton || !imageHeader) return;
 
+  let hoverAttached = false;
+
   toggleImagesButton.addEventListener("click", () => {
     const imageCells = document.querySelectorAll(".image-cell");
     const isHidden = imageHeader.classList.contains("hidden");
@@ -284,15 +271,17 @@ function setupToggleImages() {
           const img = document.createElement("img");
           img.src = imgUrl;
           img.alt = "Produktbild";
-          img.style.cursor = "zoom-in";
+          img.loading = "lazy";
+          img.addEventListener("error", () => {
+            img.classList.add("img-error");
+          });
           cell.appendChild(img);
         }
         cell.classList.remove("hidden");
       } else {
         // Hide images
-        if (cell.querySelector("img")) {
-          cell.querySelector("img").remove();
-        }
+        const img = cell.querySelector("img");
+        if (img) img.remove();
         cell.classList.add("hidden");
       }
     });
@@ -302,8 +291,11 @@ function setupToggleImages() {
       ? "Bilder ausblenden"
       : "Bilder laden";
 
-    // Attach hover preview if images are shown
-    if (isHidden) attachImageHoverPreview();
+    // Attach hover preview once
+    if (isHidden && !hoverAttached) {
+      attachImageHoverPreview();
+      hoverAttached = true;
+    }
   });
 }
 
@@ -314,21 +306,30 @@ function attachImageHoverPreview() {
   if (!table || !imagePreview) return;
 
   table.addEventListener("mouseover", (event) => {
-    const imgCell = event.target.closest(".image-cell img");
-    if (!imgCell) return;
+    const img = event.target.closest(".image-cell img");
+    if (!img || img.classList.contains("img-error")) return;
 
-    const originalUrl =
-      imgCell.closest(".image-cell").dataset.originalUrl || "";
+    const originalUrl = img.closest(".image-cell").dataset.originalUrl || "";
     if (originalUrl) {
-      imagePreview.innerHTML = `<img src="${originalUrl}" alt="Vorschau" loading="lazy">`;
+      imagePreview.innerHTML = "";
+      const previewImg = document.createElement("img");
+      previewImg.src = originalUrl;
+      previewImg.alt = "Vorschau";
+      previewImg.loading = "lazy";
+      imagePreview.appendChild(previewImg);
       imagePreview.classList.add("visible");
     }
   });
 
   table.addEventListener("mouseout", (event) => {
-    if (event.target.closest(".image-cell img")) {
-      imagePreview.innerHTML = "";
-      imagePreview.classList.remove("visible");
-    }
+    const img = event.target.closest(".image-cell img");
+    if (!img) return;
+
+    // Only hide if we're actually leaving the image (not entering a child)
+    const related = event.relatedTarget;
+    if (related && img.contains(related)) return;
+
+    imagePreview.innerHTML = "";
+    imagePreview.classList.remove("visible");
   });
 }

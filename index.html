@@ -39,9 +39,39 @@
             flex: 0 0 220px;
         }
 
-        #category-filter {
-            flex: 0 0 220px;
-            height: 80px;
+        /* Category checkboxes */
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .category-filters label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background-color: #2a2a2a;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            border: 1px solid #444;
+            user-select: none;
+        }
+
+        .category-filters label:hover {
+            background-color: #3a3a3a;
+        }
+
+        .category-filters label.checked {
+            background-color: #1a472a;
+            border-color: #2d7a4a;
+        }
+
+        .category-filters input[type="checkbox"] {
+            accent-color: #4caf50;
+            cursor: pointer;
         }
 
         /* Table */
@@ -97,6 +127,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             overflow: hidden;
             display: none;
+            pointer-events: none;
         }
 
         .image-preview.visible {
@@ -112,7 +143,7 @@
         /* Form elements */
         button,
         select,
-        input {
+        input[type="text"] {
             background-color: #333333;
             color: #e0e0e0;
             border: 1px solid #444;
@@ -124,7 +155,7 @@
 
         button:hover,
         select:hover,
-        input:hover {
+        input[type="text"]:hover {
             background-color: #444;
         }
 
@@ -149,6 +180,10 @@
         td img {
             cursor: zoom-in;
             max-width: 80px;
+        }
+
+        td img.img-error {
+            display: none;
         }
 
         td.image-cell {
@@ -179,12 +214,10 @@
     <div class="controls">
         <div class="controls-row">
             <input id="search-input" type="text" placeholder="Suchen..." />
-            <select id="category-filter" multiple aria-label="Kategorie-Filter"></select>
-            <button id="deselect-categories" aria-label="Auswahl aufheben">Auswahl aufheben</button>
-            <button id="hide-selected-categories" aria-label="Ausgewählte Kategorien ausblenden">Kategorien ausblenden</button>
             <button id="toggle-images" aria-label="Bilder anzeigen oder ausblenden">Bilder laden</button>
             <button id="copy-products" aria-label="Sichtbare Produkte kopieren">Produkte kopieren</button>
         </div>
+        <div id="category-filters" class="category-filters"></div>
     </div>
 
     <table>
