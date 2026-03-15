@@ -257,8 +257,6 @@ function setupToggleImages() {
 
   if (!toggleImagesButton || !imageHeader) return;
 
-  let hoverAttached = false;
-
   toggleImagesButton.addEventListener("click", () => {
     const imageCells = document.querySelectorAll(".image-cell");
     const isHidden = imageHeader.classList.contains("hidden");
@@ -271,16 +269,15 @@ function setupToggleImages() {
           const img = document.createElement("img");
           img.src = imgUrl;
           img.alt = "Produktbild";
-          img.addEventListener("error", () => {
-            img.classList.add("img-error");
-          });
+          img.style.cursor = "zoom-in";
           cell.appendChild(img);
         }
         cell.classList.remove("hidden");
       } else {
         // Hide images
-        const img = cell.querySelector("img");
-        if (img) img.remove();
+        if (cell.querySelector("img")) {
+          cell.querySelector("img").remove();
+        }
         cell.classList.add("hidden");
       }
     });
@@ -290,11 +287,8 @@ function setupToggleImages() {
       ? "Bilder ausblenden"
       : "Bilder laden";
 
-    // Attach hover preview once
-    if (isHidden && !hoverAttached) {
-      attachImageHoverPreview();
-      hoverAttached = true;
-    }
+    // Attach hover preview if images are shown
+    if (isHidden) attachImageHoverPreview();
   });
 }
 
@@ -305,30 +299,21 @@ function attachImageHoverPreview() {
   if (!table || !imagePreview) return;
 
   table.addEventListener("mouseover", (event) => {
-    const img = event.target.closest(".image-cell img");
-    if (!img || img.classList.contains("img-error")) return;
+    const imgCell = event.target.closest(".image-cell img");
+    if (!imgCell) return;
 
-    const originalUrl = img.closest(".image-cell").dataset.originalUrl || "";
+    const originalUrl =
+      imgCell.closest(".image-cell").dataset.originalUrl || "";
     if (originalUrl) {
-      imagePreview.innerHTML = "";
-      const previewImg = document.createElement("img");
-      previewImg.src = originalUrl;
-      previewImg.alt = "Vorschau";
-      previewImg.loading = "lazy";
-      imagePreview.appendChild(previewImg);
+      imagePreview.innerHTML = `<img src="${originalUrl}" alt="Vorschau" loading="lazy">`;
       imagePreview.classList.add("visible");
     }
   });
 
   table.addEventListener("mouseout", (event) => {
-    const img = event.target.closest(".image-cell img");
-    if (!img) return;
-
-    // Only hide if we're actually leaving the image (not entering a child)
-    const related = event.relatedTarget;
-    if (related && img.contains(related)) return;
-
-    imagePreview.innerHTML = "";
-    imagePreview.classList.remove("visible");
+    if (event.target.closest(".image-cell img")) {
+      imagePreview.innerHTML = "";
+      imagePreview.classList.remove("visible");
+    }
   });
 }
