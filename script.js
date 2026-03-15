@@ -271,7 +271,6 @@ function setupToggleImages() {
           const img = document.createElement("img");
           img.src = imgUrl;
           img.alt = "Produktbild";
-          img.loading = "lazy";
           img.addEventListener("error", () => {
             img.classList.add("img-error");
           });
