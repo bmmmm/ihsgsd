@@ -50,7 +50,13 @@ function populateDropdown(dropdown, files) {
   files.forEach((file) => {
     const option = document.createElement("option");
     option.value = file;
-    option.textContent = file;
+    // "2026/KW11/2026-03-09.json" → "KW11 — 09.03.2026"
+    const match = file.match(/(\d{4})\/(KW\d+)\/(\d{4})-(\d{2})-(\d{2})\.json/);
+    if (match) {
+      option.textContent = `${match[2]} — ${match[5]}.${match[4]}.${match[1]}`;
+    } else {
+      option.textContent = file;
+    }
     dropdown.appendChild(option);
   });
 }
@@ -69,27 +75,37 @@ async function fetchOffers(filePath) {
     const data = await response.json();
     const { validFrom, validTill, totalCount, offers } = data;
 
-    offerInfo.textContent = `${totalCount} Angebote vom ${validFrom} bis ${validTill}`;
+    offerInfo.textContent = `${totalCount} Angebote vom ${formatDate(validFrom)} bis ${formatDate(validTill)}`;
 
     tableBody.innerHTML = "";
+    const fragment = document.createDocumentFragment();
     offers.forEach((offer) => {
       const row = document.createElement("tr");
       row.dataset.category = offer.category.name;
 
-      // Use web90 for the thumbnail and original for the hover image
-      const web90Url = offer.images.web90 || "";
-      const originalUrl = offer.images.original || ""; // fallback if original not found
+      const cells = [
+        offer.id,
+        offer.title,
+        offer.category.name,
+        `${offer.price.value} €`,
+        offer.description,
+      ];
+      cells.forEach((text) => {
+        const td = document.createElement("td");
+        td.textContent = text;
+        row.appendChild(td);
+      });
 
-      row.innerHTML = `
-                <td>${offer.id}</td>
-                <td>${offer.title}</td>
-                <td>${offer.category.name}</td>
-                <td>${offer.price.value} €</td>
-                <td>${offer.description}</td>
-                <td class="image-cell hidden" data-image-url="${web90Url}" data-original-url="${originalUrl}"></td>
-            `;
-      tableBody.appendChild(row);
+      // Image cell with data attributes
+      const imgCell = document.createElement("td");
+      imgCell.className = "image-cell hidden";
+      imgCell.dataset.imageUrl = offer.images.web90 || "";
+      imgCell.dataset.originalUrl = offer.images.original || "";
+      row.appendChild(imgCell);
+
+      fragment.appendChild(row);
     });
+    tableBody.appendChild(fragment);
 
     populateCategoryDropdown(offers);
   } catch (error) {
@@ -97,6 +113,13 @@ async function fetchOffers(filePath) {
     offerInfo.textContent = "Fehler beim Laden der Angebote.";
     tableBody.innerHTML = "";
   }
+}
+
+function formatDate(dateStr) {
+  // "2026-03-09" → "09.03.2026"
+  const parts = dateStr.split("-");
+  if (parts.length === 3) return `${parts[2]}.${parts[1]}.${parts[0]}`;
+  return dateStr;
 }
 
 function populateCategoryDropdown(offers) {
@@ -297,20 +320,15 @@ function attachImageHoverPreview() {
     const originalUrl =
       imgCell.closest(".image-cell").dataset.originalUrl || "";
     if (originalUrl) {
-      const imgElement = `<img src="${originalUrl}" alt="Vorschau" loading="lazy">`;
-      if (imagePreview.innerHTML !== imgElement) {
-        imagePreview.innerHTML = imgElement; // Replace placeholder message
-      }
-      imagePreview.style.visibility = "visible";
-      imagePreview.style.opacity = "1";
+      imagePreview.innerHTML = `<img src="${originalUrl}" alt="Vorschau" loading="lazy">`;
+      imagePreview.classList.add("visible");
     }
   });
 
   table.addEventListener("mouseout", (event) => {
     if (event.target.closest(".image-cell img")) {
-      imagePreview.innerHTML = `<p style="text-align: center; color: #888;">Hover over a product to preview its image.</p>`;
-      imagePreview.style.opacity = "0";
-      imagePreview.style.visibility = "hidden";
+      imagePreview.innerHTML = "";
+      imagePreview.classList.remove("visible");
     }
   });
 }

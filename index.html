@@ -15,14 +15,43 @@
 
         h1 {
             color: #ffffff;
+            margin-bottom: 10px;
         }
 
+        /* Controls layout */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .controls-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            width: 100%;
+        }
+
+        #search-input {
+            flex: 0 0 220px;
+        }
+
+        #category-filter {
+            flex: 0 0 220px;
+            height: 80px;
+        }
+
+        /* Table */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 10px;
             background-color: #1e1e1e;
             color: #e0e0e0;
+            table-layout: fixed;
         }
 
         th,
@@ -31,7 +60,15 @@
             padding: 5px;
             text-align: left;
             word-break: break-word;
+            overflow: hidden;
             text-overflow: ellipsis;
+        }
+
+        th {
+            background-color: #252525;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         /* Column widths */
@@ -46,26 +83,24 @@
             display: none;
         }
 
+        /* Image preview (hover) */
         .image-preview {
             position: fixed;
             top: 10px;
             right: 10px;
             width: 350px;
-            /* Fixed width */
             height: 350px;
-            /* Fixed height */
             border: 2px solid #444;
             background-color: #1e1e1e;
             padding: 10px;
             z-index: 1000;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            max-width: 350px;
-            max-height: 350px;
             overflow: hidden;
-            visibility: hidden;
-            /* Keeps the placeholder visible but hides content */
-            transition: opacity 0.2s ease-in-out;
-            /* Smooth transition for visibility changes */
+            display: none;
+        }
+
+        .image-preview.visible {
+            display: block;
         }
 
         .image-preview img {
@@ -74,6 +109,7 @@
             max-height: 100%;
         }
 
+        /* Form elements */
         button,
         select,
         input {
@@ -82,8 +118,8 @@
             border: 1px solid #444;
             padding: 8px 12px;
             font-size: 14px;
-            margin-right: 10px;
             cursor: pointer;
+            border-radius: 4px;
         }
 
         button:hover,
@@ -92,32 +128,65 @@
             background-color: #444;
         }
 
+        button:active {
+            background-color: #555;
+        }
+
+        /* Dropdown row */
+        .file-select-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        #offer-info {
+            color: #aaa;
+            margin: 5px 0 10px 0;
+        }
+
+        /* Table images */
         td img {
             cursor: zoom-in;
+            max-width: 80px;
         }
 
         td.image-cell {
             text-align: center;
             vertical-align: middle;
         }
+
+        /* Alternating row colors */
+        #offer-table tr:nth-child(even) {
+            background-color: #252525;
+        }
+
+        #offer-table tr:hover {
+            background-color: #333;
+        }
     </style>
 </head>
 
 <body>
-    <div id="image-preview" class="image-preview">
-        <p style="text-align: center; color: #888;">Hover over a product to preview its image.</p>
-    </div>
     <h1 id="page-title">EDEKA Wochenangebote</h1>
-    <label for="file-dropdown">Wählen Sie eine Datei:</label>
-    <select id="file-dropdown"></select>
+
+    <div class="file-select-row">
+        <label for="file-dropdown">Woche:</label>
+        <select id="file-dropdown"></select>
+    </div>
     <p id="offer-info">Lade aktuelle Informationen...</p>
-    <input id="search-input" type="text" placeholder="Suchen..." />
-    <select id="category-filter" multiple aria-label="Kategorie-Filter"></select>
-    <button id="deselect-categories" aria-label="Auswahl aufheben">Auswahl aufheben</button>
-    <button id="hide-selected-categories" aria-label="Ausgewählte Kategorien ausblenden">Ausgewählte Kategorien
-        ausblenden</button>
-    <button id="toggle-images" aria-label="Bilder anzeigen oder ausblenden">Bilder laden</button>
-    <button id="copy-products" aria-label="Sichtbare Produkte kopieren">Produkte kopieren</button>
+
+    <div class="controls">
+        <div class="controls-row">
+            <input id="search-input" type="text" placeholder="Suchen..." />
+            <select id="category-filter" multiple aria-label="Kategorie-Filter"></select>
+            <button id="deselect-categories" aria-label="Auswahl aufheben">Auswahl aufheben</button>
+            <button id="hide-selected-categories" aria-label="Ausgewählte Kategorien ausblenden">Kategorien ausblenden</button>
+            <button id="toggle-images" aria-label="Bilder anzeigen oder ausblenden">Bilder laden</button>
+            <button id="copy-products" aria-label="Sichtbare Produkte kopieren">Produkte kopieren</button>
+        </div>
+    </div>
+
     <table>
         <colgroup>
             <col class="col-id">
@@ -139,6 +208,9 @@
         </thead>
         <tbody id="offer-table"></tbody>
     </table>
+
+    <div id="image-preview" class="image-preview"></div>
+
     <script src="script.js"></script>
 </body>
 
