@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EDEKA Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-link {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .back-link:hover {
+            color: #fff;
+            border-color: #555;
+            background: #1a1a1a;
+        }
+
+        select {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            border: 1px solid #333;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .info-bar {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto;
+            gap: 20px;
+        }
+
+        .panel {
+            background: #141414;
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 20px;
+            min-height: 400px;
+        }
+
+        .panel-full {
+            grid-column: 1 / -1;
+            min-height: 550px;
+        }
+
+        .panel h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ccc;
+            margin-bottom: 16px;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 380px;
+        }
+
+        .chart-container-large {
+            width: 100%;
+            height: 500px;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 300px;
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>EDEKA Dashboard</h1>
+        <div class="header-controls">
+            <select id="week-select"></select>
+            <a href="index.html" class="back-link">&#8592; Startseite</a>
+        </div>
+    </div>
+    <div id="info-bar" class="info-bar">Lade Daten...</div>
+
+    <div class="grid">
+        <div class="panel panel-full">
+            <h2>Produkt-Netzwerk</h2>
+            <div id="chart-network" class="chart-container-large"></div>
+        </div>
+
+        <div class="panel">
+            <h2>Kategorien &mdash; Treemap</h2>
+            <div id="chart-treemap" class="chart-container"></div>
+        </div>
+
+        <div class="panel">
+            <h2>Preisverteilung pro Kategorie</h2>
+            <div id="chart-prices" class="chart-container"></div>
+        </div>
+
+        <div class="panel panel-full">
+            <h2>Wochen-Trend &mdash; Produkte pro Kategorie</h2>
+            <div id="chart-trend" class="chart-container-large"></div>
+        </div>
+    </div>
+
+    <script>
+        const CATEGORY_COLORS = {
+            'Drogerie': '#ab47bc',
+            'Fleisch & Wurst': '#ef5350',
+            'Getränke': '#42a5f5',
+            'Grundnahrung': '#ffa726',
+            'Knabbern & Naschen': '#ec407a',
+            'Molkerei & Käse': '#ffee58',
+            'Obst & Gemüse': '#66bb6a',
+            'Tiefkühl': '#26c6da',
+            'Tiernahrung': '#8d6e63',
+        };
+
+        let allWeeksData = {};
+
+        async function init() {
+            const weekSelect = document.getElementById('week-select');
+
+            const files = await fetchJSON('data/folder-structure.json');
+            files.reverse();
+            files.forEach(file => {
+                const opt = document.createElement('option');
+                opt.value = file;
+                const m = file.match(/(\d{4})\/(KW\d+)\/(\d{4})-(\d{2})-(\d{2})\.json/);
+                opt.textContent = m ? `${m[2]} — ${m[5]}.${m[4]}.${m[1]}` : file;
+                weekSelect.appendChild(opt);
+            });
+
+            weekSelect.addEventListener('change', () => loadWeek(weekSelect.value));
+
+            // Load current week
+            if (files.length > 0) {
+                await loadWeek(files[0]);
+            }
+
+            // Load trend data in background
+            loadTrendData(files);
+        }
+
+        async function fetchJSON(url) {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+            return res.json();
+        }
+
+        async function loadWeek(filePath) {
+            const data = await fetchJSON(`data/${filePath}`);
+            const { offers, totalCount, validFrom, validTill } = data;
+
+            document.getElementById('info-bar').textContent =
+                `${totalCount} Angebote vom ${formatDate(validFrom)} bis ${formatDate(validTill)}`;
+
+            renderNetwork(offers);
+            renderTreemap(offers);
+            renderPriceChart(offers);
+        }
+
+        function formatDate(d) {
+            const p = d.split('-');
+            return p.length === 3 ? `${p[2]}.${p[1]}.${p[0]}` : d;
+        }
+
+        // ── Network Graph ──────────────────────────────────────
+        function renderNetwork(offers) {
+            const chart = echarts.init(document.getElementById('chart-network'), 'dark');
+
+            const categories = [...new Set(offers.map(o => o.category.name))];
+
+            // Category nodes (center hubs)
+            const categoryNodes = categories.map(cat => ({
+                id: `cat_${cat}`,
+                name: cat,
+                symbolSize: 50,
+                category: categories.indexOf(cat),
+                itemStyle: {
+                    color: CATEGORY_COLORS[cat] || '#888',
+                    borderColor: '#fff',
+                    borderWidth: 2,
+                },
+                label: {
+                    show: true,
+                    fontSize: 13,
+                    fontWeight: 'bold',
+                    color: '#fff',
+                },
+            }));
+
+            // Product nodes
+            const productNodes = offers.map(o => {
+                const price = parseFloat(o.price.rawValue) || parseFloat(o.price.value) || 1;
+                return {
+                    id: `p_${o.id}`,
+                    name: o.title,
+                    symbolSize: Math.max(8, Math.min(30, price * 3)),
+                    category: categories.indexOf(o.category.name),
+                    value: price,
+                    itemStyle: {
+                        color: CATEGORY_COLORS[o.category.name] || '#888',
+                        opacity: 0.85,
+                    },
+                    label: { show: false },
+                };
+            });
+
+            // Links from products to their category
+            const links = offers.map(o => ({
+                source: `p_${o.id}`,
+                target: `cat_${o.category.name}`,
+                lineStyle: {
+                    color: CATEGORY_COLORS[o.category.name] || '#888',
+                    opacity: 0.15,
+                    width: 1,
+                },
+            }));
+
+            chart.setOption({
+                backgroundColor: 'transparent',
+                tooltip: {
+                    trigger: 'item',
+                    formatter: (params) => {
+                        if (params.dataType === 'node') {
+                            if (params.data.id.startsWith('cat_')) {
+                                const count = offers.filter(o => o.category.name === params.data.name).length;
+                                return `<b>${params.data.name}</b><br/>${count} Produkte`;
+                            }
+                            return `<b>${params.data.name}</b><br/>${params.data.value.toFixed(2)} €`;
+                        }
+                        return '';
+                    },
+                },
+                legend: {
+                    data: categories,
+                    textStyle: { color: '#aaa' },
+                    bottom: 10,
+                    type: 'scroll',
+                },
+                series: [{
+                    type: 'graph',
+                    layout: 'force',
+                    roam: true,
+                    draggable: true,
+                    categories: categories.map((cat, i) => ({
+                        name: cat,
+                        itemStyle: { color: CATEGORY_COLORS[cat] || '#888' },
+                    })),
+                    nodes: [...categoryNodes, ...productNodes],
+                    links: links,
+                    force: {
+                        repulsion: 120,
+                        gravity: 0.1,
+                        edgeLength: [40, 120],
+                        friction: 0.6,
+                    },
+                    emphasis: {
+                        focus: 'adjacency',
+                        lineStyle: { opacity: 0.6, width: 2 },
+                    },
+                    animation: true,
+                    animationDuration: 1500,
+                }],
+            });
+
+            window.addEventListener('resize', () => chart.resize());
+        }
+
+        // ── Treemap ────────────────────────────────────────────
+        function renderTreemap(offers) {
+            const chart = echarts.init(document.getElementById('chart-treemap'), 'dark');
+
+            const catData = {};
+            offers.forEach(o => {
+                const cat = o.category.name;
+                if (!catData[cat]) catData[cat] = { count: 0, totalPrice: 0 };
+                catData[cat].count++;
+                catData[cat].totalPrice += parseFloat(o.price.rawValue) || parseFloat(o.price.value) || 0;
+            });
+
+            const treeData = Object.entries(catData).map(([name, d]) => ({
+                name: `${name}\n${d.count} Produkte`,
+                value: d.count,
+                itemStyle: { color: CATEGORY_COLORS[name] || '#888' },
+                avgPrice: (d.totalPrice / d.count).toFixed(2),
+            }));
+
+            chart.setOption({
+                backgroundColor: 'transparent',
+                tooltip: {
+                    formatter: (p) =>
+                        `<b>${p.name.split('\n')[0]}</b><br/>` +
+                        `${p.value} Produkte<br/>` +
+                        `Ø Preis: ${p.data.avgPrice} €`,
+                },
+                series: [{
+                    type: 'treemap',
+                    roam: false,
+                    nodeClick: false,
+                    breadcrumb: { show: false },
+                    label: {
+                        show: true,
+                        fontSize: 14,
+                        fontWeight: 'bold',
+                        color: '#fff',
+                        formatter: '{b}',
+                    },
+                    itemStyle: {
+                        borderColor: '#0a0a0a',
+                        borderWidth: 3,
+                        gapWidth: 3,
+                    },
+                    data: treeData,
+                }],
+            });
+
+            window.addEventListener('resize', () => chart.resize());
+        }
+
+        // ── Price Distribution ─────────────────────────────────
+        function renderPriceChart(offers) {
+            const chart = echarts.init(document.getElementById('chart-prices'), 'dark');
+
+            const catPrices = {};
+            offers.forEach(o => {
+                const cat = o.category.name;
+                const price = parseFloat(o.price.rawValue) || parseFloat(o.price.value) || 0;
+                if (!catPrices[cat]) catPrices[cat] = [];
+                catPrices[cat].push(price);
+            });
+
+            const categories = Object.keys(catPrices).sort();
+            const avgData = categories.map(cat => {
+                const prices = catPrices[cat];
+                return +(prices.reduce((a, b) => a + b, 0) / prices.length).toFixed(2);
+            });
+            const minData = categories.map(cat => +Math.min(...catPrices[cat]).toFixed(2));
+            const maxData = categories.map(cat => +Math.max(...catPrices[cat]).toFixed(2));
+
+            chart.setOption({
+                backgroundColor: 'transparent',
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { type: 'shadow' },
+                },
+                grid: { left: 10, right: 20, bottom: 10, top: 30, containLabel: true },
+                xAxis: {
+                    type: 'value',
+                    axisLabel: { formatter: '{value} €', color: '#888' },
+                    splitLine: { lineStyle: { color: '#222' } },
+                },
+                yAxis: {
+                    type: 'category',
+                    data: categories,
+                    axisLabel: {
+                        color: '#aaa',
+                        fontSize: 11,
+                        width: 100,
+                        overflow: 'truncate',
+                    },
+                },
+                series: [
+                    {
+                        name: 'Min',
+                        type: 'bar',
+                        stack: 'range',
+                        data: minData,
+                        itemStyle: { color: 'transparent' },
+                        emphasis: { itemStyle: { color: 'transparent' } },
+                    },
+                    {
+                        name: 'Preisspanne',
+                        type: 'bar',
+                        stack: 'range',
+                        data: categories.map((cat, i) => ({
+                            value: +(maxData[i] - minData[i]).toFixed(2),
+                            itemStyle: { color: CATEGORY_COLORS[cat] || '#888', opacity: 0.4 },
+                        })),
+                    },
+                    {
+                        name: 'Ø Preis',
+                        type: 'scatter',
+                        data: categories.map((cat, i) => ({
+                            value: avgData[i],
+                            itemStyle: { color: CATEGORY_COLORS[cat] || '#888' },
+                        })),
+                        symbolSize: 12,
+                        z: 10,
+                    },
+                ],
+            });
+
+            window.addEventListener('resize', () => chart.resize());
+        }
+
+        // ── Trend Chart (all weeks) ────────────────────────────
+        async function loadTrendData(files) {
+            const trendContainer = document.getElementById('chart-trend');
+            trendContainer.innerHTML = '<div class="loading">Lade historische Daten...</div>';
+
+            const allCategories = new Set();
+            const weeklyData = [];
+
+            // Load last 20 weeks for performance
+            const recentFiles = files.slice(0, 20);
+
+            for (const file of recentFiles) {
+                try {
+                    const data = await fetchJSON(`data/${file}`);
+                    const m = file.match(/(KW\d+)/);
+                    const weekLabel = m ? m[1] : file;
+
+                    const catCounts = {};
+                    data.offers.forEach(o => {
+                        const cat = o.category.name;
+                        allCategories.add(cat);
+                        catCounts[cat] = (catCounts[cat] || 0) + 1;
+                    });
+
+                    weeklyData.push({ week: weekLabel, counts: catCounts, total: data.totalCount });
+                } catch (e) {
+                    console.warn(`Skipping ${file}:`, e);
+                }
+            }
+
+            weeklyData.reverse(); // chronological order
+
+            const cats = [...allCategories].sort();
+            const weeks = weeklyData.map(w => w.week);
+
+            const chart = echarts.init(trendContainer, 'dark');
+
+            chart.setOption({
+                backgroundColor: 'transparent',
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { type: 'cross' },
+                },
+                legend: {
+                    data: cats,
+                    textStyle: { color: '#aaa', fontSize: 11 },
+                    bottom: 0,
+                    type: 'scroll',
+                },
+                grid: { left: 10, right: 20, bottom: 50, top: 30, containLabel: true },
+                xAxis: {
+                    type: 'category',
+                    data: weeks,
+                    axisLabel: { color: '#888', rotate: 45 },
+                },
+                yAxis: {
+                    type: 'value',
+                    name: 'Produkte',
+                    nameTextStyle: { color: '#888' },
+                    axisLabel: { color: '#888' },
+                    splitLine: { lineStyle: { color: '#222' } },
+                },
+                series: cats.map(cat => ({
+                    name: cat,
+                    type: 'line',
+                    smooth: true,
+                    symbol: 'circle',
+                    symbolSize: 6,
+                    lineStyle: { width: 2, color: CATEGORY_COLORS[cat] || '#888' },
+                    itemStyle: { color: CATEGORY_COLORS[cat] || '#888' },
+                    areaStyle: { opacity: 0.05 },
+                    data: weeklyData.map(w => w.counts[cat] || 0),
+                })),
+            });
+
+            window.addEventListener('resize', () => chart.resize());
+        }
+
+        init();
+    </script>
+</body>
+
+</html>
