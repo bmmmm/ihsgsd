@@ -1,5 +1,6 @@
 # Screenshots and snapshots (debug artifacts)
 screenshot-*.png
+debug-*.png
 snapshot*.md
 
 # Playwright MCP
