@@ -100,7 +100,7 @@ async function fetchOffers(filePath) {
       // Image cell with data attributes
       const imgCell = document.createElement("td");
       imgCell.className = "image-cell hidden";
-      imgCell.dataset.imageUrl = offer.images.web90 || "";
+      imgCell.dataset.imageUrl = offer.images.app || "";
       imgCell.dataset.originalUrl = offer.images.original || "";
       row.appendChild(imgCell);
 
