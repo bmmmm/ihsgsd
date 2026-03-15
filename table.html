@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EDEKA Angebote — Tabelle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        h1 {
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        /* Controls layout */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .controls-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            width: 100%;
+        }
+
+        #search-input {
+            flex: 0 0 220px;
+        }
+
+        /* Category checkboxes */
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .category-filters label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background-color: #2a2a2a;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            border: 1px solid #444;
+            user-select: none;
+        }
+
+        .category-filters label:hover {
+            background-color: #3a3a3a;
+        }
+
+        .category-filters label.checked {
+            background-color: #1a472a;
+            border-color: #2d7a4a;
+        }
+
+        .category-filters input[type="checkbox"] {
+            accent-color: #4caf50;
+            cursor: pointer;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            table-layout: fixed;
+        }
+
+        th,
+        td {
+            border: 1px solid #333;
+            padding: 5px;
+            text-align: left;
+            word-break: break-word;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        th {
+            background-color: #252525;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        /* Column widths */
+        col.col-id { width: 7%; }
+        col.col-produkt { width: 20%; }
+        col.col-kategorie { width: 13%; }
+        col.col-preis { width: 8%; }
+        col.col-beschreibung { width: 40%; }
+        col.col-bild { width: 12%; }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Image preview (hover) */
+        .image-preview {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 350px;
+            height: 350px;
+            border: 2px solid #444;
+            background-color: #1e1e1e;
+            padding: 10px;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            display: none;
+            pointer-events: none;
+        }
+
+        .image-preview.visible {
+            display: block;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: auto;
+            max-height: 100%;
+        }
+
+        /* Form elements */
+        button,
+        select,
+        input[type="text"] {
+            background-color: #333333;
+            color: #e0e0e0;
+            border: 1px solid #444;
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover,
+        select:hover,
+        input[type="text"]:hover {
+            background-color: #444;
+        }
+
+        button:active {
+            background-color: #555;
+        }
+
+        /* Dropdown row */
+        .file-select-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        #offer-info {
+            color: #aaa;
+            margin: 5px 0 10px 0;
+        }
+
+        /* Table images */
+        td img {
+            cursor: zoom-in;
+            max-width: 80px;
+        }
+
+        td img.img-error {
+            display: none;
+        }
+
+        td.image-cell {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        /* Alternating row colors */
+        #offer-table tr:nth-child(even) {
+            background-color: #252525;
+        }
+
+        #offer-table tr:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
+        <h1 id="page-title" style="margin:0;">EDEKA Wochenangebote</h1>
+        <a href="index.html" style="color:#888; text-decoration:none; padding:8px 16px; border:1px solid #333; border-radius:8px; font-size:0.95rem; transition:all 0.2s;"
+           onmouseover="this.style.color='#fff'; this.style.borderColor='#555'; this.style.background='#1a1a1a'"
+           onmouseout="this.style.color='#888'; this.style.borderColor='#333'; this.style.background='transparent'">&#8592; Startseite</a>
+    </div>
+
+    <div class="file-select-row">
+        <label for="file-dropdown">Woche:</label>
+        <select id="file-dropdown"></select>
+    </div>
+    <p id="offer-info">Lade aktuelle Informationen...</p>
+
+    <div class="controls">
+        <div class="controls-row">
+            <input id="search-input" type="text" placeholder="Suchen..." />
+            <button id="toggle-images" aria-label="Bilder anzeigen oder ausblenden">Bilder laden</button>
+            <button id="copy-products" aria-label="Sichtbare Produkte kopieren">Produkte kopieren</button>
+        </div>
+        <div id="category-filters" class="category-filters"></div>
+    </div>
+
+    <table>
+        <colgroup>
+            <col class="col-id">
+            <col class="col-produkt">
+            <col class="col-kategorie">
+            <col class="col-preis">
+            <col class="col-beschreibung">
+            <col class="col-bild">
+        </colgroup>
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Produkt</th>
+                <th scope="col">Kategorie</th>
+                <th scope="col">Preis</th>
+                <th scope="col">Beschreibung</th>
+                <th scope="col" id="image-column-header" class="hidden">Bild</th>
+            </tr>
+        </thead>
+        <tbody id="offer-table"></tbody>
+    </table>
+
+    <div id="image-preview" class="image-preview"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
