@@ -306,12 +306,14 @@
 
             weekSelect.addEventListener('change', () => loadWeek(weekSelect.value));
 
+            // Load trend data first so activeCategories is populated
+            await loadAllTrendData(files);
+            buildFiltersBar();
+
             if (files.length > 0) {
                 await loadWeek(files[0]);
             }
 
-            await loadAllTrendData(files);
-            buildFiltersBar();
             renderTrend();
             setupNetworkZoomGuard();
         }
