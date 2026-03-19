@@ -353,9 +353,9 @@
             trendContainer.innerHTML = '<div class="loading">Lade historische Daten...</div>';
 
             const catSet = new Set();
-            const weeklyData = [];
 
-            for (const file of files) {
+            // Fetch all weeks in parallel
+            const results = await Promise.all(files.map(async (file) => {
                 try {
                     const data = await fetchJSON(`data/${file}`);
                     const m = file.match(/(KW\d+)/);
@@ -368,13 +368,15 @@
                         catCounts[cat] = (catCounts[cat] || 0) + 1;
                     });
 
-                    weeklyData.push({ week: weekLabel, counts: catCounts, total: data.totalCount });
+                    return { week: weekLabel, counts: catCounts, total: data.totalCount };
                 } catch (e) {
                     console.warn(`Skipping ${file}:`, e);
+                    return null;
                 }
-            }
+            }));
 
-            weeklyData.reverse();
+            // Filter nulls and reverse to chronological order
+            const weeklyData = results.filter(Boolean).reverse();
             allTrendData = weeklyData;
             allTrendCategories = [...catSet].sort();
             activeCategories = new Set(allTrendCategories.filter(c => !HIDDEN_CATEGORIES_DEFAULT.includes(c)));
