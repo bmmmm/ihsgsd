@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", initializePage);
 
-const HIDDEN_CATEGORIES_DEFAULT = ["Fleisch & Wurst", "Drogerie", "Tiernahrung"];
+const HIDDEN_CATEGORIES_DEFAULT = ["Fleisch & Wurst", "Drogerie", "Tiernahrung", "Fisch & Meeresfrüchte"];
 
 async function initializePage() {
   const dropdown = document.getElementById("file-dropdown");
@@ -124,10 +124,12 @@ function formatDate(dateStr) {
 }
 
 function populateCategoryCheckboxes(offers) {
-  const container = document.getElementById("category-filters");
-  if (!container) return;
+  const activeContainer = document.getElementById("category-filters");
+  const hiddenContainer = document.getElementById("hidden-category-filters");
+  if (!activeContainer) return;
 
-  container.innerHTML = "";
+  activeContainer.innerHTML = "";
+  if (hiddenContainer) hiddenContainer.innerHTML = "";
 
   const categoryCounts = offers.reduce((counts, offer) => {
     counts[offer.category.name] = (counts[offer.category.name] || 0) + 1;
@@ -140,27 +142,48 @@ function populateCategoryCheckboxes(offers) {
     checkbox.type = "checkbox";
     checkbox.value = category;
 
-    // Default: show all except hidden categories
     const isVisible = !HIDDEN_CATEGORIES_DEFAULT.includes(category);
     checkbox.checked = isVisible;
     if (isVisible) label.classList.add("checked");
 
     checkbox.addEventListener("change", () => {
       label.classList.toggle("checked", checkbox.checked);
+      distributeCategoryLabels();
       applyCategoryFilter();
     });
 
     label.appendChild(checkbox);
     label.appendChild(document.createTextNode(` ${category} (${count})`));
-    container.appendChild(label);
+
+    if (isVisible) {
+      activeContainer.appendChild(label);
+    } else if (hiddenContainer) {
+      hiddenContainer.appendChild(label);
+    }
   });
 
-  // Apply initial filter
+  distributeCategoryLabels();
   applyCategoryFilter();
 }
 
+function distributeCategoryLabels() {
+  const activeContainer = document.getElementById("category-filters");
+  const hiddenContainer = document.getElementById("hidden-category-filters");
+  if (!activeContainer || !hiddenContainer) return;
+
+  const allLabels = [...document.querySelectorAll("#category-filters label, #hidden-category-filters label")];
+  allLabels.forEach((label) => {
+    const cb = label.querySelector("input[type='checkbox']");
+    if (!cb) return;
+    const target = cb.checked ? activeContainer : hiddenContainer;
+    target.appendChild(label);
+  });
+
+  hiddenContainer.style.display = hiddenContainer.querySelectorAll("label").length > 0 ? "" : "none";
+}
+
 function applyCategoryFilter() {
-  const checkboxes = document.querySelectorAll("#category-filters input[type='checkbox']");
+  const checkboxes = document.querySelectorAll("#category-filters input[type='checkbox'], #hidden-category-filters input[type='checkbox']");
   const visibleCategories = [];
   checkboxes.forEach((cb) => {
     if (cb.checked) visibleCategories.push(cb.value);

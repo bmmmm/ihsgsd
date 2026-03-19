@@ -181,6 +181,26 @@
             border-color: transparent;
         }
 
+        .hidden-filters {
+            margin-top: 0;
+            margin-bottom: 20px;
+            padding-top: 6px;
+            border-top: 1px solid #222;
+        }
+
+        .hidden-filters .label {
+            color: #555;
+            font-size: 0.8rem;
+        }
+
+        .hidden-filters .cat-btn {
+            opacity: 0.45;
+        }
+
+        .hidden-filters .cat-btn.active {
+            opacity: 1;
+        }
+
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -276,6 +296,7 @@
 
     <div id="stats-row" class="stats-row"></div>
     <div id="filters-bar" class="filters-bar"></div>
+    <div id="hidden-filters-bar" class="filters-bar hidden-filters"></div>
 
     <div class="grid">
         <div class="panel panel-full">
@@ -313,9 +334,10 @@
             'Obst & Gemüse': '#66bb6a',
             'Tiefkühl': '#26c6da',
             'Tiernahrung': '#8d6e63',
+            'Fisch & Meeresfrüchte': '#29b6f6',
         };
 
-        const HIDDEN_CATEGORIES_DEFAULT = ['Fleisch & Wurst', 'Drogerie', 'Tiernahrung'];
+        const HIDDEN_CATEGORIES_DEFAULT = ['Fleisch & Wurst', 'Drogerie', 'Tiernahrung', 'Fisch & Meeresfrüchte'];
 
         let allTrendData = [];
         let allTrendCategories = [];
@@ -471,13 +493,20 @@
 
         // ── Filters bar ──────────────────────────────────────────
         function buildFiltersBar() {
-            const bar = document.getElementById('filters-bar');
-            bar.innerHTML = '';
+            const activeBar = document.getElementById('filters-bar');
+            const hiddenBar = document.getElementById('hidden-filters-bar');
+            activeBar.innerHTML = '';
+            hiddenBar.innerHTML = '';
 
-            const catLabel = document.createElement('span');
-            catLabel.className = 'label';
-            catLabel.textContent = 'Kategorien:';
-            bar.appendChild(catLabel);
+            const activeLabel = document.createElement('span');
+            activeLabel.className = 'label';
+            activeLabel.textContent = 'Kategorien:';
+            activeBar.appendChild(activeLabel);
+
+            const hiddenLabel = document.createElement('span');
+            hiddenLabel.className = 'label';
+            hiddenLabel.textContent = 'Ausgeblendet:';
+            hiddenBar.appendChild(hiddenLabel);
 
             allTrendCategories.forEach(cat => {
                 const btn = document.createElement('button');
@@ -495,13 +524,31 @@
                     } else {
                         activeCategories.add(cat);
                     }
+                    distributeButtons();
                     updateCategoryButtons();
                     renderFilteredWeekCharts();
                     renderTrend();
                 });
                 btn.dataset.cat = cat;
-                bar.appendChild(btn);
+                (isActive ? activeBar : hiddenBar).appendChild(btn);
             });
+
+            distributeButtons();
+        }
+
+        function distributeButtons() {
+            const activeBar = document.getElementById('filters-bar');
+            const hiddenBar = document.getElementById('hidden-filters-bar');
+            const allBtns = [...document.querySelectorAll('.cat-btn')];
+
+            allBtns.forEach(btn => {
+                const cat = btn.dataset.cat;
+                const isActive = activeCategories.has(cat);
+                const targetBar = isActive ? activeBar : hiddenBar;
+                targetBar.appendChild(btn);
+            });
+
+            hiddenBar.style.display = hiddenBar.querySelectorAll('.cat-btn').length > 0 ? '' : 'none';
         }
 
         function updateCategoryButtons() {
@@ -606,7 +653,8 @@
                         edgeLength: [30, 80],
                         friction: 0.6,
                     },
-                    scaleLimit: { min: 0.3, max: 5 },
+                    scaleLimit: { min: 0.1, max: 5 },
+                    zoom: 0.55,
                     emphasis: {
                         focus: 'adjacency',
                         lineStyle: { opacity: 0.6, width: 2 },
@@ -615,6 +663,38 @@
                     animationDuration: 1500,
                 }],
             });
+
+            // Auto-fit after force layout settles
+            let fitTimer = null;
+            chart.on('graphRoamEnd', () => clearTimeout(fitTimer));
+            const fitToView = () => {
+                clearTimeout(fitTimer);
+                fitTimer = setTimeout(() => {
+                    const model = chart.getModel().getSeries()[0];
+                    const nodes = model.getData();
+                    if (!nodes.count()) return;
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    nodes.each((idx) => {
+                        const layout = nodes.getItemLayout(idx);
+                        if (!layout) return;
+                        minX = Math.min(minX, layout[0]);
+                        maxX = Math.max(maxX, layout[0]);
+                        minY = Math.min(minY, layout[1]);
+                        maxY = Math.max(maxY, layout[1]);
+                    });
+                    const container = chart.getDom();
+                    const w = container.clientWidth;
+                    const h = container.clientHeight;
+                    const graphW = maxX - minX || 1;
+                    const graphH = maxY - minY || 1;
+                    const padding = 0.8;
+                    const zoom = Math.min(w / graphW, h / graphH) * padding;
+                    const clampedZoom = Math.max(0.2, Math.min(zoom, 1.2));
+                    chart.setOption({ series: [{ zoom: clampedZoom, center: [(minX + maxX) / 2, (minY + maxY) / 2] }] });
+                    networkZoomLevel = clampedZoom;
+                }, 1800);
+            };
+            fitToView();
         }
 
         // ── Treemap ────────────────────────────────────────────

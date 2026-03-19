@@ -74,6 +74,28 @@
             cursor: pointer;
         }
 
+        .hidden-categories {
+            margin-top: 0;
+            padding-top: 4px;
+            border-top: 1px solid #333;
+        }
+
+        .hidden-categories::before {
+            content: "Ausgeblendet:";
+            font-size: 11px;
+            color: #666;
+            margin-right: 4px;
+            align-self: center;
+        }
+
+        .hidden-categories label {
+            opacity: 0.5;
+        }
+
+        .hidden-categories label.checked {
+            opacity: 1;
+        }
+
         /* Table */
         table {
             width: 100%;
@@ -227,6 +249,7 @@
             <button id="copy-products" aria-label="Sichtbare Produkte kopieren">Produkte kopieren</button>
         </div>
         <div id="category-filters" class="category-filters"></div>
+        <div id="hidden-category-filters" class="category-filters hidden-categories"></div>
     </div>
 
     <table>
