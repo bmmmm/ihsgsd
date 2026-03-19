@@ -699,11 +699,8 @@
             const container = document.getElementById('chart-trend');
             if (allTrendData.length === 0) return;
 
-            // Apply time range filter
-            const maxWeeks = TIME_RANGES[activeTimeRange].weeks;
-            const data = maxWeeks === Infinity
-                ? allTrendData
-                : allTrendData.slice(-maxWeeks);
+            // Trend always shows all data (time range filter only affects week charts)
+            const data = allTrendData;
 
             const weeks = data.map(w => w.week);
             const cats = allTrendCategories.filter(c => activeCategories.has(c));
