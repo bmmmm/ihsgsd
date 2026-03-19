@@ -274,6 +274,7 @@
         };
 
         const TIME_RANGES = [
+            { label: 'Aktuelle Woche', weeks: 1 },
             { label: '3 Monate', weeks: 13 },
             { label: '6 Monate', weeks: 26 },
             { label: '1 Jahr', weeks: 52 },
@@ -283,7 +284,7 @@
         let allFiles = [];
         let allTrendData = [];       // all weeks, chronological
         let allTrendCategories = [];
-        let activeTimeRange = 2;     // default: 1 Jahr
+        let activeTimeRange = 0;     // default: Aktuelle Woche
         let activeCategories = new Set();
         let trendChart = null;
         let charts = {};             // track all chart instances for proper disposal
