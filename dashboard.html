@@ -74,7 +74,36 @@
             margin-bottom: 12px;
         }
 
-        /* Time range & category filters */
+        /* KPI stats */
+        .stats-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: #141414;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 14px 20px;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .stat-card .stat-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 2px;
+        }
+
+        /* Category filters */
         .filters-bar {
             display: flex;
             flex-wrap: wrap;
@@ -87,36 +116,6 @@
             color: #888;
             font-size: 0.85rem;
             margin-right: 4px;
-        }
-
-        .filter-btn {
-            background: #1a1a1a;
-            color: #aaa;
-            border: 1px solid #333;
-            padding: 5px 14px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            user-select: none;
-        }
-
-        .filter-btn:hover {
-            background: #2a2a2a;
-            color: #fff;
-        }
-
-        .filter-btn.active {
-            background: #1a472a;
-            border-color: #2d7a4a;
-            color: #fff;
-        }
-
-        .filter-separator {
-            width: 1px;
-            height: 24px;
-            background: #333;
-            margin: 0 6px;
         }
 
         .cat-btn {
@@ -233,6 +232,7 @@
     </div>
     <div id="info-bar" class="info-bar">Lade Daten...</div>
 
+    <div id="stats-row" class="stats-row"></div>
     <div id="filters-bar" class="filters-bar"></div>
 
     <div class="grid">
@@ -273,29 +273,21 @@
             'Tiernahrung': '#8d6e63',
         };
 
-        const TIME_RANGES = [
-            { label: 'Aktuelle Woche', weeks: 1 },
-            { label: '3 Monate', weeks: 13 },
-            { label: '6 Monate', weeks: 26 },
-            { label: '1 Jahr', weeks: 52 },
-            { label: 'Gesamt', weeks: Infinity },
-        ];
+        const HIDDEN_CATEGORIES_DEFAULT = ['Fleisch & Wurst', 'Drogerie', 'Tiernahrung'];
 
-        let allFiles = [];
-        let allTrendData = [];       // all weeks, chronological
+        let allTrendData = [];
         let allTrendCategories = [];
-        let activeTimeRange = 0;     // default: Aktuelle Woche
         let activeCategories = new Set();
         let trendChart = null;
-        let charts = {};             // track all chart instances for proper disposal
-        let currentOffers = [];      // current week's offers for re-filtering
+        let charts = {};
+        let currentOffers = [];
+        let resizeHandler = null;
 
         async function init() {
             const weekSelect = document.getElementById('week-select');
 
             const files = await fetchJSON('data/folder-structure.json');
             files.reverse();
-            allFiles = files;
 
             files.forEach(file => {
                 const opt = document.createElement('option');
@@ -307,7 +299,6 @@
 
             weekSelect.addEventListener('change', () => loadWeek(weekSelect.value));
 
-            // Load trend data first so activeCategories is populated
             await loadAllTrendData(files);
             buildFiltersBar();
 
@@ -317,6 +308,13 @@
 
             renderTrend();
             setupNetworkZoomGuard();
+
+            // Single resize handler for all charts
+            resizeHandler = () => {
+                Object.values(charts).forEach(c => c && c.resize());
+                if (trendChart) trendChart.resize();
+            };
+            window.addEventListener('resize', resizeHandler);
         }
 
         async function fetchJSON(url) {
@@ -339,6 +337,7 @@
         function renderFilteredWeekCharts() {
             networkZoomLevel = 1;
             const filtered = currentOffers.filter(o => activeCategories.has(o.category.name));
+            renderStats(filtered);
             renderNetwork(filtered);
             renderTreemap(filtered);
             renderPriceChart(filtered);
@@ -349,6 +348,35 @@
             return p.length === 3 ? `${p[2]}.${p[1]}.${p[0]}` : d;
         }
 
+        // ── KPI Stats ────────────────────────────────────────────
+        function renderStats(offers) {
+            const row = document.getElementById('stats-row');
+            const totalProducts = offers.length;
+            const categories = new Set(offers.map(o => o.category.name)).size;
+            const prices = offers.map(o => parseFloat(o.price.rawValue) || parseFloat(o.price.value) || 0);
+            const avgPrice = prices.length ? (prices.reduce((a, b) => a + b, 0) / prices.length).toFixed(2) : '0.00';
+            const maxPrice = prices.length ? Math.max(...prices).toFixed(2) : '0.00';
+
+            row.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${totalProducts}</div>
+                    <div class="stat-label">Produkte</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${categories}</div>
+                    <div class="stat-label">Kategorien</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${avgPrice} &euro;</div>
+                    <div class="stat-label">&Oslash; Preis</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${maxPrice} &euro;</div>
+                    <div class="stat-label">Teuerster Artikel</div>
+                </div>
+            `;
+        }
+
         // ── Load ALL trend data ──────────────────────────────────
         async function loadAllTrendData(files) {
             const trendContainer = document.getElementById('chart-trend');
@@ -356,7 +384,6 @@
 
             const catSet = new Set();
 
-            // Fetch all weeks in parallel
             const results = await Promise.all(files.map(async (file) => {
                 try {
                     const data = await fetchJSON(`data/${file}`);
@@ -377,7 +404,6 @@
                 }
             }));
 
-            // Filter nulls and reverse to chronological order
             const weeklyData = results.filter(Boolean).reverse();
             allTrendData = weeklyData;
             allTrendCategories = [...catSet].sort();
@@ -389,31 +415,6 @@
             const bar = document.getElementById('filters-bar');
             bar.innerHTML = '';
 
-            // Time range buttons
-            const timeLabel = document.createElement('span');
-            timeLabel.className = 'label';
-            timeLabel.textContent = 'Zeitraum:';
-            bar.appendChild(timeLabel);
-
-            TIME_RANGES.forEach((range, i) => {
-                const btn = document.createElement('button');
-                btn.className = 'filter-btn' + (i === activeTimeRange ? ' active' : '');
-                btn.textContent = range.label;
-                btn.addEventListener('click', () => {
-                    activeTimeRange = i;
-                    updateFilterButtons();
-                    renderTrend();
-                });
-                btn.dataset.timeIdx = i;
-                bar.appendChild(btn);
-            });
-
-            // Separator
-            const sep = document.createElement('div');
-            sep.className = 'filter-separator';
-            bar.appendChild(sep);
-
-            // Category buttons
             const catLabel = document.createElement('span');
             catLabel.className = 'label';
             catLabel.textContent = 'Kategorien:';
@@ -440,12 +441,6 @@
                 });
                 btn.dataset.cat = cat;
                 bar.appendChild(btn);
-            });
-        }
-
-        function updateFilterButtons() {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.toggle('active', +btn.dataset.timeIdx === activeTimeRange);
             });
         }
 
@@ -559,8 +554,6 @@
                     animationDuration: 1500,
                 }],
             });
-
-            window.addEventListener('resize', () => chart.resize());
         }
 
         // ── Treemap ────────────────────────────────────────────
@@ -612,8 +605,6 @@
                     data: treeData,
                 }],
             });
-
-            window.addEventListener('resize', () => chart.resize());
         }
 
         // ── Price Distribution ─────────────────────────────────
@@ -690,18 +681,14 @@
                     },
                 ],
             });
-
-            window.addEventListener('resize', () => chart.resize());
         }
 
-        // ── Trend Chart (filtered) ───────────────────────────────
+        // ── Trend Chart ──────────────────────────────────────────
         function renderTrend() {
             const container = document.getElementById('chart-trend');
             if (allTrendData.length === 0) return;
 
-            // Trend always shows all data (time range filter only affects week charts)
             const data = allTrendData;
-
             const weeks = data.map(w => w.week);
             const cats = allTrendCategories.filter(c => activeCategories.has(c));
 
@@ -717,11 +704,23 @@
                 legend: {
                     data: cats,
                     textStyle: { color: '#aaa', fontSize: 11 },
-                    bottom: 0,
+                    bottom: 40,
                     type: 'scroll',
                     selected: Object.fromEntries(cats.map(c => [c, true])),
                 },
-                grid: { left: 10, right: 20, bottom: 50, top: 30, containLabel: true },
+                grid: { left: 10, right: 20, bottom: 90, top: 30, containLabel: true },
+                dataZoom: [{
+                    type: 'slider',
+                    start: 0,
+                    end: 100,
+                    bottom: 8,
+                    height: 22,
+                    borderColor: '#333',
+                    backgroundColor: '#1a1a1a',
+                    fillerColor: 'rgba(76, 175, 80, 0.15)',
+                    handleStyle: { color: '#4caf50' },
+                    textStyle: { color: '#888' },
+                }],
                 xAxis: {
                     type: 'category',
                     data: weeks,
@@ -746,8 +745,6 @@
                     data: data.map(w => w.counts[cat] || 0),
                 })),
             });
-
-            window.addEventListener('resize', () => trendChart.resize());
         }
 
         // ── Ctrl-to-zoom for network chart ───────────────────
@@ -769,7 +766,6 @@
             const hint = document.getElementById('network-zoom-hint');
             let hintTimeout = null;
 
-            // Ctrl/Cmd + scroll wheel to zoom
             container.addEventListener('wheel', (e) => {
                 if (e.ctrlKey || e.metaKey) {
                     e.preventDefault();
@@ -781,7 +777,6 @@
                 }
             }, { passive: false });
 
-            // Ctrl/Cmd + Plus/Minus keys to zoom
             document.addEventListener('keydown', (e) => {
                 if (!(e.ctrlKey || e.metaKey)) return;
                 if (e.key === '+' || e.key === '=') {
@@ -793,8 +788,6 @@
                 }
             });
         }
-
-        const HIDDEN_CATEGORIES_DEFAULT = ['Fleisch & Wurst', 'Drogerie', 'Tiernahrung'];
 
         init();
     </script>
