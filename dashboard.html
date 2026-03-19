@@ -186,6 +186,31 @@
             font-size: 1.1rem;
         }
 
+        /* Ctrl-to-zoom overlay */
+        .zoom-hint-wrapper {
+            position: relative;
+        }
+
+        .zoom-hint {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            font-size: 1rem;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            border-radius: 12px;
+        }
+
+        .zoom-hint.visible {
+            opacity: 1;
+        }
+
         @media (max-width: 900px) {
             .grid {
                 grid-template-columns: 1fr;
@@ -213,7 +238,10 @@
     <div class="grid">
         <div class="panel panel-full">
             <h2>Produkt-Netzwerk</h2>
-            <div id="chart-network" class="chart-container-large"></div>
+            <div class="zoom-hint-wrapper">
+                <div id="network-zoom-hint" class="zoom-hint">Ctrl + Scrollen zum Zoomen</div>
+                <div id="chart-network" class="chart-container-large"></div>
+            </div>
         </div>
 
         <div class="panel">
@@ -259,6 +287,7 @@
         let activeCategories = new Set();
         let trendChart = null;
         let charts = {};             // track all chart instances for proper disposal
+        let currentOffers = [];      // current week's offers for re-filtering
 
         async function init() {
             const weekSelect = document.getElementById('week-select');
@@ -284,6 +313,7 @@
             await loadAllTrendData(files);
             buildFiltersBar();
             renderTrend();
+            setupNetworkZoomGuard();
         }
 
         async function fetchJSON(url) {
@@ -295,13 +325,19 @@
         async function loadWeek(filePath) {
             const data = await fetchJSON(`data/${filePath}`);
             const { offers, totalCount, validFrom, validTill } = data;
+            currentOffers = offers;
 
             document.getElementById('info-bar').textContent =
                 `${totalCount} Angebote vom ${formatDate(validFrom)} bis ${formatDate(validTill)}`;
 
-            renderNetwork(offers);
-            renderTreemap(offers);
-            renderPriceChart(offers);
+            renderFilteredWeekCharts();
+        }
+
+        function renderFilteredWeekCharts() {
+            const filtered = currentOffers.filter(o => activeCategories.has(o.category.name));
+            renderNetwork(filtered);
+            renderTreemap(filtered);
+            renderPriceChart(filtered);
         }
 
         function formatDate(d) {
@@ -339,7 +375,7 @@
             weeklyData.reverse();
             allTrendData = weeklyData;
             allTrendCategories = [...catSet].sort();
-            activeCategories = new Set(allTrendCategories);
+            activeCategories = new Set(allTrendCategories.filter(c => !HIDDEN_CATEGORIES_DEFAULT.includes(c)));
         }
 
         // ── Filters bar ──────────────────────────────────────────
@@ -393,6 +429,7 @@
                         activeCategories.add(cat);
                     }
                     updateCategoryButtons();
+                    renderFilteredWeekCharts();
                     renderTrend();
                 });
                 btn.dataset.cat = cat;
@@ -494,7 +531,7 @@
                 series: [{
                     type: 'graph',
                     layout: 'force',
-                    roam: true,
+                    roam: 'move',
                     draggable: true,
                     categories: categories.map(cat => ({
                         name: cat,
@@ -709,6 +746,33 @@
 
             window.addEventListener('resize', () => trendChart.resize());
         }
+
+        // ── Ctrl-to-zoom for network chart ───────────────────
+        function setupNetworkZoomGuard() {
+            const container = document.getElementById('chart-network');
+            const hint = document.getElementById('network-zoom-hint');
+            let hintTimeout = null;
+
+            container.addEventListener('wheel', (e) => {
+                if (e.ctrlKey || e.metaKey) {
+                    e.preventDefault();
+                    const chart = charts.network;
+                    if (!chart) return;
+                    const zoom = e.deltaY < 0 ? 1.15 : 0.87;
+                    chart.dispatchAction({
+                        type: 'graphRoam',
+                        zoom: zoom,
+                    });
+                } else {
+                    // Show hint overlay briefly
+                    hint.classList.add('visible');
+                    clearTimeout(hintTimeout);
+                    hintTimeout = setTimeout(() => hint.classList.remove('visible'), 1200);
+                }
+            }, { passive: false });
+        }
+
+        const HIDDEN_CATEGORIES_DEFAULT = ['Fleisch & Wurst', 'Drogerie', 'Tiernahrung'];
 
         init();
     </script>
