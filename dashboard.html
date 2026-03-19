@@ -25,7 +25,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             flex-wrap: wrap;
             gap: 12px;
         }
@@ -71,7 +71,73 @@
         .info-bar {
             color: #888;
             font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        /* Time range & category filters */
+        .filters-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
             margin-bottom: 20px;
+        }
+
+        .filters-bar .label {
+            color: #888;
+            font-size: 0.85rem;
+            margin-right: 4px;
+        }
+
+        .filter-btn {
+            background: #1a1a1a;
+            color: #aaa;
+            border: 1px solid #333;
+            padding: 5px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .filter-btn:hover {
+            background: #2a2a2a;
+            color: #fff;
+        }
+
+        .filter-btn.active {
+            background: #1a472a;
+            border-color: #2d7a4a;
+            color: #fff;
+        }
+
+        .filter-separator {
+            width: 1px;
+            height: 24px;
+            background: #333;
+            margin: 0 6px;
+        }
+
+        .cat-btn {
+            background: #1a1a1a;
+            color: #aaa;
+            border: 1px solid #333;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .cat-btn:hover {
+            opacity: 0.9;
+        }
+
+        .cat-btn.active {
+            color: #fff;
+            border-color: transparent;
         }
 
         .grid {
@@ -142,6 +208,8 @@
     </div>
     <div id="info-bar" class="info-bar">Lade Daten...</div>
 
+    <div id="filters-bar" class="filters-bar"></div>
+
     <div class="grid">
         <div class="panel panel-full">
             <h2>Produkt-Netzwerk</h2>
@@ -177,13 +245,28 @@
             'Tiernahrung': '#8d6e63',
         };
 
-        let allWeeksData = {};
+        const TIME_RANGES = [
+            { label: '3 Monate', weeks: 13 },
+            { label: '6 Monate', weeks: 26 },
+            { label: '1 Jahr', weeks: 52 },
+            { label: 'Gesamt', weeks: Infinity },
+        ];
+
+        let allFiles = [];
+        let allTrendData = [];       // all weeks, chronological
+        let allTrendCategories = [];
+        let activeTimeRange = 2;     // default: 1 Jahr
+        let activeCategories = new Set();
+        let trendChart = null;
+        let charts = {};             // track all chart instances for proper disposal
 
         async function init() {
             const weekSelect = document.getElementById('week-select');
 
             const files = await fetchJSON('data/folder-structure.json');
             files.reverse();
+            allFiles = files;
+
             files.forEach(file => {
                 const opt = document.createElement('option');
                 opt.value = file;
@@ -194,13 +277,13 @@
 
             weekSelect.addEventListener('change', () => loadWeek(weekSelect.value));
 
-            // Load current week
             if (files.length > 0) {
                 await loadWeek(files[0]);
             }
 
-            // Load trend data in background
-            loadTrendData(files);
+            await loadAllTrendData(files);
+            buildFiltersBar();
+            renderTrend();
         }
 
         async function fetchJSON(url) {
@@ -226,13 +309,123 @@
             return p.length === 3 ? `${p[2]}.${p[1]}.${p[0]}` : d;
         }
 
+        // ── Load ALL trend data ──────────────────────────────────
+        async function loadAllTrendData(files) {
+            const trendContainer = document.getElementById('chart-trend');
+            trendContainer.innerHTML = '<div class="loading">Lade historische Daten...</div>';
+
+            const catSet = new Set();
+            const weeklyData = [];
+
+            for (const file of files) {
+                try {
+                    const data = await fetchJSON(`data/${file}`);
+                    const m = file.match(/(KW\d+)/);
+                    const weekLabel = m ? m[1] : file;
+
+                    const catCounts = {};
+                    data.offers.forEach(o => {
+                        const cat = o.category.name;
+                        catSet.add(cat);
+                        catCounts[cat] = (catCounts[cat] || 0) + 1;
+                    });
+
+                    weeklyData.push({ week: weekLabel, counts: catCounts, total: data.totalCount });
+                } catch (e) {
+                    console.warn(`Skipping ${file}:`, e);
+                }
+            }
+
+            weeklyData.reverse();
+            allTrendData = weeklyData;
+            allTrendCategories = [...catSet].sort();
+            activeCategories = new Set(allTrendCategories);
+        }
+
+        // ── Filters bar ──────────────────────────────────────────
+        function buildFiltersBar() {
+            const bar = document.getElementById('filters-bar');
+            bar.innerHTML = '';
+
+            // Time range buttons
+            const timeLabel = document.createElement('span');
+            timeLabel.className = 'label';
+            timeLabel.textContent = 'Zeitraum:';
+            bar.appendChild(timeLabel);
+
+            TIME_RANGES.forEach((range, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn' + (i === activeTimeRange ? ' active' : '');
+                btn.textContent = range.label;
+                btn.addEventListener('click', () => {
+                    activeTimeRange = i;
+                    updateFilterButtons();
+                    renderTrend();
+                });
+                btn.dataset.timeIdx = i;
+                bar.appendChild(btn);
+            });
+
+            // Separator
+            const sep = document.createElement('div');
+            sep.className = 'filter-separator';
+            bar.appendChild(sep);
+
+            // Category buttons
+            const catLabel = document.createElement('span');
+            catLabel.className = 'label';
+            catLabel.textContent = 'Kategorien:';
+            bar.appendChild(catLabel);
+
+            allTrendCategories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'cat-btn' + (activeCategories.has(cat) ? ' active' : '');
+                btn.textContent = cat;
+                const color = CATEGORY_COLORS[cat] || '#888';
+                if (activeCategories.has(cat)) {
+                    btn.style.background = color;
+                    btn.style.borderColor = 'transparent';
+                }
+                btn.addEventListener('click', () => {
+                    if (activeCategories.has(cat)) {
+                        activeCategories.delete(cat);
+                    } else {
+                        activeCategories.add(cat);
+                    }
+                    updateCategoryButtons();
+                    renderTrend();
+                });
+                btn.dataset.cat = cat;
+                bar.appendChild(btn);
+            });
+        }
+
+        function updateFilterButtons() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', +btn.dataset.timeIdx === activeTimeRange);
+            });
+        }
+
+        function updateCategoryButtons() {
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                const cat = btn.dataset.cat;
+                const isActive = activeCategories.has(cat);
+                btn.classList.toggle('active', isActive);
+                const color = CATEGORY_COLORS[cat] || '#888';
+                btn.style.background = isActive ? color : '#1a1a1a';
+                btn.style.borderColor = isActive ? 'transparent' : '#333';
+                btn.style.color = isActive ? '#fff' : '#aaa';
+            });
+        }
+
         // ── Network Graph ──────────────────────────────────────
         function renderNetwork(offers) {
+            if (charts.network) charts.network.dispose();
             const chart = echarts.init(document.getElementById('chart-network'), 'dark');
+            charts.network = chart;
 
             const categories = [...new Set(offers.map(o => o.category.name))];
 
-            // Category nodes (center hubs)
             const categoryNodes = categories.map(cat => ({
                 id: `cat_${cat}`,
                 name: cat,
@@ -251,7 +444,6 @@
                 },
             }));
 
-            // Product nodes
             const productNodes = offers.map(o => {
                 const price = parseFloat(o.price.rawValue) || parseFloat(o.price.value) || 1;
                 return {
@@ -268,7 +460,6 @@
                 };
             });
 
-            // Links from products to their category
             const links = offers.map(o => ({
                 source: `p_${o.id}`,
                 target: `cat_${o.category.name}`,
@@ -305,7 +496,7 @@
                     layout: 'force',
                     roam: true,
                     draggable: true,
-                    categories: categories.map((cat, i) => ({
+                    categories: categories.map(cat => ({
                         name: cat,
                         itemStyle: { color: CATEGORY_COLORS[cat] || '#888' },
                     })),
@@ -331,7 +522,9 @@
 
         // ── Treemap ────────────────────────────────────────────
         function renderTreemap(offers) {
+            if (charts.treemap) charts.treemap.dispose();
             const chart = echarts.init(document.getElementById('chart-treemap'), 'dark');
+            charts.treemap = chart;
 
             const catData = {};
             offers.forEach(o => {
@@ -382,7 +575,9 @@
 
         // ── Price Distribution ─────────────────────────────────
         function renderPriceChart(offers) {
+            if (charts.prices) charts.prices.dispose();
             const chart = echarts.init(document.getElementById('chart-prices'), 'dark');
+            charts.prices = chart;
 
             const catPrices = {};
             offers.forEach(o => {
@@ -456,44 +651,24 @@
             window.addEventListener('resize', () => chart.resize());
         }
 
-        // ── Trend Chart (all weeks) ────────────────────────────
-        async function loadTrendData(files) {
-            const trendContainer = document.getElementById('chart-trend');
-            trendContainer.innerHTML = '<div class="loading">Lade historische Daten...</div>';
+        // ── Trend Chart (filtered) ───────────────────────────────
+        function renderTrend() {
+            const container = document.getElementById('chart-trend');
+            if (allTrendData.length === 0) return;
 
-            const allCategories = new Set();
-            const weeklyData = [];
+            // Apply time range filter
+            const maxWeeks = TIME_RANGES[activeTimeRange].weeks;
+            const data = maxWeeks === Infinity
+                ? allTrendData
+                : allTrendData.slice(-maxWeeks);
 
-            // Load last 20 weeks for performance
-            const recentFiles = files.slice(0, 20);
+            const weeks = data.map(w => w.week);
+            const cats = allTrendCategories.filter(c => activeCategories.has(c));
 
-            for (const file of recentFiles) {
-                try {
-                    const data = await fetchJSON(`data/${file}`);
-                    const m = file.match(/(KW\d+)/);
-                    const weekLabel = m ? m[1] : file;
+            if (trendChart) trendChart.dispose();
+            trendChart = echarts.init(container, 'dark');
 
-                    const catCounts = {};
-                    data.offers.forEach(o => {
-                        const cat = o.category.name;
-                        allCategories.add(cat);
-                        catCounts[cat] = (catCounts[cat] || 0) + 1;
-                    });
-
-                    weeklyData.push({ week: weekLabel, counts: catCounts, total: data.totalCount });
-                } catch (e) {
-                    console.warn(`Skipping ${file}:`, e);
-                }
-            }
-
-            weeklyData.reverse(); // chronological order
-
-            const cats = [...allCategories].sort();
-            const weeks = weeklyData.map(w => w.week);
-
-            const chart = echarts.init(trendContainer, 'dark');
-
-            chart.setOption({
+            trendChart.setOption({
                 backgroundColor: 'transparent',
                 tooltip: {
                     trigger: 'axis',
@@ -504,6 +679,7 @@
                     textStyle: { color: '#aaa', fontSize: 11 },
                     bottom: 0,
                     type: 'scroll',
+                    selected: Object.fromEntries(cats.map(c => [c, true])),
                 },
                 grid: { left: 10, right: 20, bottom: 50, top: 30, containLabel: true },
                 xAxis: {
@@ -527,11 +703,11 @@
                     lineStyle: { width: 2, color: CATEGORY_COLORS[cat] || '#888' },
                     itemStyle: { color: CATEGORY_COLORS[cat] || '#888' },
                     areaStyle: { opacity: 0.05 },
-                    data: weeklyData.map(w => w.counts[cat] || 0),
+                    data: data.map(w => w.counts[cat] || 0),
                 })),
             });
 
-            window.addEventListener('resize', () => chart.resize());
+            window.addEventListener('resize', () => trendChart.resize());
         }
 
         init();
