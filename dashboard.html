@@ -336,6 +336,7 @@
         }
 
         function renderFilteredWeekCharts() {
+            networkZoomLevel = 1;
             const filtered = currentOffers.filter(o => activeCategories.has(o.category.name));
             renderNetwork(filtered);
             renderTreemap(filtered);
@@ -752,28 +753,47 @@
         }
 
         // ── Ctrl-to-zoom for network chart ───────────────────
+        let networkZoomLevel = 1;
+
+        function applyNetworkZoom(factor) {
+            const chart = charts.network;
+            if (!chart) return;
+            networkZoomLevel *= factor;
+            chart.setOption({
+                series: [{
+                    zoom: networkZoomLevel,
+                }],
+            });
+        }
+
         function setupNetworkZoomGuard() {
             const container = document.getElementById('chart-network');
             const hint = document.getElementById('network-zoom-hint');
             let hintTimeout = null;
 
+            // Ctrl/Cmd + scroll wheel to zoom
             container.addEventListener('wheel', (e) => {
                 if (e.ctrlKey || e.metaKey) {
                     e.preventDefault();
-                    const chart = charts.network;
-                    if (!chart) return;
-                    const zoom = e.deltaY < 0 ? 1.15 : 0.87;
-                    chart.dispatchAction({
-                        type: 'graphRoam',
-                        zoom: zoom,
-                    });
+                    applyNetworkZoom(e.deltaY < 0 ? 1.15 : 0.87);
                 } else {
-                    // Show hint overlay briefly
                     hint.classList.add('visible');
                     clearTimeout(hintTimeout);
                     hintTimeout = setTimeout(() => hint.classList.remove('visible'), 1200);
                 }
             }, { passive: false });
+
+            // Ctrl/Cmd + Plus/Minus keys to zoom
+            document.addEventListener('keydown', (e) => {
+                if (!(e.ctrlKey || e.metaKey)) return;
+                if (e.key === '+' || e.key === '=') {
+                    e.preventDefault();
+                    applyNetworkZoom(1.2);
+                } else if (e.key === '-') {
+                    e.preventDefault();
+                    applyNetworkZoom(0.83);
+                }
+            });
         }
 
         const HIDDEN_CATEGORIES_DEFAULT = ['Fleisch & Wurst', 'Drogerie', 'Tiernahrung'];
