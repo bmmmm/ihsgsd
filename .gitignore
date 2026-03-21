@@ -3,9 +3,6 @@ screenshot-*.png
 debug-*.png
 snapshot*.md
 
-# Playwright MCP
-.playwright-mcp/
-
 # Raw/test output files
 output.json
 output_raw.json
