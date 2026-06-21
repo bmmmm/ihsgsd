@@ -347,11 +347,49 @@
         let currentOffers = [];
         let resizeHandler = null;
 
+        // HTML-escape a string before interpolating it into innerHTML.
+        function escapeHtml(s) {
+            return String(s)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        // Only allow http(s) image URLs; reject javascript:, data:, etc.
+        function safeImageUrl(url) {
+            if (typeof url !== 'string') return '';
+            return /^https?:\/\//i.test(url.trim()) ? url : '';
+        }
+
+        // Extract the "YYYY-MM-DD" date embedded in a data file path for sorting.
+        function fileDate(file) {
+            const m = file.match(/(\d{4})-(\d{2})-(\d{2})/);
+            return m ? m[0] : '';
+        }
+
+        // Numeric price with a safe fallback that does not coerce a real 0.00.
+        function offerPrice(o) {
+            return Number.isFinite(o.price.rawValue)
+                ? o.price.rawValue
+                : (parseFloat(o.price.value) || 0);
+        }
+
+        // Show a visible error in the info bar when loading fails.
+        function showLoadError(err) {
+            console.error('Dashboard load error:', err);
+            const bar = document.getElementById('info-bar');
+            if (bar) bar.textContent = 'Fehler beim Laden der Daten. Bitte Seite neu laden.';
+        }
+
         async function init() {
             const weekSelect = document.getElementById('week-select');
 
             const files = await fetchJSON('data/folder-structure.json');
-            files.reverse();
+            // Sort by parsed YYYY-MM-DD descending (newest first). A blind
+            // reverse() breaks at the year boundary.
+            files.sort((a, b) => fileDate(b).localeCompare(fileDate(a)));
 
             files.forEach(file => {
                 const opt = document.createElement('option');
@@ -361,9 +399,11 @@
                 weekSelect.appendChild(opt);
             });
 
-            weekSelect.addEventListener('change', () => loadWeek(weekSelect.value));
+            weekSelect.addEventListener('change', () => {
+                loadWeek(weekSelect.value).catch(showLoadError);
+            });
 
-            await loadAllTrendData(files);
+            await loadAllTrendData();
             buildFiltersBar();
 
             if (files.length > 0) {
@@ -373,10 +413,9 @@
             renderTrend();
             setupNetworkZoomGuard();
 
-            // Single resize handler for all charts
+            // Single resize handler for all charts (trend lives in charts.trend).
             resizeHandler = () => {
                 Object.values(charts).forEach(c => c && c.resize());
-                if (trendChart) trendChart.resize();
             };
             window.addEventListener('resize', resizeHandler);
         }
@@ -388,14 +427,28 @@
         }
 
         async function loadWeek(filePath) {
-            const data = await fetchJSON(`data/${filePath}`);
-            const { offers, totalCount, validFrom, validTill } = data;
-            currentOffers = offers;
+            try {
+                const data = await fetchJSON(`data/${filePath}`);
+                const { offers, totalCount, validFrom, validTill } = data;
+                currentOffers = offers;
 
-            document.getElementById('info-bar').textContent =
-                `${totalCount} Angebote vom ${formatDate(validFrom)} bis ${formatDate(validTill)}`;
+                document.getElementById('info-bar').textContent =
+                    `${totalCount} Angebote vom ${formatDate(validFrom)} bis ${formatDate(validTill)}`;
 
-            renderFilteredWeekCharts();
+                renderFilteredWeekCharts();
+            } catch (err) {
+                showLoadError(err);
+            }
+        }
+
+        // Lazily create an ECharts instance for `name` bound to `domId`, or
+        // return the existing one. Charts are initialized once; subsequent
+        // renders only call setOption with new data (no dispose/re-init).
+        function getChart(name, domId) {
+            if (!charts[name]) {
+                charts[name] = echarts.init(document.getElementById(domId), 'dark');
+            }
+            return charts[name];
         }
 
         function renderFilteredWeekCharts() {
@@ -407,86 +460,109 @@
             renderPriceChart(filtered);
         }
 
+        // Coalesce rapid category toggles into a single re-render pass.
+        let filterRenderQueued = false;
+        function scheduleFilteredRender() {
+            if (filterRenderQueued) return;
+            filterRenderQueued = true;
+            requestAnimationFrame(() => {
+                filterRenderQueued = false;
+                renderFilteredWeekCharts();
+                renderTrend();
+            });
+        }
+
         function formatDate(d) {
             const p = d.split('-');
             return p.length === 3 ? `${p[2]}.${p[1]}.${p[0]}` : d;
         }
 
         // ── KPI Stats ────────────────────────────────────────────
+        // Builds a simple "value + label" KPI card.
+        function buildStatCard(value, label) {
+            const card = document.createElement('div');
+            card.className = 'stat-card';
+            const v = document.createElement('div');
+            v.className = 'stat-value';
+            v.textContent = value;
+            const l = document.createElement('div');
+            l.className = 'stat-label';
+            l.textContent = label;
+            card.append(v, l);
+            return card;
+        }
+
         function renderStats(offers) {
             const row = document.getElementById('stats-row');
+            row.innerHTML = '';
+
             const totalProducts = offers.length;
             const categories = new Set(offers.map(o => o.category.name)).size;
-            const prices = offers.map(o => parseFloat(o.price.rawValue) || parseFloat(o.price.value) || 0);
+            const prices = offers.map(offerPrice);
             const avgPrice = prices.length ? (prices.reduce((a, b) => a + b, 0) / prices.length).toFixed(2) : '0.00';
 
-            let expensiveHtml = '';
-            if (offers.length > 0) {
-                const mostExpensive = offers.reduce((max, o) => {
-                    const p = parseFloat(o.price.rawValue) || parseFloat(o.price.value) || 0;
-                    return p > max.price ? { offer: o, price: p } : max;
-                }, { offer: null, price: 0 });
-                const o = mostExpensive.offer;
-                const imgUrl = o.images.app || o.images.original || '';
-                const imgTag = imgUrl ? `<img src="${imgUrl}" alt="${o.title}">` : '';
-                expensiveHtml = `
-                    <div class="stat-card stat-card-expensive">
-                        ${imgTag}
-                        <div class="stat-details">
-                            <div class="stat-value">${mostExpensive.price.toFixed(2)} &euro;</div>
-                            <div class="stat-product" title="${o.title}">${o.title}</div>
-                            <div class="stat-label">Teuerster Artikel</div>
-                        </div>
-                    </div>
-                `;
-            }
+            row.appendChild(buildStatCard(totalProducts, 'Produkte'));
+            row.appendChild(buildStatCard(categories, 'Kategorien'));
+            row.appendChild(buildStatCard(`${avgPrice} €`, 'Ø Preis'));
 
-            row.innerHTML = `
-                <div class="stat-card">
-                    <div class="stat-value">${totalProducts}</div>
-                    <div class="stat-label">Produkte</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">${categories}</div>
-                    <div class="stat-label">Kategorien</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">${avgPrice} &euro;</div>
-                    <div class="stat-label">&Oslash; Preis</div>
-                </div>
-                ${expensiveHtml}
-            `;
+            if (offers.length > 0) {
+                // Build the most-expensive card via DOM API so untrusted
+                // titles/URLs can never break out of an attribute.
+                const mostExpensive = offers.reduce((max, o) => {
+                    const p = offerPrice(o);
+                    return p > max.price ? { offer: o, price: p } : max;
+                }, { offer: null, price: -Infinity });
+                const o = mostExpensive.offer;
+
+                const card = document.createElement('div');
+                card.className = 'stat-card stat-card-expensive';
+
+                const imgUrl = safeImageUrl(o.images.web90 || o.images.app || o.images.original || '');
+                if (imgUrl) {
+                    const img = document.createElement('img');
+                    img.src = imgUrl;
+                    img.alt = o.title;
+                    img.loading = 'lazy';
+                    card.appendChild(img);
+                }
+
+                const details = document.createElement('div');
+                details.className = 'stat-details';
+
+                const value = document.createElement('div');
+                value.className = 'stat-value';
+                value.textContent = `${mostExpensive.price.toFixed(2)} €`;
+
+                const product = document.createElement('div');
+                product.className = 'stat-product';
+                product.title = o.title;
+                product.textContent = o.title;
+
+                const label = document.createElement('div');
+                label.className = 'stat-label';
+                label.textContent = 'Teuerster Artikel';
+
+                details.append(value, product, label);
+                card.appendChild(details);
+                row.appendChild(card);
+            }
         }
 
         // ── Load ALL trend data ──────────────────────────────────
-        async function loadAllTrendData(files) {
+        // Reads the precomputed data/trend-index.json (one small file) instead
+        // of fetching and parsing every weekly snapshot (~17 MB).
+        async function loadAllTrendData() {
             const trendContainer = document.getElementById('chart-trend');
             trendContainer.innerHTML = '<div class="loading">Lade historische Daten...</div>';
 
+            const index = await fetchJSON('data/trend-index.json');
+            // Entries: { file, week:"YYYY-KW", date:"YYYY-MM-DD", total, counts }.
+            allTrendData = [...index].sort((a, b) => a.date.localeCompare(b.date));
+
             const catSet = new Set();
-
-            const results = await Promise.all(files.map(async (file) => {
-                try {
-                    const data = await fetchJSON(`data/${file}`);
-                    const m = file.match(/(KW\d+)/);
-                    const weekLabel = m ? m[1] : file;
-
-                    const catCounts = {};
-                    data.offers.forEach(o => {
-                        const cat = o.category.name;
-                        catSet.add(cat);
-                        catCounts[cat] = (catCounts[cat] || 0) + 1;
-                    });
-
-                    return { week: weekLabel, counts: catCounts, total: data.totalCount };
-                } catch (e) {
-                    console.warn(`Skipping ${file}:`, e);
-                    return null;
-                }
-            }));
-
-            const weeklyData = results.filter(Boolean).reverse();
-            allTrendData = weeklyData;
+            allTrendData.forEach(w => {
+                Object.keys(w.counts || {}).forEach(c => catSet.add(c));
+            });
             allTrendCategories = [...catSet].sort();
             activeCategories = new Set(allTrendCategories.filter(c => !HIDDEN_CATEGORIES_DEFAULT.includes(c)));
         }
@@ -513,7 +589,7 @@
                 const color = CATEGORY_COLORS[cat] || '#888';
                 const isActive = activeCategories.has(cat);
                 btn.className = 'cat-btn' + (isActive ? ' active' : '');
-                btn.innerHTML = `<span class="cat-dot" style="background:${color}"></span>${cat}`;
+                btn.innerHTML = `<span class="cat-dot" style="background:${escapeHtml(color)}"></span>${escapeHtml(cat)}`;
                 if (isActive) {
                     btn.style.background = color;
                     btn.style.borderColor = 'transparent';
@@ -526,8 +602,8 @@
                     }
                     distributeButtons();
                     updateCategoryButtons();
-                    renderFilteredWeekCharts();
-                    renderTrend();
+                    // Debounced: multi-toggle coalesces into one render pass.
+                    scheduleFilteredRender();
                 });
                 btn.dataset.cat = cat;
                 (isActive ? activeBar : hiddenBar).appendChild(btn);
@@ -564,18 +640,24 @@
         }
 
         // ── Network Graph ──────────────────────────────────────
+        let networkFitTimer = null;
+
         function renderNetwork(offers) {
-            if (charts.network) charts.network.dispose();
-            const chart = echarts.init(document.getElementById('chart-network'), 'dark');
-            charts.network = chart;
+            // Cancel any pending auto-fit from a previous render so it can't
+            // fire setOption on a re-rendered chart and clobber networkZoomLevel.
+            clearTimeout(networkFitTimer);
+
+            const chart = getChart('network', 'chart-network');
 
             const categories = [...new Set(offers.map(o => o.category.name))];
+            // Precompute category → index once instead of indexOf per product.
+            const catIndex = new Map(categories.map((cat, i) => [cat, i]));
 
             const categoryNodes = categories.map(cat => ({
                 id: `cat_${cat}`,
                 name: cat,
                 symbolSize: 50,
-                category: categories.indexOf(cat),
+                category: catIndex.get(cat),
                 itemStyle: {
                     color: CATEGORY_COLORS[cat] || '#888',
                     borderColor: '#fff',
@@ -590,12 +672,12 @@
             }));
 
             const productNodes = offers.map(o => {
-                const price = parseFloat(o.price.rawValue) || parseFloat(o.price.value) || 1;
+                const price = offerPrice(o);
                 return {
                     id: `p_${o.id}`,
                     name: o.title,
                     symbolSize: Math.max(8, Math.min(30, price * 3)),
-                    category: categories.indexOf(o.category.name),
+                    category: catIndex.get(o.category.name),
                     value: price,
                     itemStyle: {
                         color: CATEGORY_COLORS[o.category.name] || '#888',
@@ -621,11 +703,12 @@
                     trigger: 'item',
                     formatter: (params) => {
                         if (params.dataType === 'node') {
+                            const name = escapeHtml(params.data.name);
                             if (params.data.id.startsWith('cat_')) {
                                 const count = offers.filter(o => o.category.name === params.data.name).length;
-                                return `<b>${params.data.name}</b><br/>${count} Produkte`;
+                                return `<b>${name}</b><br/>${count} Produkte`;
                             }
-                            return `<b>${params.data.name}</b><br/>${params.data.value.toFixed(2)} €`;
+                            return `<b>${name}</b><br/>${params.data.value.toFixed(2)} €`;
                         }
                         return '';
                     },
@@ -662,53 +745,50 @@
                     animation: true,
                     animationDuration: 1500,
                 }],
-            });
+            }, { notMerge: true });
 
-            // Auto-fit after force layout settles
-            let fitTimer = null;
-            chart.on('graphRoamEnd', () => clearTimeout(fitTimer));
-            const fitToView = () => {
-                clearTimeout(fitTimer);
-                fitTimer = setTimeout(() => {
-                    const model = chart.getModel().getSeries()[0];
-                    const nodes = model.getData();
-                    if (!nodes.count()) return;
-                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-                    nodes.each((idx) => {
-                        const layout = nodes.getItemLayout(idx);
-                        if (!layout) return;
-                        minX = Math.min(minX, layout[0]);
-                        maxX = Math.max(maxX, layout[0]);
-                        minY = Math.min(minY, layout[1]);
-                        maxY = Math.max(maxY, layout[1]);
-                    });
-                    const container = chart.getDom();
-                    const w = container.clientWidth;
-                    const h = container.clientHeight;
-                    const graphW = maxX - minX || 1;
-                    const graphH = maxY - minY || 1;
-                    const padding = 0.8;
-                    const zoom = Math.min(w / graphW, h / graphH) * padding;
-                    const clampedZoom = Math.max(0.2, Math.min(zoom, 1.2));
-                    chart.setOption({ series: [{ zoom: clampedZoom, center: [(minX + maxX) / 2, (minY + maxY) / 2] }] });
-                    networkZoomLevel = clampedZoom;
-                }, 1800);
-            };
-            fitToView();
+            // Auto-fit after force layout settles. The roam guard must only be
+            // attached once (the chart instance is reused across renders).
+            if (!chart._roamGuardAttached) {
+                chart.on('graphRoamEnd', () => clearTimeout(networkFitTimer));
+                chart._roamGuardAttached = true;
+            }
+            networkFitTimer = setTimeout(() => {
+                const model = chart.getModel().getSeries()[0];
+                const nodes = model.getData();
+                if (!nodes.count()) return;
+                let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                nodes.each((idx) => {
+                    const layout = nodes.getItemLayout(idx);
+                    if (!layout) return;
+                    minX = Math.min(minX, layout[0]);
+                    maxX = Math.max(maxX, layout[0]);
+                    minY = Math.min(minY, layout[1]);
+                    maxY = Math.max(maxY, layout[1]);
+                });
+                const container = chart.getDom();
+                const w = container.clientWidth;
+                const h = container.clientHeight;
+                const graphW = maxX - minX || 1;
+                const graphH = maxY - minY || 1;
+                const padding = 0.8;
+                const zoom = Math.min(w / graphW, h / graphH) * padding;
+                const clampedZoom = Math.max(0.2, Math.min(zoom, 1.2));
+                chart.setOption({ series: [{ zoom: clampedZoom, center: [(minX + maxX) / 2, (minY + maxY) / 2] }] });
+                networkZoomLevel = clampedZoom;
+            }, 1800);
         }
 
         // ── Treemap ────────────────────────────────────────────
         function renderTreemap(offers) {
-            if (charts.treemap) charts.treemap.dispose();
-            const chart = echarts.init(document.getElementById('chart-treemap'), 'dark');
-            charts.treemap = chart;
+            const chart = getChart('treemap', 'chart-treemap');
 
             const catData = {};
             offers.forEach(o => {
                 const cat = o.category.name;
                 if (!catData[cat]) catData[cat] = { count: 0, totalPrice: 0 };
                 catData[cat].count++;
-                catData[cat].totalPrice += parseFloat(o.price.rawValue) || parseFloat(o.price.value) || 0;
+                catData[cat].totalPrice += offerPrice(o);
             });
 
             const treeData = Object.entries(catData).map(([name, d]) => ({
@@ -722,7 +802,7 @@
                 backgroundColor: 'transparent',
                 tooltip: {
                     formatter: (p) =>
-                        `<b>${p.name.split('\n')[0]}</b><br/>` +
+                        `<b>${escapeHtml(p.name.split('\n')[0])}</b><br/>` +
                         `${p.value} Produkte<br/>` +
                         `Ø Preis: ${p.data.avgPrice} €`,
                 },
@@ -745,19 +825,17 @@
                     },
                     data: treeData,
                 }],
-            });
+            }, { notMerge: true });
         }
 
         // ── Price Distribution ─────────────────────────────────
         function renderPriceChart(offers) {
-            if (charts.prices) charts.prices.dispose();
-            const chart = echarts.init(document.getElementById('chart-prices'), 'dark');
-            charts.prices = chart;
+            const chart = getChart('prices', 'chart-prices');
 
             const catPrices = {};
             offers.forEach(o => {
                 const cat = o.category.name;
-                const price = parseFloat(o.price.rawValue) || parseFloat(o.price.value) || 0;
+                const price = offerPrice(o);
                 if (!catPrices[cat]) catPrices[cat] = [];
                 catPrices[cat].push(price);
             });
@@ -821,22 +899,41 @@
                         z: 10,
                     },
                 ],
-            });
+            }, { notMerge: true });
         }
 
         // ── Trend Chart ──────────────────────────────────────────
+        // Extract the "KW##" display label from a "YYYY-KW##" week string.
+        function weekLabel(week) {
+            const m = String(week).match(/KW\d+/);
+            return m ? m[0] : String(week);
+        }
+
+        // "2024-12-09" → "09.12." for a compact secondary axis label.
+        function shortDate(date) {
+            const p = String(date).split('-');
+            return p.length === 3 ? `${p[2]}.${p[1]}.` : String(date);
+        }
+
         function renderTrend() {
             const container = document.getElementById('chart-trend');
             if (allTrendData.length === 0) return;
 
+            // allTrendData is sorted by date. KW labels are NOT unique
+            // (collisions across/within years), so the x-axis identity is the
+            // unique date; the display label is the KW + short date.
             const data = allTrendData;
-            const weeks = data.map(w => w.week);
+            const dates = data.map(w => w.date);
+            const labelByDate = new Map(
+                data.map(w => [w.date, `${weekLabel(w.week)}\n${shortDate(w.date)}`])
+            );
             const cats = allTrendCategories.filter(c => activeCategories.has(c));
 
-            if (trendChart) trendChart.dispose();
-            trendChart = echarts.init(container, 'dark');
+            const chart = getChart('trend', 'chart-trend');
+            // Keep the legacy alias so the resize handler still finds it.
+            trendChart = chart;
 
-            trendChart.setOption({
+            chart.setOption({
                 backgroundColor: 'transparent',
                 tooltip: {
                     trigger: 'axis',
@@ -864,8 +961,13 @@
                 }],
                 xAxis: {
                     type: 'category',
-                    data: weeks,
-                    axisLabel: { color: '#888', rotate: 45 },
+                    // Unique, sortable identity; KW label is shown via formatter.
+                    data: dates,
+                    axisLabel: {
+                        color: '#888',
+                        rotate: 45,
+                        formatter: (date) => labelByDate.get(date) || date,
+                    },
                 },
                 yAxis: {
                     type: 'value',
@@ -885,7 +987,7 @@
                     areaStyle: { opacity: 0.05 },
                     data: data.map(w => w.counts[cat] || 0),
                 })),
-            });
+            }, { notMerge: true });
         }
 
         // ── Ctrl-to-zoom for network chart ───────────────────
@@ -930,7 +1032,7 @@
             });
         }
 
-        init();
+        init().catch(showLoadError);
     </script>
 </body>
 
