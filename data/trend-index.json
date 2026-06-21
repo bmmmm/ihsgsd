@@ -1,0 +1,1140 @@
+[
+  {
+    "file": "2024/KW50/2024-12-09.json",
+    "week": "2024-KW50",
+    "date": "2024-12-09",
+    "total": 164,
+    "counts": {
+      "Drogerie": 9,
+      "Fleisch & Wurst": 35,
+      "Getränke": 28,
+      "Grundnahrung": 28,
+      "Knabbern & Naschen": 10,
+      "Molkerei & Käse": 22,
+      "Obst & Gemüse": 23,
+      "Tiefkühl": 6,
+      "Tiernahrung": 3
+    }
+  },
+  {
+    "file": "2024/KW50/2024-12-15.json",
+    "week": "2024-KW50",
+    "date": "2024-12-15",
+    "total": 181,
+    "counts": {
+      "Drogerie": 8,
+      "Fleisch & Wurst": 39,
+      "Getränke": 32,
+      "Grundnahrung": 28,
+      "Knabbern & Naschen": 10,
+      "Molkerei & Käse": 30,
+      "Obst & Gemüse": 20,
+      "Tiefkühl": 12,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2024/KW51/2024-12-22.json",
+    "week": "2024-KW51",
+    "date": "2024-12-22",
+    "total": 181,
+    "counts": {
+      "Drogerie": 8,
+      "Fleisch & Wurst": 39,
+      "Getränke": 32,
+      "Grundnahrung": 28,
+      "Knabbern & Naschen": 10,
+      "Molkerei & Käse": 30,
+      "Obst & Gemüse": 20,
+      "Tiefkühl": 12,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2024/KW52/2024-12-29.json",
+    "week": "2024-KW52",
+    "date": "2024-12-29",
+    "total": 174,
+    "counts": {
+      "Drogerie": 7,
+      "Fleisch & Wurst": 35,
+      "Getränke": 29,
+      "Grundnahrung": 33,
+      "Knabbern & Naschen": 12,
+      "Molkerei & Käse": 34,
+      "Obst & Gemüse": 18,
+      "Tiefkühl": 5,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW01/2025-01-05.json",
+    "week": "2025-KW01",
+    "date": "2025-01-05",
+    "total": 143,
+    "counts": {
+      "Drogerie": 8,
+      "Fleisch & Wurst": 30,
+      "Getränke": 19,
+      "Grundnahrung": 34,
+      "Knabbern & Naschen": 6,
+      "Molkerei & Käse": 25,
+      "Obst & Gemüse": 15,
+      "Tiefkühl": 6
+    }
+  },
+  {
+    "file": "2025/KW02/2025-01-08.json",
+    "week": "2025-KW02",
+    "date": "2025-01-08",
+    "total": 143,
+    "counts": {
+      "Drogerie": 8,
+      "Fleisch & Wurst": 30,
+      "Getränke": 19,
+      "Grundnahrung": 34,
+      "Knabbern & Naschen": 6,
+      "Molkerei & Käse": 25,
+      "Obst & Gemüse": 15,
+      "Tiefkühl": 6
+    }
+  },
+  {
+    "file": "2025/KW03/2025-01-13.json",
+    "week": "2025-KW03",
+    "date": "2025-01-13",
+    "total": 161,
+    "counts": {
+      "Drogerie": 11,
+      "Fleisch & Wurst": 36,
+      "Getränke": 27,
+      "Grundnahrung": 23,
+      "Knabbern & Naschen": 13,
+      "Molkerei & Käse": 21,
+      "Obst & Gemüse": 18,
+      "Tiefkühl": 9,
+      "Tiernahrung": 3
+    }
+  },
+  {
+    "file": "2025/KW04/2025-01-20.json",
+    "week": "2025-KW04",
+    "date": "2025-01-20",
+    "total": 155,
+    "counts": {
+      "Drogerie": 9,
+      "Fleisch & Wurst": 26,
+      "Getränke": 23,
+      "Grundnahrung": 33,
+      "Knabbern & Naschen": 12,
+      "Molkerei & Käse": 28,
+      "Obst & Gemüse": 16,
+      "Tiefkühl": 7,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW05/2025-01-27.json",
+    "week": "2025-KW05",
+    "date": "2025-01-27",
+    "total": 162,
+    "counts": {
+      "Drogerie": 12,
+      "Fleisch & Wurst": 28,
+      "Getränke": 29,
+      "Grundnahrung": 34,
+      "Knabbern & Naschen": 8,
+      "Molkerei & Käse": 22,
+      "Obst & Gemüse": 18,
+      "Tiefkühl": 8,
+      "Tiernahrung": 3
+    }
+  },
+  {
+    "file": "2025/KW06/2025-02-03.json",
+    "week": "2025-KW06",
+    "date": "2025-02-03",
+    "total": 149,
+    "counts": {
+      "Drogerie": 12,
+      "Fleisch & Wurst": 26,
+      "Getränke": 22,
+      "Grundnahrung": 28,
+      "Knabbern & Naschen": 14,
+      "Molkerei & Käse": 21,
+      "Obst & Gemüse": 14,
+      "Tiefkühl": 10,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2025/KW07/2025-02-10.json",
+    "week": "2025-KW07",
+    "date": "2025-02-10",
+    "total": 161,
+    "counts": {
+      "Drogerie": 6,
+      "Fisch & Meeresfrüchte": 1,
+      "Fleisch & Wurst": 34,
+      "Getränke": 22,
+      "Grundnahrung": 39,
+      "Knabbern & Naschen": 12,
+      "Molkerei & Käse": 20,
+      "Obst & Gemüse": 16,
+      "Tiefkühl": 9,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2025/KW08/2025-02-17.json",
+    "week": "2025-KW08",
+    "date": "2025-02-17",
+    "total": 154,
+    "counts": {
+      "Drogerie": 12,
+      "Fleisch & Wurst": 33,
+      "Getränke": 28,
+      "Grundnahrung": 19,
+      "Knabbern & Naschen": 9,
+      "Molkerei & Käse": 21,
+      "Obst & Gemüse": 18,
+      "Tiefkühl": 11,
+      "Tiernahrung": 3
+    }
+  },
+  {
+    "file": "2025/KW09/2025-02-24.json",
+    "week": "2025-KW09",
+    "date": "2025-02-24",
+    "total": 168,
+    "counts": {
+      "Drogerie": 12,
+      "Fisch & Meeresfrüchte": 1,
+      "Fleisch & Wurst": 30,
+      "Getränke": 37,
+      "Grundnahrung": 27,
+      "Knabbern & Naschen": 15,
+      "Molkerei & Käse": 18,
+      "Obst & Gemüse": 20,
+      "Tiefkühl": 7,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW10/2025-03-03.json",
+    "week": "2025-KW10",
+    "date": "2025-03-03",
+    "total": 156,
+    "counts": {
+      "Drogerie": 11,
+      "Fleisch & Wurst": 34,
+      "Getränke": 28,
+      "Grundnahrung": 24,
+      "Knabbern & Naschen": 10,
+      "Molkerei & Käse": 23,
+      "Obst & Gemüse": 17,
+      "Tiefkühl": 8,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW11/2025-03-10.json",
+    "week": "2025-KW11",
+    "date": "2025-03-10",
+    "total": 154,
+    "counts": {
+      "Drogerie": 12,
+      "Fleisch & Wurst": 32,
+      "Getränke": 27,
+      "Grundnahrung": 30,
+      "Knabbern & Naschen": 10,
+      "Molkerei & Käse": 19,
+      "Obst & Gemüse": 17,
+      "Tiefkühl": 5,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2025/KW12/2025-03-17.json",
+    "week": "2025-KW12",
+    "date": "2025-03-17",
+    "total": 150,
+    "counts": {
+      "Drogerie": 15,
+      "Fleisch & Wurst": 33,
+      "Getränke": 30,
+      "Grundnahrung": 26,
+      "Knabbern & Naschen": 7,
+      "Molkerei & Käse": 18,
+      "Obst & Gemüse": 12,
+      "Tiefkühl": 8,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW13/2025-03-24.json",
+    "week": "2025-KW13",
+    "date": "2025-03-24",
+    "total": 173,
+    "counts": {
+      "Drogerie": 16,
+      "Fleisch & Wurst": 26,
+      "Getränke": 29,
+      "Grundnahrung": 43,
+      "Knabbern & Naschen": 13,
+      "Molkerei & Käse": 19,
+      "Obst & Gemüse": 18,
+      "Tiefkühl": 7,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2025/KW14/2025-03-31.json",
+    "week": "2025-KW14",
+    "date": "2025-03-31",
+    "total": 158,
+    "counts": {
+      "Drogerie": 12,
+      "Fisch & Meeresfrüchte": 1,
+      "Fleisch & Wurst": 30,
+      "Getränke": 25,
+      "Grundnahrung": 28,
+      "Knabbern & Naschen": 8,
+      "Molkerei & Käse": 27,
+      "Obst & Gemüse": 20,
+      "Tiefkühl": 7
+    }
+  },
+  {
+    "file": "2025/KW15/2025-04-07.json",
+    "week": "2025-KW15",
+    "date": "2025-04-07",
+    "total": 172,
+    "counts": {
+      "Drogerie": 10,
+      "Fleisch & Wurst": 33,
+      "Getränke": 34,
+      "Grundnahrung": 28,
+      "Knabbern & Naschen": 19,
+      "Molkerei & Käse": 22,
+      "Obst & Gemüse": 17,
+      "Tiefkühl": 7,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2025/KW16/2025-04-14.json",
+    "week": "2025-KW16",
+    "date": "2025-04-14",
+    "total": 179,
+    "counts": {
+      "Drogerie": 11,
+      "Fleisch & Wurst": 40,
+      "Getränke": 32,
+      "Grundnahrung": 32,
+      "Knabbern & Naschen": 11,
+      "Molkerei & Käse": 28,
+      "Obst & Gemüse": 16,
+      "Tiefkühl": 8,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW17/2025-04-21.json",
+    "week": "2025-KW17",
+    "date": "2025-04-21",
+    "total": 176,
+    "counts": {
+      "Drogerie": 13,
+      "Fleisch & Wurst": 32,
+      "Getränke": 32,
+      "Grundnahrung": 37,
+      "Knabbern & Naschen": 8,
+      "Molkerei & Käse": 25,
+      "Obst & Gemüse": 16,
+      "Tiefkühl": 10,
+      "Tiernahrung": 3
+    }
+  },
+  {
+    "file": "2025/KW18/2025-04-28.json",
+    "week": "2025-KW18",
+    "date": "2025-04-28",
+    "total": 181,
+    "counts": {
+      "Drogerie": 10,
+      "Fleisch & Wurst": 35,
+      "Getränke": 34,
+      "Grundnahrung": 30,
+      "Knabbern & Naschen": 14,
+      "Molkerei & Käse": 26,
+      "Obst & Gemüse": 20,
+      "Tiefkühl": 11,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW19/2025-05-05.json",
+    "week": "2025-KW19",
+    "date": "2025-05-05",
+    "total": 168,
+    "counts": {
+      "Drogerie": 9,
+      "Fleisch & Wurst": 31,
+      "Getränke": 29,
+      "Grundnahrung": 32,
+      "Knabbern & Naschen": 13,
+      "Molkerei & Käse": 32,
+      "Obst & Gemüse": 14,
+      "Tiefkühl": 7,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW20/2025-05-12.json",
+    "week": "2025-KW20",
+    "date": "2025-05-12",
+    "total": 155,
+    "counts": {
+      "Drogerie": 10,
+      "Fleisch & Wurst": 34,
+      "Getränke": 28,
+      "Grundnahrung": 24,
+      "Knabbern & Naschen": 9,
+      "Molkerei & Käse": 22,
+      "Obst & Gemüse": 20,
+      "Tiefkühl": 7,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW21/2025-05-19.json",
+    "week": "2025-KW21",
+    "date": "2025-05-19",
+    "total": 156,
+    "counts": {
+      "Drogerie": 15,
+      "Fleisch & Wurst": 29,
+      "Getränke": 27,
+      "Grundnahrung": 31,
+      "Knabbern & Naschen": 10,
+      "Molkerei & Käse": 17,
+      "Obst & Gemüse": 16,
+      "Tiefkühl": 9,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2025/KW22/2025-05-26.json",
+    "week": "2025-KW22",
+    "date": "2025-05-26",
+    "total": 166,
+    "counts": {
+      "Drogerie": 11,
+      "Fleisch & Wurst": 30,
+      "Getränke": 37,
+      "Grundnahrung": 30,
+      "Knabbern & Naschen": 9,
+      "Molkerei & Käse": 25,
+      "Obst & Gemüse": 17,
+      "Tiefkühl": 6,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW23/2025-06-02.json",
+    "week": "2025-KW23",
+    "date": "2025-06-02",
+    "total": 171,
+    "counts": {
+      "Drogerie": 11,
+      "Fisch & Meeresfrüchte": 1,
+      "Fleisch & Wurst": 35,
+      "Getränke": 29,
+      "Grundnahrung": 30,
+      "Knabbern & Naschen": 8,
+      "Molkerei & Käse": 28,
+      "Obst & Gemüse": 17,
+      "Tiefkühl": 10,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2025/KW24/2025-06-09.json",
+    "week": "2025-KW24",
+    "date": "2025-06-09",
+    "total": 177,
+    "counts": {
+      "Drogerie": 14,
+      "Fisch & Meeresfrüchte": 1,
+      "Fleisch & Wurst": 36,
+      "Getränke": 32,
+      "Grundnahrung": 33,
+      "Knabbern & Naschen": 9,
+      "Molkerei & Käse": 27,
+      "Obst & Gemüse": 16,
+      "Tiefkühl": 7,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2025/KW25/2025-06-16.json",
+    "week": "2025-KW25",
+    "date": "2025-06-16",
+    "total": 157,
+    "counts": {
+      "Drogerie": 13,
+      "Fleisch & Wurst": 31,
+      "Getränke": 27,
+      "Grundnahrung": 25,
+      "Knabbern & Naschen": 8,
+      "Molkerei & Käse": 30,
+      "Obst & Gemüse": 17,
+      "Tiefkühl": 5,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW26/2025-06-23.json",
+    "week": "2025-KW26",
+    "date": "2025-06-23",
+    "total": 154,
+    "counts": {
+      "Drogerie": 11,
+      "Fleisch & Wurst": 26,
+      "Getränke": 30,
+      "Grundnahrung": 26,
+      "Knabbern & Naschen": 9,
+      "Molkerei & Käse": 21,
+      "Obst & Gemüse": 14,
+      "Tiefkühl": 14,
+      "Tiernahrung": 3
+    }
+  },
+  {
+    "file": "2025/KW27/2025-06-30.json",
+    "week": "2025-KW27",
+    "date": "2025-06-30",
+    "total": 153,
+    "counts": {
+      "Drogerie": 7,
+      "Fleisch & Wurst": 30,
+      "Getränke": 27,
+      "Grundnahrung": 36,
+      "Knabbern & Naschen": 7,
+      "Molkerei & Käse": 20,
+      "Obst & Gemüse": 16,
+      "Tiefkühl": 8,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2025/KW28/2025-07-07.json",
+    "week": "2025-KW28",
+    "date": "2025-07-07",
+    "total": 155,
+    "counts": {
+      "Drogerie": 10,
+      "Fleisch & Wurst": 30,
+      "Getränke": 21,
+      "Grundnahrung": 29,
+      "Knabbern & Naschen": 11,
+      "Molkerei & Käse": 24,
+      "Obst & Gemüse": 17,
+      "Tiefkühl": 12,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW29/2025-07-14.json",
+    "week": "2025-KW29",
+    "date": "2025-07-14",
+    "total": 148,
+    "counts": {
+      "Drogerie": 8,
+      "Fleisch & Wurst": 31,
+      "Getränke": 32,
+      "Grundnahrung": 24,
+      "Knabbern & Naschen": 8,
+      "Molkerei & Käse": 20,
+      "Obst & Gemüse": 13,
+      "Tiefkühl": 11,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW30/2025-07-21.json",
+    "week": "2025-KW30",
+    "date": "2025-07-21",
+    "total": 169,
+    "counts": {
+      "Drogerie": 11,
+      "Fleisch & Wurst": 36,
+      "Getränke": 34,
+      "Grundnahrung": 28,
+      "Knabbern & Naschen": 8,
+      "Molkerei & Käse": 27,
+      "Obst & Gemüse": 18,
+      "Tiefkühl": 7
+    }
+  },
+  {
+    "file": "2025/KW31/2025-07-28.json",
+    "week": "2025-KW31",
+    "date": "2025-07-28",
+    "total": 174,
+    "counts": {
+      "Drogerie": 10,
+      "Fleisch & Wurst": 35,
+      "Getränke": 32,
+      "Grundnahrung": 32,
+      "Knabbern & Naschen": 10,
+      "Molkerei & Käse": 23,
+      "Obst & Gemüse": 17,
+      "Tiefkühl": 14,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW32/2025-08-04.json",
+    "week": "2025-KW32",
+    "date": "2025-08-04",
+    "total": 178,
+    "counts": {
+      "Drogerie": 10,
+      "Fleisch & Wurst": 31,
+      "Getränke": 32,
+      "Grundnahrung": 30,
+      "Knabbern & Naschen": 10,
+      "Molkerei & Käse": 31,
+      "Obst & Gemüse": 22,
+      "Tiefkühl": 11,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW33/2025-08-11.json",
+    "week": "2025-KW33",
+    "date": "2025-08-11",
+    "total": 179,
+    "counts": {
+      "Drogerie": 11,
+      "Fleisch & Wurst": 33,
+      "Getränke": 38,
+      "Grundnahrung": 22,
+      "Knabbern & Naschen": 11,
+      "Molkerei & Käse": 36,
+      "Obst & Gemüse": 19,
+      "Tiefkühl": 5,
+      "Tiernahrung": 4
+    }
+  },
+  {
+    "file": "2025/KW34/2025-08-18.json",
+    "week": "2025-KW34",
+    "date": "2025-08-18",
+    "total": 173,
+    "counts": {
+      "Drogerie": 9,
+      "Fleisch & Wurst": 32,
+      "Getränke": 32,
+      "Grundnahrung": 25,
+      "Knabbern & Naschen": 17,
+      "Molkerei & Käse": 29,
+      "Obst & Gemüse": 19,
+      "Tiefkühl": 9,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW35/2025-08-25.json",
+    "week": "2025-KW35",
+    "date": "2025-08-25",
+    "total": 171,
+    "counts": {
+      "Drogerie": 11,
+      "Fleisch & Wurst": 32,
+      "Getränke": 31,
+      "Grundnahrung": 33,
+      "Knabbern & Naschen": 10,
+      "Molkerei & Käse": 24,
+      "Obst & Gemüse": 20,
+      "Tiefkühl": 8,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2025/KW36/2025-09-01.json",
+    "week": "2025-KW36",
+    "date": "2025-09-01",
+    "total": 150,
+    "counts": {
+      "Drogerie": 12,
+      "Fleisch & Wurst": 31,
+      "Getränke": 35,
+      "Grundnahrung": 17,
+      "Knabbern & Naschen": 10,
+      "Molkerei & Käse": 21,
+      "Obst & Gemüse": 20,
+      "Tiefkühl": 3,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW37/2025-09-08.json",
+    "week": "2025-KW37",
+    "date": "2025-09-08",
+    "total": 178,
+    "counts": {
+      "Drogerie": 11,
+      "Fisch & Meeresfrüchte": 1,
+      "Fleisch & Wurst": 30,
+      "Getränke": 36,
+      "Grundnahrung": 35,
+      "Knabbern & Naschen": 8,
+      "Molkerei & Käse": 23,
+      "Obst & Gemüse": 20,
+      "Tiefkühl": 12,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2025/KW38/2025-09-15.json",
+    "week": "2025-KW38",
+    "date": "2025-09-15",
+    "total": 190,
+    "counts": {
+      "Drogerie": 10,
+      "Fleisch & Wurst": 33,
+      "Getränke": 31,
+      "Grundnahrung": 41,
+      "Knabbern & Naschen": 16,
+      "Molkerei & Käse": 25,
+      "Obst & Gemüse": 21,
+      "Tiefkühl": 13
+    }
+  },
+  {
+    "file": "2025/KW39/2025-09-22.json",
+    "week": "2025-KW39",
+    "date": "2025-09-22",
+    "total": 184,
+    "counts": {
+      "Drogerie": 11,
+      "Fleisch & Wurst": 33,
+      "Getränke": 31,
+      "Grundnahrung": 38,
+      "Knabbern & Naschen": 16,
+      "Molkerei & Käse": 31,
+      "Obst & Gemüse": 17,
+      "Tiefkühl": 6,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW40/2025-09-29.json",
+    "week": "2025-KW40",
+    "date": "2025-09-29",
+    "total": 196,
+    "counts": {
+      "Drogerie": 10,
+      "Fleisch & Wurst": 33,
+      "Getränke": 36,
+      "Grundnahrung": 36,
+      "Knabbern & Naschen": 17,
+      "Molkerei & Käse": 29,
+      "Obst & Gemüse": 22,
+      "Tiefkühl": 11,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2025/KW41/2025-10-06.json",
+    "week": "2025-KW41",
+    "date": "2025-10-06",
+    "total": 195,
+    "counts": {
+      "Drogerie": 11,
+      "Fleisch & Wurst": 31,
+      "Getränke": 38,
+      "Grundnahrung": 39,
+      "Knabbern & Naschen": 17,
+      "Molkerei & Käse": 25,
+      "Obst & Gemüse": 19,
+      "Tiefkühl": 13,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2025/KW42/2025-10-13.json",
+    "week": "2025-KW42",
+    "date": "2025-10-13",
+    "total": 177,
+    "counts": {
+      "Drogerie": 15,
+      "Fleisch & Wurst": 29,
+      "Getränke": 29,
+      "Grundnahrung": 36,
+      "Knabbern & Naschen": 15,
+      "Molkerei & Käse": 27,
+      "Obst & Gemüse": 21,
+      "Tiefkühl": 4,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW43/2025-10-20.json",
+    "week": "2025-KW43",
+    "date": "2025-10-20",
+    "total": 187,
+    "counts": {
+      "Drogerie": 13,
+      "Fleisch & Wurst": 34,
+      "Getränke": 30,
+      "Grundnahrung": 43,
+      "Knabbern & Naschen": 12,
+      "Molkerei & Käse": 32,
+      "Obst & Gemüse": 17,
+      "Tiefkühl": 5,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW44/2025-10-27.json",
+    "week": "2025-KW44",
+    "date": "2025-10-27",
+    "total": 193,
+    "counts": {
+      "Drogerie": 11,
+      "Fleisch & Wurst": 34,
+      "Getränke": 36,
+      "Grundnahrung": 26,
+      "Knabbern & Naschen": 26,
+      "Molkerei & Käse": 24,
+      "Obst & Gemüse": 22,
+      "Tiefkühl": 12,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2025/KW45/2025-11-03.json",
+    "week": "2025-KW45",
+    "date": "2025-11-03",
+    "total": 186,
+    "counts": {
+      "Drogerie": 15,
+      "Fleisch & Wurst": 30,
+      "Getränke": 42,
+      "Grundnahrung": 38,
+      "Knabbern & Naschen": 14,
+      "Molkerei & Käse": 20,
+      "Obst & Gemüse": 14,
+      "Tiefkühl": 9,
+      "Tiernahrung": 4
+    }
+  },
+  {
+    "file": "2025/KW46/2025-11-10.json",
+    "week": "2025-KW46",
+    "date": "2025-11-10",
+    "total": 190,
+    "counts": {
+      "Drogerie": 10,
+      "Fleisch & Wurst": 34,
+      "Getränke": 34,
+      "Grundnahrung": 41,
+      "Knabbern & Naschen": 13,
+      "Molkerei & Käse": 24,
+      "Obst & Gemüse": 20,
+      "Tiefkühl": 11,
+      "Tiernahrung": 3
+    }
+  },
+  {
+    "file": "2025/KW47/2025-11-17.json",
+    "week": "2025-KW47",
+    "date": "2025-11-17",
+    "total": 178,
+    "counts": {
+      "Drogerie": 16,
+      "Fleisch & Wurst": 32,
+      "Getränke": 28,
+      "Grundnahrung": 29,
+      "Knabbern & Naschen": 20,
+      "Molkerei & Käse": 23,
+      "Obst & Gemüse": 17,
+      "Tiefkühl": 10,
+      "Tiernahrung": 3
+    }
+  },
+  {
+    "file": "2025/KW48/2025-11-24.json",
+    "week": "2025-KW48",
+    "date": "2025-11-24",
+    "total": 189,
+    "counts": {
+      "Drogerie": 13,
+      "Fleisch & Wurst": 34,
+      "Getränke": 31,
+      "Grundnahrung": 41,
+      "Knabbern & Naschen": 19,
+      "Molkerei & Käse": 29,
+      "Obst & Gemüse": 15,
+      "Tiefkühl": 5,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2025/KW49/2025-12-01.json",
+    "week": "2025-KW49",
+    "date": "2025-12-01",
+    "total": 192,
+    "counts": {
+      "Drogerie": 11,
+      "Fleisch & Wurst": 35,
+      "Getränke": 28,
+      "Grundnahrung": 33,
+      "Knabbern & Naschen": 23,
+      "Molkerei & Käse": 31,
+      "Obst & Gemüse": 21,
+      "Tiefkühl": 8,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2025/KW50/2025-12-08.json",
+    "week": "2025-KW50",
+    "date": "2025-12-08",
+    "total": 196,
+    "counts": {
+      "Drogerie": 10,
+      "Fleisch & Wurst": 35,
+      "Getränke": 50,
+      "Grundnahrung": 38,
+      "Knabbern & Naschen": 12,
+      "Molkerei & Käse": 24,
+      "Obst & Gemüse": 17,
+      "Tiefkühl": 9,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW51/2025-12-15.json",
+    "week": "2025-KW51",
+    "date": "2025-12-15",
+    "total": 196,
+    "counts": {
+      "Drogerie": 11,
+      "Fleisch & Wurst": 43,
+      "Getränke": 37,
+      "Grundnahrung": 33,
+      "Knabbern & Naschen": 14,
+      "Molkerei & Käse": 28,
+      "Obst & Gemüse": 18,
+      "Tiefkühl": 12
+    }
+  },
+  {
+    "file": "2025/KW52/2025-12-22.json",
+    "week": "2025-KW52",
+    "date": "2025-12-22",
+    "total": 164,
+    "counts": {
+      "Drogerie": 7,
+      "Fleisch & Wurst": 37,
+      "Getränke": 31,
+      "Grundnahrung": 21,
+      "Knabbern & Naschen": 14,
+      "Molkerei & Käse": 31,
+      "Obst & Gemüse": 17,
+      "Tiefkühl": 5,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2025/KW01/2025-12-29.json",
+    "week": "2025-KW01",
+    "date": "2025-12-29",
+    "total": 160,
+    "counts": {
+      "Drogerie": 9,
+      "Fleisch & Wurst": 33,
+      "Getränke": 31,
+      "Grundnahrung": 32,
+      "Knabbern & Naschen": 14,
+      "Molkerei & Käse": 18,
+      "Obst & Gemüse": 17,
+      "Tiefkühl": 6
+    }
+  },
+  {
+    "file": "2026/KW02/2026-01-05.json",
+    "week": "2026-KW02",
+    "date": "2026-01-05",
+    "total": 157,
+    "counts": {
+      "Drogerie": 10,
+      "Fleisch & Wurst": 35,
+      "Getränke": 33,
+      "Grundnahrung": 20,
+      "Knabbern & Naschen": 11,
+      "Molkerei & Käse": 21,
+      "Obst & Gemüse": 17,
+      "Tiefkühl": 9,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2026/KW03/2026-01-12.json",
+    "week": "2026-KW03",
+    "date": "2026-01-12",
+    "total": 176,
+    "counts": {
+      "Drogerie": 10,
+      "Fleisch & Wurst": 38,
+      "Getränke": 30,
+      "Grundnahrung": 31,
+      "Knabbern & Naschen": 15,
+      "Molkerei & Käse": 22,
+      "Obst & Gemüse": 18,
+      "Tiefkühl": 11,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2026/KW04/2026-01-19.json",
+    "week": "2026-KW04",
+    "date": "2026-01-19",
+    "total": 175,
+    "counts": {
+      "Drogerie": 11,
+      "Fleisch & Wurst": 39,
+      "Getränke": 27,
+      "Grundnahrung": 35,
+      "Knabbern & Naschen": 11,
+      "Molkerei & Käse": 27,
+      "Obst & Gemüse": 16,
+      "Tiefkühl": 8,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2026/KW05/2026-01-26.json",
+    "week": "2026-KW05",
+    "date": "2026-01-26",
+    "total": 140,
+    "counts": {
+      "Drogerie": 10,
+      "Fleisch & Wurst": 29,
+      "Getränke": 30,
+      "Grundnahrung": 26,
+      "Knabbern & Naschen": 11,
+      "Molkerei & Käse": 16,
+      "Obst & Gemüse": 12,
+      "Tiefkühl": 5,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2026/KW06/2026-02-02.json",
+    "week": "2026-KW06",
+    "date": "2026-02-02",
+    "total": 166,
+    "counts": {
+      "Drogerie": 12,
+      "Fleisch & Wurst": 33,
+      "Getränke": 33,
+      "Grundnahrung": 33,
+      "Knabbern & Naschen": 15,
+      "Molkerei & Käse": 15,
+      "Obst & Gemüse": 12,
+      "Tiefkühl": 11,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2026/KW08/2026-02-16.json",
+    "week": "2026-KW08",
+    "date": "2026-02-16",
+    "total": 176,
+    "counts": {
+      "Drogerie": 13,
+      "Fleisch & Wurst": 36,
+      "Getränke": 36,
+      "Grundnahrung": 33,
+      "Knabbern & Naschen": 11,
+      "Molkerei & Käse": 25,
+      "Obst & Gemüse": 14,
+      "Tiefkühl": 6,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2026/KW09/2026-02-23.json",
+    "week": "2026-KW09",
+    "date": "2026-02-23",
+    "total": 169,
+    "counts": {
+      "Drogerie": 15,
+      "Fleisch & Wurst": 40,
+      "Getränke": 31,
+      "Grundnahrung": 23,
+      "Knabbern & Naschen": 13,
+      "Molkerei & Käse": 22,
+      "Obst & Gemüse": 12,
+      "Tiefkühl": 11,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2026/KW10/2026-03-02.json",
+    "week": "2026-KW10",
+    "date": "2026-03-02",
+    "total": 176,
+    "counts": {
+      "Drogerie": 9,
+      "Fleisch & Wurst": 38,
+      "Getränke": 30,
+      "Grundnahrung": 37,
+      "Knabbern & Naschen": 12,
+      "Molkerei & Käse": 30,
+      "Obst & Gemüse": 14,
+      "Tiefkühl": 5,
+      "Tiernahrung": 1
+    }
+  },
+  {
+    "file": "2026/KW11/2026-03-09.json",
+    "week": "2026-KW11",
+    "date": "2026-03-09",
+    "total": 162,
+    "counts": {
+      "Drogerie": 13,
+      "Fleisch & Wurst": 37,
+      "Getränke": 32,
+      "Grundnahrung": 21,
+      "Knabbern & Naschen": 14,
+      "Molkerei & Käse": 25,
+      "Obst & Gemüse": 12,
+      "Tiefkühl": 6,
+      "Tiernahrung": 2
+    }
+  },
+  {
+    "file": "2026/KW12/2026-03-16.json",
+    "week": "2026-KW12",
+    "date": "2026-03-16",
+    "total": 186,
+    "counts": {
+      "Drogerie": 11,
+      "Fleisch & Wurst": 41,
+      "Getränke": 33,
+      "Grundnahrung": 34,
+      "Knabbern & Naschen": 14,
+      "Molkerei & Käse": 27,
+      "Obst & Gemüse": 15,
+      "Tiefkühl": 8,
+      "Tiernahrung": 3
+    }
+  }
+]
