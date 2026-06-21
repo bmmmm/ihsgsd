@@ -281,6 +281,245 @@
                 font-size: 1.4rem;
             }
         }
+
+        /* ── FEATURE styles (appended) ─────────────────────────── */
+        .feature-controls {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .feature-search {
+            flex: 1;
+            min-width: 200px;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            border: 1px solid #333;
+            padding: 9px 14px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+        }
+
+        .feature-search::placeholder {
+            color: #666;
+        }
+
+        .feature-search:focus {
+            outline: none;
+            border-color: #555;
+        }
+
+        .knuller-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1a1a1a;
+            color: #aaa;
+            border: 1px solid #333;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .knuller-toggle:hover {
+            background: #2a2a2a;
+            color: #ddd;
+        }
+
+        .knuller-toggle.active {
+            background: #ff3b6b;
+            border-color: transparent;
+            color: #fff;
+        }
+
+        .knuller-toggle .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #ff3b6b;
+            flex-shrink: 0;
+        }
+
+        .knuller-toggle.active .dot {
+            background: #fff;
+        }
+
+        .product-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 340px;
+            overflow-y: auto;
+        }
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 10px;
+            background: #1a1a1a;
+            border: 1px solid #222;
+            border-radius: 10px;
+        }
+
+        .product-item img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            border-radius: 6px;
+            background: #0f0f0f;
+            flex-shrink: 0;
+        }
+
+        .product-item .pi-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .product-item .pi-title {
+            font-size: 0.85rem;
+            color: #e0e0e0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-item .pi-cat {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.72rem;
+            color: #888;
+            margin-top: 2px;
+        }
+
+        .product-item .pi-cat .cat-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .product-item .pi-price {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .product-item .pi-rank {
+            font-size: 0.8rem;
+            color: #555;
+            width: 20px;
+            flex-shrink: 0;
+            text-align: right;
+        }
+
+        .knuller-badge {
+            display: inline-block;
+            font-size: 0.62rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: #fff;
+            background: #ff3b6b;
+            border-radius: 4px;
+            padding: 1px 5px;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        .feature-empty {
+            color: #555;
+            font-size: 0.9rem;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .feature-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 700px) {
+            .feature-cols {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .feature-cols h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+
+        /* Category share delta (week vs. previous) */
+        .delta-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .delta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: #1a1a1a;
+            border: 1px solid #222;
+            border-radius: 10px;
+        }
+
+        .delta-item .d-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .delta-item .d-name {
+            flex: 1;
+            font-size: 0.85rem;
+            color: #ddd;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .delta-item .d-counts {
+            font-size: 0.78rem;
+            color: #888;
+        }
+
+        .delta-item .d-change {
+            font-size: 0.88rem;
+            font-weight: 700;
+            width: 56px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .d-change.up {
+            color: #66bb6a;
+        }
+
+        .d-change.down {
+            color: #ef5350;
+        }
+
+        .d-change.flat {
+            color: #777;
+        }
     </style>
 </head>
 
@@ -321,6 +560,43 @@
             <h2>Wochen-Trend &mdash; Produkte pro Kategorie</h2>
             <div id="chart-trend" class="chart-container-large"></div>
         </div>
+
+        <!-- FEATURE: search-and-knuller START -->
+        <div class="panel panel-full" style="min-height:auto;">
+            <h2>Produktsuche &amp; Aktions-Highlight</h2>
+            <div class="feature-controls">
+                <input id="feature-search-input" class="feature-search" type="text"
+                    placeholder="Produkt suchen (Titel oder Beschreibung)&hellip;" autocomplete="off" />
+                <button id="knuller-toggle" class="knuller-toggle" type="button">
+                    <span class="dot"></span><span id="knuller-toggle-label">Nur Superkn&uuml;ller</span>
+                </button>
+            </div>
+            <ul id="search-results" class="product-list"></ul>
+        </div>
+        <!-- FEATURE: search-and-knuller END -->
+
+        <!-- FEATURE: top-cheapest-expensive START -->
+        <div class="panel" style="min-height:auto;">
+            <h2>G&uuml;nstigste &amp; teuerste Produkte</h2>
+            <div class="feature-cols">
+                <div>
+                    <h3>Top 5 g&uuml;nstigste</h3>
+                    <ul id="top-cheapest" class="product-list"></ul>
+                </div>
+                <div>
+                    <h3>Top 5 teuerste</h3>
+                    <ul id="top-expensive" class="product-list"></ul>
+                </div>
+            </div>
+        </div>
+        <!-- FEATURE: top-cheapest-expensive END -->
+
+        <!-- FEATURE: category-share-delta START -->
+        <div class="panel" style="min-height:auto;">
+            <h2>Kategorie-Anteil &mdash; diese Woche vs. Vorwoche</h2>
+            <ul id="category-delta" class="delta-list"></ul>
+        </div>
+        <!-- FEATURE: category-share-delta END -->
     </div>
 
     <script>
@@ -458,6 +734,7 @@
             renderNetwork(filtered);
             renderTreemap(filtered);
             renderPriceChart(filtered);
+            if (typeof renderFeatures === 'function') renderFeatures(); // FEATURE-HOOK
         }
 
         // Coalesce rapid category toggles into a single re-render pass.
@@ -1030,6 +1307,268 @@
                     applyNetworkZoom(0.83);
                 }
             });
+        }
+
+        // ══════════════════════════════════════════════════════════
+        // FEATURE BLOCK (appended — self-contained, additive)
+        // Features:
+        //  1. In-dashboard product search over currentOffers
+        //  2. Superknüller (criteria) action-highlight: KPI + "only" toggle
+        //  3. Top-N cheapest & most expensive products of the week
+        //  4. Category share delta — this week vs. previous (from allTrendData)
+        // ══════════════════════════════════════════════════════════
+
+        let featureSearchQuery = '';
+        let featureOnlyKnuller = false;
+        let featuresWired = false;
+
+        function isKnuller(o) {
+            return Array.isArray(o.criteria) && o.criteria.some(c => c && c.name === 'Superknüller');
+        }
+
+        // Build one <li> product row via DOM API (XSS-safe — no raw innerHTML for data).
+        function buildProductItem(o, opts) {
+            opts = opts || {};
+            const li = document.createElement('li');
+            li.className = 'product-item';
+
+            const imgUrl = o.images && o.images.web90;
+            if (imgUrl) {
+                const img = document.createElement('img');
+                img.src = imgUrl;
+                img.alt = o.title || '';
+                img.loading = 'lazy';
+                img.onerror = function () { this.style.display = 'none'; };
+                li.appendChild(img);
+            }
+
+            const body = document.createElement('div');
+            body.className = 'pi-body';
+
+            const title = document.createElement('div');
+            title.className = 'pi-title';
+            title.title = o.title || '';
+            title.textContent = o.title || '(ohne Titel)';
+            if (opts.markKnuller && isKnuller(o)) {
+                const badge = document.createElement('span');
+                badge.className = 'knuller-badge';
+                badge.textContent = 'Knüller';
+                title.appendChild(badge);
+            }
+            body.appendChild(title);
+
+            const catLine = document.createElement('div');
+            catLine.className = 'pi-cat';
+            const catName = o.category && o.category.name ? o.category.name : '—';
+            const dot = document.createElement('span');
+            dot.className = 'cat-dot';
+            dot.style.background = CATEGORY_COLORS[catName] || '#888';
+            catLine.appendChild(dot);
+            catLine.appendChild(document.createTextNode(catName));
+            body.appendChild(catLine);
+
+            li.appendChild(body);
+
+            const price = document.createElement('div');
+            price.className = 'pi-price';
+            price.textContent = offerPrice(o).toFixed(2) + ' €';
+            li.appendChild(price);
+
+            return li;
+        }
+
+        function setEmpty(ul, msg) {
+            ul.innerHTML = '';
+            const li = document.createElement('li');
+            li.className = 'feature-empty';
+            li.textContent = msg;
+            ul.appendChild(li);
+        }
+
+        // Offers in active categories, optionally Superknüller-only.
+        function featureBaseOffers() {
+            return currentOffers.filter(o =>
+                activeCategories.has(o.category.name) &&
+                (!featureOnlyKnuller || isKnuller(o))
+            );
+        }
+
+        function renderSearchResults(base) {
+            const ul = document.getElementById('search-results');
+            if (!ul) return;
+            const q = featureSearchQuery.trim().toLowerCase();
+
+            if (!q) {
+                const knullerCount = base.filter(isKnuller).length;
+                setEmpty(ul, base.length
+                    ? `${base.length} Produkte sichtbar · ${knullerCount} Superknüller — tippe zum Suchen`
+                    : 'Keine Produkte in den aktiven Kategorien.');
+                return;
+            }
+
+            const matches = base.filter(o => {
+                const t = (o.title || '').toLowerCase();
+                const d = (o.description || '').toLowerCase();
+                return t.includes(q) || d.includes(q);
+            }).slice(0, 50);
+
+            ul.innerHTML = '';
+            if (matches.length === 0) {
+                setEmpty(ul, `Keine Treffer für "${q}".`);
+                return;
+            }
+            const frag = document.createDocumentFragment();
+            matches.forEach(o => frag.appendChild(buildProductItem(o, { markKnuller: true })));
+            ul.appendChild(frag);
+        }
+
+        function renderTopLists(base) {
+            const cheapUl = document.getElementById('top-cheapest');
+            const expUl = document.getElementById('top-expensive');
+            if (!cheapUl || !expUl) return;
+
+            if (base.length === 0) {
+                setEmpty(cheapUl, 'Keine Produkte.');
+                setEmpty(expUl, 'Keine Produkte.');
+                return;
+            }
+
+            // Single sort (O(n log n)); reuse for both ends.
+            const sorted = base.slice().sort((a, b) => offerPrice(a) - offerPrice(b));
+            const cheapest = sorted.slice(0, 5);
+            const expensive = sorted.slice(-5).reverse();
+
+            const renderInto = (ul, list) => {
+                ul.innerHTML = '';
+                const frag = document.createDocumentFragment();
+                list.forEach((o, i) => {
+                    const item = buildProductItem(o, { markKnuller: true });
+                    const rank = document.createElement('div');
+                    rank.className = 'pi-rank';
+                    rank.textContent = '#' + (i + 1);
+                    item.insertBefore(rank, item.firstChild);
+                    frag.appendChild(item);
+                });
+                ul.appendChild(frag);
+            };
+            renderInto(cheapUl, cheapest);
+            renderInto(expUl, expensive);
+        }
+
+        function renderCategoryDelta() {
+            const ul = document.getElementById('category-delta');
+            if (!ul) return;
+
+            if (!Array.isArray(allTrendData) || allTrendData.length < 2) {
+                setEmpty(ul, 'Nicht genug Wochen für einen Vergleich.');
+                return;
+            }
+
+            const curr = allTrendData[allTrendData.length - 1].counts || {};
+            const prev = allTrendData[allTrendData.length - 2].counts || {};
+
+            // Only categories the user keeps active; sorted by absolute change.
+            const cats = allTrendCategories.filter(c => activeCategories.has(c));
+            const rows = cats.map(cat => {
+                const c = curr[cat] || 0;
+                const p = prev[cat] || 0;
+                return { cat, c, p, diff: c - p };
+            }).sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff));
+
+            ul.innerHTML = '';
+            if (rows.length === 0) {
+                setEmpty(ul, 'Keine aktiven Kategorien.');
+                return;
+            }
+
+            const frag = document.createDocumentFragment();
+            rows.forEach(r => {
+                const li = document.createElement('li');
+                li.className = 'delta-item';
+
+                const dot = document.createElement('span');
+                dot.className = 'd-dot';
+                dot.style.background = CATEGORY_COLORS[r.cat] || '#888';
+                li.appendChild(dot);
+
+                const name = document.createElement('span');
+                name.className = 'd-name';
+                name.textContent = r.cat;
+                li.appendChild(name);
+
+                const counts = document.createElement('span');
+                counts.className = 'd-counts';
+                counts.textContent = `${r.p} → ${r.c}`;
+                li.appendChild(counts);
+
+                const change = document.createElement('span');
+                const cls = r.diff > 0 ? 'up' : (r.diff < 0 ? 'down' : 'flat');
+                change.className = 'd-change ' + cls;
+                const arrow = r.diff > 0 ? '▲' : (r.diff < 0 ? '▼' : '–');
+                change.textContent = r.diff === 0 ? arrow : `${arrow} ${Math.abs(r.diff)}`;
+                li.appendChild(change);
+
+                frag.appendChild(li);
+            });
+            ul.appendChild(frag);
+        }
+
+        function updateKnullerKpi(base) {
+            // Add/refresh a "Superknüller diese Woche" KPI card without touching renderStats.
+            const row = document.getElementById('stats-row');
+            if (!row) return;
+            const count = currentOffers.filter(o =>
+                activeCategories.has(o.category.name) && isKnuller(o)).length;
+
+            let card = document.getElementById('kpi-knuller');
+            if (!card) {
+                card = document.createElement('div');
+                card.id = 'kpi-knuller';
+                card.className = 'stat-card';
+                const v = document.createElement('div');
+                v.className = 'stat-value';
+                v.id = 'kpi-knuller-value';
+                v.style.color = '#ff3b6b';
+                const l = document.createElement('div');
+                l.className = 'stat-label';
+                l.textContent = 'Superknüller';
+                card.appendChild(v);
+                card.appendChild(l);
+                row.appendChild(card);
+            }
+            document.getElementById('kpi-knuller-value').textContent = String(count);
+        }
+
+        // Single entry point — additive, called from renderFilteredWeekCharts via FEATURE-HOOK.
+        function renderFeatures() {
+            if (!featuresWired) setupFeatures();
+            const base = featureBaseOffers();
+            updateKnullerKpi(base);
+            renderSearchResults(base);
+            renderTopLists(base);
+            renderCategoryDelta();
+        }
+
+        function setupFeatures() {
+            if (featuresWired) return;
+            featuresWired = true;
+
+            const input = document.getElementById('feature-search-input');
+            if (input) {
+                input.addEventListener('input', () => {
+                    featureSearchQuery = input.value;
+                    renderSearchResults(featureBaseOffers());
+                });
+            }
+
+            const toggle = document.getElementById('knuller-toggle');
+            if (toggle) {
+                toggle.addEventListener('click', () => {
+                    featureOnlyKnuller = !featureOnlyKnuller;
+                    toggle.classList.toggle('active', featureOnlyKnuller);
+                    renderFeatures();
+                });
+            }
         }
 
         init().catch(showLoadError);
