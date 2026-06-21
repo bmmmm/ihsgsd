@@ -47,8 +47,24 @@ jobs:
       - name: Generate folder-structure.json
         id: generate-structure
         run: |
-          # Find all JSON files excluding folder-structure.json
-          find data -type f -name "*.json" ! -name "folder-structure.json" | sed 's|^data/||' | sort | jq -R -s -c 'split("\n") | map(select(length > 0))' > data/folder-structure.json
+          # Find all JSON files excluding generated index files
+          find data -type f -name "*.json" ! -name "folder-structure.json" ! -name "trend-index.json" | sed 's|^data/||' | sort | jq -R -s -c 'split("\n") | map(select(length > 0))' > data/folder-structure.json
+
+      - name: Generate trend-index.json
+        id: generate-trend
+        run: |
+          # Precomputed per-week category counts, replacing the dashboard's
+          # 17 MB load-all. One entry per snapshot, sorted by date.
+          find data -path 'data/[0-9]*/KW*/*.json' | sort | while read -r f; do
+            rel=${f#data/}
+            jq -c --arg file "$rel" '{
+              file:$file,
+              week:($file|capture("(?<y>[0-9]{4})/(?<kw>KW[0-9]+)/")|"\(.y)-\(.kw)"),
+              date:($file|capture("(?<d>[0-9]{4}-[0-9]{2}-[0-9]{2})")|.d),
+              total:.totalCount,
+              counts:(.offers|group_by(.category.name)|map({key:.[0].category.name,value:length})|from_entries)
+            }' "$f"
+          done | jq -s 'sort_by(.date)' > data/trend-index.json
 
       - name: Commit and push data
         run: |

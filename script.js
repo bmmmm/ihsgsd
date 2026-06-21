@@ -2,13 +2,39 @@ document.addEventListener("DOMContentLoaded", initializePage);
 
 const HIDDEN_CATEGORIES_DEFAULT = ["Fleisch & Wurst", "Drogerie", "Tiernahrung", "Fisch & Meeresfrüchte"];
 
+const SEARCH_DEBOUNCE_MS = 120;
+
+// Extract the "YYYY-MM-DD" date embedded in a data file path for sorting.
+function fileDate(file) {
+  const m = file.match(/(\d{4})-(\d{2})-(\d{2})/);
+  return m ? m[0] : "";
+}
+
+// HTML-escape a string before it is interpolated into innerHTML.
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+// Only allow http(s) image URLs; reject javascript:, data:, etc.
+function safeImageUrl(url) {
+  if (typeof url !== "string") return "";
+  return /^https?:\/\//i.test(url.trim()) ? url : "";
+}
+
 async function initializePage() {
   const dropdown = document.getElementById("file-dropdown");
   const copyProductsButton = document.getElementById("copy-products");
 
   try {
     const files = await fetchFolderStructure();
-    files.reverse(); // Neueste Dateien zuerst
+    // Sort by parsed YYYY-MM-DD descending (newest first). A blind reverse()
+    // breaks at the year boundary (e.g. 2025/KW01/2025-12-29.json).
+    files.sort((a, b) => fileDate(b).localeCompare(fileDate(a)));
     populateDropdown(dropdown, files);
 
     dropdown.addEventListener("change", () => {
@@ -83,6 +109,9 @@ async function fetchOffers(filePath) {
     offers.forEach((offer) => {
       const row = document.createElement("tr");
       row.dataset.category = offer.category.name;
+      // Precompute a lowercased search blob (title + category + description)
+      // so the search handler does not read every cell on each keystroke.
+      row.dataset.search = `${offer.title} ${offer.category.name} ${offer.description}`.toLowerCase();
 
       const cells = [
         offer.id,
@@ -97,10 +126,11 @@ async function fetchOffers(filePath) {
         row.appendChild(td);
       });
 
-      // Image cell with data attributes
+      // Image cell with data attributes. Use web90 (purpose-built thumbnail)
+      // instead of app (full-size) since CSS caps it at 80x60.
       const imgCell = document.createElement("td");
       imgCell.className = "image-cell hidden";
-      imgCell.dataset.imageUrl = offer.images.app || "";
+      imgCell.dataset.imageUrl = offer.images.web90 || offer.images.app || "";
       imgCell.dataset.originalUrl = offer.images.original || "";
       row.appendChild(imgCell);
 
@@ -149,7 +179,7 @@ function populateCategoryCheckboxes(offers) {
     checkbox.addEventListener("change", () => {
       label.classList.toggle("checked", checkbox.checked);
       distributeCategoryLabels();
-      applyCategoryFilter();
+      applyFilters();
     });
 
     label.appendChild(checkbox);
@@ -163,7 +193,7 @@ function populateCategoryCheckboxes(offers) {
   });
 
   distributeCategoryLabels();
-  applyCategoryFilter();
+  applyFilters();
 }
 
 function distributeCategoryLabels() {
@@ -182,49 +212,41 @@ function distributeCategoryLabels() {
   hiddenContainer.style.display = hiddenContainer.querySelectorAll("label").length > 0 ? "" : "none";
 }
 
-function applyCategoryFilter() {
-  const checkboxes = document.querySelectorAll("#category-filters input[type='checkbox'], #hidden-category-filters input[type='checkbox']");
-  const visibleCategories = [];
+// Single source of truth for row visibility: a row is shown when its category
+// is enabled AND it matches the search term. Called from both the category
+// checkboxes and the search input so neither clobbers the other's state.
+function applyFilters() {
+  const checkboxes = document.querySelectorAll(
+    "#category-filters input[type='checkbox'], #hidden-category-filters input[type='checkbox']"
+  );
+  const allowedCategories = new Set();
   checkboxes.forEach((cb) => {
-    if (cb.checked) visibleCategories.push(cb.value);
+    if (cb.checked) allowedCategories.add(cb.value);
   });
+
+  const searchInput = document.getElementById("search-input");
+  // Normalize comma to dot so "1,99" matches the "1.99" price values.
+  const term = (searchInput ? searchInput.value : "").toLowerCase().replace(/,/g, ".").trim();
 
   const rows = document.querySelectorAll("#offer-table tr");
   rows.forEach((row) => {
-    if (visibleCategories.includes(row.dataset.category)) {
-      row.classList.remove("hidden");
-    } else {
-      row.classList.add("hidden");
-    }
+    const categoryAllowed = allowedCategories.has(row.dataset.category);
+    // Search only matches title/category/description (precomputed blob),
+    // not the ID or price cell.
+    const matchesSearch = term === "" || (row.dataset.search || "").includes(term);
+    row.classList.toggle("hidden", !(categoryAllowed && matchesSearch));
   });
 }
 
 function attachSearchFunctionality() {
   const searchInput = document.getElementById("search-input");
-  if (searchInput) {
-    searchInput.addEventListener("input", () => {
-      const searchTerm = searchInput.value.toLowerCase();
-      const rows = document.querySelectorAll("#offer-table tr");
+  if (!searchInput) return;
 
-      if (!searchTerm) {
-        // Reset to category filter state
-        applyCategoryFilter();
-        return;
-      }
-
-      rows.forEach((row) => {
-        const cells = Array.from(row.querySelectorAll("td"));
-        const matches = cells.some((cell) =>
-          cell.textContent.toLowerCase().includes(searchTerm)
-        );
-        if (matches) {
-          row.classList.remove("hidden");
-        } else {
-          row.classList.add("hidden");
-        }
-      });
-    });
-  }
+  let debounceTimer = null;
+  searchInput.addEventListener("input", () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(applyFilters, SEARCH_DEBOUNCE_MS);
+  });
 }
 
 function copyVisibleProducts() {
@@ -287,12 +309,15 @@ function setupToggleImages() {
     imageCells.forEach((cell) => {
       if (isHidden) {
         // Show images
-        const imgUrl = cell.getAttribute("data-image-url");
+        const imgUrl = safeImageUrl(cell.getAttribute("data-image-url"));
         if (imgUrl && !cell.querySelector("img")) {
           const img = document.createElement("img");
           img.src = imgUrl;
           img.alt = "Produktbild";
+          img.loading = "lazy";
           img.style.cursor = "zoom-in";
+          // Activate the .img-error { display:none } rule on broken images.
+          img.onerror = () => img.classList.add("img-error");
           cell.appendChild(img);
         }
         cell.classList.remove("hidden");
@@ -325,10 +350,11 @@ function attachImageHoverPreview() {
     const imgCell = event.target.closest(".image-cell img");
     if (!imgCell) return;
 
-    const originalUrl =
-      imgCell.closest(".image-cell").dataset.originalUrl || "";
+    const originalUrl = safeImageUrl(
+      imgCell.closest(".image-cell").dataset.originalUrl || ""
+    );
     if (originalUrl) {
-      imagePreview.innerHTML = `<img src="${originalUrl}" alt="Vorschau" loading="lazy">`;
+      imagePreview.innerHTML = `<img src="${escapeHtml(originalUrl)}" alt="Vorschau" loading="lazy">`;
       imagePreview.classList.add("visible");
     }
   });
