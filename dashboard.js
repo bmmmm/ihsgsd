@@ -20,7 +20,6 @@ const HIDDEN_CATEGORIES_DEFAULT = ['Fleisch & Wurst', 'Drogerie', 'Tiernahrung',
 let allTrendData = [];
 let allTrendCategories = [];
 let activeCategories = new Set();
-let trendChart = null;
 let charts = {};
 let currentOffers = [];
 let resizeHandler = null;
@@ -62,6 +61,35 @@ function offerPrice(o) {
     return Number.isFinite(o.price.rawValue)
         ? o.price.rawValue
         : (parseFloat(o.price.value) || 0);
+}
+
+// Build the <img> for an offer (local archive first, live URL as onerror
+// fallback), or null if no usable source. Shared by the KPI card and list rows.
+function buildOfferImage(o) {
+    const liveUrl = (o.images && safeImageUrl(o.images.app || o.images.original || '')) || '';
+    const localUrl = localImageUrl(o);
+    const src = localUrl || liveUrl;
+    if (!src) return null;
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = o.title || '';
+    if (localUrl && liveUrl) img.onerror = function () { this.onerror = null; this.src = liveUrl; };
+    return img;
+}
+
+// Shared ECharts config for the line charts: a date-range slider and the grid.
+// Factored out so a theme tweak touches one place; emits the same option object.
+function sliderZoom() {
+    return [{
+        type: 'slider', start: 0, end: 100, bottom: 8, height: 22,
+        borderColor: '#333', backgroundColor: '#1a1a1a',
+        fillerColor: 'rgba(76, 175, 80, 0.15)',
+        handleStyle: { color: '#4caf50' }, textStyle: { color: '#888' },
+    }];
+}
+
+function chartGrid(bottom) {
+    return { left: 10, right: 20, bottom, top: 30, containLabel: true };
 }
 
 // Show a visible error in the info bar when loading fails.
@@ -207,16 +235,8 @@ function renderStats(offers) {
         const card = document.createElement('div');
         card.className = 'stat-card stat-card-expensive';
 
-        const liveUrl = safeImageUrl(o.images.app || o.images.original || '');
-        const localUrl = localImageUrl(o);
-        const src = localUrl || liveUrl;
-        if (src) {
-            const img = document.createElement('img');
-            img.src = src;
-            img.alt = o.title;
-            if (localUrl && liveUrl) img.onerror = function () { this.onerror = null; this.src = liveUrl; };
-            card.appendChild(img);
-        }
+        const img = buildOfferImage(o);
+        if (img) card.appendChild(img);
 
         const details = document.createElement('div');
         details.className = 'stat-details';
@@ -546,7 +566,7 @@ function renderPriceChart(offers) {
             trigger: 'axis',
             axisPointer: { type: 'shadow' },
         },
-        grid: { left: 10, right: 20, bottom: 10, top: 30, containLabel: true },
+        grid: chartGrid(10),
         xAxis: {
             type: 'value',
             axisLabel: { formatter: '{value} €', color: '#888' },
@@ -622,8 +642,6 @@ function renderTrend() {
     const cats = allTrendCategories.filter(c => activeCategories.has(c));
 
     const chart = getChart('trend', 'chart-trend');
-    // Keep the legacy alias so the resize handler still finds it.
-    trendChart = chart;
 
     chart.setOption({
         backgroundColor: 'transparent',
@@ -638,19 +656,8 @@ function renderTrend() {
             type: 'scroll',
             selected: Object.fromEntries(cats.map(c => [c, true])),
         },
-        grid: { left: 10, right: 20, bottom: 90, top: 30, containLabel: true },
-        dataZoom: [{
-            type: 'slider',
-            start: 0,
-            end: 100,
-            bottom: 8,
-            height: 22,
-            borderColor: '#333',
-            backgroundColor: '#1a1a1a',
-            fillerColor: 'rgba(76, 175, 80, 0.15)',
-            handleStyle: { color: '#4caf50' },
-            textStyle: { color: '#888' },
-        }],
+        grid: chartGrid(90),
+        dataZoom: sliderZoom(),
         xAxis: {
             type: 'category',
             // Unique, sortable identity; KW label is shown via formatter.
@@ -748,16 +755,8 @@ function buildProductItem(o, opts) {
     const li = document.createElement('li');
     li.className = 'product-item';
 
-    const liveUrl = (o.images && safeImageUrl(o.images.app || o.images.original || '')) || '';
-    const localUrl = localImageUrl(o);
-    const src = localUrl || liveUrl;
-    if (src) {
-        const img = document.createElement('img');
-        img.src = src;
-        img.alt = o.title || '';
-        if (localUrl && liveUrl) img.onerror = function () { this.onerror = null; this.src = liveUrl; };
-        li.appendChild(img);
-    }
+    const img = buildOfferImage(o);
+    if (img) li.appendChild(img);
 
     const body = document.createElement('div');
     body.className = 'pi-body';
@@ -1312,13 +1311,8 @@ function renderGpTrend(p) {
         backgroundColor: 'transparent',
         tooltip: { trigger: 'axis' },
         legend: { data: ['Grundpreis', 'unsicher'], textStyle: { color: '#aaa', fontSize: 11 }, bottom: 40 },
-        grid: { left: 10, right: 20, bottom: 90, top: 30, containLabel: true },
-        dataZoom: [{
-            type: 'slider', start: 0, end: 100, bottom: 8, height: 22,
-            borderColor: '#333', backgroundColor: '#1a1a1a',
-            fillerColor: 'rgba(76, 175, 80, 0.15)',
-            handleStyle: { color: '#4caf50' }, textStyle: { color: '#888' },
-        }],
+        grid: chartGrid(90),
+        dataZoom: sliderZoom(),
         xAxis: {
             type: 'category', data: dates,
             axisLabel: { color: '#888', rotate: 45, formatter: (d) => shortDate(d) },
