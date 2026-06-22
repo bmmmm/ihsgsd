@@ -56,11 +56,17 @@ function localImageUrl(o) {
     return `data/${dir}/img/${encodeURIComponent(o.id)}.jpg`;
 }
 
-// Numeric price with a safe fallback that does not coerce a real 0.00.
+// A single data-entry outlier (a €47,150 Camembert in KW40/2025) poisons every
+// average, extreme and axis range. The producer drops faces above this ceiling
+// (build_indexes.py face_price); the dashboard must too.
+const FACE_MAX = 500;
+
+// Comparable face price in [0, FACE_MAX], or null if missing/implausible.
+// Callers must treat null as "no price" (the real 0.00 item still returns 0).
 function offerPrice(o) {
-    return Number.isFinite(o.price.rawValue)
-        ? o.price.rawValue
-        : (parseFloat(o.price.value) || 0);
+    const raw = o && o.price ? o.price.rawValue : undefined;
+    const v = Number.isFinite(raw) ? raw : parseFloat(o && o.price ? o.price.value : NaN);
+    return (Number.isFinite(v) && v >= 0 && v <= FACE_MAX) ? v : null;
 }
 
 // Build the <img> for an offer (local archive first, live URL as onerror
@@ -154,6 +160,10 @@ async function loadWeek(filePath) {
 
         renderFilteredWeekCharts();
     } catch (err) {
+        // Don't leave the previous week's products on screen under the newly
+        // selected week's label — clear and re-render to a clean empty state.
+        currentOffers = [];
+        renderFilteredWeekCharts();
         showLoadError(err);
     }
 }
@@ -216,7 +226,7 @@ function renderStats(offers) {
 
     const totalProducts = offers.length;
     const categories = new Set(offers.map(o => o.category.name)).size;
-    const prices = offers.map(offerPrice);
+    const prices = offers.map(offerPrice).filter(p => p !== null);
     const avgPrice = prices.length ? (prices.reduce((a, b) => a + b, 0) / prices.length).toFixed(2) : '0.00';
 
     row.appendChild(buildStatCard(totalProducts, 'Produkte'));
@@ -229,13 +239,13 @@ function renderStats(offers) {
     knullerCard.querySelector('.stat-value').style.color = '#ff3b6b';
     row.appendChild(knullerCard);
 
-    if (offers.length > 0) {
-        // Build the most-expensive card via DOM API so untrusted
-        // titles/URLs can never break out of an attribute.
-        const mostExpensive = offers.reduce((max, o) => {
-            const p = offerPrice(o);
-            return p > max.price ? { offer: o, price: p } : max;
-        }, { offer: null, price: -Infinity });
+    // Build the most-expensive card via DOM API so untrusted titles/URLs can
+    // never break out of an attribute. Skips offers with no comparable price.
+    const mostExpensive = offers.reduce((max, o) => {
+        const p = offerPrice(o);
+        return (p !== null && p > max.price) ? { offer: o, price: p } : max;
+    }, { offer: null, price: -Infinity });
+    if (mostExpensive.offer) {
         const o = mostExpensive.offer;
 
         const card = document.createElement('div');
@@ -390,7 +400,7 @@ function renderNetwork(offers) {
     }));
 
     const productNodes = offers.map(o => {
-        const price = offerPrice(o);
+        const price = offerPrice(o) ?? 0; // outlier/no-price -> 0 in the decorative graph
         return {
             id: `p_${o.id}`,
             name: o.title,
@@ -504,16 +514,17 @@ function renderTreemap(offers) {
     const catData = {};
     offers.forEach(o => {
         const cat = o.category.name;
-        if (!catData[cat]) catData[cat] = { count: 0, totalPrice: 0 };
+        if (!catData[cat]) catData[cat] = { count: 0, totalPrice: 0, priced: 0 };
         catData[cat].count++;
-        catData[cat].totalPrice += offerPrice(o);
+        const pr = offerPrice(o);
+        if (pr !== null) { catData[cat].totalPrice += pr; catData[cat].priced++; }
     });
 
     const treeData = Object.entries(catData).map(([name, d]) => ({
         name: `${name}\n${d.count} Produkte`,
         value: d.count,
         itemStyle: { color: CATEGORY_COLORS[name] || '#888' },
-        avgPrice: (d.totalPrice / d.count).toFixed(2),
+        avgPrice: (d.priced ? d.totalPrice / d.priced : 0).toFixed(2),
     }));
 
     chart.setOption({
@@ -554,6 +565,7 @@ function renderPriceChart(offers) {
     offers.forEach(o => {
         const cat = o.category.name;
         const price = offerPrice(o);
+        if (price === null) return; // skip the outlier / no-price offers
         if (!catPrices[cat]) catPrices[cat] = [];
         catPrices[cat].push(price);
     });
@@ -720,6 +732,11 @@ function setupNetworkZoomGuard() {
     const container = document.getElementById('chart-network');
     const hint = document.getElementById('network-zoom-hint');
     let hintTimeout = null;
+    // Only hijack Ctrl +/- while the pointer is over the network panel, so the
+    // shortcut doesn't steal page zoom everywhere else on the page.
+    let pointerOver = false;
+    container.addEventListener('mouseenter', () => { pointerOver = true; });
+    container.addEventListener('mouseleave', () => { pointerOver = false; });
 
     container.addEventListener('wheel', (e) => {
         if (e.ctrlKey || e.metaKey) {
@@ -733,7 +750,7 @@ function setupNetworkZoomGuard() {
     }, { passive: false });
 
     document.addEventListener('keydown', (e) => {
-        if (!(e.ctrlKey || e.metaKey)) return;
+        if (!pointerOver || !(e.ctrlKey || e.metaKey)) return;
         if (e.key === '+' || e.key === '=') {
             e.preventDefault();
             applyNetworkZoom(1.2);
@@ -800,7 +817,8 @@ function buildProductItem(o, opts) {
 
     const price = document.createElement('div');
     price.className = 'pi-price';
-    price.textContent = offerPrice(o).toFixed(2) + ' €';
+    const pr = offerPrice(o);
+    price.textContent = pr === null ? '—' : pr.toFixed(2) + ' €';
     li.appendChild(price);
 
     return li;
@@ -862,8 +880,15 @@ function renderTopLists(base) {
         return;
     }
 
-    // Single sort (O(n log n)); reuse for both ends.
-    const sorted = base.slice().sort((a, b) => offerPrice(a) - offerPrice(b));
+    // Single sort (O(n log n)); reuse for both ends. Drop no-price/outlier
+    // offers so they can't rank as #1 cheapest or most-expensive.
+    const priced = base.filter(o => offerPrice(o) !== null);
+    if (priced.length === 0) {
+        setEmpty(cheapUl, 'Keine Produkte mit Preis.');
+        setEmpty(expUl, 'Keine Produkte mit Preis.');
+        return;
+    }
+    const sorted = priced.slice().sort((a, b) => offerPrice(a) - offerPrice(b));
     const cheapest = sorted.slice(0, 5);
     const expensive = sorted.slice(-5).reverse();
 
@@ -1027,17 +1052,22 @@ function medianOf(arr) {
 // are kept for plotting but excluded from statistics.
 function precomputeHistory() {
     priceHistory.products.forEach(p => {
-        const exd = p.obs
-            .filter(o => o.gpf === undefined)
-            .map(o => [o.d, o.gp])
-            .sort((a, b) => a[0] < b[0] ? -1 : (a[0] > b[0] ? 1 : 0));
-        const g = exd.map(x => x[1]);
+        // One exact Grundpreis per distinct week (min, matching currentExactGp),
+        // so a week with >1 exact observation isn't double-weighted in the
+        // median / erosion half-split.
+        const perWeek = new Map();
+        for (const o of p.obs) {
+            if (o.gpf !== undefined) continue;
+            const cur = perWeek.get(o.d);
+            perWeek.set(o.d, cur === undefined ? o.gp : Math.min(cur, o.gp));
+        }
+        const g = [...perWeek.keys()].sort().map(d => perWeek.get(d));
         p._ex = g;
         p._min = g.length ? Math.min(...g) : null;
         p._med = medianOf(g);
-        p._exWeeks = new Set(exd.map(x => x[0])).size;
+        p._exWeeks = g.length;
         // Offer-price erosion: median of the later half vs the earlier
-        // half of this article's exact Grundpreise. Needs >=4 points.
+        // half of this article's per-week exact Grundpreise. Needs >=4 weeks.
         if (g.length >= 4) {
             const half = Math.floor(g.length / 2);
             const oldM = medianOf(g.slice(0, half));
