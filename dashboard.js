@@ -23,6 +23,7 @@ let activeCategories = new Set();
 let charts = {};
 let currentOffers = [];
 let resizeHandler = null;
+let insights = null;
 
 // HTML-escape a string before interpolating it into innerHTML.
 function escapeHtml(s) {
@@ -127,6 +128,7 @@ async function init() {
 
     await loadAllTrendData();
     await loadPriceHistory();
+    await loadInsights();
     buildFiltersBar();
 
     if (files.length > 0) {
@@ -152,6 +154,75 @@ async function fetchJSON(url) {
     const res = await fetch(url);
     if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
     return res.json();
+}
+
+// Optional weekly KI-Insights, generated locally via `claude -p`
+// (scripts/generate_insights.py). Entirely additive: if data/insights.json is
+// absent or malformed the panel stays hidden and nothing else is affected.
+async function loadInsights() {
+    try {
+        const res = await fetch('data/insights.json');
+        if (!res.ok) throw new Error(`status ${res.status}`);
+        insights = await res.json();
+    } catch (err) {
+        insights = null;
+    }
+    renderInsights();
+}
+
+function renderInsights() {
+    const panel = document.getElementById('insights-panel');
+    if (!panel) return;
+    if (!insights || typeof insights.summary !== 'string' || !insights.summary) {
+        panel.style.display = 'none';
+        return;
+    }
+    panel.style.display = '';
+
+    const sub = document.getElementById('insights-sub');
+    if (sub) {
+        sub.textContent = insights.weekLabel
+            ? `KI-Zusammenfassung der Woche ${insights.weekLabel} — lokal via claude -p erzeugt.`
+            : 'KI-Zusammenfassung — lokal via claude -p erzeugt.';
+    }
+    const summaryEl = document.getElementById('insights-summary');
+    if (summaryEl) summaryEl.textContent = insights.summary;
+
+    fillInsightsList(document.getElementById('insights-pricier'),
+        Array.isArray(insights.pricier) ? insights.pricier : [], 'pricier');
+    fillInsightsList(document.getElementById('insights-deals'),
+        Array.isArray(insights.deals) ? insights.deals : [], 'deals');
+}
+
+function fillInsightsList(ul, items, kind) {
+    if (!ul) return;
+    ul.innerHTML = '';
+    const isPricier = kind === 'pricier';
+    if (!items.length) {
+        setEmpty(ul, isPricier ? 'Keine teureren Artikel.' : 'Keine besonderen Deals.');
+        return;
+    }
+    const frag = document.createDocumentFragment();
+    items.slice(0, 10).forEach((d, i) => {
+        let badge = '';
+        if (isPricier && typeof d.pct_above_min === 'number') {
+            badge = `+${Math.round(d.pct_above_min)}% über Tief`;
+        } else if (!isPricier && typeof d.hist_max_gp === 'number'
+                   && typeof d.current_gp === 'number' && d.current_gp > 0) {
+            badge = `−${Math.round((1 - d.current_gp / d.hist_max_gp) * 100)}% vs. Hoch`;
+        }
+        frag.appendChild(buildGpRow({
+            rank: i + 1,
+            title: d.title || '—',
+            cat: d.cat || '—',
+            sub: d.note || (d.cat || ''),
+            priceText: (typeof d.current_gp === 'number' && d.unit) ? formatGp(d.current_gp, d.unit) : '',
+            priceColor: isPricier ? '#ef5350' : '#66bb6a',
+            badgeText: badge,
+            badgeClass: isPricier ? 'bad' : 'good',
+        }));
+    });
+    ul.appendChild(frag);
 }
 
 async function loadWeek(filePath) {
@@ -1668,6 +1739,7 @@ function renderEhrlichkeit() {
     const bad = cands.filter(c => c.ratio >= 1.0).sort((a, b) => b.ratio - a.ratio).slice(0, 10);
     fillHonest(goodUl, good, true);
     fillHonest(badUl, bad, false);
+    renderEhrlichkeitChart(cands);
 }
 
 function fillHonest(ul, items, isGood) {
@@ -1688,6 +1760,111 @@ function fillHonest(ul, items, isGood) {
         }));
     });
     ul.appendChild(frag);
+}
+
+// Diverging bars for the honesty check: each Superknüller's Grundpreis as a
+// signed % deviation from the article's OWN median (0 = honesty line). Green
+// below, amber inside the 5% buffer, red at/above = Mogelpackung. Faint ticks
+// mark the article's own all-time low/high so a Knüller priced near its own
+// high is exposed at a glance.
+function renderEhrlichkeitChart(cands) {
+    const el = document.getElementById('chart-ehrlichkeit');
+    if (!el) return;
+    const chart = getChart('ehrlich', 'chart-ehrlichkeit');
+    if (!priceHistory || !cands || !cands.length) { chart.clear(); return; }
+
+    const GREEN = '#66bb6a', AMBER = '#ffa726', RED = '#ef5350';
+    const colorFor = (dev) => dev <= -5 ? GREEN : dev >= 0 ? RED : AMBER;
+
+    const rows = cands.map(c => {
+        const lo = Math.min(...c.p._ex), hi = Math.max(...c.p._ex);
+        return {
+            title: c.p.title, cat: c.p.cat, unit: c.p.unit,
+            med: c.p._med, kmin: c.kmin, weeks: c.p._exWeeks,
+            dev: +((c.ratio - 1) * 100).toFixed(1),       // Knüller-GP vs own median
+            devLo: +((lo / c.p._med - 1) * 100).toFixed(1), // own cheapest, % vs median
+            devHi: +((hi / c.p._med - 1) * 100).toFixed(1), // own dearest, % vs median
+        };
+    });
+
+    // Align with the lists (10 each): show the 12 most-Mogel + 12 most-honest
+    // so the amber middle stays visible without overflowing the panel.
+    const N = 12;
+    let shown;
+    if (rows.length > 2 * N) {
+        const asc = [...rows].sort((a, b) => a.dev - b.dev);
+        shown = [...asc.slice(0, N), ...asc.slice(-N)];
+    } else {
+        shown = [...rows];
+    }
+    // Sort so green clusters top, red bottom under the inverse y-axis.
+    shown.sort((a, b) => b.dev - a.dev);
+    const names = shown.map(r => r.title);
+
+    chart.setOption({
+        backgroundColor: 'transparent',
+        grid: { left: 10, right: 64, top: 28, bottom: 8, containLabel: true },
+        tooltip: {
+            trigger: 'item',
+            formatter: (p) => {
+                const r = shown[p.dataIndex];
+                const verdict = r.dev <= -5 ? 'Echter Knüller' : r.dev >= 0 ? 'Mogelpackung' : 'Grenzfall';
+                const sign = r.dev > 0 ? '+' : '';
+                const hiSign = r.devHi > 0 ? '+' : '';
+                return `${escapeHtml(r.title)}<br/>`
+                    + `<b style="color:${colorFor(r.dev)}">${verdict}</b>: ${sign}${r.dev}% vs. eigener Median<br/>`
+                    + `Knüller ${formatGp(r.kmin, r.unit)} · Median ${formatGp(r.med, r.unit)}<br/>`
+                    + `eigene Spanne ${r.devLo}%…${hiSign}${r.devHi}% · ${r.weeks} Wo.`;
+            },
+        },
+        xAxis: {
+            type: 'value', name: '% vs. eigener Median',
+            nameLocation: 'middle', nameGap: 26, nameTextStyle: { color: '#888' },
+            axisLabel: { color: '#888', formatter: '{value}%' },
+            splitLine: { lineStyle: { color: '#222' } },
+            axisLine: { lineStyle: { color: '#333' } },
+        },
+        yAxis: {
+            type: 'category', inverse: true, data: names,
+            axisLabel: { color: '#aaa', fontSize: 11, width: 170, overflow: 'truncate' },
+            axisLine: { lineStyle: { color: '#333' } },
+            axisTick: { show: false },
+        },
+        series: [
+            {
+                type: 'bar', barMaxWidth: 16,
+                data: shown.map(r => ({ value: r.dev, itemStyle: { color: colorFor(r.dev) } })),
+                label: {
+                    show: true, color: '#ccc', fontSize: 10,
+                    position: (pr) => (shown[pr.dataIndex].dev >= 0 ? 'right' : 'left'),
+                    formatter: (pr) => { const d = shown[pr.dataIndex].dev; return (d > 0 ? '+' : '') + d + '%'; },
+                },
+                markLine: {
+                    symbol: 'none', silent: true,
+                    lineStyle: { color: '#888', type: 'dashed' },
+                    label: { color: '#999', formatter: 'Median', position: 'insideEndTop' },
+                    data: [{ xAxis: 0 }],
+                },
+                markArea: {
+                    silent: true,
+                    itemStyle: { color: 'rgba(255,167,38,0.08)' }, // Grenzfall buffer -5%..0%
+                    data: [[{ xAxis: -5 }, { xAxis: 0 }]],
+                },
+                // inverse:true flips only the visual order; coord category
+                // index i still matches the bar at data index i, so the ticks
+                // annotate the correct rows.
+                markPoint: {
+                    silent: true, symbol: 'rect', symbolSize: [2, 13],
+                    itemStyle: { color: 'rgba(255,255,255,0.30)' },
+                    label: { show: false },
+                    data: [
+                        ...shown.map((r, i) => ({ coord: [r.devLo, i] })),
+                        ...shown.map((r, i) => ({ coord: [r.devHi, i] })),
+                    ],
+                },
+            },
+        ],
+    }, { notMerge: true });
 }
 
 // ── Grundpreis-Ligatabelle: cheapest €/unit this week (week-dependent) ──
@@ -1751,6 +1928,7 @@ function renderVolatilitaet() {
     }
     fillVol(hiUl, hi);
     fillVol(loUl, lo);
+    renderVolWaitChart(hi);
 }
 
 function fillVol(ul, items) {
@@ -1770,6 +1948,103 @@ function fillVol(ul, items) {
         }));
     });
     ul.appendChild(frag);
+}
+
+// Floating range bars for the most volatile staples (left "lohnt zu warten"
+// column). Each row: a faint full-swing track (own all-time low→high) for
+// context, plus a solid category-colored bar = the downside room from the
+// article's all-time low to its current price. A "pay now" dot sitting high
+// above the floor tick = swings a lot AND expensive now = wait.
+function renderVolWaitChart(hi) {
+    const dom = document.getElementById('vol-wait-chart');
+    if (!dom) return;
+    // Fewer than 2 rows: hide the canvas, the text list below still renders.
+    if (!priceHistory || !hi || hi.length < 2) {
+        dom.style.display = 'none';
+        if (charts.volWait) charts.volWait.clear();
+        return;
+    }
+    dom.style.display = '';
+
+    // ECharts paints the category axis bottom→top; reverse so rank #1 is on top.
+    const rows = [...hi].reverse();
+    const catColor = (p) => CATEGORY_COLORS[p.cat] || '#888';
+    const trunc = (s) => (s.length > 30 ? s.slice(0, 29) + '…' : s);
+
+    const labels = rows.map(p => trunc(p.title));
+    const ext = rows.map(p => ({ lo: Math.min(...p._ex), hi: Math.max(...p._ex) }));
+
+    // Swing track (faint): spacer 0→lo, then lo→hi. Downside-room (solid):
+    // spacer 0→_min, then _min→_latest. All values positive, so stacking is safe.
+    const trackSpacer = ext.map(e => +e.lo.toFixed(4));
+    const trackSpan = ext.map(e => +(e.hi - e.lo).toFixed(4));
+    const roomSpacer = rows.map(p => +p._min.toFixed(4));
+    const roomSpan = rows.map(p => +Math.max(0, p._latest - p._min).toFixed(4));
+    const floorPts = rows.map((p, i) => [p._min, i]);
+    const latestPts = rows.map((p, i) => [p._latest, i]);
+
+    // ~36px per row keeps a 10-row chart readable; size before getChart so init measures right.
+    dom.style.height = (rows.length * 36 + 56) + 'px';
+    const chart = getChart('volWait', 'vol-wait-chart');
+
+    chart.setOption({
+        backgroundColor: 'transparent',
+        grid: chartGrid(30),
+        tooltip: {
+            trigger: 'axis', axisPointer: { type: 'shadow' },
+            formatter: (ps) => {
+                // Every series shares the row's category index; read it off the
+                // visible bar (the silent spacer series may be ordered first).
+                const hit = ps.find(s => s.seriesName === 'Spielraum nach unten') || ps[0];
+                const i = hit.dataIndex, p = rows[i], e = ext[i];
+                const pctRoom = p._latest > 0 ? Math.round((p._latest - p._min) / p._latest * 100) : 0;
+                const overFloor = p._min > 0 ? Math.round((p._latest / p._min - 1) * 100) : 0;
+                const since = p._weeksSinceLow != null ? ` · ${p._weeksSinceLow} Wo. seit Tief` : '';
+                return `${escapeHtml(p.title)}<br/>`
+                    + `<span style="color:${catColor(p)}">●</span> ${escapeHtml(p.cat)}<br/>`
+                    + `Jetzt: €${p._latest.toFixed(2)}/${escapeHtml(p.unit)} (+${overFloor}% über Tief)<br/>`
+                    + `Spanne: €${e.lo.toFixed(2)}–€${e.hi.toFixed(2)} · Median €${(p._med != null ? p._med : 0).toFixed(2)}<br/>`
+                    + `Spielraum nach unten: €${(p._latest - p._min).toFixed(2)} (${pctRoom}%)<br/>`
+                    + `Schwankung (CV): ${Math.round(p._cv * 100)}% · ${p._exWeeks} Wo.${since}`;
+            },
+        },
+        xAxis: {
+            type: 'value', name: '€ / Einheit', nameTextStyle: { color: '#888' },
+            axisLabel: { color: '#888', formatter: '{value} €' },
+            splitLine: { lineStyle: { color: '#222' } },
+        },
+        yAxis: {
+            type: 'category', data: labels,
+            axisLabel: { color: '#aaa', fontSize: 11 },
+            axisTick: { show: false }, axisLine: { lineStyle: { color: '#333' } },
+        },
+        series: [
+            { name: 'track-spacer', type: 'bar', stack: 'track', silent: true,
+              itemStyle: { color: 'transparent' }, emphasis: { disabled: true },
+              barWidth: '70%', barGap: '-100%', data: trackSpacer },
+            { name: 'Spanne (Tief–Hoch)', type: 'bar', stack: 'track', silent: true,
+              itemStyle: { color: '#2b2b2b', borderRadius: 3 }, emphasis: { disabled: true },
+              barWidth: '70%', barGap: '-100%', data: trackSpan },
+            { name: 'room-spacer', type: 'bar', stack: 'room', silent: true,
+              itemStyle: { color: 'transparent' }, emphasis: { disabled: true },
+              barWidth: '70%', barGap: '-100%', data: roomSpacer },
+            { name: 'Spielraum nach unten', type: 'bar', stack: 'room',
+              barWidth: '70%', barGap: '-100%',
+              itemStyle: { color: (pr) => catColor(rows[pr.dataIndex]), borderRadius: [0, 3, 3, 0], opacity: 0.9 },
+              label: { show: true, position: 'right', color: '#ddd', fontSize: 11,
+                       formatter: (pr) => `€${rows[pr.dataIndex]._latest.toFixed(2)}` },
+              data: roomSpan,
+              markPoint: {
+                  silent: true,
+                  data: [
+                      ...floorPts.map(c => ({ coord: c, symbol: 'rect', symbolSize: [2, 16], itemStyle: { color: '#666' } })),
+                      ...latestPts.map(c => ({ coord: c, symbol: 'circle', symbolSize: 9, itemStyle: { color: '#fff', borderColor: '#111', borderWidth: 1 } })),
+                  ],
+              },
+            },
+        ],
+    }, { notMerge: true });
+    chart.resize();
 }
 
 // ── Saisonale Kategorie-Muster: month × category heatmap ───

@@ -558,6 +558,14 @@
             line-height: 1.4;
         }
 
+        .insights-summary {
+            font-size: 0.95rem;
+            color: #ddd;
+            margin: 0 0 16px;
+            line-height: 1.6;
+            max-width: 70ch;
+        }
+
         .product-item .pi-right {
             display: flex;
             flex-direction: column;
@@ -731,6 +739,23 @@
             <span class="section-hint">unabhängig von der gewählten Woche</span>
         </div>
 
+        <!-- FEATURE: ki-insights (optional, generated locally via claude -p) -->
+        <div id="insights-panel" class="panel panel-full panel--auto" style="display:none">
+            <h2>KI-Insights der Woche</h2>
+            <p id="insights-sub" class="panel-sub"></p>
+            <p id="insights-summary" class="insights-summary"></p>
+            <div class="feature-cols">
+                <div>
+                    <h3>Teurer als sonst</h3>
+                    <ul id="insights-pricier" class="product-list"></ul>
+                </div>
+                <div>
+                    <h3>Echte Deals</h3>
+                    <ul id="insights-deals" class="product-list"></ul>
+                </div>
+            </div>
+        </div>
+
         <div class="panel panel-full">
             <h2>Wochen-Trend &mdash; Produkte pro Kategorie</h2>
             <div id="chart-trend" class="chart-container-large" role="img" aria-label="Wochen-Trend: Produkte pro Kategorie über die Zeit"></div>
@@ -791,6 +816,7 @@
         <div class="panel panel-full panel--auto">
             <h2>Superkn&uuml;ller-Ehrlichkeitscheck &mdash; echter Deal oder Mogelpackung?</h2>
             <p id="honest-sub" class="panel-sub"></p>
+            <div id="chart-ehrlichkeit" class="chart-container-large" role="img" aria-label="Superkn&uuml;ller-Ehrlichkeitscheck: Kn&uuml;ller-Grundpreis je Artikel als Abweichung vom eigenen Median"></div>
             <div class="feature-cols">
                 <div>
                     <h3>Echte Kn&uuml;ller (unter eigenem Median)</h3>
@@ -810,6 +836,7 @@
             <div class="feature-cols">
                 <div>
                     <h3>Stark schwankend (lohnt zu warten)</h3>
+                    <div id="vol-wait-chart" class="chart-container" role="img" aria-label="St&auml;rkste Preisschwanker: Spielraum vom Tiefstpreis bis zum aktuellen Preis je Artikel"></div>
                     <ul id="vol-high" class="product-list"></ul>
                 </div>
                 <div>

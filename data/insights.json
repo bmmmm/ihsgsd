@@ -1,0 +1,180 @@
+{
+  "generatedAt": "2026-06-01",
+  "weekLabel": "2026-KW23",
+  "summary": "De Cecco Pasta ist mit 106% Preisaufschlag der größte Anstieg diese Woche. Im Gegenzug gibt es exzellente Deals: Paulaner Spezi (49% Rabatt) und Hackfleisch (37% unter Höchstpreis) sind Rekordtiefs.",
+  "pricier": [
+    {
+      "title": "De Cecco Pasta",
+      "cat": "Grundnahrung",
+      "current_gp": 4.58,
+      "unit": "kg",
+      "hist_min_gp": 2.22,
+      "pct_above_min": 106.3,
+      "note": "von 2,22€/kg auf 4,58€/kg – mehr als doppelt"
+    },
+    {
+      "title": "Polen - GUT & GÜNSTIG - Champignons",
+      "cat": "Obst & Gemüse",
+      "current_gp": 4.48,
+      "unit": "kg",
+      "hist_min_gp": 3.73,
+      "pct_above_min": 20.1,
+      "note": "20 % über historischem Minimum"
+    },
+    {
+      "title": "Fever-Tree",
+      "cat": "Getränke",
+      "current_gp": 3.98,
+      "unit": "l",
+      "hist_min_gp": 3.33,
+      "pct_above_min": 19.5,
+      "note": "19,5 % über Minimum: 3,33€ zu 3,98€/l"
+    },
+    {
+      "title": "Metten Dicke Sauerländer Bockwurst",
+      "cat": "Grundnahrung",
+      "current_gp": 8.73,
+      "unit": "kg",
+      "hist_min_gp": 7.48,
+      "pct_above_min": 16.7,
+      "note": "16,7 % teurer als je zuvor"
+    },
+    {
+      "title": "Cevapcici",
+      "cat": "Fleisch & Wurst",
+      "current_gp": 11.63,
+      "unit": "kg",
+      "hist_min_gp": 9.97,
+      "pct_above_min": 16.6,
+      "note": "16,6 % über historischem Tief"
+    },
+    {
+      "title": "Kühne Schlemmertöpfchen",
+      "cat": "Grundnahrung",
+      "current_gp": 8.3,
+      "unit": "kg",
+      "hist_min_gp": 7.4,
+      "pct_above_min": 12.2,
+      "note": "12,2 % über Minimum"
+    },
+    {
+      "title": "EDEKA - Italienische Pasta",
+      "cat": "Grundnahrung",
+      "current_gp": 1.76,
+      "unit": "kg",
+      "hist_min_gp": 1.58,
+      "pct_above_min": 11.4,
+      "note": "11,4 % über Minimum"
+    },
+    {
+      "title": "Marokko - Driscolls - Kulturheidelbeeren",
+      "cat": "Obst & Gemüse",
+      "current_gp": 8.88,
+      "unit": "kg",
+      "hist_min_gp": 7.98,
+      "pct_above_min": 11.3,
+      "note": "11,3 % teurer als Minimum"
+    },
+    {
+      "title": "Erasco Eintöpfe",
+      "cat": "Grundnahrung",
+      "current_gp": 2.49,
+      "unit": "kg",
+      "hist_min_gp": 2.24,
+      "pct_above_min": 11.2,
+      "note": "11,2 % über Minimum"
+    },
+    {
+      "title": "Pepsi, Schwip Schwap oder 7up",
+      "cat": "Getränke",
+      "current_gp": 0.7,
+      "unit": "l",
+      "hist_min_gp": 0.63,
+      "pct_above_min": 11.1,
+      "note": "11,1 % teurer als je zuvor"
+    }
+  ],
+  "deals": [
+    {
+      "title": "Paulaner Spezi oder Limo",
+      "cat": "Getränke",
+      "current_gp": 1.1,
+      "unit": "l",
+      "hist_max_gp": 2.17,
+      "note": "49,3 % Rabatt – von 2,17€/l auf 1,10€/l"
+    },
+    {
+      "title": "Miracel Whip",
+      "cat": "Grundnahrung",
+      "current_gp": 2.98,
+      "unit": "l",
+      "hist_max_gp": 5.3,
+      "note": "43,8 % günstiger als je zuvor"
+    },
+    {
+      "title": "Hackfleisch",
+      "cat": "Fleisch & Wurst",
+      "current_gp": 6.98,
+      "unit": "kg",
+      "hist_max_gp": 11.13,
+      "note": "37,3 % Rabatt – Rekordtief bei 6,98€/kg"
+    },
+    {
+      "title": "Krombacher Pils oder Radler",
+      "cat": "Getränke",
+      "current_gp": 1.76,
+      "unit": "l",
+      "hist_max_gp": 2.42,
+      "note": "27,3 % Rabatt – von 2,42€/l auf 1,76€/l"
+    },
+    {
+      "title": "Vitamalz",
+      "cat": "Getränke",
+      "current_gp": 1.35,
+      "unit": "l",
+      "hist_max_gp": 1.72,
+      "note": "21,5 % unter Höchstpreis"
+    },
+    {
+      "title": "Beemster Royaal",
+      "cat": "Molkerei & Käse",
+      "current_gp": 15.7,
+      "unit": "kg",
+      "hist_max_gp": 19.9,
+      "note": "21,1 % Rabatt – Premium-Käse günstig"
+    },
+    {
+      "title": "Meggle Feine Butter oder Streichzart ungesalzen",
+      "cat": "Molkerei & Käse",
+      "current_gp": 4.76,
+      "unit": "kg",
+      "hist_max_gp": 5.96,
+      "note": "20,1 % unter Höchstpreis"
+    },
+    {
+      "title": "Dallmayr Classic oder Classic mild",
+      "cat": "Grundnahrung",
+      "current_gp": 13.98,
+      "unit": "kg",
+      "hist_max_gp": 16.98,
+      "note": "17,7 % Rabatt auf Premium-Kaffee"
+    },
+    {
+      "title": "Sanpellegrino Limonaden",
+      "cat": "Getränke",
+      "current_gp": 3.0,
+      "unit": "l",
+      "hist_max_gp": 3.61,
+      "note": "16,9 % günstiger als je zuvor"
+    },
+    {
+      "title": "albi Fruchtsaft, -nektar oder Fruchtsaftgetränk",
+      "cat": "Getränke",
+      "current_gp": 1.48,
+      "unit": "l",
+      "hist_max_gp": 1.72,
+      "note": "14 % unter Höchstpreis"
+    }
+  ],
+  "model": "haiku"
+}
