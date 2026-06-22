@@ -223,6 +223,12 @@ function renderStats(offers) {
     row.appendChild(buildStatCard(categories, 'Kategorien'));
     row.appendChild(buildStatCard(`${avgPrice} €`, 'Ø Preis'));
 
+    // Superknüller count, grouped with the other flat KPIs (was a separate
+    // card injected after the wide "Teuerster" card on every feature render).
+    const knullerCard = buildStatCard(String(offers.filter(isKnuller).length), 'Superknüller');
+    knullerCard.querySelector('.stat-value').style.color = '#ff3b6b';
+    row.appendChild(knullerCard);
+
     if (offers.length > 0) {
         // Build the most-expensive card via DOM API so untrusted
         // titles/URLs can never break out of an attribute.
@@ -959,37 +965,10 @@ function renderCategoryDelta() {
     ul.appendChild(frag);
 }
 
-function updateKnullerKpi(base) {
-    // Add/refresh a "Superknüller diese Woche" KPI card without touching renderStats.
-    const row = document.getElementById('stats-row');
-    if (!row) return;
-    const count = currentOffers.filter(o =>
-        activeCategories.has(o.category.name) && isKnuller(o)).length;
-
-    let card = document.getElementById('kpi-knuller');
-    if (!card) {
-        card = document.createElement('div');
-        card.id = 'kpi-knuller';
-        card.className = 'stat-card';
-        const v = document.createElement('div');
-        v.className = 'stat-value';
-        v.id = 'kpi-knuller-value';
-        v.style.color = '#ff3b6b';
-        const l = document.createElement('div');
-        l.className = 'stat-label';
-        l.textContent = 'Superknüller';
-        card.appendChild(v);
-        card.appendChild(l);
-        row.appendChild(card);
-    }
-    document.getElementById('kpi-knuller-value').textContent = String(count);
-}
-
 // Single entry point — additive, called from renderFilteredWeekCharts via FEATURE-HOOK.
 function renderFeatures() {
     if (!featuresWired) setupFeatures();
     const base = featureBaseOffers();
-    updateKnullerKpi(base);
     renderSearchResults(base);
     renderTopLists(base);
     renderCategoryDelta();
