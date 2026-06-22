@@ -1712,5 +1712,27 @@
   "gpCoverage": 0.742,
   "avgFace": 3.69,
   "medFace": 2.21
+ },
+ {
+  "file": "2026/KW26/2026-06-22.json",
+  "week": "2026-KW26",
+  "date": "2026-06-22",
+  "total": 179,
+  "counts": {
+   "Drogerie": 9,
+   "Fleisch & Wurst": 38,
+   "Getränke": 30,
+   "Grundnahrung": 34,
+   "Knabbern & Naschen": 10,
+   "Molkerei & Käse": 27,
+   "Obst & Gemüse": 17,
+   "Tiefkühl": 13,
+   "Tiernahrung": 1
+  },
+  "knuller": 103,
+  "payback": 8,
+  "gpCoverage": 0.754,
+  "avgFace": 3.14,
+  "medFace": 1.79
  }
 ]
