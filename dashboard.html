@@ -520,6 +520,57 @@
         .d-change.flat {
             color: #777;
         }
+
+        /* ── Price-history panels (Grundpreis over time) ───────── */
+        .panel-sub {
+            font-size: 0.8rem;
+            color: #888;
+            margin: -8px 0 14px;
+            line-height: 1.4;
+        }
+
+        .product-item .pi-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 3px;
+            flex-shrink: 0;
+        }
+
+        .gp-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border-radius: 5px;
+            padding: 1px 6px;
+            white-space: nowrap;
+        }
+
+        .gp-badge.good {
+            color: #66bb6a;
+            background: rgba(102, 187, 106, 0.12);
+        }
+
+        .gp-badge.bad {
+            color: #ef5350;
+            background: rgba(239, 83, 80, 0.12);
+        }
+
+        .gp-badge.flat {
+            color: #999;
+            background: rgba(150, 150, 150, 0.12);
+        }
+
+        .gp-picker {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            border: 1px solid #333;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            max-width: 100%;
+            margin-bottom: 14px;
+        }
     </style>
 </head>
 
@@ -598,6 +649,49 @@
             <ul id="category-delta" class="delta-list"></ul>
         </div>
         <!-- FEATURE: category-share-delta END -->
+
+        <!-- FEATURE: preis-radar START -->
+        <div class="panel panel-full" style="min-height:auto;">
+            <h2>Preis-Radar &mdash; Grundpreis vs. eigene Historie</h2>
+            <p id="preis-radar-sub" class="panel-sub"></p>
+            <div class="feature-cols">
+                <div>
+                    <h3>Beste Deals diese Woche</h3>
+                    <ul id="deal-lows" class="product-list"></ul>
+                </div>
+                <div>
+                    <h3>War schon g&uuml;nstiger</h3>
+                    <ul id="deal-highs" class="product-list"></ul>
+                </div>
+            </div>
+        </div>
+        <!-- FEATURE: preis-radar END -->
+
+        <!-- FEATURE: aktionspreis-trend START -->
+        <div class="panel panel-full" style="min-height:auto;">
+            <h2>Aktionspreis-Trend &mdash; teurer oder g&uuml;nstiger geworden?</h2>
+            <p id="erosion-sub" class="panel-sub"></p>
+            <div class="feature-cols">
+                <div>
+                    <h3>Nicht mehr so g&uuml;nstig (Aktionspreis gestiegen)</h3>
+                    <ul id="erosion-up" class="product-list"></ul>
+                </div>
+                <div>
+                    <h3>G&uuml;nstiger geworden (Aktionspreis gefallen)</h3>
+                    <ul id="erosion-down" class="product-list"></ul>
+                </div>
+            </div>
+        </div>
+        <!-- FEATURE: aktionspreis-trend END -->
+
+        <!-- FEATURE: grundpreis-verlauf START -->
+        <div class="panel panel-full">
+            <h2>Grundpreis-Verlauf einzelner Artikel</h2>
+            <p id="gp-trend-sub" class="panel-sub"></p>
+            <select id="gp-picker" class="gp-picker"></select>
+            <div id="chart-gp-trend" class="chart-container-large"></div>
+        </div>
+        <!-- FEATURE: grundpreis-verlauf END -->
     </div>
 
     <script>
@@ -691,6 +785,7 @@
             });
 
             await loadAllTrendData();
+            await loadPriceHistory();
             buildFiltersBar();
 
             if (files.length > 0) {
@@ -1334,6 +1429,7 @@
         let featureSearchQuery = '';
         let featureOnlyKnuller = false;
         let featuresWired = false;
+        let priceHistory = null; // data/price-history-index.json, enriched at load
 
         function isKnuller(o) {
             return Array.isArray(o.criteria) && o.criteria.some(c => c && c.name === 'Superknüller');
@@ -1591,6 +1687,8 @@
             renderSearchResults(base);
             renderTopLists(base);
             renderCategoryDelta();
+            renderPreisRadar();
+            renderErosionTrend();
         }
 
         function setupFeatures() {
@@ -1614,6 +1712,333 @@
                     renderFeatures();
                 });
             }
+        }
+
+        // ══════════════════════════════════════════════════════════
+        // PRICE-HISTORY BLOCK (appended — Grundpreis over time)
+        // Reads data/price-history-index.json: per-product €/unit series
+        // keyed on a composite identity. Powers three panels:
+        //  1. Preis-Radar      — this week's offers vs. their all-time low
+        //  2. Aktionspreis-Trend — structural offer-price erosion over time
+        //  3. Grundpreis-Verlauf — €/unit line for one picked article
+        // ══════════════════════════════════════════════════════════
+
+        function medianOf(arr) {
+            if (!arr || !arr.length) return null;
+            const s = [...arr].sort((a, b) => a - b);
+            const m = Math.floor(s.length / 2);
+            return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+        }
+
+        // Precompute per-product stats once, so each render is a cheap scan.
+        // Exact-only Grundpreise drive min/median/erosion; range/"ab €" values
+        // are kept for plotting but excluded from statistics.
+        function precomputeHistory() {
+            priceHistory.products.forEach(p => {
+                const exd = p.obs
+                    .filter(o => o.gpf === undefined)
+                    .map(o => [o.d, o.gp])
+                    .sort((a, b) => a[0] < b[0] ? -1 : (a[0] > b[0] ? 1 : 0));
+                const g = exd.map(x => x[1]);
+                p._ex = g;
+                p._min = g.length ? Math.min(...g) : null;
+                p._med = medianOf(g);
+                p._exWeeks = new Set(exd.map(x => x[0])).size;
+                // Offer-price erosion: median of the later half vs the earlier
+                // half of this article's exact Grundpreise. Needs >=4 points.
+                if (g.length >= 4) {
+                    const half = Math.floor(g.length / 2);
+                    const oldM = medianOf(g.slice(0, half));
+                    const newM = medianOf(g.slice(g.length - half));
+                    p._oldM = oldM;
+                    p._newM = newM;
+                    p._erosion = (oldM && newM) ? (newM / oldM - 1) : null;
+                } else {
+                    p._erosion = null;
+                }
+            });
+        }
+
+        async function loadPriceHistory() {
+            try {
+                priceHistory = await fetchJSON('data/price-history-index.json');
+                precomputeHistory();
+                populateGpPicker();
+            } catch (err) {
+                // Additive feature — a failure here must not break the dashboard.
+                console.error('Price history load failed:', err);
+                priceHistory = null;
+            }
+        }
+
+        // The exact Grundpreis for product p in the given week, or null if the
+        // article was not offered that week with an unambiguous Grundpreis.
+        function currentExactGp(p, date) {
+            let cur = null;
+            for (const o of p.obs) {
+                if (o.d === date && o.gpf === undefined) {
+                    cur = (cur === null) ? o.gp : Math.min(cur, o.gp);
+                }
+            }
+            return cur;
+        }
+
+        // Shared row builder for the Grundpreis list panels (XSS-safe DOM API).
+        function buildGpRow(opts) {
+            const li = document.createElement('li');
+            li.className = 'product-item';
+
+            if (opts.rank != null) {
+                const r = document.createElement('div');
+                r.className = 'pi-rank';
+                r.textContent = '#' + opts.rank;
+                li.appendChild(r);
+            }
+
+            const body = document.createElement('div');
+            body.className = 'pi-body';
+
+            const title = document.createElement('div');
+            title.className = 'pi-title';
+            title.title = opts.title || '';
+            title.textContent = opts.title || '(ohne Titel)';
+            body.appendChild(title);
+
+            const cat = document.createElement('div');
+            cat.className = 'pi-cat';
+            const dot = document.createElement('span');
+            dot.className = 'cat-dot';
+            dot.style.background = CATEGORY_COLORS[opts.cat] || '#888';
+            cat.appendChild(dot);
+            cat.appendChild(document.createTextNode(opts.sub || opts.cat || '—'));
+            body.appendChild(cat);
+
+            li.appendChild(body);
+
+            const right = document.createElement('div');
+            right.className = 'pi-right';
+            const price = document.createElement('div');
+            price.className = 'pi-price';
+            price.textContent = opts.priceText;
+            if (opts.priceColor) price.style.color = opts.priceColor;
+            right.appendChild(price);
+            if (opts.badgeText) {
+                const b = document.createElement('span');
+                b.className = 'gp-badge ' + (opts.badgeClass || 'flat');
+                b.textContent = opts.badgeText;
+                right.appendChild(b);
+            }
+            li.appendChild(right);
+            return li;
+        }
+
+        // ── Panel 1: Preis-Radar (this week vs. own all-time low) ──
+        function renderPreisRadar() {
+            const lowsUl = document.getElementById('deal-lows');
+            const highsUl = document.getElementById('deal-highs');
+            const sub = document.getElementById('preis-radar-sub');
+            if (!lowsUl || !highsUl) return;
+            if (!priceHistory) {
+                setEmpty(lowsUl, 'Keine Preishistorie geladen.');
+                setEmpty(highsUl, '—');
+                return;
+            }
+
+            const ws = document.getElementById('week-select');
+            const date = (ws && fileDate(ws.value)) || priceHistory.latestDate;
+
+            const cands = [];
+            for (const p of priceHistory.products) {
+                if (!activeCategories.has(p.cat)) continue;
+                if (p._ex.length < 3) continue; // need history to judge a deal
+                const cur = currentExactGp(p, date);
+                if (cur === null) continue;
+                const over = p._min > 0 ? (cur / p._min - 1) : 0;
+                cands.push({ p, cur, over });
+            }
+
+            if (sub) {
+                sub.textContent = cands.length
+                    ? `Woche ${formatDate(date)}: ${cands.length} angebotene Artikel mit ≥3 Wochen Preishistorie, verglichen mit ihrem eigenen Allzeit-Tief (€/Einheit).`
+                    : `Für die Woche ${formatDate(date)} gibt es keine angebotenen Artikel mit genug Preishistorie.`;
+            }
+
+            const lows = [...cands].sort((a, b) => a.over - b.over).slice(0, 8);
+            const highs = [...cands].sort((a, b) => b.over - a.over).slice(0, 8);
+            renderDealList(lowsUl, lows, 'low');
+            renderDealList(highsUl, highs, 'high');
+        }
+
+        function renderDealList(ul, items, kind) {
+            ul.innerHTML = '';
+            if (!items.length) {
+                setEmpty(ul, 'Keine Artikel mit genug Historie.');
+                return;
+            }
+            const frag = document.createDocumentFragment();
+            items.forEach((d, i) => {
+                const pct = Math.round(d.over * 100);
+                let badgeText, badgeClass;
+                if (d.over <= 0.001) {
+                    badgeText = 'Allzeit-Tief';
+                    badgeClass = 'good';
+                } else {
+                    badgeText = `+${pct}% über Tief`;
+                    if (kind === 'low') badgeClass = pct <= 10 ? 'good' : 'flat';
+                    else badgeClass = pct >= 20 ? 'bad' : 'flat';
+                }
+                frag.appendChild(buildGpRow({
+                    rank: i + 1,
+                    title: d.p.title,
+                    cat: d.p.cat,
+                    sub: `Tief €${d.p._min.toFixed(2)} · Median €${(d.p._med != null ? d.p._med : 0).toFixed(2)} /${d.p.unit}`,
+                    priceText: `€${d.cur.toFixed(2)}/${d.p.unit}`,
+                    badgeText,
+                    badgeClass,
+                }));
+            });
+            ul.appendChild(frag);
+        }
+
+        // ── Panel 2: Aktionspreis-Trend (structural erosion) ───────
+        function renderErosionTrend() {
+            const upUl = document.getElementById('erosion-up');
+            const downUl = document.getElementById('erosion-down');
+            const sub = document.getElementById('erosion-sub');
+            if (!upUl || !downUl) return;
+            if (!priceHistory) {
+                setEmpty(upUl, 'Keine Preishistorie geladen.');
+                setEmpty(downUl, '—');
+                return;
+            }
+
+            const cands = priceHistory.products.filter(p =>
+                activeCategories.has(p.cat) && p._erosion != null && p._ex.length >= 4);
+            const up = cands.filter(p => p._erosion > 0.05)
+                .sort((a, b) => b._erosion - a._erosion).slice(0, 10);
+            const down = cands.filter(p => p._erosion < -0.05)
+                .sort((a, b) => a._erosion - b._erosion).slice(0, 10);
+
+            if (sub) {
+                sub.textContent = `Median-Grundpreis der frühen vs. späten Angebote je Artikel (≥4 Wochen exakter Grundpreis, ${cands.length} Artikel). Unabhängig von der gewählten Woche.`;
+            }
+
+            const fill = (ul, list, rising) => {
+                ul.innerHTML = '';
+                if (!list.length) {
+                    setEmpty(ul, 'Keine Artikel über der Schwelle.');
+                    return;
+                }
+                const frag = document.createDocumentFragment();
+                list.forEach((p, i) => {
+                    const pct = Math.round(p._erosion * 100);
+                    frag.appendChild(buildGpRow({
+                        rank: i + 1,
+                        title: p.title,
+                        cat: p.cat,
+                        sub: `früher €${p._oldM.toFixed(2)} → jetzt €${p._newM.toFixed(2)} /${p.unit}`,
+                        priceText: `${pct > 0 ? '+' : ''}${pct}%`,
+                        priceColor: rising ? '#ef5350' : '#66bb6a',
+                        badgeText: `${p._exWeeks} Wo.`,
+                        badgeClass: 'flat',
+                    }));
+                });
+                ul.appendChild(frag);
+            };
+            fill(upUl, up, true);
+            fill(downUl, down, false);
+        }
+
+        // ── Panel 3: Grundpreis-Verlauf (single article) ───────────
+        function populateGpPicker() {
+            const sel = document.getElementById('gp-picker');
+            if (!sel || !priceHistory) return;
+            // Only articles with >=3 exact weeks give a meaningful line.
+            // products is already sorted by history depth (deepest first).
+            const pickable = priceHistory.products
+                .map((p, idx) => ({ p, idx }))
+                .filter(x => x.p._exWeeks >= 3);
+
+            sel.innerHTML = '';
+            pickable.forEach(({ p, idx }) => {
+                const opt = document.createElement('option');
+                opt.value = String(idx);
+                opt.textContent = `${p.title} (${p.cat || '—'}, ${p._exWeeks} Wo.)`;
+                sel.appendChild(opt);
+            });
+
+            sel.addEventListener('change', () => {
+                const p = priceHistory.products[Number(sel.value)];
+                if (p) renderGpTrend(p);
+            });
+
+            if (pickable.length) {
+                sel.value = String(pickable[0].idx);
+                renderGpTrend(pickable[0].p);
+            }
+        }
+
+        function renderGpTrend(p) {
+            const sub = document.getElementById('gp-trend-sub');
+            if (!priceHistory || !p) return;
+
+            const all = [...p.obs].sort((a, b) => a.d < b.d ? -1 : (a.d > b.d ? 1 : 0));
+            const dates = all.map(o => o.d);
+            // Exact values form the connected line; flagged ones a grey scatter.
+            const exactLine = all.map(o => o.gpf === undefined ? o.gp : null);
+            const flaggedPts = all.filter(o => o.gpf !== undefined).map(o => [o.d, o.gp]);
+            const color = CATEGORY_COLORS[p.cat] || '#4caf50';
+            const weeks = new Set(dates).size;
+
+            if (sub) {
+                sub.textContent = `${p.title} — Grundpreis in €/${p.unit} über ${weeks} Wochen. ` +
+                    `Tief €${(p._min != null ? p._min : 0).toFixed(2)}, Median €${(p._med != null ? p._med : 0).toFixed(2)}. ` +
+                    `Graue Punkte: Range-/„ab €"-Werte (unsicher).`;
+            }
+
+            const markLineData = (p._med != null)
+                ? [{ yAxis: +p._med.toFixed(2), name: 'Median' }]
+                : [];
+
+            const chart = getChart('gpTrend', 'chart-gp-trend');
+            chart.setOption({
+                backgroundColor: 'transparent',
+                tooltip: { trigger: 'axis' },
+                legend: { data: ['Grundpreis', 'unsicher'], textStyle: { color: '#aaa', fontSize: 11 }, bottom: 40 },
+                grid: { left: 10, right: 20, bottom: 90, top: 30, containLabel: true },
+                dataZoom: [{
+                    type: 'slider', start: 0, end: 100, bottom: 8, height: 22,
+                    borderColor: '#333', backgroundColor: '#1a1a1a',
+                    fillerColor: 'rgba(76, 175, 80, 0.15)',
+                    handleStyle: { color: '#4caf50' }, textStyle: { color: '#888' },
+                }],
+                xAxis: {
+                    type: 'category', data: dates,
+                    axisLabel: { color: '#888', rotate: 45, formatter: (d) => shortDate(d) },
+                },
+                yAxis: {
+                    type: 'value', name: `€/${p.unit}`, nameTextStyle: { color: '#888' },
+                    axisLabel: { color: '#888', formatter: '{value} €' },
+                    splitLine: { lineStyle: { color: '#222' } },
+                },
+                series: [
+                    {
+                        name: 'Grundpreis', type: 'line', connectNulls: true,
+                        symbol: 'circle', symbolSize: 7, data: exactLine,
+                        lineStyle: { width: 2, color }, itemStyle: { color },
+                        markLine: {
+                            silent: true, symbol: 'none',
+                            lineStyle: { color: '#666', type: 'dashed' },
+                            label: { color: '#999', formatter: 'Median' },
+                            data: markLineData,
+                        },
+                    },
+                    {
+                        name: 'unsicher', type: 'scatter', data: flaggedPts,
+                        symbol: 'circle', symbolSize: 6, itemStyle: { color: '#555' },
+                    },
+                ],
+            }, { notMerge: true });
         }
 
         init().catch(showLoadError);
