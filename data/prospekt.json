@@ -1,0 +1,50 @@
+{
+  "generatedAt": "2026-06-22",
+  "weekLabel": "KW26",
+  "lead": "Willkommen zur KW26! Diese Woche bringt Sommer auf euren Tisch: Bio-Heidelbeeren, knackfrische Kartoffeln zum Sensationspreis und frische Kräuter. Und für alle Bierfreunde: Pils und Co. mit attraktiven Angeboten. Viel Spaß beim Einkaufen!",
+  "sections": {
+    "vegan": "Vegetarisch und vegan genießen – mit leckeren Alternativen, die keine Kompromisse machen. Geschmack und fairer Preis garantiert.",
+    "obstgemuese": "Frische aus der Region und von weit her: knackiges Gemüse, saftige Beeren und Bio-Highlights für die warme Jahreszeit. Sommerleckerien zum Schnäppchenpreis!",
+    "bierspezi": "Erfrischung für jeden Geschmack: klassisches Pils, alkoholfrei oder mit Charakter – unsere Getränkeauswahl begeistert beim Preis.",
+    "knueller": "Top-Angebote für Haushalt und Küche: praktische Helfer und leckere Fleischspezialitäten mit echtem Sparpotenzial."
+  },
+  "picks": [
+    {
+      "title": "China - Bio-Ingwer",
+      "reason": "Unschlagbarer Preis für Bio-Qualität! Perfekt für Tee und würzige Marinaden."
+    },
+    {
+      "title": "Deutschland - Kohlrabi",
+      "reason": "Knackfrisch und günstiger als gedacht – ein echtes Schnäppchen zum Ausprobieren!"
+    },
+    {
+      "title": "Deutschland - Frühkartoffeln",
+      "reason": "Sensationeller Grundpreis (€1,25/kg) – so günstig gibt's Kartoffeln selten!"
+    },
+    {
+      "title": "Vegetarische oder Vegane Produkte",
+      "reason": "Perfekt für abwechslungsreiche vegane Küche zum fairen Preis!"
+    },
+    {
+      "title": "Spanien - Bio-Kulturheidelbeeren",
+      "reason": "Bio-Qualität mit Sommergeschmack – pur oder in Desserts unschlagbar!"
+    },
+    {
+      "title": "Spanien - Bio-Spitzpaprika",
+      "reason": "Knackige Paprika in Bio-Qualität – perfekt für bunte Sommergerichte!"
+    },
+    {
+      "title": "Deutschland - Stachelbeeren oder Johannisbeeren",
+      "reason": "Heimische Sommerboten – fruchtig-aromatisch und zum fairen Preis!"
+    },
+    {
+      "title": "Wicküler Pils oder Pils 0,0% alkoholfrei",
+      "reason": "Klassisches Pils oder alkoholfrei – beides jetzt im Top-Angebot!"
+    },
+    {
+      "title": "Jever Pilsener",
+      "reason": "Norddeutscher Klassiker zum Top-Preis – echte Bierkultur zum Genießen!"
+    }
+  ],
+  "model": "haiku"
+}

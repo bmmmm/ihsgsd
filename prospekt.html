@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EDEKA Prospekt</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .wrap { max-width: 1200px; margin: 0 auto; }
+
+        /* ── header / nav ── */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 6px;
+        }
+        .header h1 { margin: 0; font-size: 1.7rem; color: #fff; }
+        .header-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        #week-select {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            border: 1px solid #333;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+        .nav-links { display: flex; gap: 8px; }
+        .back-link {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 8px 14px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .back-link:hover { color: #fff; border-color: #555; background: #1a1a1a; }
+        #info-bar { color: #888; font-size: 0.9rem; margin: 0 0 18px; }
+
+        /* ── hero ── */
+        .pk-hero {
+            background: linear-gradient(135deg, #14210f, #141414);
+            border: 1px solid #243018;
+            border-radius: 16px;
+            padding: 26px 28px;
+            margin-bottom: 20px;
+        }
+        .pk-hero h2 { margin: 0 0 8px; font-size: 1.35rem; color: #cdebb5; }
+        #pk-lead { margin: 0; font-size: 1.02rem; line-height: 1.6; color: #ddd; max-width: 75ch; }
+
+        /* ── panels / sections ── */
+        .panel {
+            background: #141414;
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .panel h2 { margin: 0 0 4px; font-size: 1.15rem; color: #fff; }
+        .panel-sub { margin: 0 0 14px; color: #888; font-size: 0.88rem; }
+
+        /* ── steering tool ── */
+        .steer-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+        .steer-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 999px;
+            border: 1px solid #333;
+            background: #1a1a1a;
+            color: #aaa;
+            transition: all 0.15s;
+        }
+        .steer-chip:hover { border-color: #555; }
+        .steer-chip .chip-emoji { font-size: 1rem; }
+        .steer-chip .chip-state { font-size: 0.7rem; opacity: 0.85; }
+        .steer-chip.lvl-like { border-color: #66bb6a; color: #66bb6a; background: rgba(102,187,106,0.12); }
+        .steer-chip.lvl-fav  { border-color: #ff3b6b; color: #ff8aa8; background: rgba(255,59,107,0.15); }
+        .steer-chip.lvl-off  { color: #666; border-color: #2a2a2a; background: #121212; text-decoration: line-through; }
+
+        .steer-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+        .steer-btn {
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+            padding: 7px 14px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #1a1a1a;
+            color: #ddd;
+            transition: all 0.15s;
+        }
+        .steer-btn:hover { border-color: #555; background: #222; }
+        .steer-btn.primary { border-color: #4caf50; color: #9be29e; background: rgba(76,175,80,0.12); }
+        .show-hidden { display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; color: #aaa; cursor: pointer; }
+        #steer-hint { margin: 12px 0 0; font-size: 0.82rem; color: #7fae7f; min-height: 1em; }
+        .steer-legend { font-size: 0.78rem; color: #777; margin-top: 10px; }
+
+        /* ── product sections ── */
+        .pk-section { margin-bottom: 8px; }
+        .pk-section > h2 { margin: 0 0 4px; font-size: 1.2rem; color: #fff; }
+        .pk-section > h2 .pk-emoji { margin-right: 8px; }
+        .pk-intro { margin: 0 0 14px; color: #aaa; font-size: 0.92rem; line-height: 1.5; max-width: 75ch; }
+        .pk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+            gap: 14px;
+        }
+
+        /* ── cards ── */
+        .pk-card {
+            background: #161616;
+            border: 1px solid #242424;
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.15s, opacity 0.15s;
+        }
+        .pk-card:hover { border-color: #3a3a3a; }
+        .pk-card.downvoted { opacity: 0.45; }
+        .pk-thumb {
+            position: relative;
+            height: 140px;
+            background: #0f0f0f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .pk-thumb img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .pk-thumb.noimg { font-size: 2.2rem; opacity: 0.4; }
+        .pk-thumb .knuller-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+        }
+        .knuller-badge {
+            display: inline-block;
+            font-size: 0.62rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: #fff;
+            background: #ff3b6b;
+            border-radius: 4px;
+            padding: 2px 6px;
+        }
+        .pk-body { padding: 12px 13px 13px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+        .pk-title {
+            font-size: 0.9rem;
+            color: #f0f0f0;
+            font-weight: 600;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .pk-cat { display: inline-flex; align-items: center; gap: 6px; font-size: 0.74rem; color: #888; }
+        .pk-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .pk-price-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-top: 2px; }
+        .pk-price { font-size: 1.15rem; font-weight: 700; color: #fff; }
+        .pk-gp { font-size: 0.74rem; color: #888; }
+        .pk-reason { font-size: 0.8rem; color: #cdebb5; line-height: 1.4; background: rgba(102,187,106,0.08); border-radius: 8px; padding: 6px 8px; }
+        .pk-actions { display: flex; gap: 8px; margin-top: auto; padding-top: 6px; }
+        .pk-vote {
+            flex: 1;
+            cursor: pointer;
+            font-size: 0.95rem;
+            padding: 5px 0;
+            border-radius: 8px;
+            border: 1px solid #2a2a2a;
+            background: #1a1a1a;
+            opacity: 0.65;
+            transition: all 0.15s;
+        }
+        .pk-vote:hover { opacity: 1; border-color: #444; }
+        .pk-vote.up.on { opacity: 1; border-color: #66bb6a; background: rgba(102,187,106,0.18); }
+        .pk-vote.down.on { opacity: 1; border-color: #ef5350; background: rgba(239,83,80,0.18); }
+
+        .footer { margin-top: 28px; padding-top: 16px; border-top: 1px solid #222; color: #666; font-size: 0.82rem; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="header">
+            <h1>EDEKA Wochen-Prospekt</h1>
+            <div class="header-controls">
+                <select id="week-select" aria-label="Woche auswählen"></select>
+                <div class="nav-links">
+                    <a href="table.html" class="back-link">Tabelle</a>
+                    <a href="dashboard.html" class="back-link">Dashboard</a>
+                    <a href="index.html" class="back-link">&#8592; Start</a>
+                </div>
+            </div>
+        </div>
+        <p id="info-bar"></p>
+
+        <section class="pk-hero">
+            <h2 id="pk-week">Unsere Highlights der Woche</h2>
+            <p id="pk-lead"></p>
+        </section>
+
+        <section class="panel" aria-labelledby="steer-title">
+            <h2 id="steer-title">Meine Vorlieben</h2>
+            <p class="panel-sub">Tipp pro Thema durch: neutral &rarr; mag ich &rarr; Favorit &rarr; aus. Karten ordnen sich sofort danach.</p>
+            <div id="steer-chips" class="steer-chips"></div>
+            <div class="steer-bar">
+                <button type="button" id="steer-export" class="steer-btn primary">Für Montag exportieren</button>
+                <button type="button" id="steer-reset" class="steer-btn">Zurücksetzen</button>
+                <label class="show-hidden"><input type="checkbox" id="show-hidden"> Ausgeblendete zeigen</label>
+            </div>
+            <p id="steer-hint"></p>
+            <p class="steer-legend">Mit &#128077; / &#128683; auf den Karten verfeinerst du einzelne Produkte. Der Export (preferences.json) personalisiert montags die KI-Texte.</p>
+        </section>
+
+        <section class="pk-section" id="pk-foryou">
+            <h2><span class="pk-emoji">&#11088;</span>Für dich diese Woche</h2>
+            <div id="pk-foryou-grid" class="pk-grid"></div>
+        </section>
+
+        <section class="pk-section" id="pk-vegan">
+            <h2><span class="pk-emoji">&#127793;</span>Vegan &amp; vegetarisch</h2>
+            <p id="pk-vegan-intro" class="pk-intro"></p>
+            <div id="pk-vegan-grid" class="pk-grid"></div>
+        </section>
+
+        <section class="pk-section" id="pk-obst">
+            <h2><span class="pk-emoji">&#129382;</span>Obst &amp; Gemüse</h2>
+            <p id="pk-obst-intro" class="pk-intro"></p>
+            <div id="pk-obst-grid" class="pk-grid"></div>
+        </section>
+
+        <section class="pk-section" id="pk-bier">
+            <h2><span class="pk-emoji">&#127866;</span>Bier &amp; Spezi</h2>
+            <p id="pk-bier-intro" class="pk-intro"></p>
+            <div id="pk-bier-grid" class="pk-grid"></div>
+        </section>
+
+        <section class="pk-section" id="pk-knueller">
+            <h2><span class="pk-emoji">&#128293;</span>Top-Knüller</h2>
+            <p id="pk-knueller-intro" class="pk-intro"></p>
+            <div id="pk-knueller-grid" class="pk-grid"></div>
+        </section>
+
+        <div class="footer">
+            EDEKA Wochen-Prospekt &mdash; kuratiert aus den Wochenangeboten. Texte optional lokal via <code>claude -p</code> erzeugt.
+        </div>
+    </div>
+    <script src="prospekt.js"></script>
+</body>
+</html>
