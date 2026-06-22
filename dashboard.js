@@ -134,6 +134,11 @@ async function init() {
     }
 
     renderTrend();
+    // Global cross-week KPI panels — independent of week and category, so they
+    // only need to render once after the trend data is loaded.
+    renderKnullerPuls();
+    renderTransparenz();
+    renderArchitektur();
     setupNetworkZoomGuard();
 
     // Single resize handler for all charts (trend lives in charts.trend).
@@ -1006,6 +1011,10 @@ function renderFeatures() {
     renderCategoryDelta();
     renderPreisRadar();
     renderErosionTrend();
+    renderLigatabelle();
+    renderEhrlichkeit();
+    renderVolatilitaet();
+    renderSaison();
 }
 
 function setupFeatures() {
@@ -1075,8 +1084,14 @@ function precomputeHistory() {
             p._oldM = oldM;
             p._newM = newM;
             p._erosion = (oldM && newM) ? (newM / oldM - 1) : null;
+            // Coefficient of variation (stdev/mean) over the per-week prices —
+            // how much this article's offer price swings week to week.
+            const mean = g.reduce((a, b) => a + b, 0) / g.length;
+            const variance = g.reduce((a, b) => a + (b - mean) ** 2, 0) / g.length;
+            p._cv = mean > 0 ? Math.sqrt(variance) / mean : null;
         } else {
             p._erosion = null;
+            p._cv = null;
         }
     });
 }
@@ -1356,6 +1371,265 @@ function renderGpTrend(p) {
                 symbol: 'circle', symbolSize: 6, itemStyle: { color: '#555' },
             },
         ],
+    }, { notMerge: true });
+}
+
+// ══════════════════════════════════════════════════════════
+// EXTRA PANELS — visualize the trend-index KPIs that were shipped but never
+// shown (knuller/payback/gpCoverage/avgFace/medFace) plus deeper Grundpreis
+// cuts. All additive; each guards its own DOM and the loaded data.
+// ══════════════════════════════════════════════════════════
+
+// Generic date-axis line chart over allTrendData (drives the global KPI
+// panels). series items: {name, color, get(week)->number, area?, markLine?}.
+function renderDateLineChart(chartName, domId, series, yAxis) {
+    if (!allTrendData.length) return;
+    const data = allTrendData;
+    const dates = data.map(w => w.date);
+    const labelByDate = new Map(data.map(w => [w.date, `${weekLabel(w.week)}\n${shortDate(w.date)}`]));
+    const chart = getChart(chartName, domId);
+    chart.setOption({
+        backgroundColor: 'transparent',
+        tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+        legend: { data: series.map(s => s.name), textStyle: { color: '#aaa', fontSize: 11 }, bottom: 40, type: 'scroll' },
+        grid: chartGrid(90),
+        dataZoom: sliderZoom(),
+        xAxis: {
+            type: 'category', data: dates,
+            axisLabel: { color: '#888', rotate: 45, formatter: (d) => labelByDate.get(d) || d },
+        },
+        yAxis: Object.assign({
+            type: 'value', nameTextStyle: { color: '#888' },
+            axisLabel: { color: '#888' }, splitLine: { lineStyle: { color: '#222' } },
+        }, yAxis),
+        series: series.map(s => ({
+            name: s.name, type: 'line', smooth: true, symbol: 'circle', symbolSize: 6,
+            lineStyle: { width: 2, color: s.color }, itemStyle: { color: s.color },
+            areaStyle: s.area ? { opacity: 0.06 } : undefined,
+            data: data.map(s.get), markLine: s.markLine,
+        })),
+    }, { notMerge: true });
+}
+
+// ── Superknüller-Puls: action-tag counts over time (global) ──
+function renderKnullerPuls() {
+    renderDateLineChart('knullerPuls', 'chart-knuller-puls', [
+        { name: 'Superknüller', color: '#ff3b6b', get: w => w.knuller || 0, area: true },
+        { name: 'PAYBACK', color: '#42a5f5', get: w => w.payback || 0 },
+    ], { name: 'Aktionen' });
+}
+
+// ── Transparenz-Index: Grundpreis coverage over time (global) ──
+function renderTransparenz() {
+    if (!allTrendData.length) return;
+    const vals = allTrendData.map(w => (w.gpCoverage || 0) * 100);
+    const mean = vals.reduce((a, b) => a + b, 0) / vals.length;
+    renderDateLineChart('transparenz', 'chart-transparenz', [{
+        name: 'Grundpreis-Abdeckung', color: '#66bb6a', area: true,
+        get: w => +((w.gpCoverage || 0) * 100).toFixed(1),
+        markLine: {
+            silent: true, symbol: 'none', lineStyle: { color: '#666', type: 'dashed' },
+            label: { color: '#999', formatter: `Ø ${mean.toFixed(0)}%` },
+            data: [{ yAxis: +mean.toFixed(1) }],
+        },
+    }], { name: '%', min: 0, max: 100, axisLabel: { color: '#888', formatter: '{value}%' } });
+}
+
+// ── Preis-Architektur: avg vs median face price = skew (global) ──
+function renderArchitektur() {
+    renderDateLineChart('architektur', 'chart-architektur', [
+        { name: 'Ø Preis', color: '#ffa726', get: w => w.avgFace },
+        { name: 'Median', color: '#42a5f5', get: w => w.medFace, area: true },
+    ], { name: '€', axisLabel: { color: '#888', formatter: '{value} €' } });
+}
+
+// ── Superknüller-Ehrlichkeitscheck: is the "Knüller" price low? ──
+function renderEhrlichkeit() {
+    const goodUl = document.getElementById('honest-good');
+    const badUl = document.getElementById('honest-bad');
+    const sub = document.getElementById('honest-sub');
+    if (!goodUl || !badUl) return;
+    if (!priceHistory) { setEmpty(goodUl, 'Keine Preishistorie geladen.'); setEmpty(badUl, '—'); return; }
+
+    const cands = [];
+    for (const p of priceHistory.products) {
+        if (!activeCategories.has(p.cat)) continue;
+        if (p._med == null || p._exWeeks < 3) continue;
+        const kvals = p.obs.filter(o => o.k === 1 && o.gpf === undefined).map(o => o.gp);
+        if (!kvals.length) continue;
+        const kmin = Math.min(...kvals);
+        cands.push({ p, kmin, ratio: kmin / p._med });
+    }
+    if (sub) {
+        sub.textContent = cands.length
+            ? `${cands.length} als Superknüller beworbene Artikel (≥3 Wochen Historie): Knüller-Grundpreis vs. eigener Median (€/Einheit).`
+            : 'Keine Superknüller-Artikel mit genug Preishistorie in den aktiven Kategorien.';
+    }
+    const good = cands.filter(c => c.ratio <= 0.95).sort((a, b) => a.ratio - b.ratio).slice(0, 10);
+    const bad = cands.filter(c => c.ratio >= 1.0).sort((a, b) => b.ratio - a.ratio).slice(0, 10);
+    fillHonest(goodUl, good, true);
+    fillHonest(badUl, bad, false);
+}
+
+function fillHonest(ul, items, isGood) {
+    ul.innerHTML = '';
+    if (!items.length) { setEmpty(ul, isGood ? 'Keine echten Knüller.' : 'Keine Mogelpackungen.'); return; }
+    const frag = document.createDocumentFragment();
+    items.forEach((c, i) => {
+        const pct = isGood ? Math.round((1 - c.ratio) * 100) : Math.round((c.ratio - 1) * 100);
+        frag.appendChild(buildGpRow({
+            rank: i + 1,
+            title: c.p.title,
+            cat: c.p.cat,
+            sub: `Median €${c.p._med.toFixed(2)}/${c.p.unit} · ${c.p._exWeeks} Wo.`,
+            priceText: `€${c.kmin.toFixed(2)}/${c.p.unit}`,
+            priceColor: isGood ? '#66bb6a' : '#ef5350',
+            badgeText: isGood ? `${pct}% unter Median` : `+${pct}% über Median`,
+            badgeClass: isGood ? 'good' : 'bad',
+        }));
+    });
+    ul.appendChild(frag);
+}
+
+// ── Grundpreis-Ligatabelle: cheapest €/unit this week (week-dependent) ──
+function renderLigatabelle() {
+    const kgUl = document.getElementById('liga-kg');
+    const lUl = document.getElementById('liga-l');
+    const sub = document.getElementById('liga-sub');
+    if (!kgUl || !lUl) return;
+    if (!priceHistory) { setEmpty(kgUl, 'Keine Preishistorie geladen.'); setEmpty(lUl, '—'); return; }
+    const ws = document.getElementById('week-select');
+    const date = (ws && fileDate(ws.value)) || priceHistory.latestDate;
+
+    const kg = [], l = [];
+    for (const p of priceHistory.products) {
+        if (!activeCategories.has(p.cat)) continue;
+        const cur = currentExactGp(p, date);
+        if (cur == null) continue;
+        if (p.unit === 'kg') kg.push({ p, cur });
+        else if (p.unit === 'l') l.push({ p, cur });
+    }
+    kg.sort((a, b) => a.cur - b.cur);
+    l.sort((a, b) => a.cur - b.cur);
+    if (sub) {
+        sub.textContent = `Günstigste exakte Grundpreise der Woche ${formatDate(date)} — je Einheit getrennt (kg und l werden nie gemischt).`;
+    }
+    fillLiga(kgUl, kg.slice(0, 10), 'kg');
+    fillLiga(lUl, l.slice(0, 10), 'l');
+}
+
+function fillLiga(ul, items, unit) {
+    ul.innerHTML = '';
+    if (!items.length) { setEmpty(ul, `Keine Artikel mit €/${unit} diese Woche.`); return; }
+    const frag = document.createDocumentFragment();
+    items.forEach((d, i) => {
+        frag.appendChild(buildGpRow({
+            rank: i + 1,
+            title: d.p.title,
+            cat: d.p.cat,
+            sub: d.p.cat || '—',
+            priceText: `€${d.cur.toFixed(2)}/${unit}`,
+            badgeText: (d.p._min != null && d.cur <= d.p._min * 1.001) ? 'Allzeit-Tief' : '',
+            badgeClass: 'good',
+        }));
+    });
+    ul.appendChild(frag);
+}
+
+// ── Preis-Volatilität: which staples swing most week to week ──
+function renderVolatilitaet() {
+    const hiUl = document.getElementById('vol-high');
+    const loUl = document.getElementById('vol-low');
+    const sub = document.getElementById('vol-sub');
+    if (!hiUl || !loUl) return;
+    if (!priceHistory) { setEmpty(hiUl, 'Keine Preishistorie geladen.'); setEmpty(loUl, '—'); return; }
+    const cands = priceHistory.products.filter(p =>
+        activeCategories.has(p.cat) && p._cv != null && p._ex.length >= 4);
+    const hi = [...cands].sort((a, b) => b._cv - a._cv).slice(0, 10);
+    const lo = [...cands].sort((a, b) => a._cv - b._cv).slice(0, 10);
+    if (sub) {
+        sub.textContent = `Variationskoeffizient (Streuung ÷ Mittel) des Grundpreises über ≥4 Wochen, ${cands.length} Artikel.`;
+    }
+    fillVol(hiUl, hi);
+    fillVol(loUl, lo);
+}
+
+function fillVol(ul, items) {
+    ul.innerHTML = '';
+    if (!items.length) { setEmpty(ul, 'Keine Artikel mit genug Historie.'); return; }
+    const frag = document.createDocumentFragment();
+    items.forEach((p, i) => {
+        const lo = Math.min(...p._ex), hi = Math.max(...p._ex);
+        frag.appendChild(buildGpRow({
+            rank: i + 1,
+            title: p.title,
+            cat: p.cat,
+            sub: `€${lo.toFixed(2)}–€${hi.toFixed(2)}/${p.unit} · ${p._exWeeks} Wo.`,
+            priceText: `${Math.round(p._cv * 100)}%`,
+            badgeText: `Median €${(p._med != null ? p._med : 0).toFixed(2)}`,
+            badgeClass: 'flat',
+        }));
+    });
+    ul.appendChild(frag);
+}
+
+// ── Saisonale Kategorie-Muster: month × category heatmap ───
+const MONTH_NAMES = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+
+function renderSaison() {
+    const sub = document.getElementById('saison-sub');
+    if (!document.getElementById('chart-saison') || !allTrendData.length) return;
+    const cats = allTrendCategories.filter(c => activeCategories.has(c));
+    if (!cats.length) return;
+
+    // Per (month-of-year, category): mean weekly offer count across all years.
+    const sums = {}; // "mm|cat" -> {sum, n}
+    const monthsSeen = new Set();
+    allTrendData.forEach(w => {
+        const mm = Number((w.date || '').slice(5, 7)) - 1; // 0..11
+        if (mm < 0 || mm > 11) return;
+        monthsSeen.add(mm);
+        cats.forEach(cat => {
+            const key = `${mm}|${cat}`;
+            if (!sums[key]) sums[key] = { sum: 0, n: 0 };
+            sums[key].sum += (w.counts && w.counts[cat]) || 0;
+            sums[key].n++;
+        });
+    });
+    const months = [...monthsSeen].sort((a, b) => a - b);
+    const cells = [];
+    let maxV = 0;
+    months.forEach((mm, xi) => {
+        cats.forEach((cat, yi) => {
+            const s = sums[`${mm}|${cat}`];
+            const v = s ? +(s.sum / s.n).toFixed(1) : 0;
+            if (v > maxV) maxV = v;
+            cells.push([xi, yi, v]);
+        });
+    });
+    if (sub) {
+        sub.textContent = `Ø Angebote je Monat und Kategorie über ${allTrendData.length} Wochen (~${Math.round(allTrendData.length / 4.3)} Monate Datenbasis — saisonale Aussagen mit Vorsicht).`;
+    }
+    const chart = getChart('saison', 'chart-saison');
+    chart.setOption({
+        backgroundColor: 'transparent',
+        tooltip: {
+            position: 'top',
+            formatter: (pp) => `${MONTH_NAMES[months[pp.value[0]]]} · ${escapeHtml(cats[pp.value[1]])}<br/>Ø ${pp.value[2]} Angebote`,
+        },
+        grid: { left: 10, right: 20, top: 10, bottom: 55, containLabel: true },
+        xAxis: { type: 'category', data: months.map(m => MONTH_NAMES[m]), axisLabel: { color: '#888' }, splitArea: { show: true } },
+        yAxis: { type: 'category', data: cats, axisLabel: { color: '#aaa', fontSize: 11 }, splitArea: { show: true } },
+        visualMap: {
+            min: 0, max: maxV || 1, calculable: true, orient: 'horizontal', left: 'center', bottom: 5,
+            inRange: { color: ['#10261a', '#1e5631', '#4caf50', '#ffee58'] },
+            textStyle: { color: '#888' },
+        },
+        series: [{
+            type: 'heatmap', data: cells,
+            label: { show: false },
+            emphasis: { itemStyle: { borderColor: '#fff', borderWidth: 1 } },
+        }],
     }, { notMerge: true });
 }
 
