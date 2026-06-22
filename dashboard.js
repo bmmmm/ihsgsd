@@ -635,7 +635,11 @@ function shortDate(date) {
 
 function renderTrend() {
     const container = document.getElementById('chart-trend');
-    if (allTrendData.length === 0) return;
+    if (allTrendData.length === 0) {
+        // Don't leave the "Lade historische Daten…" spinner stuck forever.
+        container.innerHTML = '<div class="loading">Keine Trend-Daten verfügbar.</div>';
+        return;
+    }
 
     // allTrendData is sorted by date. KW labels are NOT unique
     // (collisions across/within years), so the x-axis identity is the
@@ -701,6 +705,9 @@ let networkZoomLevel = 1;
 function applyNetworkZoom(factor) {
     const chart = charts.network;
     if (!chart) return;
+    // Cancel a pending post-layout auto-fit so a manual zoom right after a
+    // week switch isn't reset 1.8s later (auto-fit otherwise only cancels on drag).
+    clearTimeout(networkFitTimer);
     networkZoomLevel *= factor;
     chart.setOption({
         series: [{
@@ -1222,7 +1229,8 @@ function renderErosionTrend() {
                 title: p.title,
                 cat: p.cat,
                 sub: `früher €${p._oldM.toFixed(2)} → jetzt €${p._newM.toFixed(2)} /${p.unit}`,
-                priceText: `${pct > 0 ? '+' : ''}${pct}%`,
+                // Arrow glyph so direction isn't conveyed by colour alone (a11y).
+                priceText: `${rising ? '▲' : '▼'} ${pct > 0 ? '+' : ''}${pct}%`,
                 priceColor: rising ? '#ef5350' : '#66bb6a',
                 badgeText: `${p._exWeeks} Wo.`,
                 badgeClass: 'flat',
