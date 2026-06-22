@@ -1558,32 +1558,195 @@ function renderErosionTrend() {
 }
 
 // ── Panel 3: Grundpreis-Verlauf (single article) ───────────
+
+// Normalize a string for umlaut-friendly search:
+// ä→ae, ö→oe, ü→ue, Ä→ae, Ö→oe, Ü→ue, ß→ss, then lowercase.
+function gpNorm(s) {
+    return String(s)
+        .toLowerCase()
+        .replace(/ä/g, 'ae')
+        .replace(/ö/g, 'oe')
+        .replace(/ü/g, 'ue')
+        .replace(/ß/g, 'ss');
+}
+
 function populateGpPicker() {
-    const sel = document.getElementById('gp-picker');
-    if (!sel || !priceHistory) return;
+    const input = document.getElementById('gp-picker-input');
+    const dropdown = document.getElementById('gp-picker-dropdown');
+    const currentLabel = document.getElementById('gp-picker-current');
+    if (!input || !dropdown || !priceHistory) return;
+
     // Only articles with >=3 exact weeks give a meaningful line.
     // products is already sorted by history depth (deepest first).
     const pickable = priceHistory.products
         .map((p, idx) => ({ p, idx }))
         .filter(x => x.p._exWeeks >= 3);
 
-    sel.innerHTML = '';
-    pickable.forEach(({ p, idx }) => {
-        const opt = document.createElement('option');
-        opt.value = String(idx);
-        opt.textContent = `${p.title} (${p.cat || '—'}, ${p._exWeeks} Wo.)`;
-        sel.appendChild(opt);
-    });
-
-    sel.addEventListener('change', () => {
-        const p = priceHistory.products[Number(sel.value)];
-        if (p) renderGpTrend(p);
-    });
-
-    if (pickable.length) {
-        sel.value = String(pickable[0].idx);
-        renderGpTrend(pickable[0].p);
+    if (!pickable.length) {
+        input.placeholder = 'Keine Artikel mit genug Preishistorie.';
+        input.disabled = true;
+        return;
     }
+
+    // Pre-build normalised search tokens for each entry (title + cat).
+    pickable.forEach(x => {
+        x._norm = gpNorm(x.p.title + ' ' + (x.p.cat || ''));
+    });
+
+    // Track currently selected product index (into priceHistory.products).
+    let selectedIdx = pickable[0].idx;
+    let activeItemEl = null;    // the currently keyboard-highlighted <div>
+
+    function selectProduct(idx, titleText) {
+        selectedIdx = idx;
+        const p = priceHistory.products[idx];
+        input.value = titleText || p.title;
+        if (currentLabel) {
+            currentLabel.innerHTML = 'Ausgewählt: <strong>' + escapeHtml(p.title) + '</strong>' +
+                ' &mdash; ' + escapeHtml(p.cat || '—') + ', ' + p._exWeeks + '&nbsp;Wochen';
+        }
+        input.setAttribute('aria-expanded', 'false');
+        dropdown.classList.remove('open');
+        activeItemEl = null;
+        renderGpTrend(p);
+    }
+
+    function buildDropdown(query) {
+        dropdown.innerHTML = '';
+        const q = gpNorm(query || '');
+        const matched = q ? pickable.filter(x => x._norm.includes(q)) : pickable;
+
+        if (!matched.length) {
+            const empty = document.createElement('div');
+            empty.className = 'gp-dd-empty';
+            empty.textContent = 'Keine Übereinstimmungen für „' + (query || '') + '"';
+            dropdown.appendChild(empty);
+            input.setAttribute('aria-expanded', 'true');
+            dropdown.classList.add('open');
+            activeItemEl = null;
+            return;
+        }
+
+        // Group by category, sort groups alphabetically.
+        const byCat = new Map();
+        matched.forEach(x => {
+            const cat = x.p.cat || '—';
+            if (!byCat.has(cat)) byCat.set(cat, []);
+            byCat.get(cat).push(x);
+        });
+        const cats = [...byCat.keys()].sort();
+
+        const frag = document.createDocumentFragment();
+        cats.forEach(cat => {
+            const group = document.createElement('div');
+            group.className = 'gp-dd-group';
+            group.setAttribute('role', 'group');
+
+            const groupLabel = document.createElement('div');
+            groupLabel.className = 'gp-dd-group-label';
+            groupLabel.textContent = cat;
+            group.appendChild(groupLabel);
+
+            byCat.get(cat).forEach(x => {
+                const item = document.createElement('div');
+                item.className = 'gp-dd-item';
+                item.setAttribute('role', 'option');
+                item.setAttribute('aria-selected', String(x.idx === selectedIdx));
+                item.dataset.idx = String(x.idx);
+
+                const dot = document.createElement('span');
+                dot.className = 'gp-dd-cat-dot';
+                dot.style.background = CATEGORY_COLORS[cat] || '#888';
+                item.appendChild(dot);
+
+                const nameSpan = document.createElement('span');
+                nameSpan.textContent = x.p.title;
+                item.appendChild(nameSpan);
+
+                const weeksSpan = document.createElement('span');
+                weeksSpan.className = 'gp-dd-weeks';
+                weeksSpan.textContent = x.p._exWeeks + ' Wo.';
+                item.appendChild(weeksSpan);
+
+                item.addEventListener('mousedown', (e) => {
+                    // mousedown fires before blur — prevent the blur from closing before click.
+                    e.preventDefault();
+                    selectProduct(x.idx, x.p.title);
+                });
+                group.appendChild(item);
+            });
+
+            frag.appendChild(group);
+        });
+
+        dropdown.appendChild(frag);
+        activeItemEl = null;
+        input.setAttribute('aria-expanded', 'true');
+        dropdown.classList.add('open');
+    }
+
+    function closeDropdown() {
+        dropdown.classList.remove('open');
+        input.setAttribute('aria-expanded', 'false');
+        activeItemEl = null;
+    }
+
+    function getAllItems() {
+        return Array.from(dropdown.querySelectorAll('.gp-dd-item'));
+    }
+
+    function setActive(el) {
+        if (activeItemEl) activeItemEl.classList.remove('active');
+        activeItemEl = el;
+        if (el) {
+            el.classList.add('active');
+            el.scrollIntoView({ block: 'nearest' });
+        }
+    }
+
+    input.addEventListener('input', () => {
+        buildDropdown(input.value);
+    });
+
+    input.addEventListener('focus', () => {
+        buildDropdown(input.value);
+    });
+
+    input.addEventListener('blur', () => {
+        // Small delay lets mousedown on an item fire first.
+        setTimeout(() => closeDropdown(), 120);
+    });
+
+    input.addEventListener('keydown', (e) => {
+        const items = getAllItems();
+        if (!dropdown.classList.contains('open')) {
+            if (e.key === 'ArrowDown' || e.key === 'Enter') buildDropdown(input.value);
+            return;
+        }
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            const next = items[activeItemEl ? items.indexOf(activeItemEl) + 1 : 0];
+            if (next) setActive(next);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            const idx = activeItemEl ? items.indexOf(activeItemEl) - 1 : items.length - 1;
+            if (idx >= 0) setActive(items[idx]);
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (activeItemEl) {
+                const pidx = Number(activeItemEl.dataset.idx);
+                selectProduct(pidx, priceHistory.products[pidx].title);
+            }
+        } else if (e.key === 'Escape') {
+            closeDropdown();
+            // Restore the label of the currently selected product.
+            input.value = priceHistory.products[selectedIdx]
+                ? priceHistory.products[selectedIdx].title : '';
+        }
+    });
+
+    // Initial selection: show the product with deepest history.
+    selectProduct(pickable[0].idx, pickable[0].p.title);
 }
 
 function renderGpTrend(p) {

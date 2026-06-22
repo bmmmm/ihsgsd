@@ -598,15 +598,102 @@
             background: rgba(150, 150, 150, 0.12);
         }
 
-        .gp-picker {
+        /* ── Grundpreis typeahead picker ─────────────────────── */
+        .gp-typeahead {
+            position: relative;
+            max-width: 520px;
+            margin-bottom: 14px;
+        }
+        .gp-typeahead label {
+            display: block;
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        .gp-typeahead-input {
+            width: 100%;
+            box-sizing: border-box;
             background: #1a1a1a;
             color: #e0e0e0;
             border: 1px solid #333;
             padding: 8px 12px;
             border-radius: 10px;
             font-size: 0.9rem;
-            max-width: 100%;
-            margin-bottom: 14px;
+            outline: none;
+        }
+        .gp-typeahead-input:focus {
+            border-color: #555;
+        }
+        .gp-typeahead-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            max-height: 280px;
+            overflow-y: auto;
+            background: #1e1e1e;
+            border: 1px solid #444;
+            border-radius: 10px;
+            z-index: 200;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+        }
+        .gp-typeahead-dropdown.open {
+            display: block;
+        }
+        .gp-dd-group {
+            padding: 5px 0 2px;
+        }
+        .gp-dd-group-label {
+            padding: 4px 12px;
+            font-size: 0.72rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            user-select: none;
+        }
+        .gp-dd-item {
+            padding: 7px 14px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .gp-dd-item:hover,
+        .gp-dd-item.active {
+            background: #2a2a2a;
+            color: #fff;
+        }
+        .gp-dd-item .gp-dd-cat-dot {
+            flex-shrink: 0;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .gp-dd-item .gp-dd-weeks {
+            margin-left: auto;
+            flex-shrink: 0;
+            font-size: 0.75rem;
+            color: #555;
+        }
+        .gp-dd-empty {
+            padding: 12px 14px;
+            color: #666;
+            font-size: 0.85rem;
+        }
+        .gp-current-label {
+            font-size: 0.82rem;
+            color: #999;
+            margin-bottom: 10px;
+        }
+        .gp-current-label strong {
+            color: #ccc;
         }
     </style>
 </head>
@@ -850,7 +937,18 @@
         <div class="panel panel-full">
             <h2>Grundpreis-Verlauf einzelner Artikel</h2>
             <p id="gp-trend-sub" class="panel-sub"></p>
-            <select id="gp-picker" class="gp-picker" aria-label="Artikel für Grundpreis-Verlauf"></select>
+            <div class="gp-typeahead" id="gp-typeahead-wrap">
+                <label for="gp-picker-input">Artikel suchen (Name oder Kategorie)</label>
+                <input type="text" id="gp-picker-input" class="gp-typeahead-input"
+                       placeholder="z.B. Butter, Parmesan, Fleisch&hellip;"
+                       autocomplete="off" spellcheck="false"
+                       aria-label="Artikel für Grundpreis-Verlauf suchen"
+                       aria-haspopup="listbox" aria-expanded="false"
+                       aria-controls="gp-picker-dropdown" role="combobox">
+                <div id="gp-picker-dropdown" class="gp-typeahead-dropdown" role="listbox"
+                     aria-label="Artikel-Vorschläge"></div>
+            </div>
+            <p id="gp-picker-current" class="gp-current-label" aria-live="polite"></p>
             <div id="chart-gp-trend" class="chart-container-large" role="img" aria-label="Grundpreis-Verlauf des gewählten Artikels über die Zeit"></div>
         </div>
 
