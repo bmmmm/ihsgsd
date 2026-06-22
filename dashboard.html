@@ -221,6 +221,12 @@
             min-height: 550px;
         }
 
+        /* Panels whose content sizes itself (lists, etc.) — overrides the
+           fixed min-height of .panel / .panel-full (defined after, so it wins). */
+        .panel--auto {
+            min-height: auto;
+        }
+
         .panel h2 {
             font-size: 1.1rem;
             font-weight: 600;
@@ -578,7 +584,7 @@
     <div class="header">
         <h1>EDEKA Dashboard</h1>
         <div class="header-controls">
-            <select id="week-select"></select>
+            <select id="week-select" aria-label="Woche auswählen"></select>
             <a href="index.html" class="back-link">&#8592; Startseite</a>
         </div>
     </div>
@@ -593,27 +599,27 @@
             <h2>Produkt-Netzwerk</h2>
             <div class="zoom-hint-wrapper">
                 <div id="network-zoom-hint" class="zoom-hint">Ctrl + Scrollen zum Zoomen</div>
-                <div id="chart-network" class="chart-container-large"></div>
+                <div id="chart-network" class="chart-container-large" role="img" aria-label="Produkt-Netzwerk: Kategorien und Produkte als Kraftgraph"></div>
             </div>
         </div>
 
         <div class="panel">
             <h2>Kategorien &mdash; Treemap</h2>
-            <div id="chart-treemap" class="chart-container"></div>
+            <div id="chart-treemap" class="chart-container" role="img" aria-label="Kategorien als Treemap nach Produktanzahl"></div>
         </div>
 
         <div class="panel">
             <h2>Preisverteilung pro Kategorie</h2>
-            <div id="chart-prices" class="chart-container"></div>
+            <div id="chart-prices" class="chart-container" role="img" aria-label="Preisverteilung pro Kategorie (Min, Spanne, Durchschnitt)"></div>
         </div>
 
         <div class="panel panel-full">
             <h2>Wochen-Trend &mdash; Produkte pro Kategorie</h2>
-            <div id="chart-trend" class="chart-container-large"></div>
+            <div id="chart-trend" class="chart-container-large" role="img" aria-label="Wochen-Trend: Produkte pro Kategorie über die Zeit"></div>
         </div>
 
         <!-- FEATURE: search-and-knuller START -->
-        <div class="panel panel-full" style="min-height:auto;">
+        <div class="panel panel-full panel--auto">
             <h2>Produktsuche &amp; Aktions-Highlight</h2>
             <div class="feature-controls">
                 <input id="feature-search-input" class="feature-search" type="text"
@@ -627,7 +633,7 @@
         <!-- FEATURE: search-and-knuller END -->
 
         <!-- FEATURE: top-cheapest-expensive START -->
-        <div class="panel" style="min-height:auto;">
+        <div class="panel panel--auto">
             <h2>G&uuml;nstigste &amp; teuerste Produkte</h2>
             <div class="feature-cols">
                 <div>
@@ -643,7 +649,7 @@
         <!-- FEATURE: top-cheapest-expensive END -->
 
         <!-- FEATURE: category-share-delta START -->
-        <div class="panel" style="min-height:auto;">
+        <div class="panel panel--auto">
             <h2>Kategorie-Anteil &mdash; diese Woche vs. Vorwoche</h2>
             <p id="category-delta-dates" style="margin:0 0 .5rem;font-size:.8rem;color:#aaa;"></p>
             <ul id="category-delta" class="delta-list"></ul>
@@ -651,7 +657,7 @@
         <!-- FEATURE: category-share-delta END -->
 
         <!-- FEATURE: preis-radar START -->
-        <div class="panel panel-full" style="min-height:auto;">
+        <div class="panel panel-full panel--auto">
             <h2>Preis-Radar &mdash; Grundpreis vs. eigene Historie</h2>
             <p id="preis-radar-sub" class="panel-sub"></p>
             <div class="feature-cols">
@@ -668,7 +674,7 @@
         <!-- FEATURE: preis-radar END -->
 
         <!-- FEATURE: aktionspreis-trend START -->
-        <div class="panel panel-full" style="min-height:auto;">
+        <div class="panel panel-full panel--auto">
             <h2>Aktionspreis-Trend &mdash; teurer oder g&uuml;nstiger geworden?</h2>
             <p id="erosion-sub" class="panel-sub"></p>
             <div class="feature-cols">
@@ -688,8 +694,8 @@
         <div class="panel panel-full">
             <h2>Grundpreis-Verlauf einzelner Artikel</h2>
             <p id="gp-trend-sub" class="panel-sub"></p>
-            <select id="gp-picker" class="gp-picker"></select>
-            <div id="chart-gp-trend" class="chart-container-large"></div>
+            <select id="gp-picker" class="gp-picker" aria-label="Artikel für Grundpreis-Verlauf"></select>
+            <div id="chart-gp-trend" class="chart-container-large" role="img" aria-label="Grundpreis-Verlauf des gewählten Artikels über die Zeit"></div>
         </div>
         <!-- FEATURE: grundpreis-verlauf END -->
     </div>
