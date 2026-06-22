@@ -2,7 +2,7 @@ name: Fetch EDEKA Offers
 
 on:
   schedule:
-    - cron: "0 5 * * 1" # Runs every Monday at 5 AM GMT+1
+    - cron: "0 5 * * 1" # Runs every Monday at 05:00 UTC (06:00 CET / 07:00 CEST)
   workflow_dispatch: # Allows manual triggering of the workflow
 
 # The built-in GITHUB_TOKEN needs write access to push the fetched data back
@@ -10,6 +10,10 @@ on:
 # expired and broke the pipeline; the built-in token never expires.
 permissions:
   contents: write
+
+concurrency:
+  group: fetch-offers
+  cancel-in-progress: false
 
 jobs:
   fetch-and-store:
@@ -28,7 +32,8 @@ jobs:
         id: fetch-data
         run: |
           API_URL="https://www.edeka.de/api/auth-proxy/?path=api%2Foffers%3Flimit%3D999%26marketId%3D5625811"
-          RESPONSE=$(curl -s "$API_URL")
+          RESPONSE=$(curl -sf "$API_URL") || { echo "EDEKA API fetch failed (HTTP error or network failure)"; exit 1; }
+          echo "$RESPONSE" | jq -e '.offers | type == "array"' >/dev/null || { echo "EDEKA API returned no offers array"; exit 1; }
           echo "$RESPONSE" > data.json
 
       - name: Sort JSON by category
@@ -41,7 +46,7 @@ jobs:
         id: structure
         run: |
           CURRENT_DATE=$(date -u +"%Y-%m-%d")
-          YEAR=$(date -u +"%Y")
+          YEAR=$(date -u +"%G")
           WEEK="KW$(date -u +"%V")"
           FOLDER="data/$YEAR/$WEEK"
           FILE="$CURRENT_DATE.json"
@@ -49,6 +54,29 @@ jobs:
           mv data.json "$FOLDER/$FILE"
           echo "folder=$FOLDER" >> $GITHUB_OUTPUT
           echo "file=$FOLDER/$FILE" >> $GITHUB_OUTPUT
+
+      - name: Archive product images
+        run: |
+          # Download the small `app` thumbnails (~10 KB each) into a sibling
+          # img/ dir so they survive EDEKA's ~1-2 month purge of live images.
+          # Keyed by offer id; skips already-present files; failures are
+          # non-fatal (the frontend falls back to the live URL).
+          IMG_DIR="${{ steps.structure.outputs.folder }}/img"
+          FILE="${{ steps.structure.outputs.file }}"
+          mkdir -p "$IMG_DIR"
+          ok=0; fail=0
+          while IFS=$'\t' read -r id url; do
+            [ -n "$url" ] || continue
+            out="$IMG_DIR/${id}.jpg"
+            [ -f "$out" ] && continue
+            if curl -sf --max-time 30 -o "$out" "$url"; then
+              ok=$((ok + 1))
+            else
+              rm -f "$out"; fail=$((fail + 1))
+              echo "WARN: could not fetch image for offer $id ($url)"
+            fi
+          done < <(jq -r '.offers[] | "\(.id)\t\(.images.app // "")"' "$FILE")
+          echo "Archived $ok image(s), $fail failure(s) into $IMG_DIR"
 
       - name: Generate folder-structure.json
         id: generate-structure
@@ -68,12 +96,13 @@ jobs:
               week:($file|capture("(?<y>[0-9]{4})/(?<kw>KW[0-9]+)/")|"\(.y)-\(.kw)"),
               date:($file|capture("(?<d>[0-9]{4}-[0-9]{2}-[0-9]{2})")|.d),
               total:.totalCount,
-              counts:(.offers|group_by(.category.name)|map({key:.[0].category.name,value:length})|from_entries)
+              counts:(.offers|map(select(.category.name!=null))|group_by(.category.name)|map({key:.[0].category.name,value:length})|from_entries)
             }' "$f"
           done | jq -s 'sort_by(.date)' > data/trend-index.json
 
       - name: Commit and push data
         run: |
           git add data/
+          git diff --staged --quiet && echo "Nothing to commit, skipping" && exit 0
           git commit -m "Add data for ${{ steps.structure.outputs.file }} and update folder structure"
           git push
