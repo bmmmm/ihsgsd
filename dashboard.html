@@ -227,6 +227,29 @@
             min-height: auto;
         }
 
+        /* Full-width section divider grouping the panels by scope. */
+        .section-head {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 6px 0 -6px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #222;
+        }
+
+        .section-head h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .section-head .section-hint {
+            font-size: 0.8rem;
+            color: #777;
+        }
+
         .panel h2 {
             font-size: 1.1rem;
             font-weight: 600;
@@ -595,12 +618,23 @@
     <div id="hidden-filters-bar" class="filters-bar hidden-filters"></div>
 
     <div class="grid">
-        <div class="panel panel-full">
-            <h2>Produkt-Netzwerk</h2>
-            <div class="zoom-hint-wrapper">
-                <div id="network-zoom-hint" class="zoom-hint">Ctrl + Scrollen zum Zoomen</div>
-                <div id="chart-network" class="chart-container-large" role="img" aria-label="Produkt-Netzwerk: Kategorien und Produkte als Kraftgraph"></div>
+        <!-- ── SECTION: this week (reacts to the week dropdown) ──────── -->
+        <div class="section-head">
+            <h2>Diese Woche</h2>
+            <span class="section-hint">reagiert auf die Wochenauswahl oben rechts</span>
+        </div>
+
+        <!-- FEATURE: search-and-knuller -->
+        <div class="panel panel-full panel--auto">
+            <h2>Produktsuche &amp; Aktions-Highlight</h2>
+            <div class="feature-controls">
+                <input id="feature-search-input" class="feature-search" type="text"
+                    placeholder="Produkt suchen (Titel oder Beschreibung)&hellip;" autocomplete="off" />
+                <button id="knuller-toggle" class="knuller-toggle" type="button" aria-pressed="false">
+                    <span class="dot"></span><span id="knuller-toggle-label">Nur Superkn&uuml;ller</span>
+                </button>
             </div>
+            <ul id="search-results" class="product-list"></ul>
         </div>
 
         <div class="panel">
@@ -613,26 +647,7 @@
             <div id="chart-prices" class="chart-container" role="img" aria-label="Preisverteilung pro Kategorie (Min, Spanne, Durchschnitt)"></div>
         </div>
 
-        <div class="panel panel-full">
-            <h2>Wochen-Trend &mdash; Produkte pro Kategorie</h2>
-            <div id="chart-trend" class="chart-container-large" role="img" aria-label="Wochen-Trend: Produkte pro Kategorie über die Zeit"></div>
-        </div>
-
-        <!-- FEATURE: search-and-knuller START -->
-        <div class="panel panel-full panel--auto">
-            <h2>Produktsuche &amp; Aktions-Highlight</h2>
-            <div class="feature-controls">
-                <input id="feature-search-input" class="feature-search" type="text"
-                    placeholder="Produkt suchen (Titel oder Beschreibung)&hellip;" autocomplete="off" />
-                <button id="knuller-toggle" class="knuller-toggle" type="button" aria-pressed="false">
-                    <span class="dot"></span><span id="knuller-toggle-label">Nur Superkn&uuml;ller</span>
-                </button>
-            </div>
-            <ul id="search-results" class="product-list"></ul>
-        </div>
-        <!-- FEATURE: search-and-knuller END -->
-
-        <!-- FEATURE: top-cheapest-expensive START -->
+        <!-- FEATURE: top-cheapest-expensive -->
         <div class="panel panel--auto">
             <h2>G&uuml;nstigste &amp; teuerste Produkte</h2>
             <div class="feature-cols">
@@ -646,17 +661,15 @@
                 </div>
             </div>
         </div>
-        <!-- FEATURE: top-cheapest-expensive END -->
 
-        <!-- FEATURE: category-share-delta START -->
+        <!-- FEATURE: category-share-delta -->
         <div class="panel panel--auto">
             <h2>Kategorie-Anteil &mdash; diese Woche vs. Vorwoche</h2>
-            <p id="category-delta-dates" style="margin:0 0 .5rem;font-size:.8rem;color:#aaa;"></p>
+            <p id="category-delta-dates" class="panel-sub"></p>
             <ul id="category-delta" class="delta-list"></ul>
         </div>
-        <!-- FEATURE: category-share-delta END -->
 
-        <!-- FEATURE: preis-radar START -->
+        <!-- FEATURE: preis-radar -->
         <div class="panel panel-full panel--auto">
             <h2>Preis-Radar &mdash; Grundpreis vs. eigene Historie</h2>
             <p id="preis-radar-sub" class="panel-sub"></p>
@@ -671,9 +684,27 @@
                 </div>
             </div>
         </div>
-        <!-- FEATURE: preis-radar END -->
 
-        <!-- FEATURE: aktionspreis-trend START -->
+        <div class="panel panel-full">
+            <h2>Produkt-Netzwerk</h2>
+            <div class="zoom-hint-wrapper">
+                <div id="network-zoom-hint" class="zoom-hint">Ctrl + Scrollen zum Zoomen</div>
+                <div id="chart-network" class="chart-container-large" role="img" aria-label="Produkt-Netzwerk: Kategorien und Produkte als Kraftgraph"></div>
+            </div>
+        </div>
+
+        <!-- ── SECTION: across weeks (independent of the week dropdown) ── -->
+        <div class="section-head">
+            <h2>Verlauf über Wochen</h2>
+            <span class="section-hint">unabhängig von der gewählten Woche</span>
+        </div>
+
+        <div class="panel panel-full">
+            <h2>Wochen-Trend &mdash; Produkte pro Kategorie</h2>
+            <div id="chart-trend" class="chart-container-large" role="img" aria-label="Wochen-Trend: Produkte pro Kategorie über die Zeit"></div>
+        </div>
+
+        <!-- FEATURE: aktionspreis-trend -->
         <div class="panel panel-full panel--auto">
             <h2>Aktionspreis-Trend &mdash; teurer oder g&uuml;nstiger geworden?</h2>
             <p id="erosion-sub" class="panel-sub"></p>
@@ -688,16 +719,14 @@
                 </div>
             </div>
         </div>
-        <!-- FEATURE: aktionspreis-trend END -->
 
-        <!-- FEATURE: grundpreis-verlauf START -->
+        <!-- FEATURE: grundpreis-verlauf -->
         <div class="panel panel-full">
             <h2>Grundpreis-Verlauf einzelner Artikel</h2>
             <p id="gp-trend-sub" class="panel-sub"></p>
             <select id="gp-picker" class="gp-picker" aria-label="Artikel für Grundpreis-Verlauf"></select>
             <div id="chart-gp-trend" class="chart-container-large" role="img" aria-label="Grundpreis-Verlauf des gewählten Artikels über die Zeit"></div>
         </div>
-        <!-- FEATURE: grundpreis-verlauf END -->
     </div>
 
     <script src="dashboard.js"></script>
