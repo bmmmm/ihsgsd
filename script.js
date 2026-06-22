@@ -126,11 +126,12 @@ async function fetchOffers(filePath) {
         row.appendChild(td);
       });
 
-      // Image cell with data attributes. Use web90 (purpose-built thumbnail)
-      // instead of app (full-size) since CSS caps it at 80x60.
+      // Image cell with data attributes. Use the `app` endpoint: the web90
+      // thumbnails are broken server-side (404), which is why the project
+      // switched away from them in b165e1b.
       const imgCell = document.createElement("td");
       imgCell.className = "image-cell hidden";
-      imgCell.dataset.imageUrl = offer.images.web90 || offer.images.app || "";
+      imgCell.dataset.imageUrl = offer.images.app || "";
       imgCell.dataset.originalUrl = offer.images.original || "";
       row.appendChild(imgCell);
 
@@ -314,10 +315,7 @@ function setupToggleImages() {
           const img = document.createElement("img");
           img.src = imgUrl;
           img.alt = "Produktbild";
-          img.loading = "lazy";
           img.style.cursor = "zoom-in";
-          // Activate the .img-error { display:none } rule on broken images.
-          img.onerror = () => img.classList.add("img-error");
           cell.appendChild(img);
         }
         cell.classList.remove("hidden");

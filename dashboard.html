@@ -794,12 +794,11 @@
                 const card = document.createElement('div');
                 card.className = 'stat-card stat-card-expensive';
 
-                const imgUrl = safeImageUrl(o.images.web90 || o.images.app || o.images.original || '');
+                const imgUrl = safeImageUrl(o.images.app || o.images.original || '');
                 if (imgUrl) {
                     const img = document.createElement('img');
                     img.src = imgUrl;
                     img.alt = o.title;
-                    img.loading = 'lazy';
                     card.appendChild(img);
                 }
 
@@ -1332,13 +1331,11 @@
             const li = document.createElement('li');
             li.className = 'product-item';
 
-            const imgUrl = o.images && o.images.web90;
+            const imgUrl = o.images && (o.images.app || o.images.original);
             if (imgUrl) {
                 const img = document.createElement('img');
                 img.src = imgUrl;
                 img.alt = o.title || '';
-                img.loading = 'lazy';
-                img.onerror = function () { this.style.display = 'none'; };
                 li.appendChild(img);
             }
 
