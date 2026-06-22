@@ -41,14 +41,36 @@ GP_RE = re.compile(
 )
 # First measurement in a baseUnit string, e.g. "je 250 ml Flasche" -> 250 ml.
 SIZE_RE = re.compile(r"(\d+(?:[.,]\d+)?)\s*(ml|l|g|kg)\b", re.IGNORECASE)
+# Count-based size, e.g. "je 36 - 64 Tabs", "27 WA", "16 - 36 Stück". Used as a
+# size class for products priced per wash-load / tab / piece, which carry no
+# ml/l/g/kg in baseUnit and would otherwise all collapse into the "?" bucket.
+COUNT_RE = re.compile(
+    r"(\d+(?:[.,]\d+)?)\s*(WA|Tabs?|Caps?|St(?:ü|ue)ck|Stk|WL)\b", re.IGNORECASE
+)
 DATE_RE = re.compile(r"\d{4}-\d{2}-\d{2}")
 WEEK_RE = re.compile(r"(\d{4})/(KW\d+)/")
 VOL_WEIGHT_FACTOR = {"ml": 0.001, "l": 1.0, "g": 0.001, "kg": 1.0}
+# Display-canonical Grundpreis units (kg/l stay lowercase by convention).
+UNIT_DISPLAY = {"wa": "WA", "tab": "Tab", "st": "St", "stk": "St"}
 
 
 def norm(s):
     """Trim and replace the non-breaking spaces EDEKA uses in price strings."""
     return (s or "").replace("\xa0", " ").strip()
+
+
+def parse_number(s):
+    """Parse a price/size number tolerant of German grouping.
+
+    "12.50" -> 12.5, "1,99" -> 1.99, "1.234,56" -> 1234.56. Raises ValueError
+    on anything non-numeric so callers can skip it rather than guess.
+    """
+    s = s.strip()
+    if "." in s and "," in s:  # grouped: dot=thousands, comma=decimal
+        s = s.replace(".", "").replace(",", ".")
+    else:
+        s = s.replace(",", ".")
+    return float(s)
 
 
 def parse_gp(offer):
@@ -63,11 +85,12 @@ def parse_gp(offer):
         if not m:
             continue
         try:
-            val = float(m.group(3).replace(",", "."))
+            val = parse_number(m.group(3))
         except ValueError:
             continue
         flag = "lower" if m.group(2) else ("range" if m.group(4) else "exact")
-        return val, m.group(1).lower(), flag
+        unit = m.group(1).lower()
+        return val, UNIT_DISPLAY.get(unit, unit), flag
     return None, None, None
 
 
@@ -99,21 +122,30 @@ def size_bucket(baseunit):
 
     Separates e.g. a 0.33 l can from a 1.5 l bottle of the same title (both
     €/l) so their Grundpreis series don't get conflated, while keeping minor
-    size variants (250 ml vs 300 ml) in the same bucket. "?" when no size is
-    parseable (typically messy multipack/Pfand strings)."""
-    m = SIZE_RE.search(norm(baseunit))
-    if not m:
-        return "?"
-    try:
-        val = float(m.group(1).replace(",", "."))
-    except ValueError:
-        return "?"
-    unit = m.group(2).lower()
-    base = val * VOL_WEIGHT_FACTOR[unit]
-    if base <= 0:
-        return "?"
-    dim = "v" if unit in ("ml", "l") else "w"
-    return f"{dim}{int(math.floor(math.log10(base)))}"
+    size variants (250 ml vs 300 ml) in the same bucket. Falls back to a
+    count-based class (Tabs/WA/Stück) and finally "?" for messy multipack /
+    Pfand strings with no parseable measurement."""
+    s = norm(baseunit)
+    m = SIZE_RE.search(s)
+    if m:
+        try:
+            val = parse_number(m.group(1))
+        except ValueError:
+            val = 0
+        unit = m.group(2).lower()
+        base = val * VOL_WEIGHT_FACTOR[unit]
+        if base > 0:
+            dim = "v" if unit in ("ml", "l") else "w"
+            return f"{dim}{int(math.floor(math.log10(base)))}"
+    m = COUNT_RE.search(s)
+    if m:
+        try:
+            val = parse_number(m.group(1))
+        except ValueError:
+            val = 0
+        if val > 0:
+            return f"c{int(math.floor(math.log10(val)))}"
+    return "?"
 
 
 def product_key(offer, unit):
