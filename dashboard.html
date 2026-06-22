@@ -103,7 +103,7 @@
             margin-top: 2px;
         }
 
-        .stat-card-expensive {
+        .stat-card-wide {
             display: flex;
             align-items: center;
             gap: 14px;
@@ -111,7 +111,7 @@
             min-width: 280px;
         }
 
-        .stat-card-expensive img {
+        .stat-card-wide img {
             width: 52px;
             height: 52px;
             object-fit: contain;
@@ -120,11 +120,11 @@
             flex-shrink: 0;
         }
 
-        .stat-card-expensive .stat-details .stat-value {
+        .stat-card-wide .stat-details .stat-value {
             font-size: 1.4rem;
         }
 
-        .stat-card-expensive .stat-details .stat-product {
+        .stat-card-wide .stat-details .stat-product {
             font-size: 0.75rem;
             color: #aaa;
             margin-top: 1px;
@@ -247,7 +247,7 @@
 
         .section-head .section-hint {
             font-size: 0.8rem;
-            color: #777;
+            color: #999;
         }
 
         .panel h2 {
@@ -701,6 +701,22 @@
             </div>
         </div>
 
+        <!-- FEATURE: kauf-jetzt-perzentil -->
+        <div class="panel panel-full panel--auto">
+            <h2>Kaufen oder warten? &mdash; Grundpreis-Perzentil diese Woche</h2>
+            <p id="kaufjetzt-sub" class="panel-sub"></p>
+            <div class="feature-cols">
+                <div>
+                    <h3>Jetzt kaufen (g&uuml;nstig wie selten)</h3>
+                    <ul id="kaufjetzt-now" class="product-list"></ul>
+                </div>
+                <div>
+                    <h3>Lieber warten (teuer f&uuml;r diesen Artikel)</h3>
+                    <ul id="kaufjetzt-wait" class="product-list"></ul>
+                </div>
+            </div>
+        </div>
+
         <div class="panel panel-full">
             <h2>Produkt-Netzwerk</h2>
             <div class="zoom-hint-wrapper">
@@ -755,6 +771,20 @@
                     <ul id="erosion-down" class="product-list"></ul>
                 </div>
             </div>
+        </div>
+
+        <!-- FEATURE: preis-duerre -->
+        <div class="panel panel--auto">
+            <h2>Preis-D&uuml;rre &mdash; am l&auml;ngsten nicht mehr so g&uuml;nstig</h2>
+            <p id="duerre-sub" class="panel-sub"></p>
+            <ul id="duerre-list" class="product-list"></ul>
+        </div>
+
+        <!-- FEATURE: langfrist-trend -->
+        <div class="panel panel--auto">
+            <h2>Langfrist-Trend &mdash; stetig teurer (lineare Regression)</h2>
+            <p id="langtrend-sub" class="panel-sub"></p>
+            <ul id="langtrend-list" class="product-list"></ul>
         </div>
 
         <!-- FEATURE: superknueller-ehrlichkeitscheck -->
