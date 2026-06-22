@@ -212,6 +212,17 @@ function formatDate(d) {
 
 // ── KPI Stats ────────────────────────────────────────────
 // Builds a simple "value + label" KPI card.
+// Currency formatting. Face prices (shelf price of a pack) use the suffix
+// form "12.34 €"; Grundpreise (€/unit) use the prefix form "€12.34/kg".
+// The two are intentionally distinct: a pack price and a cross-week
+// comparable per-unit price should not look the same.
+function formatEuro(n) {
+    return `${Number(n).toFixed(2)} €`;
+}
+function formatGp(n, unit) {
+    return `€${Number(n).toFixed(2)}/${unit}`;
+}
+
 function buildStatCard(value, label) {
     const card = document.createElement('div');
     card.className = 'stat-card';
@@ -229,56 +240,71 @@ function renderStats(offers) {
     const row = document.getElementById('stats-row');
     row.innerHTML = '';
 
-    const totalProducts = offers.length;
-    const categories = new Set(offers.map(o => o.category.name)).size;
-    const prices = offers.map(offerPrice).filter(p => p !== null);
-    const avgPrice = prices.length ? (prices.reduce((a, b) => a + b, 0) / prices.length).toFixed(2) : '0.00';
+    row.appendChild(buildStatCard(offers.length, 'Produkte'));
 
-    row.appendChild(buildStatCard(totalProducts, 'Produkte'));
-    row.appendChild(buildStatCard(categories, 'Kategorien'));
-    row.appendChild(buildStatCard(`${avgPrice} €`, 'Ø Preis'));
-
-    // Superknüller count, grouped with the other flat KPIs (was a separate
-    // card injected after the wide "Teuerster" card on every feature render).
     const knullerCard = buildStatCard(String(offers.filter(isKnuller).length), 'Superknüller');
     knullerCard.querySelector('.stat-value').style.color = '#ff3b6b';
     row.appendChild(knullerCard);
 
-    // Build the most-expensive card via DOM API so untrusted titles/URLs can
-    // never break out of an attribute. Skips offers with no comparable price.
-    const mostExpensive = offers.reduce((max, o) => {
-        const p = offerPrice(o);
-        return (p !== null && p > max.price) ? { offer: o, price: p } : max;
-    }, { offer: null, price: -Infinity });
-    if (mostExpensive.offer) {
-        const o = mostExpensive.offer;
+    // GP-honest deal metrics replace the old face-price "Ø Preis" and the
+    // off-goal "Teuerster Artikel": how many of this week's offered articles
+    // sit at their own all-time Grundpreis low, plus the single best deal.
+    const ws = document.getElementById('week-select');
+    const date = (ws && fileDate(ws.value)) || (priceHistory && priceHistory.latestDate);
+    const cands = date ? radarCandidates(date) : [];
 
-        const card = document.createElement('div');
-        card.className = 'stat-card stat-card-expensive';
+    if (cands.length) {
+        const atLow = cands.filter(c => c.over <= 0.001).length;
+        const lowCard = buildStatCard(String(atLow), 'Allzeit-Tief-Deals');
+        lowCard.querySelector('.stat-value').style.color = '#66bb6a';
+        row.appendChild(lowCard);
 
-        const img = buildOfferImage(o);
-        if (img) card.appendChild(img);
-
-        const details = document.createElement('div');
-        details.className = 'stat-details';
-
-        const value = document.createElement('div');
-        value.className = 'stat-value';
-        value.textContent = `${mostExpensive.price.toFixed(2)} €`;
-
-        const product = document.createElement('div');
-        product.className = 'stat-product';
-        product.title = o.title;
-        product.textContent = o.title;
-
-        const label = document.createElement('div');
-        label.className = 'stat-label';
-        label.textContent = 'Teuerster Artikel';
-
-        details.append(value, product, label);
-        card.appendChild(details);
-        row.appendChild(card);
+        const best = cands.reduce((a, b) => (b.over < a.over ? b : a));
+        row.appendChild(buildBestDealCard(best, offers));
+    } else {
+        // Fallback when no price history is loaded: the week's average shelf
+        // price (face price — only meaningful within a single week).
+        const prices = offers.map(offerPrice).filter(p => p !== null);
+        const avg = prices.length ? prices.reduce((a, b) => a + b, 0) / prices.length : 0;
+        row.appendChild(buildStatCard(formatEuro(avg), 'Ø Preis'));
     }
+}
+
+// Wide KPI card for the week's best Grundpreis deal. Built via DOM API so
+// untrusted titles/URLs can never break out of an attribute. Reuses the
+// current week's raw offer (matched by title) for a thumbnail, if present.
+function buildBestDealCard(best, offers) {
+    const p = best.p;
+    const card = document.createElement('div');
+    card.className = 'stat-card stat-card-wide';
+
+    const match = offers.find(x => x && x.title === p.title);
+    const img = match ? buildOfferImage(match) : null;
+    if (img) card.appendChild(img);
+
+    const details = document.createElement('div');
+    details.className = 'stat-details';
+
+    const value = document.createElement('div');
+    value.className = 'stat-value';
+    value.style.color = '#66bb6a';
+    value.textContent = formatGp(best.cur, p.unit);
+
+    const product = document.createElement('div');
+    product.className = 'stat-product';
+    product.title = p.title;
+    product.textContent = p.title;
+
+    const label = document.createElement('div');
+    label.className = 'stat-label';
+    const pct = Math.round(best.over * 100);
+    label.textContent = best.over <= 0.001
+        ? 'Bester Deal · Allzeit-Tief'
+        : `Bester Deal · +${pct}% über Tief`;
+
+    details.append(value, product, label);
+    card.appendChild(details);
+    return card;
 }
 
 // ── Load ALL trend data ──────────────────────────────────
@@ -322,6 +348,7 @@ function buildFiltersBar() {
         const color = CATEGORY_COLORS[cat] || '#888';
         const isActive = activeCategories.has(cat);
         btn.className = 'cat-btn' + (isActive ? ' active' : '');
+        btn.setAttribute('aria-pressed', String(isActive));
         btn.innerHTML = `<span class="cat-dot" style="background:${escapeHtml(color)}"></span>${escapeHtml(cat)}`;
         if (isActive) {
             btn.style.background = color;
@@ -365,6 +392,7 @@ function updateCategoryButtons() {
         const cat = btn.dataset.cat;
         const isActive = activeCategories.has(cat);
         btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', String(isActive));
         const color = CATEGORY_COLORS[cat] || '#888';
         btn.style.background = isActive ? color : '';
         btn.style.borderColor = isActive ? 'transparent' : '';
@@ -441,7 +469,7 @@ function renderNetwork(offers) {
                         const count = offers.filter(o => o.category.name === params.data.name).length;
                         return `<b>${name}</b><br/>${count} Produkte`;
                     }
-                    return `<b>${name}</b><br/>${params.data.value.toFixed(2)} €`;
+                    return `<b>${name}</b><br/>${formatEuro(params.data.value)}`;
                 }
                 return '';
             },
@@ -823,7 +851,7 @@ function buildProductItem(o, opts) {
     const price = document.createElement('div');
     price.className = 'pi-price';
     const pr = offerPrice(o);
-    price.textContent = pr === null ? '—' : pr.toFixed(2) + ' €';
+    price.textContent = pr === null ? '—' : formatEuro(pr);
     li.appendChild(price);
 
     return li;
@@ -1011,6 +1039,9 @@ function renderFeatures() {
     renderCategoryDelta();
     renderPreisRadar();
     renderErosionTrend();
+    renderKaufjetzt();
+    renderPreisDuerre();
+    renderLangtrend();
     renderLigatabelle();
     renderEhrlichkeit();
     renderVolatilitaet();
@@ -1075,6 +1106,12 @@ function precomputeHistory() {
         p._min = g.length ? Math.min(...g) : null;
         p._med = medianOf(g);
         p._exWeeks = g.length;
+        p._latest = g.length ? g[g.length - 1] : null;
+        // Offered-weeks elapsed since this article last hit its all-time low —
+        // powers "Preis-Dürre" (how long since it was this cheap).
+        let lastLowIdx = -1;
+        for (let i = 0; i < g.length; i++) if (g[i] <= p._min + 1e-9) lastLowIdx = i;
+        p._weeksSinceLow = lastLowIdx >= 0 ? (g.length - 1 - lastLowIdx) : null;
         // Offer-price erosion: median of the later half vs the earlier
         // half of this article's per-week exact Grundpreise. Needs >=4 weeks.
         if (g.length >= 4) {
@@ -1089,9 +1126,19 @@ function precomputeHistory() {
             const mean = g.reduce((a, b) => a + b, 0) / g.length;
             const variance = g.reduce((a, b) => a + (b - mean) ** 2, 0) / g.length;
             p._cv = mean > 0 ? Math.sqrt(variance) / mean : null;
+            // Linear regression slope over the per-week series (index as x),
+            // as a fraction of the mean per offered-week. Positive = a steady
+            // upward creep the half-split erosion check can miss.
+            const n = g.length;
+            let sx = 0, sy = 0, sxy = 0, sxx = 0;
+            for (let i = 0; i < n; i++) { sx += i; sy += g[i]; sxy += i * g[i]; sxx += i * i; }
+            const denom = n * sxx - sx * sx;
+            const slope = denom !== 0 ? (n * sxy - sx * sy) / denom : 0;
+            p._slope = mean > 0 ? slope / mean : null;
         } else {
             p._erosion = null;
             p._cv = null;
+            p._slope = null;
         }
     });
 }
@@ -1169,6 +1216,23 @@ function buildGpRow(opts) {
     return li;
 }
 
+// Articles offered in the given week (active categories, >=3 weeks of exact
+// Grundpreis history), each with its current €/unit and how far above its own
+// all-time low it sits. Shared by Preis-Radar and the KPI deal cards.
+function radarCandidates(date) {
+    const out = [];
+    if (!priceHistory) return out;
+    for (const p of priceHistory.products) {
+        if (!activeCategories.has(p.cat)) continue;
+        if (p._ex.length < 3) continue; // need history to judge a deal
+        const cur = currentExactGp(p, date);
+        if (cur === null) continue;
+        const over = p._min > 0 ? (cur / p._min - 1) : 0;
+        out.push({ p, cur, over });
+    }
+    return out;
+}
+
 // ── Panel 1: Preis-Radar (this week vs. own all-time low) ──
 function renderPreisRadar() {
     const lowsUl = document.getElementById('deal-lows');
@@ -1184,15 +1248,7 @@ function renderPreisRadar() {
     const ws = document.getElementById('week-select');
     const date = (ws && fileDate(ws.value)) || priceHistory.latestDate;
 
-    const cands = [];
-    for (const p of priceHistory.products) {
-        if (!activeCategories.has(p.cat)) continue;
-        if (p._ex.length < 3) continue; // need history to judge a deal
-        const cur = currentExactGp(p, date);
-        if (cur === null) continue;
-        const over = p._min > 0 ? (cur / p._min - 1) : 0;
-        cands.push({ p, cur, over });
-    }
+    const cands = radarCandidates(date);
 
     if (sub) {
         sub.textContent = cands.length
@@ -1229,9 +1285,152 @@ function renderDealList(ul, items, kind) {
             title: d.p.title,
             cat: d.p.cat,
             sub: `Tief €${d.p._min.toFixed(2)} · Median €${(d.p._med != null ? d.p._med : 0).toFixed(2)} /${d.p.unit}`,
-            priceText: `€${d.cur.toFixed(2)}/${d.p.unit}`,
+            priceText: formatGp(d.cur, d.p.unit),
             badgeText,
             badgeClass,
+        }));
+    });
+    ul.appendChild(frag);
+}
+
+// ── Panel: Kaufen oder warten? (GP-percentile this week) ───
+// Where today's Grundpreis sits within the article's own historical range:
+// 0th percentile = as cheap as it has ever been offered.
+function renderKaufjetzt() {
+    const nowUl = document.getElementById('kaufjetzt-now');
+    const waitUl = document.getElementById('kaufjetzt-wait');
+    const sub = document.getElementById('kaufjetzt-sub');
+    if (!nowUl || !waitUl) return;
+    if (!priceHistory) {
+        setEmpty(nowUl, 'Keine Preishistorie geladen.');
+        setEmpty(waitUl, '—');
+        if (sub) sub.textContent = '';
+        return;
+    }
+
+    const ws = document.getElementById('week-select');
+    const date = (ws && fileDate(ws.value)) || priceHistory.latestDate;
+
+    const cands = [];
+    for (const p of priceHistory.products) {
+        if (!activeCategories.has(p.cat)) continue;
+        if (p._exWeeks < 4) continue; // need a real distribution
+        const cur = currentExactGp(p, date);
+        if (cur === null) continue;
+        const below = p._ex.filter(x => x < cur).length;
+        const pct = Math.round(100 * below / (p._exWeeks - 1));
+        cands.push({ p, cur, pct });
+    }
+
+    if (sub) {
+        sub.textContent = cands.length
+            ? `Woche ${formatDate(date)}: ${cands.length} angebotene Artikel mit ≥4 Wochen Historie — wo liegt der heutige Grundpreis in der eigenen Preisspanne (0 % = so günstig wie nie).`
+            : `Für die Woche ${formatDate(date)} gibt es keine angebotenen Artikel mit genug Preishistorie.`;
+    }
+
+    const now = [...cands].sort((a, b) => a.pct - b.pct).slice(0, 8);
+    const wait = [...cands].sort((a, b) => b.pct - a.pct).slice(0, 8);
+    fillPercentileList(nowUl, now, 'now');
+    fillPercentileList(waitUl, wait, 'wait');
+}
+
+function fillPercentileList(ul, items, kind) {
+    ul.innerHTML = '';
+    if (!items.length) { setEmpty(ul, 'Keine Artikel mit genug Historie.'); return; }
+    const frag = document.createDocumentFragment();
+    items.forEach((d, i) => {
+        const badgeClass = kind === 'now'
+            ? (d.pct <= 15 ? 'good' : 'flat')
+            : (d.pct >= 80 ? 'bad' : 'flat');
+        frag.appendChild(buildGpRow({
+            rank: i + 1,
+            title: d.p.title,
+            cat: d.p.cat,
+            sub: `Tief €${d.p._min.toFixed(2)} · Median €${(d.p._med != null ? d.p._med : 0).toFixed(2)} /${d.p.unit}`,
+            priceText: formatGp(d.cur, d.p.unit),
+            badgeText: `${d.pct}. Perzentil`,
+            badgeClass,
+        }));
+    });
+    ul.appendChild(frag);
+}
+
+// ── Panel: Preis-Dürre (weeks since own all-time low) ──────
+function renderPreisDuerre() {
+    const ul = document.getElementById('duerre-list');
+    const sub = document.getElementById('duerre-sub');
+    if (!ul) return;
+    if (!priceHistory) { setEmpty(ul, 'Keine Preishistorie geladen.'); if (sub) sub.textContent = ''; return; }
+
+    const cands = [];
+    for (const p of priceHistory.products) {
+        if (!activeCategories.has(p.cat)) continue;
+        if (p._exWeeks < 4) continue;
+        if (p._weeksSinceLow == null || p._weeksSinceLow < 1) continue;
+        if (p._latest == null || p._min == null) continue;
+        const over = p._min > 0 ? (p._latest / p._min - 1) : 0;
+        cands.push({ p, over });
+    }
+
+    if (sub) {
+        sub.textContent = cands.length
+            ? `${cands.length} Artikel (≥4 Angebots-Wochen): wie lange ihr Tiefpreis schon zurückliegt und wie viel teurer der letzte Angebotspreis ist.`
+            : 'Keine Artikel mit genug Historie in den aktiven Kategorien.';
+    }
+
+    const top = cands.sort((a, b) => (b.p._weeksSinceLow - a.p._weeksSinceLow) || (b.over - a.over)).slice(0, 10);
+    ul.innerHTML = '';
+    const frag = document.createDocumentFragment();
+    top.forEach((d, i) => {
+        const pct = Math.round(d.over * 100);
+        frag.appendChild(buildGpRow({
+            rank: i + 1,
+            title: d.p.title,
+            cat: d.p.cat,
+            sub: `Tief €${d.p._min.toFixed(2)} → zuletzt ${formatGp(d.p._latest, d.p.unit)}`,
+            priceText: `vor ${d.p._weeksSinceLow} Wo.`,
+            badgeText: pct > 0 ? `+${pct}% über Tief` : 'auf Tief',
+            badgeClass: pct >= 20 ? 'bad' : 'flat',
+        }));
+    });
+    ul.appendChild(frag);
+}
+
+// ── Panel: Langfrist-Trend (linear GP regression slope) ────
+function renderLangtrend() {
+    const ul = document.getElementById('langtrend-list');
+    const sub = document.getElementById('langtrend-sub');
+    if (!ul) return;
+    if (!priceHistory) { setEmpty(ul, 'Keine Preishistorie geladen.'); if (sub) sub.textContent = ''; return; }
+
+    const cands = [];
+    for (const p of priceHistory.products) {
+        if (!activeCategories.has(p.cat)) continue;
+        if (p._slope == null || p._exWeeks < 4) continue;
+        if (p._slope <= 0) continue; // only steady risers — "nicht mehr so günstig"
+        cands.push(p);
+    }
+
+    if (sub) {
+        sub.textContent = cands.length
+            ? `${cands.length} Artikel mit stetig steigendem Grundpreis (lineare Regression über ≥4 Angebots-Wochen) — fängt schleichendes Kriechen, das der Halbjahres-Vergleich übersieht.`
+            : 'Keine Artikel mit steigendem Langfrist-Trend in den aktiven Kategorien.';
+    }
+
+    const top = cands.sort((a, b) => b._slope - a._slope).slice(0, 10);
+    ul.innerHTML = '';
+    const frag = document.createDocumentFragment();
+    top.forEach((p, i) => {
+        const perWk = Math.round(p._slope * 1000) / 10; // % per offered-week
+        frag.appendChild(buildGpRow({
+            rank: i + 1,
+            title: p.title,
+            cat: p.cat,
+            sub: `${p._exWeeks} Wo. · €${p._min.toFixed(2)} Tief → ${formatGp(p._latest, p.unit)}`,
+            priceText: `+${perWk}%/Wo.`,
+            priceColor: '#ef5350',
+            badgeText: `Median €${(p._med != null ? p._med : 0).toFixed(2)}`,
+            badgeClass: 'flat',
         }));
     });
     ul.appendChild(frag);
@@ -1482,7 +1681,7 @@ function fillHonest(ul, items, isGood) {
             title: c.p.title,
             cat: c.p.cat,
             sub: `Median €${c.p._med.toFixed(2)}/${c.p.unit} · ${c.p._exWeeks} Wo.`,
-            priceText: `€${c.kmin.toFixed(2)}/${c.p.unit}`,
+            priceText: formatGp(c.kmin, c.p.unit),
             priceColor: isGood ? '#66bb6a' : '#ef5350',
             badgeText: isGood ? `${pct}% unter Median` : `+${pct}% über Median`,
             badgeClass: isGood ? 'good' : 'bad',
@@ -1528,7 +1727,7 @@ function fillLiga(ul, items, unit) {
             title: d.p.title,
             cat: d.p.cat,
             sub: d.p.cat || '—',
-            priceText: `€${d.cur.toFixed(2)}/${unit}`,
+            priceText: formatGp(d.cur, unit),
             badgeText: (d.p._min != null && d.cur <= d.p._min * 1.001) ? 'Allzeit-Tief' : '',
             badgeClass: 'good',
         }));
