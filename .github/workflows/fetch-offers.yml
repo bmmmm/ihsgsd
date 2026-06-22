@@ -75,6 +75,7 @@ jobs:
               rm -f "$out"; fail=$((fail + 1))
               echo "WARN: could not fetch image for offer $id ($url)"
             fi
+            sleep 0.1  # gentle throttle so we don't hammer the image host
           done < <(jq -r '.offers[] | "\(.id)\t\(.images.app // "")"' "$FILE")
           echo "Archived $ok image(s), $fail failure(s) into $IMG_DIR"
 
