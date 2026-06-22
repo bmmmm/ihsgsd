@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", initializePage);
 
 const HIDDEN_CATEGORIES_DEFAULT = ["Fleisch & Wurst", "Drogerie", "Tiernahrung", "Fisch & Meeresfrüchte"];
 
+// Guard so attachImageHoverPreview() registers its listeners only once.
+let hoverPreviewAttached = false;
+
 const SEARCH_DEBOUNCE_MS = 120;
 
 // Extract the "YYYY-MM-DD" date embedded in a data file path for sorting.
@@ -90,6 +93,9 @@ function populateDropdown(dropdown, files) {
 
 async function fetchOffers(filePath) {
   const fullPath = `data/${filePath}`;
+  // Directory of the selected week, e.g. "2026/KW23" — used to build the
+  // local archived-image path for each offer.
+  const weekDir = filePath.replace(/\/[^/]+$/, "");
   const tableBody = document.getElementById("offer-table");
   const offerInfo = document.getElementById("offer-info");
 
@@ -109,15 +115,19 @@ async function fetchOffers(filePath) {
     offers.forEach((offer) => {
       const row = document.createElement("tr");
       row.dataset.category = offer.category.name;
-      // Precompute a lowercased search blob (title + category + description)
-      // so the search handler does not read every cell on each keystroke.
-      row.dataset.search = `${offer.title} ${offer.category.name} ${offer.description}`.toLowerCase();
+      // Precompute a lowercased search blob (title + category + description +
+      // price) so the search handler does not read every cell on each keystroke.
+      // Commas are normalized to dots so "1,5 l" and a query of "1,5" both
+      // become "1.5" and match (same normalization applied to the query in applyFilters).
+      row.dataset.search = `${offer.title} ${offer.category.name} ${offer.description} ${offer.price.value}`
+        .toLowerCase()
+        .replace(/,/g, ".");
 
       const cells = [
         offer.id,
         offer.title,
         offer.category.name,
-        `${offer.price.value} €`,
+        `${(Number.isFinite(offer.price.rawValue) ? offer.price.rawValue : parseFloat(offer.price.value)).toFixed(2)} €`,
         offer.description,
       ];
       cells.forEach((text) => {
@@ -126,11 +136,15 @@ async function fetchOffers(filePath) {
         row.appendChild(td);
       });
 
-      // Image cell with data attributes. Use the `app` endpoint: the web90
-      // thumbnails are broken server-side (404), which is why the project
-      // switched away from them in b165e1b.
+      // Image cell with data attributes. Prefer the locally archived thumbnail
+      // (data/<week>/img/<id>.jpg); fall back to the live EDEKA `app` URL. The
+      // live web90 thumbnails are broken server-side (404), which is why the
+      // project switched away from them in b165e1b, and EDEKA purges the live
+      // images ~1-2 months after the offer ends — the local archive is what
+      // keeps older weeks' images alive.
       const imgCell = document.createElement("td");
       imgCell.className = "image-cell hidden";
+      imgCell.dataset.localUrl = `data/${weekDir}/img/${encodeURIComponent(offer.id)}.jpg`;
       imgCell.dataset.imageUrl = offer.images.app || "";
       imgCell.dataset.originalUrl = offer.images.original || "";
       row.appendChild(imgCell);
@@ -138,6 +152,13 @@ async function fetchOffers(filePath) {
       fragment.appendChild(row);
     });
     tableBody.appendChild(fragment);
+
+    // Reset image-column UI to the hidden baseline so the toggle button stays
+    // in sync after the user switches weeks while images are shown.
+    const imageColHeader = document.getElementById("image-column-header");
+    const toggleImagesBtn = document.getElementById("toggle-images");
+    if (imageColHeader) imageColHeader.classList.add("hidden");
+    if (toggleImagesBtn) toggleImagesBtn.textContent = "Bilder laden";
 
     populateCategoryCheckboxes(offers);
   } catch (error) {
@@ -226,7 +247,8 @@ function applyFilters() {
   });
 
   const searchInput = document.getElementById("search-input");
-  // Normalize comma to dot so "1,99" matches the "1.99" price values.
+  // Normalize comma to dot so "1,99" matches "1.99" in both prices and
+  // descriptions (the search blob is pre-normalized the same way).
   const term = (searchInput ? searchInput.value : "").toLowerCase().replace(/,/g, ".").trim();
 
   const rows = document.querySelectorAll("#offer-table tr");
@@ -294,14 +316,19 @@ Please follow the steps below in your response:
     })
     .catch((err) => {
       console.error("Fehler beim Kopieren der Daten:", err);
+      alert("Kopieren fehlgeschlagen — bitte manuell kopieren (Clipboard-Zugriff verweigert oder kein HTTPS-Kontext).");
     });
 }
 
 function setupToggleImages() {
   const toggleImagesButton = document.getElementById("toggle-images");
   const imageHeader = document.getElementById("image-column-header");
+  const imageCol = document.querySelector("col.col-bild");
 
   if (!toggleImagesButton || !imageHeader) return;
+
+  // Images start hidden — collapse the column immediately so no width is wasted.
+  if (imageCol) imageCol.style.width = "0";
 
   toggleImagesButton.addEventListener("click", () => {
     const imageCells = document.querySelectorAll(".image-cell");
@@ -309,13 +336,22 @@ function setupToggleImages() {
 
     imageCells.forEach((cell) => {
       if (isHidden) {
-        // Show images
-        const imgUrl = safeImageUrl(cell.getAttribute("data-image-url"));
-        if (imgUrl && !cell.querySelector("img")) {
+        // Show images. Prefer the locally archived thumbnail; if it is missing
+        // (older week not backfilled), fall back to the live EDEKA `app` URL.
+        const localUrl = cell.getAttribute("data-local-url") || "";
+        const liveUrl = safeImageUrl(cell.getAttribute("data-image-url"));
+        const src = localUrl || liveUrl;
+        if (src && !cell.querySelector("img")) {
           const img = document.createElement("img");
-          img.src = imgUrl;
+          img.src = src;
           img.alt = "Produktbild";
           img.style.cursor = "zoom-in";
+          if (localUrl && liveUrl) {
+            img.onerror = function () {
+              this.onerror = null; // fall back once, then keep broken image visible
+              this.src = liveUrl;
+            };
+          }
           cell.appendChild(img);
         }
         cell.classList.remove("hidden");
@@ -333,12 +369,18 @@ function setupToggleImages() {
       ? "Bilder ausblenden"
       : "Bilder laden";
 
+    // Expand or collapse the image column to match visibility.
+    if (imageCol) imageCol.style.width = isHidden ? "12%" : "0";
+
     // Attach hover preview if images are shown
     if (isHidden) attachImageHoverPreview();
   });
 }
 
 function attachImageHoverPreview() {
+  if (hoverPreviewAttached) return;
+  hoverPreviewAttached = true;
+
   const table = document.getElementById("offer-table");
   const imagePreview = document.getElementById("image-preview");
 
@@ -348,11 +390,21 @@ function attachImageHoverPreview() {
     const imgCell = event.target.closest(".image-cell img");
     if (!imgCell) return;
 
-    const originalUrl = safeImageUrl(
-      imgCell.closest(".image-cell").dataset.originalUrl || ""
-    );
+    const cell = imgCell.closest(".image-cell");
+    const originalUrl = safeImageUrl(cell.dataset.originalUrl || "");
+    const fallbackUrl = safeImageUrl(cell.dataset.imageUrl || "");
     if (originalUrl) {
-      imagePreview.innerHTML = `<img src="${escapeHtml(originalUrl)}" alt="Vorschau" loading="lazy">`;
+      const previewImg = document.createElement("img");
+      previewImg.src = originalUrl;
+      previewImg.alt = "Vorschau";
+      previewImg.loading = "lazy";
+      // If the original URL 404s, fall back to the app thumbnail once.
+      previewImg.onerror = function () {
+        this.onerror = null; // prevent infinite loop
+        if (fallbackUrl) this.src = fallbackUrl;
+      };
+      imagePreview.innerHTML = "";
+      imagePreview.appendChild(previewImg);
       imagePreview.classList.add("visible");
     }
   });

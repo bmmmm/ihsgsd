@@ -567,7 +567,7 @@
             <div class="feature-controls">
                 <input id="feature-search-input" class="feature-search" type="text"
                     placeholder="Produkt suchen (Titel oder Beschreibung)&hellip;" autocomplete="off" />
-                <button id="knuller-toggle" class="knuller-toggle" type="button">
+                <button id="knuller-toggle" class="knuller-toggle" type="button" aria-pressed="false">
                     <span class="dot"></span><span id="knuller-toggle-label">Nur Superkn&uuml;ller</span>
                 </button>
             </div>
@@ -594,6 +594,7 @@
         <!-- FEATURE: category-share-delta START -->
         <div class="panel" style="min-height:auto;">
             <h2>Kategorie-Anteil &mdash; diese Woche vs. Vorwoche</h2>
+            <p id="category-delta-dates" style="margin:0 0 .5rem;font-size:.8rem;color:#aaa;"></p>
             <ul id="category-delta" class="delta-list"></ul>
         </div>
         <!-- FEATURE: category-share-delta END -->
@@ -643,6 +644,16 @@
         function fileDate(file) {
             const m = file.match(/(\d{4})-(\d{2})-(\d{2})/);
             return m ? m[0] : '';
+        }
+
+        // Local archived thumbnail path for an offer of the currently-selected
+        // week, e.g. "data/2026/KW23/img/123.jpg". Returns "" if undeterminable.
+        function localImageUrl(o) {
+            const sel = document.getElementById('week-select');
+            const file = sel ? sel.value : '';
+            const dir = file.replace(/\/[^/]+$/, '');
+            if (!dir || o == null || o.id == null) return '';
+            return `data/${dir}/img/${encodeURIComponent(o.id)}.jpg`;
         }
 
         // Numeric price with a safe fallback that does not coerce a real 0.00.
@@ -794,11 +805,14 @@
                 const card = document.createElement('div');
                 card.className = 'stat-card stat-card-expensive';
 
-                const imgUrl = safeImageUrl(o.images.app || o.images.original || '');
-                if (imgUrl) {
+                const liveUrl = safeImageUrl(o.images.app || o.images.original || '');
+                const localUrl = localImageUrl(o);
+                const src = localUrl || liveUrl;
+                if (src) {
                     const img = document.createElement('img');
-                    img.src = imgUrl;
+                    img.src = src;
                     img.alt = o.title;
+                    if (localUrl && liveUrl) img.onerror = function () { this.onerror = null; this.src = liveUrl; };
                     card.appendChild(img);
                 }
 
@@ -1331,11 +1345,14 @@
             const li = document.createElement('li');
             li.className = 'product-item';
 
-            const imgUrl = o.images && (o.images.app || o.images.original);
-            if (imgUrl) {
+            const liveUrl = (o.images && safeImageUrl(o.images.app || o.images.original || '')) || '';
+            const localUrl = localImageUrl(o);
+            const src = localUrl || liveUrl;
+            if (src) {
                 const img = document.createElement('img');
-                img.src = imgUrl;
+                img.src = src;
                 img.alt = o.title || '';
+                if (localUrl && liveUrl) img.onerror = function () { this.onerror = null; this.src = liveUrl; };
                 li.appendChild(img);
             }
 
@@ -1456,13 +1473,38 @@
             const ul = document.getElementById('category-delta');
             if (!ul) return;
 
+            const datesEl = document.getElementById('category-delta-dates');
+
             if (!Array.isArray(allTrendData) || allTrendData.length < 2) {
+                if (datesEl) datesEl.textContent = '';
                 setEmpty(ul, 'Nicht genug Wochen für einen Vergleich.');
                 return;
             }
 
-            const curr = allTrendData[allTrendData.length - 1].counts || {};
-            const prev = allTrendData[allTrendData.length - 2].counts || {};
+            // Determine which trend entry corresponds to the currently selected week.
+            // The #week-select option value is a file path like "2024/KW05/2024-02-05.json";
+            // fileDate() extracts the embedded "YYYY-MM-DD" string from it.
+            const weekSelect = document.getElementById('week-select');
+            const selectedDate = weekSelect ? fileDate(weekSelect.value) : '';
+            let currIdx = selectedDate
+                ? allTrendData.findIndex(e => e.date === selectedDate)
+                : -1;
+
+            // Fall back to the last entry if the selected date isn't in trend data.
+            if (currIdx === -1) currIdx = allTrendData.length - 1;
+
+            // No predecessor available — the selected week is the earliest in the dataset.
+            if (currIdx === 0) {
+                if (datesEl) datesEl.textContent = '';
+                ul.innerHTML = '';
+                setEmpty(ul, 'Keine Vorwoche verfügbar für den gewählten Zeitraum.');
+                return;
+            }
+
+            const currEntry = allTrendData[currIdx];
+            const prevEntry = allTrendData[currIdx - 1];
+            const curr = currEntry.counts || {};
+            const prev = prevEntry.counts || {};
 
             // Only categories the user keeps active; sorted by absolute change.
             const cats = allTrendCategories.filter(c => activeCategories.has(c));
@@ -1471,6 +1513,11 @@
                 const p = prev[cat] || 0;
                 return { cat, c, p, diff: c - p };
             }).sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff));
+
+            // Show which two weeks are being compared.
+            if (datesEl) {
+                datesEl.textContent = `${formatDate(prevEntry.date)} → ${formatDate(currEntry.date)}`;
+            }
 
             ul.innerHTML = '';
             if (rows.length === 0) {
@@ -1563,6 +1610,7 @@
                 toggle.addEventListener('click', () => {
                     featureOnlyKnuller = !featureOnlyKnuller;
                     toggle.classList.toggle('active', featureOnlyKnuller);
+                    toggle.setAttribute('aria-pressed', String(featureOnlyKnuller));
                     renderFeatures();
                 });
             }
