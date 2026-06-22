@@ -685,6 +685,22 @@
             </div>
         </div>
 
+        <!-- FEATURE: grundpreis-ligatabelle -->
+        <div class="panel panel-full panel--auto">
+            <h2>Grundpreis-Ligatabelle &mdash; g&uuml;nstigste &euro;/Einheit diese Woche</h2>
+            <p id="liga-sub" class="panel-sub"></p>
+            <div class="feature-cols">
+                <div>
+                    <h3>G&uuml;nstigste &euro;/kg</h3>
+                    <ul id="liga-kg" class="product-list"></ul>
+                </div>
+                <div>
+                    <h3>G&uuml;nstigste &euro;/l</h3>
+                    <ul id="liga-l" class="product-list"></ul>
+                </div>
+            </div>
+        </div>
+
         <div class="panel panel-full">
             <h2>Produkt-Netzwerk</h2>
             <div class="zoom-hint-wrapper">
@@ -704,6 +720,27 @@
             <div id="chart-trend" class="chart-container-large" role="img" aria-label="Wochen-Trend: Produkte pro Kategorie über die Zeit"></div>
         </div>
 
+        <!-- FEATURE: superknueller-puls -->
+        <div class="panel panel-full">
+            <h2>Superkn&uuml;ller-Puls &mdash; Aktionen pro Woche</h2>
+            <p id="puls-sub" class="panel-sub">Anzahl der als Superkn&uuml;ller bzw. PAYBACK markierten Angebote je Woche.</p>
+            <div id="chart-knuller-puls" class="chart-container-large" role="img" aria-label="Superknüller- und PAYBACK-Anzahl pro Woche"></div>
+        </div>
+
+        <!-- FEATURE: transparenz-index -->
+        <div class="panel">
+            <h2>Transparenz-Index &mdash; Grundpreis-Abdeckung</h2>
+            <p id="transparenz-sub" class="panel-sub">Anteil der Angebote mit ausgewiesenem Grundpreis (&euro;/Einheit) je Woche.</p>
+            <div id="chart-transparenz" class="chart-container" role="img" aria-label="Grundpreis-Abdeckung in Prozent pro Woche"></div>
+        </div>
+
+        <!-- FEATURE: preis-architektur -->
+        <div class="panel">
+            <h2>Preis-Architektur &mdash; &Oslash; vs. Median</h2>
+            <p id="architektur-sub" class="panel-sub">Durchschnitt &uuml;ber Median = wenige teure Artikel ziehen den Schnitt hoch (Korbschiefe, kein Pro-Artikel-Vergleich).</p>
+            <div id="chart-architektur" class="chart-container" role="img" aria-label="Durchschnitts- vs. Median-Angebotspreis pro Woche"></div>
+        </div>
+
         <!-- FEATURE: aktionspreis-trend -->
         <div class="panel panel-full panel--auto">
             <h2>Aktionspreis-Trend &mdash; teurer oder g&uuml;nstiger geworden?</h2>
@@ -720,12 +757,51 @@
             </div>
         </div>
 
+        <!-- FEATURE: superknueller-ehrlichkeitscheck -->
+        <div class="panel panel-full panel--auto">
+            <h2>Superkn&uuml;ller-Ehrlichkeitscheck &mdash; echter Deal oder Mogelpackung?</h2>
+            <p id="honest-sub" class="panel-sub"></p>
+            <div class="feature-cols">
+                <div>
+                    <h3>Echte Kn&uuml;ller (unter eigenem Median)</h3>
+                    <ul id="honest-good" class="product-list"></ul>
+                </div>
+                <div>
+                    <h3>Mogelpackungen (auf/&uuml;ber eigenem Median)</h3>
+                    <ul id="honest-bad" class="product-list"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURE: preis-volatilitaet -->
+        <div class="panel panel-full panel--auto">
+            <h2>Preis-Volatilit&auml;t &mdash; welche Artikel schwanken?</h2>
+            <p id="vol-sub" class="panel-sub"></p>
+            <div class="feature-cols">
+                <div>
+                    <h3>Stark schwankend (lohnt zu warten)</h3>
+                    <ul id="vol-high" class="product-list"></ul>
+                </div>
+                <div>
+                    <h3>Preis-stabil (jederzeit kaufen)</h3>
+                    <ul id="vol-low" class="product-list"></ul>
+                </div>
+            </div>
+        </div>
+
         <!-- FEATURE: grundpreis-verlauf -->
         <div class="panel panel-full">
             <h2>Grundpreis-Verlauf einzelner Artikel</h2>
             <p id="gp-trend-sub" class="panel-sub"></p>
             <select id="gp-picker" class="gp-picker" aria-label="Artikel für Grundpreis-Verlauf"></select>
             <div id="chart-gp-trend" class="chart-container-large" role="img" aria-label="Grundpreis-Verlauf des gewählten Artikels über die Zeit"></div>
+        </div>
+
+        <!-- FEATURE: saisonale-heatmap -->
+        <div class="panel panel-full">
+            <h2>Saisonale Kategorie-Muster</h2>
+            <p id="saison-sub" class="panel-sub"></p>
+            <div id="chart-saison" class="chart-container-large" role="img" aria-label="Durchschnittliche Angebote je Monat und Kategorie als Heatmap"></div>
         </div>
     </div>
 
