@@ -353,6 +353,114 @@ function buildSteering() {
     if (resetBtn) resetBtn.addEventListener('click', resetPrefs);
     const hiddenToggle = document.getElementById('show-hidden');
     if (hiddenToggle) hiddenToggle.addEventListener('change', renderAll);
+
+    // "Alle Angebote" browser — the anti-drift surface (see buildBrowseRow).
+    const browseToggle = document.getElementById('browse-toggle');
+    const browseBody = document.getElementById('browse-body');
+    if (browseToggle && browseBody) {
+        browseToggle.addEventListener('click', () => {
+            const opening = browseBody.hidden;
+            browseBody.hidden = !opening;
+            browseToggle.setAttribute('aria-expanded', String(opening));
+            renderBrowse();
+        });
+    }
+    const browseSearch = document.getElementById('browse-search');
+    if (browseSearch) browseSearch.addEventListener('input', () => {
+        browseFilter = browseSearch.value;
+        renderBrowse();
+    });
+}
+
+// ── anti-drift "Alle Angebote" browser ──
+// Once a topic is muted or a product down-voted it drops out of every section
+// (score < 0). This browser lists the FULL week — hidden items included — so a
+// single 👍 (vote weight 6, see VOTE_WEIGHT) pulls a wrongly-excluded product
+// straight back into the curated lists. Prevents the filter bubble from drifting.
+let browseFilter = '';
+
+function buildBrowseRow(o) {
+    const li = document.createElement('li');
+    li.className = 'browse-row';
+    const hidden = scoreOffer(o) < 0;
+    if (hidden) li.classList.add('is-hidden');
+
+    const main = document.createElement('div');
+    main.className = 'browse-main';
+    const dot = document.createElement('span');
+    dot.className = 'pk-dot';
+    dot.style.background = CATEGORY_COLORS[catName(o)] || '#888';
+    main.appendChild(dot);
+    const title = document.createElement('span');
+    title.className = 'browse-title';
+    title.textContent = o.title || '(ohne Titel)';
+    title.title = o.title || '';
+    main.appendChild(title);
+    if (hidden) {
+        const tag = document.createElement('span');
+        tag.className = 'browse-tag';
+        tag.textContent = 'ausgeblendet';
+        main.appendChild(tag);
+    }
+    li.appendChild(main);
+
+    const pr = offerPrice(o);
+    const price = document.createElement('span');
+    price.className = 'browse-price';
+    price.textContent = pr === null ? '' : formatEuro(pr);
+    li.appendChild(price);
+
+    const vote = voteFor(o);
+    const up = document.createElement('button');
+    up.type = 'button';
+    up.className = 'browse-vote up' + (vote === 1 ? ' on' : '');
+    up.textContent = '👍';
+    up.title = 'Zurückholen / mehr davon';
+    up.setAttribute('aria-label', 'Zurückholen: ' + (o.title || ''));
+    up.addEventListener('click', () => setVote(o, 1));
+    const down = document.createElement('button');
+    down.type = 'button';
+    down.className = 'browse-vote down' + (vote === -1 ? ' on' : '');
+    down.textContent = '🚫';
+    down.title = 'Ausblenden';
+    down.setAttribute('aria-label', 'Ausblenden: ' + (o.title || ''));
+    down.addEventListener('click', () => setVote(o, -1));
+    li.appendChild(up);
+    li.appendChild(down);
+    return li;
+}
+
+function renderBrowse() {
+    const list = document.getElementById('browse-list');
+    const body = document.getElementById('browse-body');
+    if (!list) return;
+    if (body && body.hidden) { list.innerHTML = ''; return; }   // skip work while collapsed
+
+    const q = browseFilter.trim().toLowerCase();
+    let items = currentOffers.slice();
+    if (q) {
+        items = items.filter(o =>
+            (o.title || '').toLowerCase().includes(q) || catName(o).toLowerCase().includes(q));
+    }
+    // Hidden (score < 0) first so wrongly-excluded items are easy to rescue.
+    items.sort((a, b) => {
+        const ha = scoreOffer(a) < 0, hb = scoreOffer(b) < 0;
+        if (ha !== hb) return ha ? -1 : 1;
+        return String(a.title || '').localeCompare(String(b.title || ''));
+    });
+
+    list.innerHTML = '';
+    const frag = document.createDocumentFragment();
+    items.forEach(o => frag.appendChild(buildBrowseRow(o)));
+    list.appendChild(frag);
+}
+
+function updateHiddenCount() {
+    const n = currentOffers.reduce((c, o) => c + (scoreOffer(o) < 0 ? 1 : 0), 0);
+    const el = document.getElementById('hidden-count');
+    if (el) el.textContent = n ? `${n} ausgeblendet` : '';
+    const bc = document.getElementById('browse-count');
+    if (bc) bc.textContent = `${currentOffers.length} Angebote${n ? ` · ${n} ausgeblendet` : ''}`;
 }
 
 function paintChips() {
@@ -654,6 +762,9 @@ function renderAll() {
         'bierspezi', { limit: 12 });
     fillSection('pk-knueller-grid', 'pk-knueller-intro',
         offersWhere(isKnuller), 'knueller', { limit: 12 });
+
+    updateHiddenCount();
+    renderBrowse();
 }
 
 if (typeof document !== 'undefined') {

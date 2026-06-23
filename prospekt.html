@@ -110,6 +110,68 @@
         .show-hidden { display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; color: #aaa; cursor: pointer; }
         #steer-hint { margin: 12px 0 0; font-size: 0.82rem; color: #7fae7f; min-height: 1em; }
         .steer-legend { font-size: 0.78rem; color: #777; margin-top: 10px; }
+        .hidden-count { font-size: 0.78rem; color: #c08a4a; }
+
+        /* ── "Alle Angebote" browser (anti-drift: rescue hidden items) ── */
+        .browse-head {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            font-family: inherit;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            text-align: left;
+        }
+        .browse-head::before { content: "▸"; color: #888; margin-right: 8px; transition: transform 0.15s; display: inline-block; }
+        .browse-head[aria-expanded="true"]::before { transform: rotate(90deg); }
+        .browse-count { font-size: 0.8rem; font-weight: 400; color: #888; }
+        .browse-body { margin-top: 14px; }
+        #browse-search {
+            width: 100%;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            border: 1px solid #333;
+            padding: 9px 12px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+        #browse-search:focus { outline: none; border-color: #4caf50; }
+        .browse-hint { margin: 8px 0 10px; font-size: 0.8rem; color: #777; }
+        .browse-list { list-style: none; margin: 0; padding: 0; max-height: 420px; overflow-y: auto; }
+        .browse-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 4px;
+            border-bottom: 1px solid #1d1d1d;
+        }
+        .browse-row.is-hidden { opacity: 0.6; }
+        .browse-main { display: flex; align-items: center; gap: 7px; flex: 1; min-width: 0; }
+        .browse-title { font-size: 0.86rem; color: #e0e0e0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .browse-tag { font-size: 0.66rem; color: #c08a4a; border: 1px solid #5a4326; border-radius: 4px; padding: 1px 5px; flex-shrink: 0; }
+        .browse-price { font-size: 0.84rem; color: #bbb; flex-shrink: 0; min-width: 56px; text-align: right; }
+        .browse-vote {
+            flex-shrink: 0;
+            cursor: pointer;
+            font-size: 0.85rem;
+            line-height: 1;
+            padding: 4px 7px;
+            border-radius: 7px;
+            border: 1px solid #2a2a2a;
+            background: #1a1a1a;
+            opacity: 0.55;
+            transition: all 0.12s;
+        }
+        .browse-vote:hover { opacity: 1; border-color: #444; }
+        .browse-vote.up.on { opacity: 1; border-color: #66bb6a; background: rgba(102,187,106,0.18); }
+        .browse-vote.down.on { opacity: 1; border-color: #ef5350; background: rgba(239,83,80,0.18); }
 
         /* ── product sections ── */
         .pk-section { margin-bottom: 8px; }
@@ -228,9 +290,22 @@
                 <button type="button" id="steer-export" class="steer-btn primary">Für Montag exportieren</button>
                 <button type="button" id="steer-reset" class="steer-btn">Zurücksetzen</button>
                 <label class="show-hidden"><input type="checkbox" id="show-hidden"> Ausgeblendete zeigen</label>
+                <span id="hidden-count" class="hidden-count"></span>
             </div>
             <p id="steer-hint"></p>
             <p class="steer-legend">Mit &#128077; / &#128683; auf den Karten verfeinerst du einzelne Produkte. Der Export (preferences.json) personalisiert montags die KI-Texte.</p>
+        </section>
+
+        <section class="panel" id="browse-panel" aria-labelledby="browse-toggle">
+            <button type="button" id="browse-toggle" class="browse-head" aria-expanded="false" aria-controls="browse-body">
+                <span>Alle Angebote der Woche</span>
+                <span id="browse-count" class="browse-count"></span>
+            </button>
+            <div class="browse-body" id="browse-body" hidden>
+                <input type="text" id="browse-search" placeholder="In allen Angeboten suchen&hellip;" aria-label="Alle Angebote durchsuchen" />
+                <p class="browse-hint">Hier siehst du auch <strong>ausgeblendete</strong> &amp; herabgestufte Produkte. &#128077; holt eins zur&uuml;ck in deine Listen, &#128683; blendet es aus.</p>
+                <ul id="browse-list" class="browse-list"></ul>
+            </div>
         </section>
 
         <section class="pk-section" id="pk-foryou">
