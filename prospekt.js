@@ -199,10 +199,11 @@ const LEVELS = {
 };
 const LEVEL_CYCLE = [0, 1, 2, -1];   // chip click order
 const VOTE_WEIGHT = 6;               // a thumb outweighs topic interest
+const BOUGHT_WEIGHT = 1;             // a mild loyalty nudge for items you actually buy
 
 // ── preferences (localStorage) ──
 function defaultPrefs() {
-    return { version: 1, interests: { ...DEFAULT_INTERESTS }, votes: {} };
+    return { version: 1, interests: { ...DEFAULT_INTERESTS }, votes: {}, bought: {} };
 }
 
 function loadPrefs() {
@@ -214,6 +215,7 @@ function loadPrefs() {
             version: 1,
             interests: (p && typeof p.interests === 'object' && p.interests) ? p.interests : { ...DEFAULT_INTERESTS },
             votes: (p && typeof p.votes === 'object' && p.votes) ? p.votes : {},
+            bought: (p && typeof p.bought === 'object' && p.bought) ? p.bought : {},
         };
     } catch (err) {
         prefs = defaultPrefs();
@@ -244,13 +246,32 @@ function voteFor(o) {
     return e && (e.v === 1 || e.v === -1) ? e.v : 0;
 }
 
-// An offer's relevance = sum of matching interest weights + the explicit vote.
+// "Bought" is a loyalty signal: set by the 🛒 marker on cards and, at Monday
+// time, by receipt OCR (scripts/ingest_receipt.py). Keyed by stable offer id
+// like votes; `c` aggregates repeat buys so the generator can weight regulars.
+function boughtFor(o) {
+    const e = (prefs && prefs.bought && o) ? prefs.bought[o.id] : null;
+    return e && Number.isFinite(e.c) ? e.c : 0;
+}
+
+function toggleBought(o) {
+    const id = o && o.id;
+    if (id == null) return;
+    if (boughtFor(o) > 0) { delete prefs.bought[id]; }
+    else { prefs.bought[id] = { c: 1, t: o.title || '' }; }
+    savePrefs();
+    renderAll();
+}
+
+// An offer's relevance = matching interest weights + the explicit vote + a
+// small nudge for items the reader actually buys.
 function scoreOffer(o) {
     let s = 0;
     for (const t of TOPICS) {
         if (t.test(o)) s += LEVELS[String(interestLevel(t.key))].weight;
     }
     s += voteFor(o) * VOTE_WEIGHT;
+    if (boughtFor(o) > 0) s += BOUGHT_WEIGHT;
     return s;
 }
 
@@ -619,6 +640,12 @@ function buildCard(o, opts) {
         badge.textContent = 'Knüller';
         thumb.appendChild(badge);
     }
+    if (boughtFor(o) > 0) {
+        const b = document.createElement('span');
+        b.className = 'bought-badge';
+        b.textContent = '✓ gekauft';
+        thumb.appendChild(b);
+    }
     card.appendChild(thumb);
 
     const body = document.createElement('div');
@@ -692,8 +719,16 @@ function buildCard(o, opts) {
     down.textContent = '🚫';
     down.setAttribute('aria-label', 'Weniger davon');
     down.addEventListener('click', () => setVote(o, -1));
+    const buy = document.createElement('button');
+    buy.type = 'button';
+    buy.className = 'pk-vote buy' + (boughtFor(o) > 0 ? ' on' : '');
+    buy.textContent = '🛒';
+    buy.title = boughtFor(o) > 0 ? 'Als gekauft markiert (klick zum Entfernen)' : 'Schon gekauft';
+    buy.setAttribute('aria-label', 'Als gekauft markieren');
+    buy.addEventListener('click', () => toggleBought(o));
     actions.appendChild(up);
     actions.appendChild(down);
+    actions.appendChild(buy);
     body.appendChild(actions);
 
     card.appendChild(body);

@@ -301,6 +301,8 @@ def prefs_summary(prefs_path):
         elif v == -1:
             down.append(title)
 
+    loyal = bought_titles(prefs.get("bought"))
+
     lines = ["Reader preferences (personalise tone and pick selection accordingly):"]
     if loves:
         lines.append(f"- Loves (Favorit): {', '.join(loves)}")
@@ -312,9 +314,29 @@ def prefs_summary(prefs_path):
         lines.append(f"- Thumbs-up products: {', '.join(up[:15])}")
     if down:
         lines.append(f"- Thumbs-down products (avoid): {', '.join(down[:15])}")
+    if loyal:
+        lines.append(f"- Regularly bought (loyal — highlight these when on offer): {', '.join(loyal[:20])}")
     if len(lines) == 1:
         lines.append("- (no explicit signals yet)")
     return "\n".join(lines)
+
+
+def bought_titles(bought):
+    """Human titles of the reader's 'bought' loyalty signal, newest-count first.
+    Accepts the {id: {c, t}} shape written by the page and merged from receipts."""
+    if not isinstance(bought, dict):
+        return []
+    rows = []
+    for key, entry in bought.items():
+        if isinstance(entry, dict):
+            title = entry.get("t") or entry.get("title")
+            count = entry.get("c") if isinstance(entry.get("c"), (int, float)) else 1
+        else:
+            title, count = key, entry if isinstance(entry, (int, float)) else 1
+        if title:
+            rows.append((count, title))
+    rows.sort(key=lambda r: -r[0])
+    return [t for _, t in rows]
 
 
 def prefs_updated_at(prefs_path):
