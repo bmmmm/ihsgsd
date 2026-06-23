@@ -1,50 +1,97 @@
 {
   "generatedAt": "2026-06-22",
   "weekLabel": "KW26",
-  "lead": "Willkommen zur KW26! Diese Woche bringt Sommer auf euren Tisch: Bio-Heidelbeeren, knackfrische Kartoffeln zum Sensationspreis und frische Kräuter. Und für alle Bierfreunde: Pils und Co. mit attraktiven Angeboten. Viel Spaß beim Einkaufen!",
+  "lead": "KW26 hat echte Frische-Highlights: Mini-Rispentomaten für nur €1,00 und Bio-Kulturheidelbeeren aus Spanien sind auf absolutem Allzeit-Tief – beide nach mehreren Wochen Preisverlauf belegt. Dazu vegane Produkte und solide Bierangebote für den Sommer.",
   "sections": {
-    "vegan": "Vegetarisch und vegan genießen – mit leckeren Alternativen, die keine Kompromisse machen. Geschmack und fairer Preis garantiert.",
-    "obstgemuese": "Frische aus der Region und von weit her: knackiges Gemüse, saftige Beeren und Bio-Highlights für die warme Jahreszeit. Sommerleckerien zum Schnäppchenpreis!",
-    "bierspezi": "Erfrischung für jeden Geschmack: klassisches Pils, alkoholfrei oder mit Charakter – unsere Getränkeauswahl begeistert beim Preis.",
-    "knueller": "Top-Angebote für Haushalt und Küche: praktische Helfer und leckere Fleischspezialitäten mit echtem Sparpotenzial."
+    "vegan": "Vegane und vegetarische Produkte stehen diese Woche direkt im Angebot – ergänzt durch Linsen und Erbsen aus dem Knüller-Regal für die pflanzliche Küche.",
+    "obstgemuese": "Starke Saisonwoche: Mini-Rispentomaten und Bio-Heidelbeeren auf Allzeit-Tief, dazu Kohlrabi für 59 Cent und frische Frühkartoffeln für €1,25/kg.",
+    "bierspezi": "Wicküler und Veltins sind die Bier-Picks der Woche – beide ohne Preisverlauf, aber verlässliche Favoriten für den Vorrat.",
+    "knueller": "Viele echte Allzeit-Tiefs im Knüller-Regal: Müller's Mühle Linsen ideal für vegane Küche, Palmolive Duschgel für unter einem Euro."
   },
-  "picks": [
+  "foryou": [
     {
-      "title": "China - Bio-Ingwer",
-      "reason": "Unschlagbarer Preis für Bio-Qualität! Perfekt für Tee und würzige Marinaden."
-    },
-    {
-      "title": "Deutschland - Kohlrabi",
-      "reason": "Knackfrisch und günstiger als gedacht – ein echtes Schnäppchen zum Ausprobieren!"
-    },
-    {
-      "title": "Deutschland - Frühkartoffeln",
-      "reason": "Sensationeller Grundpreis (€1,25/kg) – so günstig gibt's Kartoffeln selten!"
-    },
-    {
-      "title": "Vegetarische oder Vegane Produkte",
-      "reason": "Perfekt für abwechslungsreiche vegane Küche zum fairen Preis!"
+      "title": "Niederlande - EDEKA Herzstücke - Mini-Rispentomaten",
+      "rank": 1,
+      "reason": "Allzeit-Tief nach 6 Wochen Verlauf – günstiger waren sie noch nie.",
+      "evidenceTag": "Allzeit-Tief"
     },
     {
       "title": "Spanien - Bio-Kulturheidelbeeren",
-      "reason": "Bio-Qualität mit Sommergeschmack – pur oder in Desserts unschlagbar!"
+      "rank": 2,
+      "reason": "Bio-Heidelbeeren ebenfalls auf Allzeit-Tief – so günstig wie nie erfasst.",
+      "evidenceTag": "Allzeit-Tief"
+    },
+    {
+      "title": "Vegetarische oder Vegane Produkte",
+      "rank": 3,
+      "reason": "Direkt für vegane Ernährung – passt perfekt zu deinen Vorlieben.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Deutschland - Kohlrabi",
+      "rank": 4,
+      "reason": "Nur 59 Cent für deutschen Kohlrabi – kaum günstiger zu bekommen.",
+      "evidenceTag": "mag ich"
+    },
+    {
+      "title": "Deutschland - Frühkartoffeln",
+      "rank": 5,
+      "reason": "Saisonale Frühkartoffeln für €1,25/kg – echter Sommerwert.",
+      "evidenceTag": "mag ich"
     },
     {
       "title": "Spanien - Bio-Spitzpaprika",
-      "reason": "Knackige Paprika in Bio-Qualität – perfekt für bunte Sommergerichte!"
-    },
-    {
-      "title": "Deutschland - Stachelbeeren oder Johannisbeeren",
-      "reason": "Heimische Sommerboten – fruchtig-aromatisch und zum fairen Preis!"
+      "rank": 6,
+      "reason": "Bio-Spitzpaprika aus Spanien für €1,79 – frisch aus der Lieblingskategorie.",
+      "evidenceTag": "mag ich"
     },
     {
       "title": "Wicküler Pils oder Pils 0,0% alkoholfrei",
-      "reason": "Klassisches Pils oder alkoholfrei – beides jetzt im Top-Angebot!"
+      "rank": 7,
+      "reason": "Bier-Favorit mit 0,0%-Alternative – klassisches Pils zum Vorratspreis.",
+      "evidenceTag": "mag ich"
     },
     {
-      "title": "Jever Pilsener",
-      "reason": "Norddeutscher Klassiker zum Top-Preis – echte Bierkultur zum Genießen!"
+      "title": "Veltins Pilsener",
+      "rank": 8,
+      "reason": "Klassischer Kasten Veltins – verlässliches Pils ohne Preisverlauf.",
+      "evidenceTag": "mag ich"
     }
   ],
-  "model": "haiku"
+  "model": "sonnet",
+  "picks": [
+    {
+      "title": "Niederlande - EDEKA Herzstücke - Mini-Rispentomaten",
+      "reason": "Allzeit-Tief nach 6 Wochen Verlauf – günstiger waren sie noch nie."
+    },
+    {
+      "title": "Spanien - Bio-Kulturheidelbeeren",
+      "reason": "Bio-Heidelbeeren ebenfalls auf Allzeit-Tief – so günstig wie nie erfasst."
+    },
+    {
+      "title": "Vegetarische oder Vegane Produkte",
+      "reason": "Direkt für vegane Ernährung – passt perfekt zu deinen Vorlieben."
+    },
+    {
+      "title": "Deutschland - Kohlrabi",
+      "reason": "Nur 59 Cent für deutschen Kohlrabi – kaum günstiger zu bekommen."
+    },
+    {
+      "title": "Deutschland - Frühkartoffeln",
+      "reason": "Saisonale Frühkartoffeln für €1,25/kg – echter Sommerwert."
+    },
+    {
+      "title": "Spanien - Bio-Spitzpaprika",
+      "reason": "Bio-Spitzpaprika aus Spanien für €1,79 – frisch aus der Lieblingskategorie."
+    },
+    {
+      "title": "Wicküler Pils oder Pils 0,0% alkoholfrei",
+      "reason": "Bier-Favorit mit 0,0%-Alternative – klassisches Pils zum Vorratspreis."
+    },
+    {
+      "title": "Veltins Pilsener",
+      "reason": "Klassischer Kasten Veltins – verlässliches Pils ohne Preisverlauf."
+    }
+  ],
+  "generatedFor": "default"
 }

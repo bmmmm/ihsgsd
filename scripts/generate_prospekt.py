@@ -20,7 +20,8 @@ run therefore never breaks the site.
 Flags:
     --dry-run     Build the digest and print the prompt, but do NOT call claude
                   and do NOT write data/prospekt.json.
-    --model M     Override the model (default: haiku).
+    --model M     Override the model (default: sonnet — the ranking task needs
+                  the rubric followed; it is one local call per week).
     --prefs PATH  Preferences file to personalise with (default:
                   data/preferences.json; silently skipped if absent).
 """
@@ -32,11 +33,21 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+# build_indexes is the single source of truth for Grundpreis parsing + the
+# composite product key; reuse it so the price evidence we feed the model is
+# computed exactly like the dashboard's and the page's price-check badge.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import build_indexes as bx  # noqa: E402
+
 FOLDER_STRUCTURE = REPO_ROOT / "data" / "folder-structure.json"
 PREFS_PATH = REPO_ROOT / "data" / "preferences.json"
+PRICE_HISTORY_PATH = REPO_ROOT / "data" / "price-history-index.json"
 OUT_PATH = REPO_ROOT / "data" / "prospekt.json"
 
 PER_SECTION_CAP = 12   # how many candidates per section we hand to the model
+GP_EPS = 1e-9
+# evidenceTag values the model may emit; anything else is dropped to "".
+EVIDENCE_TAGS = {"Favorit", "mag ich", "guter Preis", "Allzeit-Tief", "Knüller", "Entdeckung", ""}
 
 # Mirror the steering chips in prospekt.js so exported preferences map back to
 # human labels in the prompt.
@@ -53,9 +64,14 @@ TOPIC_LABELS = {
     "tk": "Tiefkühl",
 }
 
-PROMPT_TEMPLATE = """You write the weekly product flyer ("Prospekt") for a German supermarket (EDEKA) offers tracker. Return ONLY valid JSON — no prose, no markdown, no text outside the JSON.
+PROMPT_TEMPLATE = """You are the personal shopping recommender for a German supermarket (EDEKA) offers tracker. Return ONLY valid JSON — no prose, no markdown, no text outside the JSON.
 
-The reader especially likes VEGAN/vegetarian products, OBST & GEMÜSE (fruit & veg), and BIER & SPEZI (beer + the Spezi cola-orange drink). The input lists this week's curated candidates per section, each with face price and Grundpreis (GP = EUR/unit). GP is the honest comparator.
+The reader especially likes VEGAN/vegetarian products, OBST & GEMÜSE (fruit & veg), and BIER & SPEZI (beer + the Spezi cola-orange drink). The input lists this week's curated candidates per section, each with face price, Grundpreis (GP = EUR/unit, the honest comparator), and — when known — a "ph" price-history object:
+- ph.best (bool): the GP is at or below its all-time low across prior offer weeks.
+- ph.overPct (int): how many percent the GP is above its own historical low.
+- ph.pctile (int): where this GP sits in the product's own history (0 = cheapest it has ever been offered, 100 = most expensive).
+- ph.weeks (int): how many prior weeks of history back this up.
+A missing "ph" just means there is not enough history — rank such items on preferences, do not invent a price claim for them.
 
 READER_PREFS_PLACEHOLDER
 
@@ -73,20 +89,27 @@ Return exactly this JSON structure (no extra keys, no trailing text):
     "bierspezi": "<1-2 sentence German intro for beer & Spezi. Max 200 chars.>",
     "knueller": "<1-2 sentence German intro for the Superknüller deals. Max 200 chars.>"
   },
-  "picks": [
+  "foryou": [
     {
       "title": "<exact product title copied verbatim from the input>",
-      "reason": "<max 90 char German reason why it is worth buying this week>"
+      "rank": 1,
+      "reason": "<max 90 char German reason, citing the concrete why: the reader's interest OR a real price fact>",
+      "evidenceTag": "<one of: Favorit | mag ich | guter Preis | Allzeit-Tief | Knüller | (empty string)>"
     }
   ],
   "model": "MODEL_PLACEHOLDER"
 }
 
 Rules:
-- Write ALL text in German, in a friendly, concrete flyer tone (not corporate).
-- "picks": choose the 6-10 most appealing products ACROSS ALL sections. Copy each "title" verbatim from the input so the page can match it. Prefer items the reader's preferences favour; never recommend items from sections the reader switched off.
+- Write ALL text in German, friendly and concrete (not corporate).
+- "foryou" is an ORDERED personal recommendation of the 6-10 best products for THIS reader, across all sections. rank starts at 1 (best) and increases by 1 with no gaps. Copy each "title" verbatim from the input so the page can match it.
+- Ranking rubric, in priority order:
+  1. Honour the reader's preferences: push "Loves (Favorit)" and "Thumbs-up" products to the top; NEVER include products from a section the reader switched off or thumbed down.
+  2. Prefer genuinely good prices: ph.best or a low ph.pctile is a strong signal. Only make a price claim ("Allzeit-Tief", "guter Preis") when the item actually has ph evidence supporting it.
+  3. A Superknüller is only a real deal if its price also looks good — don't trust the Knüller label alone.
+- Pick evidenceTag to match the dominant reason (Favorit/mag ich for preference-driven; Allzeit-Tief for ph.best; guter Preis for low pctile; Knüller for a Superknüller that holds up; empty string if none fits).
 - If a section has no candidates, still write a short generic intro for it.
-- Numbers/prices: refer to them naturally in prose; do not invent prices.
+- Numbers/prices: refer to them naturally; never invent a price.
 - No fields besides those listed.
 """
 
@@ -134,13 +157,68 @@ def face_price(offer):
         return None
 
 
-def offer_entry(offer):
+def load_price_map():
+    """{product_key: product} from price-history-index.json, or {} if absent or
+    malformed. Optional input: without it the digest simply carries no price
+    evidence and the model ranks on preferences alone."""
+    if not PRICE_HISTORY_PATH.exists():
+        return {}
+    try:
+        ph = json.loads(PRICE_HISTORY_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+    out = {}
+    for p in ph.get("products", []):
+        if isinstance(p, dict) and p.get("key"):
+            out[p["key"]] = p
+    return out
+
+
+def price_evidence(offer, price_map, latest_date):
+    """Where this offer's Grundpreis sits in the product's own PRIOR-week
+    history, or None. Mirrors prospekt.js priceCheck so the page badge and the
+    model's reasons agree: exact GPs only, strictly-earlier weeks, >=2 of them."""
+    val, unit, flag = bx.parse_gp(offer)
+    if val is None or flag != "exact":
+        return None
+    prod = price_map.get(bx.product_key(offer, unit))
+    if not prod:
+        return None
+    per_week = {}
+    for ob in prod.get("obs", []):
+        if ob.get("gpf") is not None:          # skip range / "ab €"
+            continue
+        d = ob.get("d")
+        if not d or d >= latest_date:           # only weeks before this one
+            continue
+        gp = ob.get("gp")
+        per_week[d] = gp if d not in per_week else min(per_week[d], gp)
+    if len(per_week) < 2:
+        return None
+    prior = list(per_week.values())
+    low = min(prior)
+    over_pct = round((val / low - 1) * 100) if low > 0 else 0
+    pctile = round(100 * sum(1 for x in prior if x < val) / len(prior))
     return {
+        "best": val <= low + GP_EPS,
+        "overPct": over_pct,
+        "pctile": pctile,
+        "weeks": len(prior),
+    }
+
+
+def offer_entry(offer, price_map=None, latest_date=""):
+    entry = {
         "title": offer.get("title"),
         "cat": (offer.get("category") or {}).get("name"),
         "price": face_price(offer),
         "gp": offer.get("basicPrice"),
     }
+    if price_map:
+        ev = price_evidence(offer, price_map, latest_date)
+        if ev is not None:
+            entry["ph"] = ev
+    return entry
 
 
 def is_knuller(offer):
@@ -150,7 +228,7 @@ def is_knuller(offer):
     )
 
 
-def build_digest(offers):
+def build_digest(offers, price_map=None, latest_date=""):
     def title_of(o):
         return o.get("title") or ""
 
@@ -166,11 +244,25 @@ def build_digest(offers):
     ]
     knueller = [o for o in offers if is_knuller(o)]
 
+    def section(items):
+        entries = [offer_entry(o, price_map, latest_date) for o in items]
+        # Surface the genuine deals to the model: best-price first, then lowest
+        # percentile, then those carrying any evidence. Items without evidence
+        # keep their original order at the back. Cap AFTER sorting so the cap
+        # keeps the most relevant candidates, not the first ones encountered.
+        def rank(e):
+            ph = e.get("ph")
+            if not ph:
+                return (1, 1, 100)
+            return (0, 0 if ph.get("best") else 1, ph.get("pctile", 100))
+        entries.sort(key=rank)
+        return entries[:PER_SECTION_CAP]
+
     return {
-        "vegan": [offer_entry(o) for o in vegan[:PER_SECTION_CAP]],
-        "obstgemuese": [offer_entry(o) for o in obst[:PER_SECTION_CAP]],
-        "bierspezi": [offer_entry(o) for o in bier[:PER_SECTION_CAP]],
-        "knueller": [offer_entry(o) for o in knueller[:PER_SECTION_CAP]],
+        "vegan": section(vegan),
+        "obstgemuese": section(obst),
+        "bierspezi": section(bier),
+        "knueller": section(knueller),
     }
 
 
@@ -225,6 +317,19 @@ def prefs_summary(prefs_path):
     return "\n".join(lines)
 
 
+def prefs_updated_at(prefs_path):
+    """The exported prefs' updatedAt stamp, or 'default' if none — lets the
+    client detect when localStorage prefs have changed since this was built."""
+    if not prefs_path.exists():
+        return "default"
+    try:
+        prefs = json.loads(prefs_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return "default"
+    ts = prefs.get("updatedAt")
+    return ts if isinstance(ts, str) and ts else "default"
+
+
 def extract_json(text):
     """Parse the JSON object out of claude's reply, tolerating markdown code
     fences and any prose before/after the object."""
@@ -250,7 +355,7 @@ def extract_json(text):
 def main():
     args = sys.argv[1:]
     dry_run = "--dry-run" in args
-    model = "haiku"
+    model = "sonnet"
     if "--model" in args:
         i = args.index("--model")
         if i + 1 >= len(args):
@@ -274,8 +379,12 @@ def main():
     if not isinstance(offers, list) or not offers:
         fail(f"{week_path} has no offers")
 
-    digest = build_digest(offers)
+    price_map = load_price_map()
+    digest = build_digest(offers, price_map, latest_date)
     counts = {k: len(v) for k, v in digest.items()}
+    n_ev = sum(1 for sec in digest.values() for e in sec if e.get("ph"))
+    print(f"Price history: {len(price_map)} products indexed, "
+          f"{n_ev} candidate(s) carry price evidence.")
     print(f"Latest week {week_label} ({latest_date}): "
           f"vegan={counts['vegan']}, obst&gemuese={counts['obstgemuese']}, "
           f"bier&spezi={counts['bierspezi']}, knueller={counts['knueller']}.")
@@ -319,21 +428,40 @@ def main():
         fail("claude output is missing a non-empty 'lead'")
     if not isinstance(data.get("sections"), dict):
         fail("claude output is missing the 'sections' object")
-    if not isinstance(data.get("picks"), list):
-        fail("'picks' must be a JSON array")
-    for item in data["picks"]:
+    # Accept either the new 'foryou' (ranked) or, for resilience, a legacy
+    # 'picks' array — normalise both to the foryou shape.
+    ranked = data.get("foryou")
+    if not isinstance(ranked, list):
+        ranked = data.get("picks")
+    if not isinstance(ranked, list):
+        fail("claude output is missing the 'foryou' array")
+    for item in ranked:
         if not isinstance(item, dict) or not item.get("title"):
-            fail(f"'picks' has a malformed entry (expected objects with a title): {item!r}")
+            fail(f"'foryou' has a malformed entry (expected objects with a title): {item!r}")
 
-    # Drop picks whose title is not a verbatim candidate this week: pickReason()
-    # in prospekt.js matches on exact title, so a mismatched pick would silently
-    # render no reason. Dropping it (loudly) is better than a dead card.
+    # Drop entries whose title is not a verbatim candidate this week: the page
+    # matches recommendations on exact title, so a mismatched one would silently
+    # render no reason and break the LLM ordering. Dropping it (loudly) is better.
     input_titles = {e["title"] for sec in digest.values() for e in sec if e.get("title")}
-    matched = [p for p in data["picks"] if p.get("title") in input_titles]
-    dropped = [p.get("title") for p in data["picks"] if p.get("title") not in input_titles]
+    dropped = [p.get("title") for p in ranked if p.get("title") not in input_titles]
+    matched = [p for p in ranked if p.get("title") in input_titles]
     if dropped:
-        print(f"  note: dropped {len(dropped)} pick(s) with non-verbatim titles: {dropped}")
-    data["picks"] = matched
+        print(f"  note: dropped {len(dropped)} recommendation(s) with non-verbatim titles: {dropped}")
+
+    # Normalise: contiguous 1..n rank, allow-listed evidenceTag, reason <=90 chars.
+    foryou = []
+    for i, p in enumerate(matched, start=1):
+        tag = p.get("evidenceTag") or ""
+        if tag not in EVIDENCE_TAGS:
+            tag = ""
+        reason = p.get("reason") if isinstance(p.get("reason"), str) else ""
+        if len(reason) > 90:
+            reason = reason[:89].rstrip() + "…"
+        foryou.append({"title": p["title"], "rank": i, "reason": reason, "evidenceTag": tag})
+    data["foryou"] = foryou
+    # Legacy alias so an older cached client (and external consumers) still find
+    # reasons under 'picks'; can be dropped after one regeneration cycle.
+    data["picks"] = [{"title": p["title"], "reason": p["reason"]} for p in foryou]
 
     missing = {"vegan", "obstgemuese", "bierspezi", "knueller"} - set(data["sections"].keys())
     if missing:
@@ -342,10 +470,14 @@ def main():
     data.setdefault("generatedAt", latest_date)
     data.setdefault("weekLabel", week_label)
     data.setdefault("model", model)
+    # Stamp which preferences snapshot this was generated for, so the client can
+    # tell when localStorage prefs have moved on since Monday.
+    data["generatedFor"] = prefs_updated_at(prefs_path)
 
     OUT_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {OUT_PATH.relative_to(REPO_ROOT)}: "
-          f"lead + {len(data.get('sections', {}))} section intros, {len(data['picks'])} picks.")
+          f"lead + {len(data.get('sections', {}))} section intros, "
+          f"{len(foryou)} ranked recommendations.")
 
 
 if __name__ == "__main__":
