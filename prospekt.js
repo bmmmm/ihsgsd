@@ -19,6 +19,8 @@ const PREFS_STORE = 'edeka-prospekt-prefs-v1';
 let currentOffers = [];     // offers of the selected week
 let prospektData = null;    // optional AI editorial (data/prospekt.json)
 let prefs = null;           // { interests:{key:level}, votes:{title:±1}, ... }
+let priceHistory = null;    // optional cross-week index (data/price-history-index.json)
+let phByKey = null;         // Map(product.key -> product) for O(1) lookup
 
 const CATEGORY_COLORS = {
     'Drogerie': '#ab47bc',
@@ -95,6 +97,78 @@ async function fetchJSON(url) {
     const res = await fetch(url);
     if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
     return res.json();
+}
+
+// ── Grundpreis (€/unit) parsing — a faithful JS port of scripts/build_indexes.py
+// so the per-product identity key matches the precomputed index byte-for-byte.
+// Any divergence here silently yields zero lookups (no badges), so the parity
+// test in tmp/ guards it.
+const VOL_WEIGHT_FACTOR = { ml: 0.001, l: 1.0, g: 0.001, kg: 1.0 };
+const UNIT_DISPLAY = { wa: 'WA', tab: 'Tab', st: 'St', stk: 'St' };
+// "1 kg = € 12.50", "1 l = ab € 0.12", "1 l = € 15.27 / € 45.80".
+const GP_RE = /1\s*([A-Za-z]{1,3})\s*=\s*(ab\s*)?€\s*([\d.,]+)(?:\s*\/\s*€\s*([\d.,]+))?/;
+const SIZE_RE = /(\d+(?:[.,]\d+)?)\s*(ml|l|g|kg)\b/i;
+const COUNT_RE = /(\d+(?:[.,]\d+)?)\s*(WA|Tabs?|Caps?|St(?:ü|ue)ck|Stk|WL)\b/i;
+
+function gpNormStr(s) {
+    return (s == null ? '' : String(s)).replace(/\u00a0/g, ' ').trim();
+}
+
+// Mirrors build_indexes.parse_number: tolerant of German grouping. Returns NaN
+// (not a throw) on garbage so callers skip rather than guess.
+function parseNumberDe(s) {
+    s = String(s).trim();
+    if (s.indexOf('.') !== -1 && s.indexOf(',') !== -1) {
+        s = s.replace(/\./g, '').replace(',', '.');   // dot=thousands, comma=decimal
+    } else {
+        s = s.replace(',', '.');
+    }
+    const v = parseFloat(s);
+    return Number.isFinite(v) ? v : NaN;
+}
+
+// { val, unit, flag } for the Grundpreis, or all-null. flag: exact|range|lower.
+function parseGp(offer) {
+    for (const src of [offer && offer.basicPrice, offer && offer.description]) {
+        const m = GP_RE.exec(gpNormStr(src));
+        if (!m) continue;
+        const val = parseNumberDe(m[3]);
+        if (!Number.isFinite(val)) continue;
+        const flag = m[2] ? 'lower' : (m[4] ? 'range' : 'exact');
+        const unit = m[1].toLowerCase();
+        return { val, unit: UNIT_DISPLAY[unit] || unit, flag };
+    }
+    return { val: null, unit: null, flag: null };
+}
+
+function normTitle(title) {
+    return gpNormStr(title).toLowerCase().replace(/\s+/g, ' ');
+}
+
+// Coarse order-of-magnitude size class from baseUnit (see build_indexes.py).
+function sizeBucket(baseunit) {
+    const s = gpNormStr(baseunit);
+    let m = SIZE_RE.exec(s);
+    if (m) {
+        let val = parseNumberDe(m[1]); if (!Number.isFinite(val)) val = 0;
+        const unit = m[2].toLowerCase();
+        const base = val * VOL_WEIGHT_FACTOR[unit];
+        if (base > 0) {
+            const dim = (unit === 'ml' || unit === 'l') ? 'v' : 'w';
+            return dim + String(Math.floor(Math.log10(base)));
+        }
+    }
+    m = COUNT_RE.exec(s);
+    if (m) {
+        let val = parseNumberDe(m[1]); if (!Number.isFinite(val)) val = 0;
+        if (val > 0) return 'c' + String(Math.floor(Math.log10(val)));
+    }
+    return '?';
+}
+
+// Composite cross-week identity: title + Grundpreis-unit + size class.
+function productKey(offer, unit) {
+    return `${normTitle(offer && offer.title)}|${unit}|${sizeBucket(offer && offer.baseUnit)}`;
 }
 
 // ── interest topics: the steering chips + the detectors used for scoring ──
@@ -205,7 +279,7 @@ async function init() {
         loadWeek(weekSelect.value);
     });
 
-    await loadProspekt();
+    await Promise.all([loadProspekt(), loadPriceHistory()]);
     if (files.length > 0) {
         await loadWeek(files[0]);
     } else {
@@ -238,6 +312,18 @@ async function loadProspekt() {
         prospektData = await res.json();
     } catch (err) {
         prospektData = null;
+    }
+}
+
+// Optional cross-week price history. Additive: absence -> no price badges.
+async function loadPriceHistory() {
+    try {
+        priceHistory = await fetchJSON('data/price-history-index.json');
+        phByKey = new Map();
+        (priceHistory.products || []).forEach(p => { if (p && p.key) phByKey.set(p.key, p); });
+    } catch (err) {
+        priceHistory = null;
+        phByKey = null;
     }
 }
 
@@ -339,6 +425,58 @@ function resetPrefs() {
     if (hint) hint.textContent = 'Vorlieben zurückgesetzt.';
 }
 
+// ── price check: is this week's Grundpreis a genuine deal vs the product's
+// own history? Joins the offer to data/price-history-index.json via the same
+// composite key build_indexes.py uses, then mirrors the dashboard's
+// percentile / "über Tief" logic. Returns {tier,text,title} or null.
+const PC_EPS = 1e-9;
+
+function selectedWeekDate() {
+    const sel = document.getElementById('week-select');
+    const d = sel ? fileDate(sel.value) : '';
+    return d || (priceHistory && priceHistory.latestDate) || '';
+}
+
+function priceCheck(o) {
+    if (!phByKey) return null;
+    const gp = parseGp(o);
+    if (gp.val === null || gp.flag !== 'exact') return null;   // need an unambiguous €/unit
+    const prod = phByKey.get(productKey(o, gp.unit));
+    if (!prod || !Array.isArray(prod.obs)) return null;
+
+    const date = selectedWeekDate();
+    // One exact Grundpreis per distinct PRIOR week (min), like dashboard.js
+    // precomputeHistory — strictly earlier weeks form the comparison history.
+    const perWeek = new Map();
+    for (const ob of prod.obs) {
+        if (ob.gpf !== undefined) continue;        // exclude range / "ab €"
+        if (!ob.d || ob.d >= date) continue;       // only weeks before the selected one
+        const cur = perWeek.get(ob.d);
+        perWeek.set(ob.d, cur === undefined ? ob.gp : Math.min(cur, ob.gp));
+    }
+    const priorDates = [...perWeek.keys()].sort();
+    if (priorDates.length < 2) return null;        // not enough history to judge
+
+    const cur = gp.val;
+    const priorVals = priorDates.map(d => perWeek.get(d));
+    const min = Math.min(...priorVals);
+    const over = min > 0 ? (cur / min - 1) : 0;
+    const pctOver = Math.round(over * 100);
+    const depth = `Tief €${min.toFixed(2)}/${gp.unit} · ${priorVals.length} Vergleichswochen`;
+
+    if (cur <= min + PC_EPS) {
+        // At or below everything seen before — how long was it pricier than now?
+        let run = 0;
+        for (let i = priorDates.length - 1; i >= 0; i--) {
+            if (perWeek.get(priorDates[i]) > cur + PC_EPS) run++; else break;
+        }
+        return { tier: 'best', text: run >= 2 ? `Bestpreis seit ${run} Wochen` : 'Bestpreis', title: depth };
+    }
+    if (pctOver <= 10) return { tier: 'good', text: 'Guter Preis', title: `+${pctOver}% über ${depth}` };
+    if (pctOver >= 20) return { tier: 'wait', text: `+${pctOver}% über Tief`, title: `schon mal günstiger — ${depth}` };
+    return null;   // 11–19% over: unremarkable, keep the card clean
+}
+
 // ── rendering ──
 function pickReason(title) {
     if (!prospektData || !Array.isArray(prospektData.picks)) return '';
@@ -401,6 +539,15 @@ function buildCard(o) {
         priceRow.appendChild(gp);
     }
     body.appendChild(priceRow);
+
+    const pc = priceCheck(o);
+    if (pc) {
+        const badge = document.createElement('div');
+        badge.className = 'pk-pricecheck pc-' + pc.tier;
+        badge.textContent = pc.text;
+        if (pc.title) badge.title = pc.title;
+        body.appendChild(badge);
+    }
 
     const reason = pickReason(o.title || '');
     if (reason) {
