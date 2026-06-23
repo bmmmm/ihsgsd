@@ -587,12 +587,18 @@ function priceCheck(o) {
 
 // ── rendering ──
 function pickReason(title) {
-    if (!prospektData || !Array.isArray(prospektData.picks)) return '';
-    const hit = prospektData.picks.find(p => p && p.title === title);
-    return hit && typeof hit.reason === 'string' ? hit.reason : '';
+    if (!prospektData) return '';
+    // Prefer the new ranked foryou[]; fall back to the legacy picks[] alias.
+    for (const list of [prospektData.foryou, prospektData.picks]) {
+        if (!Array.isArray(list)) continue;
+        const hit = list.find(p => p && p.title === title);
+        if (hit && typeof hit.reason === 'string' && hit.reason) return hit.reason;
+    }
+    return '';
 }
 
-function buildCard(o) {
+function buildCard(o, opts) {
+    opts = opts || {};
     const card = document.createElement('article');
     card.className = 'pk-card';
     const vote = voteFor(o);
@@ -617,6 +623,13 @@ function buildCard(o) {
 
     const body = document.createElement('div');
     body.className = 'pk-body';
+
+    if (opts.tag) {
+        const tag = document.createElement('div');
+        tag.className = 'pk-tag';
+        tag.textContent = opts.tag;
+        body.appendChild(tag);
+    }
 
     const title = document.createElement('div');
     title.className = 'pk-title';
@@ -738,20 +751,69 @@ function offersWhere(test) {
     return currentOffers.filter(o => { try { return test(o); } catch (e) { return false; } });
 }
 
+// "Für dich": the LLM's ranked order (data/prospekt.json foryou[]) when
+// present, with LIVE client prefs overriding Monday's snapshot — an item the
+// reader has since muted or down-voted (score < 0) is dropped, fresh up-votes
+// are backfilled from the client-side score. Without prospekt.json it is purely
+// the client-side score (the original behaviour). Returns the offers plus the
+// set already placed, so discoveries don't duplicate them.
+function buildForYou() {
+    const inForYou = new Set();
+    const list = [];
+    const llm = prospektData && Array.isArray(prospektData.foryou) ? prospektData.foryou : null;
+    if (llm) {
+        const ordered = llm.slice().sort((a, b) => ((a && a.rank) || 99) - ((b && b.rank) || 99));
+        for (const entry of ordered) {
+            if (!entry || !entry.title) continue;
+            const o = currentOffers.find(x => (x.title || '') === entry.title && !inForYou.has(x));
+            if (!o || scoreOffer(o) < 0) continue;     // muted/down-voted since Monday -> drop
+            inForYou.add(o); list.push(o);
+            if (list.length >= 8) break;
+        }
+    }
+    if (list.length < 8) {
+        currentOffers
+            .filter(o => !inForYou.has(o))
+            .map(o => ({ o, s: scoreOffer(o) }))
+            .filter(x => x.s > 0)
+            .sort((a, b) => b.s - a.s || String(a.o.title || '').localeCompare(String(b.o.title || '')))
+            .forEach(x => { if (list.length < 8) { inForYou.add(x.o); list.push(x.o); } });
+    }
+    return { list, inForYou };
+}
+
+// 1-2 genuine price deals OUTSIDE the reader's stated interests (neutral
+// topics, score === 0), surfaced as "Entdeckung" so a narrow profile doesn't
+// hide a real bargain. Respects explicit mutes (score < 0) and down-votes.
+function pickDiscoveries(inForYou, limit) {
+    const found = [];
+    for (const o of currentOffers) {
+        if (inForYou.has(o)) continue;
+        if (scoreOffer(o) !== 0) continue;          // only truly-neutral items
+        if (voteFor(o) === -1) continue;
+        const pc = priceCheck(o);
+        if (!pc || (pc.tier !== 'best' && pc.tier !== 'good')) continue;
+        found.push({ o, best: pc.tier === 'best' });
+    }
+    found.sort((a, b) => (b.best ? 1 : 0) - (a.best ? 1 : 0));
+    return found.slice(0, limit).map(x => x.o);
+}
+
 function renderAll() {
     renderHero();
 
-    // Personalised top picks: highest-scoring offers across the whole week,
-    // but only when the reader has actually expressed a preference (score > 0).
-    const forYou = currentOffers
-        .map(o => ({ o, s: scoreOffer(o) }))
-        .filter(x => x.s > 0)
-        .sort((a, b) => b.s - a.s)
-        .slice(0, 8)
-        .map(x => x.o);
-    fillSection('pk-foryou-grid', null, forYou, null, {});
+    // Personalised top picks (LLM-ranked + client fallback) followed by 1-2
+    // out-of-interest price discoveries.
+    const fy = buildForYou();
+    const discoveries = pickDiscoveries(fy.inForYou, 2);
+    const forYouGrid = document.getElementById('pk-foryou-grid');
+    if (forYouGrid) {
+        forYouGrid.innerHTML = '';
+        fy.list.forEach(o => forYouGrid.appendChild(buildCard(o)));
+        discoveries.forEach(o => forYouGrid.appendChild(buildCard(o, { tag: '✨ Entdeckung' })));
+    }
     const forYouSection = document.getElementById('pk-foryou');
-    if (forYouSection) forYouSection.style.display = forYou.length ? '' : 'none';
+    if (forYouSection) forYouSection.style.display = (fy.list.length + discoveries.length) ? '' : 'none';
 
     fillSection('pk-vegan-grid', 'pk-vegan-intro',
         offersWhere(o => /vegan|vegetar/i.test(o.title || '')), 'vegan', { limit: 12 });
