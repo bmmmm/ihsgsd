@@ -42,6 +42,7 @@ import build_indexes as bx  # noqa: E402
 FOLDER_STRUCTURE = REPO_ROOT / "data" / "folder-structure.json"
 PREFS_PATH = REPO_ROOT / "data" / "preferences.json"
 PRICE_HISTORY_PATH = REPO_ROOT / "data" / "price-history-index.json"
+RECEIPTS_PATH = REPO_ROOT / "data" / "receipts.json"
 OUT_PATH = REPO_ROOT / "data" / "prospekt.json"
 
 PER_SECTION_CAP = 12   # how many candidates per section we hand to the model
@@ -72,6 +73,7 @@ The reader especially likes VEGAN/vegetarian products, OBST & GEMÜSE (fruit & v
 - ph.pctile (int): where this GP sits in the product's own history (0 = cheapest it has ever been offered, 100 = most expensive).
 - ph.weeks (int): how many prior weeks of history back this up.
 A missing "ph" just means there is not enough history — rank such items on preferences, do not invent a price claim for them.
+A candidate may also carry "bought": N — the reader has bought this product N times before (from their receipts / loyalty marks). Treat it as a strong personal signal: they clearly want it, so surface it especially when its price also looks good.
 
 READER_PREFS_PLACEHOLDER
 
@@ -104,7 +106,7 @@ Rules:
 - Write ALL text in German, friendly and concrete (not corporate).
 - "foryou" is an ORDERED personal recommendation of the 6-10 best products for THIS reader, across all sections. rank starts at 1 (best) and increases by 1 with no gaps. Copy each "title" verbatim from the input so the page can match it.
 - Ranking rubric, in priority order:
-  1. Honour the reader's preferences: push "Loves (Favorit)" and "Thumbs-up" products to the top; NEVER include products from a section the reader switched off or thumbed down.
+  1. Honour the reader's preferences: push "Loves (Favorit)", "Thumbs-up" and "bought"-before products to the top; NEVER include products from a section the reader switched off or thumbed down.
   2. Prefer genuinely good prices: ph.best or a low ph.pctile is a strong signal. Only make a price claim ("Allzeit-Tief", "guter Preis") when the item actually has ph evidence supporting it.
   3. A Superknüller is only a real deal if its price also looks good — don't trust the Knüller label alone.
 - Pick evidenceTag to match the dominant reason (Favorit/mag ich for preference-driven; Allzeit-Tief for ph.best; guter Preis for low pctile; Knüller for a Superknüller that holds up; empty string if none fits).
@@ -207,7 +209,36 @@ def price_evidence(offer, price_map, latest_date):
     }
 
 
-def offer_entry(offer, price_map=None, latest_date=""):
+def load_receipts():
+    """{norm_title: {name, c, ...}} from the gitignored receipts store, or {}.
+    Optional input (scripts/ingest_receipt.py builds it): absent -> no loyalty
+    signal from receipts."""
+    if not RECEIPTS_PATH.exists():
+        return {}
+    try:
+        data = json.loads(RECEIPTS_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+    items = data.get("items") if isinstance(data, dict) else None
+    return items if isinstance(items, dict) else {}
+
+
+def receipts_summary(receipts):
+    """A prompt line listing the most-bought receipt products, or ''."""
+    if not receipts:
+        return ""
+    rows = []
+    for entry in receipts.values():
+        if isinstance(entry, dict) and entry.get("name"):
+            rows.append((entry.get("c") or 1, entry["name"]))
+    rows.sort(key=lambda r: -r[0])
+    if not rows:
+        return ""
+    names = ", ".join(n for _, n in rows[:20])
+    return f"- From receipts (actually bought, strongest loyalty signal): {names}"
+
+
+def offer_entry(offer, price_map=None, latest_date="", receipts=None):
     entry = {
         "title": offer.get("title"),
         "cat": (offer.get("category") or {}).get("name"),
@@ -218,6 +249,10 @@ def offer_entry(offer, price_map=None, latest_date=""):
         ev = price_evidence(offer, price_map, latest_date)
         if ev is not None:
             entry["ph"] = ev
+    if receipts:
+        hit = receipts.get(bx.norm_title(offer.get("title")))
+        if hit:
+            entry["bought"] = hit.get("c") or 1
     return entry
 
 
@@ -228,7 +263,7 @@ def is_knuller(offer):
     )
 
 
-def build_digest(offers, price_map=None, latest_date=""):
+def build_digest(offers, price_map=None, latest_date="", receipts=None):
     def title_of(o):
         return o.get("title") or ""
 
@@ -245,7 +280,7 @@ def build_digest(offers, price_map=None, latest_date=""):
     knueller = [o for o in offers if is_knuller(o)]
 
     def section(items):
-        entries = [offer_entry(o, price_map, latest_date) for o in items]
+        entries = [offer_entry(o, price_map, latest_date, receipts) for o in items]
         # Surface the genuine deals to the model: best-price first, then lowest
         # percentile, then those carrying any evidence. Items without evidence
         # keep their original order at the back. Cap AFTER sorting so the cap
@@ -402,19 +437,29 @@ def main():
         fail(f"{week_path} has no offers")
 
     price_map = load_price_map()
-    digest = build_digest(offers, price_map, latest_date)
+    receipts = load_receipts()
+    digest = build_digest(offers, price_map, latest_date, receipts)
     counts = {k: len(v) for k, v in digest.items()}
     n_ev = sum(1 for sec in digest.values() for e in sec if e.get("ph"))
+    n_bought = sum(1 for sec in digest.values() for e in sec if e.get("bought"))
     print(f"Price history: {len(price_map)} products indexed, "
           f"{n_ev} candidate(s) carry price evidence.")
+    if receipts:
+        print(f"Receipts: {len(receipts)} bought product(s) known, "
+              f"{n_bought} match this week's candidates.")
     print(f"Latest week {week_label} ({latest_date}): "
           f"vegan={counts['vegan']}, obst&gemuese={counts['obstgemuese']}, "
           f"bier&spezi={counts['bierspezi']}, knueller={counts['knueller']}.")
     if sum(counts.values()) == 0:
         fail("no curated candidates found — nothing to write (is the latest week empty?)")
 
+    prefs_block = prefs_summary(prefs_path)
+    rcpt_line = receipts_summary(receipts)
+    if rcpt_line:
+        prefs_block += "\n" + rcpt_line
+
     prompt = (PROMPT_TEMPLATE
-              .replace("READER_PREFS_PLACEHOLDER", prefs_summary(prefs_path))
+              .replace("READER_PREFS_PLACEHOLDER", prefs_block)
               .replace("SLICE_PLACEHOLDER", json.dumps(digest, ensure_ascii=False, indent=1))
               .replace("LATEST_DATE_PLACEHOLDER", latest_date)
               .replace("WEEK_LABEL_PLACEHOLDER", week_label)
