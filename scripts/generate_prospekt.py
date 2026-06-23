@@ -199,7 +199,10 @@ def price_evidence(offer, price_map, latest_date):
         return None
     prior = list(per_week.values())
     low = min(prior)
-    over_pct = round((val / low - 1) * 100) if low > 0 else 0
+    # Clamp to 0: a fresh all-time low is "0% above the low" (ph.best carries the
+    # new-low signal). A negative value would contradict the field's documented
+    # "how many percent above the low" meaning and confuse the model.
+    over_pct = max(0, round((val / low - 1) * 100)) if low > 0 else 0
     pctile = round(100 * sum(1 for x in prior if x < val) / len(prior))
     return {
         "best": val <= low + GP_EPS,

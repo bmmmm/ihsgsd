@@ -119,12 +119,14 @@ function gpNormStr(s) {
 function parseNumberDe(s) {
     s = String(s).trim();
     if (s.indexOf('.') !== -1 && s.indexOf(',') !== -1) {
-        s = s.replace(/\./g, '').replace(',', '.');   // dot=thousands, comma=decimal
+        s = s.replace(/\./g, '').replace(/,/g, '.');   // dot=thousands, comma=decimal
     } else {
-        s = s.replace(',', '.');
+        s = s.replace(/,/g, '.');
     }
-    const v = parseFloat(s);
-    return Number.isFinite(v) ? v : NaN;
+    // Mirror Python float(): reject leftover separators / garbage instead of
+    // silently truncating (parseFloat("1.2.3") would otherwise return 1.2).
+    if (!/^\d*\.?\d+$|^\d+\.$/.test(s)) return NaN;
+    return parseFloat(s);
 }
 
 // { val, unit, flag } for the Grundpreis, or all-null. flag: exact|range|lower.

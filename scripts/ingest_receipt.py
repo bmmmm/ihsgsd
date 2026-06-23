@@ -32,6 +32,14 @@ import build_indexes as bx  # noqa: E402
 
 DEFAULT_STORE = REPO_ROOT / "data" / "receipts.json"
 
+# Defense in depth: even if the model misclassifies, never store these
+# non-product receipt lines in the loyalty store.
+NON_PRODUCT_RE = re.compile(
+    r"\b(pfand|leergut|rabatt|coupon|gutschein|summe|gesamt|zwischensumme|"
+    r"payback|kartenzahlung|ec[- ]?cash|wechselgeld|r[uü]ckgeld)\b",
+    re.IGNORECASE,
+)
+
 PROMPT_TEMPLATE = """Read the supermarket receipt image at this path and extract its line items: {path}
 
 Return ONLY valid JSON, no prose or markdown:
@@ -115,7 +123,7 @@ def merge(store, parsed, source_label):
         if not isinstance(it, dict):
             continue
         name = (it.get("name") or "").strip()
-        if not name:
+        if not name or NON_PRODUCT_RE.search(name):
             continue
         key = bx.norm_title(name)
         if not key:
@@ -174,7 +182,10 @@ def main():
     if opts["from_json"]:
         if not opts["from_json"].exists():
             fail(f"--from-json file not found: {opts['from_json']}")
-        parsed = json.loads(opts["from_json"].read_text(encoding="utf-8"))
+        try:
+            parsed = json.loads(opts["from_json"].read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            fail(f"--from-json file is not valid JSON: {exc}")
         store = load_store(store_path)
         n = merge(store, parsed, f"json:{opts['from_json'].name}")
         store_path.write_text(json.dumps(store, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
