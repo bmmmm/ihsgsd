@@ -23,3 +23,8 @@ Thumbs.db
 
 # Local working artifacts
 tmp/
+
+# Personal data — read locally by the Monday pipeline, never published
+data/preferences.json
+data/receipts.json
+data/receipts/
