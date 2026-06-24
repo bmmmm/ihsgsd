@@ -292,10 +292,15 @@ async function init() {
     }
     files.sort((a, b) => fileDate(b).localeCompare(fileDate(a)));   // newest first
     files.forEach(file => {
+        const m = file.match(/(\d{4})\/(KW\d+)\/(\d{4})-(\d{2})-(\d{2})\.json/);
+        // Skip non-week artifacts (e.g. insights.json) so they can't become a
+        // junk dropdown option that errors on selection.
+        if (!m) return;
         const opt = document.createElement('option');
         opt.value = file;
-        const m = file.match(/(\d{4})\/(KW\d+)\/(\d{4})-(\d{2})-(\d{2})\.json/);
-        opt.textContent = m ? `${m[2]} — ${m[5]}.${m[4]}.${m[1]}` : file;
+        // Year from the filename (m[3]), not the folder (m[1]): they differ at
+        // the ISO-week/year boundary.
+        opt.textContent = `${m[2]} — ${m[5]}.${m[4]}.${m[3]}`;
         weekSelect.appendChild(opt);
     });
     weekSelect.addEventListener('change', () => {

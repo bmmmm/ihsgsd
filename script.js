@@ -78,15 +78,15 @@ async function fetchFolderStructure() {
 function populateDropdown(dropdown, files) {
   dropdown.innerHTML = "";
   files.forEach((file) => {
+    // "2026/KW11/2026-03-09.json" → "KW11 — 09.03.2026". Skip non-week artifacts
+    // (e.g. insights.json) so they can't become a junk option that errors on load.
+    const match = file.match(/(\d{4})\/(KW\d+)\/(\d{4})-(\d{2})-(\d{2})\.json/);
+    if (!match) return;
     const option = document.createElement("option");
     option.value = file;
-    // "2026/KW11/2026-03-09.json" → "KW11 — 09.03.2026"
-    const match = file.match(/(\d{4})\/(KW\d+)\/(\d{4})-(\d{2})-(\d{2})\.json/);
-    if (match) {
-      option.textContent = `${match[2]} — ${match[5]}.${match[4]}.${match[1]}`;
-    } else {
-      option.textContent = file;
-    }
+    // Year from the filename (match[3]), not the folder (match[1]) — they differ
+    // at the ISO-week/year boundary.
+    option.textContent = `${match[2]} — ${match[5]}.${match[4]}.${match[3]}`;
     dropdown.appendChild(option);
   });
 }
