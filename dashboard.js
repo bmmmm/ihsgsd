@@ -207,7 +207,7 @@ function fillInsightsList(ul, items, kind) {
         let badge = '';
         if (isPricier && typeof d.pct_above_min === 'number') {
             badge = `+${Math.round(d.pct_above_min)}% über Tief`;
-        } else if (!isPricier && typeof d.hist_max_gp === 'number'
+        } else if (!isPricier && typeof d.hist_max_gp === 'number' && d.hist_max_gp > 0
                    && typeof d.current_gp === 'number' && d.current_gp > 0) {
             badge = `−${Math.round((1 - d.current_gp / d.hist_max_gp) * 100)}% vs. Hoch`;
         }

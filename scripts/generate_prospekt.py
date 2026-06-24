@@ -487,6 +487,13 @@ def main():
         fail(f"could not parse JSON from claude output ({exc}). "
              f"Raw output starts with: {proc.stdout.strip()[:200]!r}")
 
+    if not isinstance(data, dict):
+        # extract_json returns whatever top-level JSON parsed (a list/scalar is
+        # valid JSON); guard before .get() so an off-spec reply fails cleanly
+        # via fail() instead of an uncaught AttributeError traceback.
+        fail(f"claude output was not a JSON object (got {type(data).__name__}). "
+             f"Raw output starts with: {proc.stdout.strip()[:200]!r}")
+
     if not isinstance(data.get("lead"), str) or not data["lead"]:
         fail("claude output is missing a non-empty 'lead'")
     if not isinstance(data.get("sections"), dict):
@@ -530,9 +537,12 @@ def main():
     if missing:
         print(f"  note: sections missing intros for: {sorted(missing)}")
 
-    data.setdefault("generatedAt", latest_date)
-    data.setdefault("weekLabel", week_label)
-    data.setdefault("model", model)
+    # Authoritative metadata — overwrite whatever the model echoed back. The
+    # prompt asks the model to emit these, so setdefault() would keep a
+    # hallucinated weekLabel/model and the page would render the wrong week.
+    data["generatedAt"] = latest_date
+    data["weekLabel"] = week_label
+    data["model"] = model
     # Stamp which preferences snapshot this was generated for (metadata only;
     # reserved for a future client-side staleness check — nothing reads it yet).
     data["generatedFor"] = prefs_updated_at(prefs_path)
