@@ -1,0 +1,16 @@
+# Credentials & secrets
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+id_*
+
+# Personal data (gitignored, but also keep out of Claude's index)
+data/preferences.json*
+data/receipts.json*
+data/receipts/
+
+# macOS metadata
+.DS_Store
