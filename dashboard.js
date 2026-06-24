@@ -115,10 +115,15 @@ async function init() {
     files.sort((a, b) => fileDate(b).localeCompare(fileDate(a)));
 
     files.forEach(file => {
+        const m = file.match(/(\d{4})\/(KW\d+)\/(\d{4})-(\d{2})-(\d{2})\.json/);
+        // Skip non-week artifacts (e.g. insights.json): they fail the regex and
+        // would otherwise become a junk dropdown option that errors on selection.
+        if (!m) return;
         const opt = document.createElement('option');
         opt.value = file;
-        const m = file.match(/(\d{4})\/(KW\d+)\/(\d{4})-(\d{2})-(\d{2})\.json/);
-        opt.textContent = m ? `${m[2]} — ${m[5]}.${m[4]}.${m[1]}` : file;
+        // Date label from the filename's own year (m[3]), not the folder year
+        // (m[1]) — the two can differ at the ISO-week/year boundary.
+        opt.textContent = `${m[2]} — ${m[5]}.${m[4]}.${m[3]}`;
         weekSelect.appendChild(opt);
     });
 

@@ -46,7 +46,12 @@ jobs:
         id: structure
         run: |
           CURRENT_DATE=$(date -u +"%Y-%m-%d")
-          YEAR=$(date -u +"%G")
+          # Calendar year (%Y) so the folder year matches the filename's own year.
+          # %G (ISO week-numbering year) diverges at the Dec/Jan boundary — e.g.
+          # 2025-12-29 would land under data/2026/ while every existing snapshot
+          # uses calendar-year folders, and the dropdown label would show the
+          # wrong year.
+          YEAR=$(date -u +"%Y")
           WEEK="KW$(date -u +"%V")"
           FOLDER="data/$YEAR/$WEEK"
           FILE="$CURRENT_DATE.json"
@@ -82,8 +87,11 @@ jobs:
       - name: Generate folder-structure.json
         id: generate-structure
         run: |
-          # Find all JSON files excluding generated index files
-          find data -type f -name "*.json" ! -name "folder-structure.json" ! -name "trend-index.json" ! -name "price-history-index.json" | sed 's|^data/||' | sort | jq -R -s -c 'split("\n") | map(select(length > 0))' > data/folder-structure.json
+          # Only the nested weekly snapshots (data/<year>/KW<nn>/<date>.json) —
+          # a path filter, not an exclusion list, so root-level generated
+          # artifacts (folder-structure/trend-index/price-history/insights/
+          # prospekt and any future one) can never leak into the week dropdown.
+          find data -type f -name "*.json" -path "data/*/KW*/*.json" | sed 's|^data/||' | sort | jq -R -s -c 'split("\n") | map(select(length > 0))' > data/folder-structure.json
 
       - name: Generate index files (trend + price history)
         id: generate-indexes
@@ -100,4 +108,14 @@ jobs:
           git add data/
           git diff --staged --quiet && echo "Nothing to commit, skipping" && exit 0
           git commit -m "Add data for ${{ steps.structure.outputs.file }} and update folder structure"
-          git push
+          # Retry against a concurrent push to main: a commit landing between the
+          # checkout and this push makes git push a non-fast-forward and would
+          # abort the run, losing the fetched week. Rebase onto the latest remote
+          # and try again.
+          for attempt in 1 2 3; do
+            if git push; then exit 0; fi
+            echo "push rejected (attempt $attempt) — rebasing onto origin/main and retrying"
+            git pull --rebase origin main
+          done
+          echo "push failed after 3 attempts" >&2
+          exit 1
