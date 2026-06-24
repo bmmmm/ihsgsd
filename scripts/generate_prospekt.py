@@ -10,7 +10,7 @@ It reads the newest week's offer file, filters the products we curate on the
 Prospekt page (vegan/vegetarian, Obst & Gemüse, beer & Spezi, Superknüller),
 optionally folds in the reader's interests from data/preferences.json (exported
 from the Prospekt page's "Für Montag exportieren" button), asks `claude -p`
-(Haiku) for a warm German lead, per-section intros and a handful of pick
+(sonnet) for a warm German lead, per-section intros and a handful of pick
 reasons, and writes data/prospekt.json.
 
 The Prospekt page loads that file OPTIONALLY: if it is missing or malformed the
@@ -48,7 +48,7 @@ OUT_PATH = REPO_ROOT / "data" / "prospekt.json"
 PER_SECTION_CAP = 12   # how many candidates per section we hand to the model
 GP_EPS = 1e-9
 # evidenceTag values the model may emit; anything else is dropped to "".
-EVIDENCE_TAGS = {"Favorit", "mag ich", "guter Preis", "Allzeit-Tief", "Knüller", "Entdeckung", ""}
+EVIDENCE_TAGS = {"Favorit", "mag ich", "guter Preis", "Allzeit-Tief", "Knüller", ""}
 
 # Mirror the steering chips in prospekt.js so exported preferences map back to
 # human labels in the prompt.
@@ -148,17 +148,6 @@ def latest_week_path(files):
     return max(paths, key=file_date)
 
 
-def face_price(offer):
-    price = offer.get("price") or {}
-    raw = price.get("rawValue")
-    if isinstance(raw, (int, float)):
-        return round(float(raw), 2)
-    try:
-        return round(float(price.get("value")), 2)
-    except (TypeError, ValueError):
-        return None
-
-
 def load_price_map():
     """{product_key: product} from price-history-index.json, or {} if absent or
     malformed. Optional input: without it the digest simply carries no price
@@ -194,6 +183,8 @@ def price_evidence(offer, price_map, latest_date):
         if not d or d >= latest_date:           # only weeks before this one
             continue
         gp = ob.get("gp")
+        if not isinstance(gp, (int, float)):    # skip malformed obs (e.g. gp=null)
+            continue
         per_week[d] = gp if d not in per_week else min(per_week[d], gp)
     if len(per_week) < 2:
         return None
@@ -233,7 +224,8 @@ def receipts_summary(receipts):
     rows = []
     for entry in receipts.values():
         if isinstance(entry, dict) and entry.get("name"):
-            rows.append((entry.get("c") or 1, entry["name"]))
+            c = entry.get("c")
+            rows.append((c if isinstance(c, (int, float)) else 1, entry["name"]))
     rows.sort(key=lambda r: -r[0])
     if not rows:
         return ""
@@ -245,7 +237,7 @@ def offer_entry(offer, price_map=None, latest_date="", receipts=None):
     entry = {
         "title": offer.get("title"),
         "cat": (offer.get("category") or {}).get("name"),
-        "price": face_price(offer),
+        "price": bx.face_price(offer),
         "gp": offer.get("basicPrice"),
     }
     if price_map:
@@ -378,8 +370,9 @@ def bought_titles(bought):
 
 
 def prefs_updated_at(prefs_path):
-    """The exported prefs' updatedAt stamp, or 'default' if none — lets the
-    client detect when localStorage prefs have changed since this was built."""
+    """The exported prefs' updatedAt stamp, or 'default' if none. Recorded as
+    output metadata only (no client consumes it yet — reserved for a future
+    staleness check against the live localStorage prefs)."""
     if not prefs_path.exists():
         return "default"
     try:
@@ -540,8 +533,8 @@ def main():
     data.setdefault("generatedAt", latest_date)
     data.setdefault("weekLabel", week_label)
     data.setdefault("model", model)
-    # Stamp which preferences snapshot this was generated for, so the client can
-    # tell when localStorage prefs have moved on since Monday.
+    # Stamp which preferences snapshot this was generated for (metadata only;
+    # reserved for a future client-side staleness check — nothing reads it yet).
     data["generatedFor"] = prefs_updated_at(prefs_path)
 
     OUT_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
