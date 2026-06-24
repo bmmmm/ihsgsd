@@ -119,7 +119,12 @@ async function fetchOffers(filePath) {
       // price) so the search handler does not read every cell on each keystroke.
       // Commas are normalized to dots so "1,5 l" and a query of "1,5" both
       // become "1.5" and match (same normalization applied to the query in applyFilters).
-      row.dataset.search = `${offer.title} ${offer.category.name} ${offer.description} ${offer.price.value}`
+      // The displayed price uses rawValue (falling back to parsed value); include
+      // it in the blob alongside the raw price.value so a search for the number
+      // shown in the price cell matches even when the two disagree (e.g. the one
+      // real rawValue:0 item).
+      const priceShown = (Number.isFinite(offer.price.rawValue) ? offer.price.rawValue : parseFloat(offer.price.value)).toFixed(2);
+      row.dataset.search = `${offer.title} ${offer.category.name} ${offer.description} ${offer.price.value} ${priceShown}`
         .toLowerCase()
         .replace(/,/g, ".");
 
@@ -127,7 +132,7 @@ async function fetchOffers(filePath) {
         offer.id,
         offer.title,
         offer.category.name,
-        `${(Number.isFinite(offer.price.rawValue) ? offer.price.rawValue : parseFloat(offer.price.value)).toFixed(2)} €`,
+        `${priceShown} €`,
         offer.description,
       ];
       cells.forEach((text) => {
@@ -157,8 +162,17 @@ async function fetchOffers(filePath) {
     // in sync after the user switches weeks while images are shown.
     const imageColHeader = document.getElementById("image-column-header");
     const toggleImagesBtn = document.getElementById("toggle-images");
+    const imageCol = document.querySelector("col.col-bild");
+    const imagePreview = document.getElementById("image-preview");
     if (imageColHeader) imageColHeader.classList.add("hidden");
     if (toggleImagesBtn) toggleImagesBtn.textContent = "Bilder laden";
+    // Collapse the column back to 0 — the new rows render hidden with no <img>,
+    // so a leftover 12% width would leave an empty gap column on the right.
+    if (imageCol) imageCol.style.width = "0";
+    // Clear any stuck hover preview: tableBody.innerHTML='' above detached the
+    // hovered <img>, so its mouseout never fires and the panel would otherwise
+    // keep showing the previous week's image.
+    if (imagePreview) { imagePreview.innerHTML = ""; imagePreview.classList.remove("visible"); }
 
     populateCategoryCheckboxes(offers);
   } catch (error) {
