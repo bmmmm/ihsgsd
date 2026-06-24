@@ -9,18 +9,23 @@ data/receipts.json (gitignored — personal data). generate_prospekt.py reads
 that store on Mondays so the flyer can highlight what you actually buy.
 
 The model reads the image via its Read tool, so pass a path it can open. A
-failed/garbled extraction never corrupts the store: parsing is validated and
-the file is only rewritten on success.
+failed/garbled extraction never corrupts the store: parsing is validated, the
+same receipt is not double-counted (content fingerprint), and the store is
+written atomically (temp file + os.replace) so a crash mid-write cannot
+truncate it.
 
 Flags:
     --dry-run        Print the prompt(s); do not call claude or write anything.
     --model M        Vision model (default: sonnet).
     --store PATH     Receipt store (default: data/receipts.json).
+    --force          Ingest even if this receipt's content was already ingested.
     --from-json P    Skip the model and ingest an already-extracted JSON file
                      (same shape the model returns) — for testing the
                      normalise+merge path deterministically.
 """
+import hashlib
 import json
+import os
 import re
 import subprocess
 import sys
@@ -33,10 +38,15 @@ import build_indexes as bx  # noqa: E402
 DEFAULT_STORE = REPO_ROOT / "data" / "receipts.json"
 
 # Defense in depth: even if the model misclassifies, never store these
-# non-product receipt lines in the loyalty store.
+# non-product receipt lines in the loyalty store. "pfand" is a substring (no
+# \b) so it also catches the common compounds Flaschen-/Einweg-/Mehrweg-/
+# Getränkepfand and Pfandrückgabe. Bare "bar"/"karte" are deliberately omitted
+# to avoid eating real product names ("... Bar", "Grußkarte").
 NON_PRODUCT_RE = re.compile(
-    r"\b(pfand|leergut|rabatt|coupon|gutschein|summe|gesamt|zwischensumme|"
-    r"payback|kartenzahlung|ec[- ]?cash|wechselgeld|r[uü]ckgeld)\b",
+    r"(pfand|\bleergut\b|\brabatt\b|\bcoupon\b|\bgutschein\b|\bsumme\b|\bgesamt\b|"
+    r"\bzwischensumme\b|\bpayback\b|\bkartenzahlung\b|\bec[- ]?cash\b|\bwechselgeld\b|"
+    r"\br[uü]ckgeld\b|\bmwst\b|\bmehrwertsteuer\b|\bnetto\b|\bbrutto\b|\bbargeld\b|"
+    r"\bgegeben\b|\bvisa\b|\bmastercard\b|\bgirocard\b|\bmaestro\b|\btrinkgeld\b)",
     re.IGNORECASE,
 )
 
@@ -66,14 +76,23 @@ def extract_json(text):
         return json.loads(text)
     except json.JSONDecodeError:
         pass
+    # Scan all candidate objects; prefer the one that actually carries an
+    # 'items' list (the receipt payload), so a stray valid object the model may
+    # emit first — an echoed example, a tool-style preamble — does not win.
     decoder = json.JSONDecoder()
+    first = None
     for i, ch in enumerate(text):
         if ch == "{":
             try:
                 obj, _ = decoder.raw_decode(text[i:])
-                return obj
             except json.JSONDecodeError:
                 continue
+            if isinstance(obj, dict) and isinstance(obj.get("items"), list):
+                return obj
+            if first is None:
+                first = obj
+    if first is not None:
+        return first
     raise json.JSONDecodeError("no JSON object found in output", text, 0)
 
 
@@ -89,6 +108,34 @@ def load_store(path):
     data.setdefault("items", {})
     data.setdefault("sources", [])
     return data
+
+
+def write_store(path, store):
+    """Write the store atomically: a temp file in the same directory + os.replace
+    so a crash/ENOSPC mid-write cannot truncate the (gitignored, un-backed-up)
+    receipts.json. os.replace is atomic within a filesystem."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(json.dumps(store, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    os.replace(tmp, path)
+
+
+def receipt_fingerprint(parsed):
+    """A stable content hash of one receipt (store + date + sorted item lines),
+    so re-ingesting the same photo/JSON is detected and skipped. Independent of
+    key order; tolerant of a model that omits store/date."""
+    obj = parsed if isinstance(parsed, dict) else {}
+    items = obj.get("items") if isinstance(obj.get("items"), list) else []
+    basis = {
+        "store": (obj.get("store") or "").strip().lower(),
+        "date": (obj.get("date") or "").strip(),
+        "items": sorted(
+            f"{(it.get('name') or '').strip().lower()}|{it.get('qty')}|{it.get('price')}"
+            for it in items if isinstance(it, dict)
+        ),
+    }
+    blob = json.dumps(basis, ensure_ascii=False, sort_keys=True).encode("utf-8")
+    return hashlib.sha256(blob).hexdigest()
 
 
 def call_claude(image_path, model):
@@ -112,12 +159,22 @@ def call_claude(image_path, model):
              f"Raw output starts with: {proc.stdout.strip()[:200]!r}")
 
 
-def merge(store, parsed, source_label):
+def merge(store, parsed, source_label, force=False):
     """Fold one receipt's items into the store, keyed by the build_indexes
-    normalised title so a product matches its weekly-offer counterpart."""
+    normalised title so a product matches its weekly-offer counterpart.
+
+    Idempotent: a receipt whose content fingerprint was already ingested is
+    skipped (returns 0) unless force=True — re-running on the same photo must
+    not double-count the loyalty signal."""
     items = parsed.get("items") if isinstance(parsed, dict) else None
     if not isinstance(items, list):
         fail(f"extracted data for {source_label} has no 'items' list")
+    fp = receipt_fingerprint(parsed)
+    seen = {s.get("fp") for s in store.get("sources", []) if isinstance(s, dict)}
+    if fp in seen and not force:
+        print(f"  skip {source_label}: identical receipt already ingested; "
+              f"pass --force to add it again.")
+        return 0
     added = 0
     for it in items:
         if not isinstance(it, dict):
@@ -140,18 +197,20 @@ def merge(store, parsed, source_label):
         if price is not None:
             entry["spent"] = round(entry.get("spent", 0.0) + price, 2)
         added += 1
-    store["sources"].append({"source": source_label, "items": added})
+    store["sources"].append({"source": source_label, "items": added, "fp": fp})
     return added
 
 
 def parse_args(argv):
     opts = {"dry_run": False, "model": "sonnet", "store": DEFAULT_STORE,
-            "from_json": None, "images": []}
+            "from_json": None, "images": [], "force": False}
     i = 0
     while i < len(argv):
         a = argv[i]
         if a == "--dry-run":
             opts["dry_run"] = True
+        elif a == "--force":
+            opts["force"] = True
         elif a == "--model":
             i += 1
             if i >= len(argv):
@@ -180,6 +239,9 @@ def main():
     store_path = opts["store"]
 
     if opts["from_json"]:
+        if opts["images"]:
+            fail("--from-json cannot be combined with image arguments — "
+                 "ingest the JSON or the photos in separate runs.")
         if not opts["from_json"].exists():
             fail(f"--from-json file not found: {opts['from_json']}")
         try:
@@ -187,8 +249,8 @@ def main():
         except json.JSONDecodeError as exc:
             fail(f"--from-json file is not valid JSON: {exc}")
         store = load_store(store_path)
-        n = merge(store, parsed, f"json:{opts['from_json'].name}")
-        store_path.write_text(json.dumps(store, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        n = merge(store, parsed, f"json:{opts['from_json'].name}", force=opts["force"])
+        write_store(store_path, store)
         print(f"Ingested {n} item(s) from {opts['from_json']} -> "
               f"{store_path} ({len(store['items'])} unique products).")
         return
@@ -212,8 +274,8 @@ def main():
     total = 0
     for img in images:
         parsed = call_claude(str(Path(img).resolve()), opts["model"])
-        total += merge(store, parsed, Path(img).name)
-    store_path.write_text(json.dumps(store, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        total += merge(store, parsed, Path(img).name, force=opts["force"])
+    write_store(store_path, store)
     print(f"Ingested {total} item(s) from {len(images)} image(s) -> "
           f"{store_path} ({len(store['items'])} unique products). "
           f"Run generate_prospekt.py to use them.")
