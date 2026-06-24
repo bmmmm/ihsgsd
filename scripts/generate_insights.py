@@ -22,6 +22,7 @@ Flags:
 """
 
 import json
+import math
 import re
 import subprocess
 import sys
@@ -35,6 +36,23 @@ OUT_PATH = REPO_ROOT / "data" / "insights.json"
 MIN_WEEKS = 3          # need at least this much history to judge "normal"
 PRICIER_MIN_PCT = 5.0  # ignore noise: only flag >=5% above own minimum
 CANDIDATE_CAP = 15     # how many candidates per list we hand to the model
+
+
+def _as_finite_float(x):
+    """Coerce a number or numeric string to a finite float, else None. Rejects
+    bool (int subclass), NaN/Infinity, null and non-numeric strings."""
+    if isinstance(x, bool):
+        return None
+    if isinstance(x, (int, float)):
+        return float(x) if math.isfinite(x) else None
+    if isinstance(x, str):
+        try:
+            val = float(x.replace(",", ".").strip())
+        except ValueError:
+            return None
+        return val if math.isfinite(val) else None
+    return None
+
 
 PROMPT_TEMPLATE = """You are a price analyst for a German supermarket (EDEKA) weekly offers tracker. You receive structured price data and must return ONLY valid JSON — no prose, no markdown, no explanation outside the JSON.
 
@@ -249,6 +267,10 @@ def main():
         fail(f"could not parse JSON from claude output ({exc}). "
              f"Raw output starts with: {proc.stdout.strip()[:200]!r}")
 
+    if not isinstance(data, dict):
+        fail(f"claude output was not a JSON object (got {type(data).__name__}). "
+             f"Raw output starts with: {proc.stdout.strip()[:200]!r}")
+
     for key in ("summary", "pricier", "deals"):
         if key not in data:
             fail(f"claude output is missing required key '{key}'")
@@ -259,9 +281,26 @@ def main():
             if not isinstance(item, dict) or not item.get("title"):
                 fail(f"'{key}' has a malformed entry (expected objects with a title): {item!r}")
 
-    data.setdefault("generatedAt", latest)
-    data.setdefault("weekLabel", week_label)
-    data.setdefault("model", model)
+    # Sanitise the model's numeric fields: coerce a number or numeric string to a
+    # finite float, drop anything else (null, NaN/Infinity, garbage). The dashboard
+    # guards on `typeof === 'number'`, so a leftover "2.99" string or null would
+    # silently blank the price/badge — clean it at the source rather than trust the
+    # model to honour "Numbers as JSON numbers".
+    for key in ("pricier", "deals"):
+        for item in data[key]:
+            for field in ("current_gp", "hist_min_gp", "hist_max_gp", "pct_above_min"):
+                if field in item:
+                    val = _as_finite_float(item[field])
+                    if val is None:
+                        item.pop(field, None)
+                    else:
+                        item[field] = val
+
+    # Authoritative metadata — overwrite the model's echo, never setdefault (it
+    # is prompted to emit these, so setdefault would keep a hallucinated value).
+    data["generatedAt"] = latest
+    data["weekLabel"] = week_label
+    data["model"] = model
 
     OUT_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {OUT_PATH.relative_to(REPO_ROOT)}: "
