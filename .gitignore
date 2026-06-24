@@ -24,7 +24,9 @@ Thumbs.db
 # Local working artifacts
 tmp/
 
-# Personal data — read locally by the Monday pipeline, never published
-data/preferences.json
-data/receipts.json
+# Personal data — read locally by the Monday pipeline, never published.
+# Globs (not exact paths) so atomic-write temp siblings (e.g. receipts.json.tmp)
+# can never leak into the public repo on a crash between write and os.replace.
+data/preferences.json*
+data/receipts.json*
 data/receipts/

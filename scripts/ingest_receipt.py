@@ -25,6 +25,7 @@ Flags:
 """
 import hashlib
 import json
+import math
 import os
 import re
 import subprocess
@@ -36,6 +37,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_indexes as bx  # noqa: E402
 
 DEFAULT_STORE = REPO_ROOT / "data" / "receipts.json"
+
+
+def _finite_num(x):
+    """True only for a real finite int/float. Rejects bool (a bool is an int
+    subclass, so isinstance(True, int) is True) and NaN/Infinity (which
+    json.load admits by default) — a model that emits qty:true or price:NaN
+    must not poison the counts/spent totals."""
+    return isinstance(x, (int, float)) and not isinstance(x, bool) and math.isfinite(x)
 
 # Defense in depth: even if the model misclassifies, never store these
 # non-product receipt lines in the loyalty store. "pfand" is a substring (no
@@ -186,8 +195,9 @@ def merge(store, parsed, source_label, force=False):
         if not key:
             continue
         qty = it.get("qty")
-        qty = qty if isinstance(qty, (int, float)) and qty > 0 else 1
-        price = it.get("price") if isinstance(it.get("price"), (int, float)) else None
+        qty = qty if _finite_num(qty) and qty > 0 else 1
+        praw = it.get("price")
+        price = praw if _finite_num(praw) and praw >= 0 else None
         entry = store["items"].get(key)
         if entry is None:
             entry = store["items"][key] = {"name": name, "c": 0, "qty": 0, "spent": 0.0}
@@ -213,17 +223,17 @@ def parse_args(argv):
             opts["force"] = True
         elif a == "--model":
             i += 1
-            if i >= len(argv):
+            if i >= len(argv) or argv[i].startswith("--"):
                 fail("--model needs a value, e.g. --model sonnet")
             opts["model"] = argv[i]
         elif a == "--store":
             i += 1
-            if i >= len(argv):
+            if i >= len(argv) or argv[i].startswith("--"):
                 fail("--store needs a path")
             opts["store"] = Path(argv[i])
         elif a == "--from-json":
             i += 1
-            if i >= len(argv):
+            if i >= len(argv) or argv[i].startswith("--"):
                 fail("--from-json needs a path")
             opts["from_json"] = Path(argv[i])
         elif a.startswith("--"):
