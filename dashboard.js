@@ -1042,16 +1042,20 @@ function renderCategoryDelta() {
     // Fall back to the last entry if the selected date isn't in trend data.
     if (currIdx === -1) currIdx = allTrendData.length - 1;
 
-    // No predecessor available — the selected week is the earliest in the dataset.
-    if (currIdx === 0) {
+    const currEntry = allTrendData[currIdx];
+    // Walk back to the most recent snapshot from a DIFFERENT week. The dataset
+    // holds multiple snapshots within one ISO week (KW labels collide, e.g. the
+    // two KW50/2024 snapshots), and comparing two same-week snapshots while the
+    // panel header says "Vorwoche" is misleading.
+    let prevIdx = currIdx - 1;
+    while (prevIdx >= 0 && allTrendData[prevIdx].week === currEntry.week) prevIdx--;
+    if (prevIdx < 0) {
         if (datesEl) datesEl.textContent = '';
         ul.innerHTML = '';
         setEmpty(ul, 'Keine Vorwoche verfügbar für den gewählten Zeitraum.');
         return;
     }
-
-    const currEntry = allTrendData[currIdx];
-    const prevEntry = allTrendData[currIdx - 1];
+    const prevEntry = allTrendData[prevIdx];
     const curr = currEntry.counts || {};
     const prev = prevEntry.counts || {};
 
@@ -1762,7 +1766,11 @@ function renderGpTrend(p) {
     const dates = all.map(o => o.d);
     // Exact values form the connected line; flagged ones a grey scatter.
     const exactLine = all.map(o => o.gpf === undefined ? o.gp : null);
-    const flaggedPts = all.filter(o => o.gpf !== undefined).map(o => [o.d, o.gp]);
+    // Plot flagged points by ARRAY INDEX, not by date value: 15 products have
+    // multiple obs on the same date, and on a category axis a [dateString, gp]
+    // point snaps to the first slot with that label — landing the grey dot on
+    // the wrong column. The index aligns it with its own slot (and exactLine).
+    const flaggedPts = all.map((o, i) => o.gpf !== undefined ? [i, o.gp] : null).filter(Boolean);
     const color = CATEGORY_COLORS[p.cat] || '#4caf50';
     const weeks = new Set(dates).size;
 
