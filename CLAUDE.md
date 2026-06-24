@@ -20,6 +20,8 @@ No build step, no npm, no package.json. Just serve the root directory.
 ## Architecture
 
 - **`index.html`** — Single-page app with dark theme, contains all CSS inline in `<style>`.
+- **`table.html`** — Alternative table view of the same offer data (different layout/presentation).
+- **`dashboard.html`** — EDEKA Dashboard — separate analytics/summary view of the offer data.
 - **`script.js`** — All frontend logic: data fetching, table rendering, search, category filtering, image toggle, clipboard export.
 - **`data/`** — Weekly JSON snapshots organized as `data/{YEAR}/KW{XX}/{DATE}.json`. ~17MB total, 70+ files.
 - **`data/folder-structure.json`** — Auto-generated index of all data files (used by the dropdown).
