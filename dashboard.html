@@ -40,6 +40,10 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            /* Wrap the week selector and nav links onto a second line instead
+               of pushing the header wider than the viewport on narrow screens. */
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
         .back-link {
@@ -214,6 +218,13 @@
             border-radius: 16px;
             padding: 20px;
             min-height: 400px;
+            /* Grid items default to min-width:auto, so a panel can never shrink
+               below its content's min-content width. ECharts gives each chart
+               canvas a fixed pixel width, which then pins the grid track and
+               ratchets the whole dashboard wider than the viewport (horizontal
+               overflow). min-width:0 lets the 1fr tracks shrink so charts init
+               and resize to the real column width. */
+            min-width: 0;
         }
 
         .panel-full {
@@ -482,6 +493,17 @@
             .feature-cols {
                 grid-template-columns: 1fr;
             }
+        }
+
+        /* Same min-width:auto trap as .panel, one level down: the columns,
+           rows and cards inside the panels are themselves grid/flex items.
+           Without min-width:0 a long product name, a wrapped badge or an
+           ECharts canvas pins the nested track and overflows the page on
+           narrow viewports. */
+        .feature-cols > *,
+        .product-item,
+        .delta-item {
+            min-width: 0;
         }
 
         .feature-cols h3 {
