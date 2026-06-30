@@ -410,7 +410,9 @@ async function loadWeek(filePath) {
 // Optional AI editorial. Additive: absence never breaks the page.
 async function loadProspekt() {
     try {
-        const res = await fetch('data/prospekt.json');
+        // no-store: the editorial is regenerated weekly (and on demand); a
+        // cached copy would keep showing last week's lead/picks after a refresh.
+        const res = await fetch('data/prospekt.json', { cache: 'no-store' });
         if (!res.ok) throw new Error(`status ${res.status}`);
         prospektData = await res.json();
     } catch (err) {
