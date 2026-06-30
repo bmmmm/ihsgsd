@@ -192,6 +192,18 @@ const TOPICS = [
 // The reader told us up front what they love — seed those at "Favorit".
 const DEFAULT_INTERESTS = { vegan: 2, obstgemuese: 2, bier: 2, spezi: 2, bio: 1 };
 
+// Topics whose membership is a plain category match (catName === X), so a vote's
+// category is unambiguous. Used when a category is switched OFF to drop its now
+// redundant 👎 votes. Title-based topics (vegan/bio/spezi/bier/knueller) overlap
+// across categories and are deliberately absent here — they are never auto-pruned.
+const CATEGORY_FOR_TOPIC = {
+    obstgemuese: 'Obst & Gemüse',
+    kaese: 'Molkerei & Käse',
+    suess: 'Knabbern & Naschen',
+    fleisch: 'Fleisch & Wurst',
+    tk: 'Tiefkühl',
+};
+
 // Interest levels and how each one weighs into an offer's score.
 const LEVELS = {
     '-1': { label: 'aus',     weight: -4, cls: 'lvl-off' },
@@ -385,6 +397,7 @@ async function loadWeek(filePath) {
         currentOffers = [];
         showError('Angebote dieser Woche konnten nicht geladen werden.');
     }
+    reconcileOffCategoryVotes();
     renderAll();
 }
 
@@ -583,9 +596,58 @@ function cycleInterest(key) {
     const cur = interestLevel(key);
     const next = LEVEL_CYCLE[(LEVEL_CYCLE.indexOf(cur) + 1) % LEVEL_CYCLE.length];
     prefs.interests[key] = next;
+    // Switching a category OFF makes its per-item 👎 redundant — the category
+    // already suppresses them. Drop those (keep 👍 as deliberate exceptions).
+    const pruned = next === -1 ? pruneDownVotesForCategory(key) : 0;
     savePrefs();
     paintChips();
     renderAll();
+    if (pruned > 0) {
+        const hint = document.getElementById('steer-hint');
+        const t = TOPICS.find(x => x.key === key);
+        const label = t ? t.label : key;
+        if (hint) {
+            hint.textContent = `${pruned} ${pruned === 1 ? 'Bewertung' : 'Bewertungen'} aus „${label}“ entfernt — die Kategorie steuert das jetzt.`;
+        }
+    }
+}
+
+// Drop the redundant 👎 votes inside a switched-off category, keeping 👍 votes
+// (deliberate "category off, but THIS one yes" exceptions). Returns the count
+// removed. Only category-based topics qualify; for others this is a no-op.
+// A vote's category comes from its stored `c`; older exports without it are
+// resolved against this week's loaded offers by id (cross-week votes that no
+// longer appear this week can't be classified and are left untouched).
+function pruneDownVotesForCategory(topicKey) {
+    const cat = CATEGORY_FOR_TOPIC[topicKey];
+    if (!cat || !prefs || !prefs.votes) return 0;
+    const catById = new Map(currentOffers.map(o => [String(o.id), catName(o)]));
+    let removed = 0;
+    for (const [id, e] of Object.entries(prefs.votes)) {
+        if (!e || e.v !== -1) continue;          // keep 👍 exceptions
+        const voteCat = e.c || catById.get(String(id));
+        if (voteCat === cat) { delete prefs.votes[id]; removed++; }
+    }
+    return removed;
+}
+
+// Self-heal already-stored prefs: a category may have been switched off BEFORE
+// the auto-prune existed, leaving its redundant 👎 in the file. Run once after a
+// week loads (offers available for resolving pre-`c` votes). Idempotent — once
+// pruned it removes nothing, so re-running on every loadWeek is harmless.
+function reconcileOffCategoryVotes() {
+    if (!prefs || !prefs.interests) return;
+    let removed = 0;
+    for (const key of Object.keys(CATEGORY_FOR_TOPIC)) {
+        if (interestLevel(key) === -1) removed += pruneDownVotesForCategory(key);
+    }
+    if (removed > 0) {
+        savePrefs();
+        const hint = document.getElementById('steer-hint');
+        if (hint) {
+            hint.textContent = `${removed} überflüssige Bewertung${removed === 1 ? '' : 'en'} in ausgeschalteten Kategorien bereinigt — bitte neu exportieren.`;
+        }
+    }
 }
 
 function setVote(o, value) {
@@ -595,7 +657,7 @@ function setVote(o, value) {
     if (cur === value) {
         delete prefs.votes[id];        // second click on the same thumb clears it
     } else {
-        prefs.votes[id] = { v: value, t: o.title || '' };
+        prefs.votes[id] = { v: value, t: o.title || '', c: catName(o) };
     }
     savePrefs();
     renderAll();
