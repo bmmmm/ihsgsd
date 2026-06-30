@@ -108,7 +108,10 @@
         .steer-btn:hover { border-color: #555; background: #222; }
         .steer-btn.primary { border-color: #4caf50; color: #9be29e; background: rgba(76,175,80,0.12); }
         .show-hidden { display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; color: #aaa; cursor: pointer; }
-        #steer-hint { margin: 12px 0 0; font-size: 0.82rem; color: #7fae7f; min-height: 1em; }
+        #steer-status { margin: 12px 0 0; font-size: 0.82rem; min-height: 1em; }
+        #steer-status.warn { color: #e0a04d; }
+        #steer-status.ok { color: #7fae7f; }
+        #steer-hint { margin: 8px 0 0; font-size: 0.82rem; color: #7fae7f; min-height: 1em; }
         .steer-legend { font-size: 0.78rem; color: #777; margin-top: 10px; }
         .hidden-count { font-size: 0.78rem; color: #c08a4a; }
 
@@ -314,6 +317,7 @@
                 <label class="show-hidden"><input type="checkbox" id="show-hidden"> Ausgeblendete zeigen</label>
                 <span id="hidden-count" class="hidden-count"></span>
             </div>
+            <p id="steer-status" aria-live="polite"></p>
             <p id="steer-hint"></p>
             <p class="steer-legend">Mit &#128077; / &#128683; auf den Karten verfeinerst du einzelne Produkte. Der Export (preferences.json) personalisiert montags die KI-Texte.</p>
         </section>
