@@ -193,10 +193,16 @@ const TOPICS = [
     { key: 'suess',       label: 'Süßes',           emoji: '🍫', test: o => catName(o) === 'Knabbern & Naschen' },
     { key: 'fleisch',     label: 'Fleisch & Wurst', emoji: '🥩', test: o => catName(o) === 'Fleisch & Wurst' },
     { key: 'tk',          label: 'Tiefkühl',        emoji: '❄️', test: o => catName(o) === 'Tiefkühl' },
+    { key: 'grundnahrung',label: 'Grundnahrung',    emoji: '🍝', test: o => catName(o) === 'Grundnahrung' },
+    { key: 'drogerie',    label: 'Drogerie',        emoji: '🧴', test: o => catName(o) === 'Drogerie' },
+    { key: 'tiernahrung', label: 'Tiernahrung',     emoji: '🐾', test: o => catName(o) === 'Tiernahrung' },
+    { key: 'fisch',       label: 'Fisch',           emoji: '🐟', test: o => catName(o) === 'Fisch & Meeresfrüchte' },
 ];
 
-// The reader told us up front what they love — seed those at "Favorit".
-const DEFAULT_INTERESTS = { vegan: 2, obstgemuese: 2, bier: 2, spezi: 2, bio: 1 };
+// The reader told us up front what they love — seed those at "Favorit". The
+// drugstore / pet-food / fish categories are seeded OFF (the durable taste
+// profile never wants them); only affects fresh users, existing prefs are kept.
+const DEFAULT_INTERESTS = { vegan: 2, obstgemuese: 2, bier: 2, spezi: 2, bio: 1, drogerie: -1, tiernahrung: -1, fisch: -1 };
 
 // How many cards the "Für dich" highlights grid shows at most (LLM-ranked picks
 // plus client-score fallback). Matches the generator's foryou target so a full
@@ -213,6 +219,10 @@ const CATEGORY_FOR_TOPIC = {
     suess: 'Knabbern & Naschen',
     fleisch: 'Fleisch & Wurst',
     tk: 'Tiefkühl',
+    grundnahrung: 'Grundnahrung',
+    drogerie: 'Drogerie',
+    tiernahrung: 'Tiernahrung',
+    fisch: 'Fisch & Meeresfrüchte',
 };
 
 // Interest levels and how each one weighs into an offer's score.
