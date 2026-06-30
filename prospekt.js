@@ -518,6 +518,11 @@ function buildSteering() {
         });
     }
 
+    const slCopy = document.getElementById('pk-shopping-copy');
+    if (slCopy) slCopy.addEventListener('click', copyShoppingList);
+    const slSave = document.getElementById('pk-shopping-save');
+    if (slSave) slSave.addEventListener('click', saveShoppingList);
+
     const hiddenToggle = document.getElementById('show-hidden');
     if (hiddenToggle) hiddenToggle.addEventListener('change', renderAll);
 
@@ -1292,6 +1297,7 @@ function renderMealplan() {
     // plan can be generated straight from the "↻ Neu generieren" button.
     if (!hasPlan && !localApi) {
         section.style.display = 'none';
+        renderShopping();   // marked offers can still fill the shopping list
         return;
     }
     section.style.display = '';
@@ -1308,6 +1314,7 @@ function renderMealplan() {
     if (hasPlan) {
         mealplanView.days.forEach((d, i) => grid.appendChild(buildMealCard(d.day, d.meal, i)));
     }
+    renderShopping();   // keep the shopping list in sync with the shown plan
 }
 
 // Local-only: rebuild the plan live via scripts/serve.py (claude -p). Exports
@@ -1336,6 +1343,205 @@ async function regenerateMealplan() {
         }
     } finally {
         if (btn) { btn.disabled = false; btn.textContent = orig || '↻ Neu generieren'; }
+    }
+}
+
+// ── shopping list (minimal, copyable, saved on disk via serve.py) ──
+// "diese Woche" = the meal plan's ingredients (current view incl. swaps + GF
+// substitution) combined with the offers the reader marked (🛒 bought / 👍).
+// Deduplicated by normalised name into two groups: offers (with price) and
+// pantry/basics. Built fresh on each render and on every copy/save click.
+
+// KW label + date of the selected week, parsed from the dropdown's file path
+// (data/{YEAR}/KW{XX}/{DATE}.json). The date names the saved file server-side.
+function selectedWeekMeta() {
+    const sel = document.getElementById('week-select');
+    const m = (sel ? sel.value : '').match(/(KW\d+)\/(\d{4}-\d{2}-\d{2})/);
+    return { weekLabel: m ? m[1] : '', date: m ? m[2] : '' };
+}
+
+function buildShoppingList() {
+    const gf = !!(prefs && prefs.glutenFree);
+    const offersMap = new Map();   // normName -> { name, price }
+    const pantryMap = new Map();   // normName -> { name }
+
+    const addOffer = (name, price) => {
+        const key = normTitle(name);
+        if (!key) return;
+        if (!offersMap.has(key)) offersMap.set(key, { name, price: price || '' });
+        else if (price && !offersMap.get(key).price) offersMap.get(key).price = price;
+    };
+    const addPantry = (name) => {
+        const key = normTitle(name);
+        if (key && !pantryMap.has(key)) pantryMap.set(key, { name });
+    };
+
+    // 1) meal-plan ingredients — mirror buildMealCard's offer/pantry/GF split.
+    if (mealplanView && Array.isArray(mealplanView.days)) {
+        mealplanView.days.forEach(d => {
+            const meal = d && d.meal;
+            (meal && Array.isArray(meal.ingredients) ? meal.ingredients : []).forEach(ing => {
+                if (!ing || !ing.name) return;
+                const swapped = gf ? glutenFreeText(ing.name) : ing.name;
+                if (gf && swapped !== ing.name) addPantry(swapped);   // GF substitute (not on offer)
+                else if (ing.offerTitle) addOffer(ing.name, ing.price);
+                else addPantry(ing.name);
+            });
+        });
+    }
+
+    // 2) offers the reader explicitly marked this week.
+    currentOffers.forEach(o => {
+        if (boughtFor(o) > 0 || voteFor(o) === 1) {
+            const pr = offerPrice(o);
+            // German format (€ first, comma) to match the plan's verbatim prices.
+            addOffer(o.title || '', pr === null ? '' : `€${pr.toFixed(2).replace('.', ',')}`);
+        }
+    });
+
+    // A real offer must not also appear under pantry.
+    for (const key of offersMap.keys()) pantryMap.delete(key);
+
+    const byName = (a, b) => a.name.localeCompare(b.name, 'de');
+    const meta = selectedWeekMeta();
+    return {
+        weekLabel: meta.weekLabel,
+        date: meta.date,
+        offers: [...offersMap.values()].sort(byName),
+        pantry: [...pantryMap.values()].sort(byName),
+    };
+}
+
+// Plain-text render — what the copy button puts on the clipboard and what's
+// stored on disk's `text` field for a ready-to-paste list.
+function shoppingListText(list) {
+    const lines = [`Einkaufszettel${list.weekLabel ? ' ' + list.weekLabel : ''}`];
+    if (list.offers.length) {
+        lines.push('', 'Angebote diese Woche');
+        list.offers.forEach(it => lines.push(`- ${it.name}${it.price ? ' — ' + it.price : ''}`));
+    }
+    if (list.pantry.length) {
+        lines.push('', 'Vorrat / Basis');
+        list.pantry.forEach(it => lines.push(`- ${it.name}`));
+    }
+    return lines.join('\n') + '\n';
+}
+
+function renderShopping() {
+    const section = document.getElementById('pk-shopping');
+    const body = document.getElementById('pk-shopping-body');
+    if (!section || !body) return;
+
+    const list = buildShoppingList();
+    const total = list.offers.length + list.pantry.length;
+
+    const saveBtn = document.getElementById('pk-shopping-save');
+    if (saveBtn) saveBtn.hidden = !localApi;          // disk save only on the dev server
+    const copyBtn = document.getElementById('pk-shopping-copy');
+    if (copyBtn) copyBtn.disabled = total === 0;
+
+    if (total === 0) { section.style.display = 'none'; return; }
+    section.style.display = '';
+
+    body.innerHTML = '';
+    [
+        { key: 'offer', title: 'Angebote diese Woche', items: list.offers },
+        { key: 'pantry', title: 'Vorrat / Basis', items: list.pantry },
+    ].forEach(g => {
+        if (!g.items.length) return;
+        const wrap = document.createElement('div');
+        wrap.className = 'pk-sl-group' + (g.key === 'pantry' ? ' pantry' : '');
+        const h3 = document.createElement('h3');
+        h3.textContent = g.title;
+        wrap.appendChild(h3);
+        const ul = document.createElement('ul');
+        ul.className = 'pk-sl-list';
+        g.items.forEach(it => {
+            const li = document.createElement('li');
+            li.className = 'pk-sl-item';
+            const name = document.createElement('span');
+            name.textContent = it.name;
+            li.appendChild(name);
+            if (it.price) {
+                const p = document.createElement('span');
+                p.className = 'pk-sl-price';
+                p.textContent = it.price;
+                li.appendChild(p);
+            }
+            ul.appendChild(li);
+        });
+        wrap.appendChild(ul);
+        body.appendChild(wrap);
+    });
+
+    const meta = document.getElementById('pk-shopping-meta');
+    if (meta) {
+        meta.className = 'pk-sl-meta';
+        meta.textContent = `${total} Position${total === 1 ? '' : 'en'}${list.date ? ' · ' + formatDate(list.date) : ''}`;
+    }
+}
+
+function setShoppingMeta(text, cls) {
+    const meta = document.getElementById('pk-shopping-meta');
+    if (!meta) return;
+    meta.className = 'pk-sl-meta' + (cls ? ' ' + cls : '');
+    meta.textContent = text;
+}
+
+async function copyShoppingList() {
+    const text = shoppingListText(buildShoppingList());
+    try {
+        await navigator.clipboard.writeText(text);
+        setShoppingMeta('✓ In die Zwischenablage kopiert.', 'ok');
+        return;
+    } catch (e) {
+        // Clipboard API unavailable (insecure context / denied) — fall back.
+    }
+    try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        setShoppingMeta(ok ? '✓ In die Zwischenablage kopiert.' : 'Kopieren nicht möglich — Liste manuell markieren.', ok ? 'ok' : 'warn');
+    } catch (e) {
+        setShoppingMeta('Kopieren nicht möglich — Liste manuell markieren.', 'warn');
+    }
+}
+
+// Local-only: persist the list to data/shopping/<date>.json via serve.py. The
+// button only shows when the dev API is reachable (localApi).
+async function saveShoppingList() {
+    const list = buildShoppingList();
+    if (!list.date) { setShoppingMeta('Keine Woche gewählt — nichts zu speichern.', 'warn'); return; }
+    const btn = document.getElementById('pk-shopping-save');
+    const orig = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; btn.textContent = '⏳ …'; }
+    try {
+        const payload = JSON.stringify({
+            weekLabel: list.weekLabel,
+            date: list.date,
+            savedAt: new Date().toISOString(),
+            offers: list.offers,
+            pantry: list.pantry,
+            text: shoppingListText(list),
+        }, null, 2) + '\n';
+        const res = await fetch('/api/shopping', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: payload,
+        });
+        if (!res.ok) throw new Error(`Fehler ${res.status}`);
+        const j = await res.json().catch(() => ({}));
+        const total = list.offers.length + list.pantry.length;
+        setShoppingMeta(`✓ Abgelegt in ${j.path || 'data/shopping/'} (${total} Position${total === 1 ? '' : 'en'}).`, 'ok');
+    } catch (err) {
+        setShoppingMeta('Ablegen fehlgeschlagen: ' + (err && err.message ? err.message : err), 'warn');
+    } finally {
+        if (btn) { btn.disabled = false; btn.textContent = orig || '💾 Ablegen'; }
     }
 }
 
