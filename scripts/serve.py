@@ -2,14 +2,19 @@
 """Local dev server for the EDEKA offers viewer.
 
 Drop-in replacement for `python3 -m http.server`: it serves the repo root
-statically AND adds one write endpoint the static server cannot offer —
+statically AND adds two endpoints the static server cannot offer —
 
-    POST /api/preferences   body = the exported preferences JSON
+    POST /api/preferences          body = the exported preferences JSON
+    POST /api/mealplan/regenerate  (no body) runs scripts/generate_mealplan.py
 
-which stores the body straight into data/preferences.json, the file
-generate_prospekt.py reads to personalise the weekly Prospekt. That lets the
-Prospekt page's "Für Montag exportieren" button save in place instead of
-dropping a download you have to move into data/ by hand.
+The first stores the body straight into data/preferences.json, the file the
+generators read to personalise the weekly Prospekt. That lets the Prospekt
+page's "Für Montag exportieren" button save in place instead of dropping a
+download you have to move into data/ by hand.
+
+The second powers the meal plan's "↻ Neu generieren" button: it runs the
+vegan-meal-plan generator live (`claude -p`) and rewrites data/mealplan.json,
+so the page can rebuild the plan on demand instead of waiting for Monday.
 
 Usage:
 
@@ -34,9 +39,10 @@ button still works — it just falls back to a normal download.
 
 import json
 import os
+import subprocess
 import sys
 from functools import partial
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -98,11 +104,57 @@ def write_preferences(raw):
     return data
 
 
+def run_mealplan_regen(timeout=660):
+    """Run scripts/generate_mealplan.py and return (ok: bool, message: str). The
+    generator reads data/preferences.json (the page POSTs /api/preferences first)
+    and calls `claude -p`, so this can take a while — the threading server keeps
+    serving other requests meanwhile. Kept socket-free for isolated testing."""
+    script = REPO_ROOT / "scripts" / "generate_mealplan.py"
+    try:
+        # Point the generator at the SAME prefs file this server writes (which may
+        # be redirected via --prefs / EDEKA_PREFS_PATH), so a live regen honours
+        # the freshly-exported votes rather than a stale data/preferences.json.
+        proc = subprocess.run(
+            [sys.executable, str(script), "--prefs", str(PREFS_PATH)],
+            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=timeout,
+        )
+    except subprocess.TimeoutExpired:
+        return False, f"generate_mealplan.py timed out after {timeout}s"
+    if proc.returncode != 0:
+        err = (proc.stderr or proc.stdout or "").strip()
+        return False, (err[-400:] or f"generate_mealplan.py exited {proc.returncode}")
+    return True, (proc.stdout or "").strip()[-400:]
+
+
 class DevHandler(SimpleHTTPRequestHandler):
-    def do_POST(self):
-        if self.path.split("?", 1)[0] != "/api/preferences":
-            self.send_error(404, "Unknown endpoint")
+    def do_GET(self):
+        # Health probe so the page can tell THIS dev server (which has the write
+        # endpoints) apart from a plain `http.server` at localhost — a GET to
+        # /api/health returns 200 here but 404 there. Lets the page hide the
+        # "↻ Neu generieren" button when the API isn't actually available.
+        if self.path.split("?", 1)[0] == "/api/health":
+            self._send_json(200, {"ok": True, "service": "edeka-dev-server"})
             return
+        super().do_GET()
+
+    def do_POST(self):
+        route = self.path.split("?", 1)[0]
+        if route == "/api/preferences":
+            self._handle_preferences()
+        elif route == "/api/mealplan/regenerate":
+            self._handle_mealplan_regen()
+        else:
+            self.send_error(404, "Unknown endpoint")
+
+    def _send_json(self, status, payload):
+        body = json.dumps(payload).encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def _handle_preferences(self):
         try:
             length = int(self.headers.get("Content-Length", 0))
         except ValueError:
@@ -112,6 +164,9 @@ class DevHandler(SimpleHTTPRequestHandler):
             self.send_error(400, "Empty body")
             return
         if length > MAX_BODY:
+            # Don't read the oversized body; close the connection so its undrained
+            # bytes can't desync the next keep-alive request on this socket.
+            self.close_connection = True
             self.send_error(413, f"Body too large (max {MAX_BODY} bytes)")
             return
         raw = self.rfile.read(length)
@@ -122,19 +177,32 @@ class DevHandler(SimpleHTTPRequestHandler):
             return
         n_votes = len(data.get("votes", {}))
         n_bought = len(data.get("bought", {}))
-        body = json.dumps({
+        self._send_json(200, {
             "ok": True,
             "path": display_path(PREFS_PATH),
             "votes": n_votes,
             "bought": n_bought,
-        }).encode("utf-8")
-        self.send_response(200)
-        self.send_header("Content-Type", "application/json")
-        self.send_header("Content-Length", str(len(body)))
-        self.end_headers()
-        self.wfile.write(body)
+        })
         print(f"saved {display_path(PREFS_PATH)} "
               f"({n_votes} votes, {n_bought} bought)")
+
+    def _handle_mealplan_regen(self):
+        # The generator ignores the request body (it reads data/preferences.json,
+        # which the page POSTs first). Drain any body so keep-alive stays in sync.
+        try:
+            length = int(self.headers.get("Content-Length", 0))
+        except ValueError:
+            length = 0
+        if length > 0:
+            self.rfile.read(min(length, MAX_BODY))
+            if length > MAX_BODY:
+                # Couldn't fully drain an abusive body — close to stay aligned.
+                self.close_connection = True
+        print("regenerate mealplan: running generate_mealplan.py …")
+        ok, message = run_mealplan_regen()
+        self._send_json(200 if ok else 500,
+                        {"ok": ok, "message": message} if ok else {"ok": ok, "error": message})
+        print(f"regenerate mealplan: {'ok' if ok else 'FAILED — ' + message}")
 
 
 def parse_args(argv):
@@ -171,9 +239,12 @@ def main():
     else:
         src = "default"
     handler = partial(DevHandler, directory=str(REPO_ROOT))
-    server = HTTPServer(("127.0.0.1", port), handler)
+    # Threading so a long `claude -p` meal-plan regeneration doesn't block the
+    # static assets the page needs to keep loading.
+    server = ThreadingHTTPServer(("127.0.0.1", port), handler)
     print(f"Serving {REPO_ROOT} at http://127.0.0.1:{port}")
-    print(f"  POST /api/preferences -> {display_path(PREFS_PATH)}  ({src})")
+    print(f"  POST /api/preferences          -> {display_path(PREFS_PATH)}  ({src})")
+    print(f"  POST /api/mealplan/regenerate  -> runs scripts/generate_mealplan.py")
     print("Press Ctrl+C to stop.")
     try:
         server.serve_forever()

@@ -18,9 +18,15 @@ const PREFS_STORE = 'edeka-prospekt-prefs-v1';
 
 let currentOffers = [];     // offers of the selected week
 let prospektData = null;    // optional AI editorial (data/prospekt.json)
+let mealplanData = null;    // optional vegan week plan (data/mealplan.json)
+let mealplanView = null;    // live working copy { days:[{day,meal}], bench:[meal] } (swaps)
+let localApi = false;       // is scripts/serve.py (write endpoints) reachable?
 let prefs = null;           // { interests:{key:level}, votes:{title:±1}, ... }
 let priceHistory = null;    // optional cross-week index (data/price-history-index.json)
 let phByKey = null;         // Map(product.key -> product) for O(1) lookup
+
+// Mo–So short label -> full German weekday for the meal-plan day headers.
+const WEEKDAYS_FULL = { Mo: 'Montag', Di: 'Dienstag', Mi: 'Mittwoch', Do: 'Donnerstag', Fr: 'Freitag', Sa: 'Samstag', So: 'Sonntag' };
 
 const CATEGORY_COLORS = {
     'Drogerie': '#ab47bc',
@@ -222,7 +228,7 @@ const BOUGHT_WEIGHT = 1;             // a mild loyalty nudge for items you actua
 
 // ── preferences (localStorage) ──
 function defaultPrefs() {
-    return { version: 1, interests: { ...DEFAULT_INTERESTS }, votes: {}, bought: {} };
+    return { version: 1, interests: { ...DEFAULT_INTERESTS }, votes: {}, bought: {}, meals: {} };
 }
 
 function loadPrefs() {
@@ -235,6 +241,8 @@ function loadPrefs() {
             interests: (p && typeof p.interests === 'object' && p.interests) ? p.interests : { ...DEFAULT_INTERESTS },
             votes: (p && typeof p.votes === 'object' && p.votes) ? p.votes : {},
             bought: (p && typeof p.bought === 'object' && p.bought) ? p.bought : {},
+            // Per-meal 👍/👎 (keyed by meal slug) — the meal-plan learning signal.
+            meals: (p && typeof p.meals === 'object' && p.meals) ? p.meals : {},
             // Keep the last-changed stamp across reloads so the page can tell
             // whether data/preferences.json still matches the live prefs.
             updatedAt: (p && typeof p.updatedAt === 'string') ? p.updatedAt : undefined,
@@ -380,7 +388,7 @@ async function init() {
         loadWeek(weekSelect.value);
     });
 
-    await Promise.all([loadProspekt(), loadPriceHistory()]);
+    await Promise.all([loadProspekt(), loadMealplan(), loadPriceHistory(), checkDevServer()]);
     if (files.length > 0) {
         await loadWeek(files[0]);
     } else {
@@ -420,6 +428,31 @@ async function loadProspekt() {
     }
 }
 
+// Optional vegan week plan. Additive: absence just hides the meal-plan section.
+async function loadMealplan() {
+    try {
+        // no-store like prospekt.json: a fresh plan (incl. the local "↻ Neu
+        // generieren" rebuild) must show up without a hard refresh.
+        const res = await fetch('data/mealplan.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error(`status ${res.status}`);
+        mealplanData = await res.json();
+    } catch (err) {
+        mealplanData = null;
+    }
+    buildMealplanView();
+}
+
+// Build the mutable working copy the page renders & swaps against. Keeps the
+// raw mealplanData intact (re-derived on every (re)load / regenerate).
+function buildMealplanView() {
+    if (!mealplanData || !Array.isArray(mealplanData.days)) { mealplanView = null; return; }
+    const days = mealplanData.days
+        .filter(d => d && d.meal && d.meal.slug)
+        .map(d => ({ day: d.day, meal: d.meal }));
+    const bench = Array.isArray(mealplanData.bench) ? mealplanData.bench.filter(m => m && m.slug) : [];
+    mealplanView = days.length ? { days, bench } : null;
+}
+
 // Optional cross-week price history. Additive: absence -> no price badges.
 async function loadPriceHistory() {
     try {
@@ -456,6 +489,8 @@ function buildSteering() {
     if (exportBtn) exportBtn.addEventListener('click', exportPrefs);
     const resetBtn = document.getElementById('steer-reset');
     if (resetBtn) resetBtn.addEventListener('click', resetPrefs);
+    const regenBtn = document.getElementById('pk-mealplan-regen');
+    if (regenBtn) regenBtn.addEventListener('click', regenerateMealplan);
     const hiddenToggle = document.getElementById('show-hidden');
     if (hiddenToggle) hiddenToggle.addEventListener('change', renderAll);
 
@@ -1019,6 +1054,209 @@ function pickDiscoveries(inForYou, limit) {
     return found.slice(0, limit).map(x => x.o);
 }
 
+// ── meal plan (vegan week) ──
+// Probe scripts/serve.py's health endpoint. A plain `python3 -m http.server`
+// (the other documented local option) answers /api/health with 404, so this
+// cleanly tells the dev server with the write endpoints apart from one without —
+// gating "↻ Neu generieren" on hostname alone would show it on http.server and a
+// click would trigger a spurious preferences download + a failed regen.
+async function checkDevServer() {
+    try {
+        const res = await fetch('/api/health', { cache: 'no-store' });
+        localApi = res.ok;
+    } catch (e) {
+        localApi = false;
+    }
+}
+
+// Per-meal votes are keyed by the meal slug (stable across weeks, so a
+// recurring dish keeps its rating). Stored under prefs.meals; exported to
+// data/preferences.json and read back by generate_mealplan.py next run.
+function mealVoteFor(slug) {
+    const e = (prefs && prefs.meals && slug) ? prefs.meals[slug] : null;
+    return e && (e.v === 1 || e.v === -1) ? e.v : 0;
+}
+
+function setMealVote(meal, value) {
+    if (!meal || !meal.slug || !prefs) return;
+    if (!prefs.meals) prefs.meals = {};
+    const slug = meal.slug;
+    if (mealVoteFor(slug) === value) {
+        delete prefs.meals[slug];        // second click on the same thumb clears it
+    } else {
+        prefs.meals[slug] = { v: value, t: meal.title || '', tags: Array.isArray(meal.tags) ? meal.tags : [] };
+    }
+    savePrefs();
+    renderMealplan();
+    paintExportStatus();   // the meal vote may now outdate the export
+}
+
+// Swap a day's meal for the next bench alternative (the swapped-out meal goes
+// back onto the bench). Purely visual — does not touch prefs.
+function swapMeal(dayIndex) {
+    if (!mealplanView || !mealplanView.bench.length) return;
+    const cur = mealplanView.days[dayIndex];
+    if (!cur) return;
+    const next = mealplanView.bench.shift();
+    mealplanView.bench.push(cur.meal);
+    cur.meal = next;
+    renderMealplan();
+}
+
+function buildMealCard(day, meal, dayIndex) {
+    const card = document.createElement('article');
+    card.className = 'mp-card';
+    const vote = mealVoteFor(meal.slug);
+    if (vote === -1) card.classList.add('downvoted');
+
+    const dayEl = document.createElement('div');
+    dayEl.className = 'mp-day';
+    dayEl.textContent = WEEKDAYS_FULL[day] || day || '';
+    card.appendChild(dayEl);
+
+    const title = document.createElement('div');
+    title.className = 'mp-title';
+    title.textContent = meal.title || '(ohne Titel)';
+    card.appendChild(title);
+
+    if (meal.blurb) {
+        const blurb = document.createElement('div');
+        blurb.className = 'mp-blurb';
+        blurb.textContent = meal.blurb;
+        card.appendChild(blurb);
+    }
+
+    const ings = document.createElement('div');
+    ings.className = 'mp-ings';
+    (Array.isArray(meal.ingredients) ? meal.ingredients : []).forEach(ing => {
+        if (!ing || !ing.name) return;
+        const chip = document.createElement('span');
+        if (ing.offerTitle) {
+            const onOffer = currentOffers.some(o => (o.title || '') === ing.offerTitle);
+            chip.className = 'mp-chip offer';
+            chip.textContent = ing.name;
+            if (ing.price) {
+                const p = document.createElement('span');
+                p.className = 'mp-chip-price';
+                p.textContent = ing.price;
+                chip.appendChild(p);
+            }
+            chip.title = onOffer ? `Im Angebot: ${ing.offerTitle}` : `${ing.offerTitle} (diese Woche nicht gefunden)`;
+        } else {
+            chip.className = 'mp-chip pantry';
+            chip.textContent = ing.name;
+            chip.title = 'Vorrat / bekanntes veganes Produkt';
+        }
+        ings.appendChild(chip);
+    });
+    card.appendChild(ings);
+
+    if (Array.isArray(meal.steps) && meal.steps.length) {
+        const details = document.createElement('details');
+        details.className = 'mp-steps';
+        const summary = document.createElement('summary');
+        summary.textContent = 'Zubereitung';
+        details.appendChild(summary);
+        const ol = document.createElement('ol');
+        meal.steps.forEach(s => {
+            const li = document.createElement('li');
+            li.textContent = s;
+            ol.appendChild(li);
+        });
+        details.appendChild(ol);
+        card.appendChild(details);
+    }
+
+    const actions = document.createElement('div');
+    actions.className = 'mp-actions';
+    const up = document.createElement('button');
+    up.type = 'button';
+    up.className = 'mp-btn up' + (vote === 1 ? ' on' : '');
+    up.textContent = '👍';
+    up.setAttribute('aria-label', 'Gericht mag ich');
+    up.addEventListener('click', () => setMealVote(meal, 1));
+    const down = document.createElement('button');
+    down.type = 'button';
+    down.className = 'mp-btn down' + (vote === -1 ? ' on' : '');
+    down.textContent = '🚫';
+    down.setAttribute('aria-label', 'Gericht mag ich nicht');
+    down.addEventListener('click', () => setMealVote(meal, -1));
+    const swap = document.createElement('button');
+    swap.type = 'button';
+    swap.className = 'mp-btn swap';
+    swap.textContent = '↻ Tauschen';
+    swap.setAttribute('aria-label', 'Anderes Gericht');
+    swap.disabled = !(mealplanView && mealplanView.bench.length);
+    swap.addEventListener('click', () => swapMeal(dayIndex));
+    actions.appendChild(up);
+    actions.appendChild(down);
+    actions.appendChild(swap);
+    card.appendChild(actions);
+
+    return card;
+}
+
+function renderMealplan() {
+    const section = document.getElementById('pk-mealplan');
+    const grid = document.getElementById('pk-mealplan-grid');
+    if (!section || !grid) return;
+    const regen = document.getElementById('pk-mealplan-regen');
+    if (regen) regen.hidden = !localApi;
+    const intro = document.getElementById('pk-mealplan-intro');
+    const hasPlan = !!(mealplanView && mealplanView.days.length);
+
+    // Hide the whole section only when there's nothing to show AND no way to make
+    // one. On the dev server, keep it visible with an empty state so the first
+    // plan can be generated straight from the "↻ Neu generieren" button.
+    if (!hasPlan && !localApi) {
+        section.style.display = 'none';
+        return;
+    }
+    section.style.display = '';
+
+    if (intro) {
+        const txt = hasPlan && mealplanData && typeof mealplanData.intro === 'string'
+            ? mealplanData.intro
+            : (hasPlan ? '' : 'Noch kein Wochenplan — „↻ Neu generieren" baut einen aus den aktuellen Angeboten und deinen Vorlieben.');
+        intro.textContent = txt;
+        intro.style.display = txt ? '' : 'none';
+    }
+
+    grid.innerHTML = '';
+    if (hasPlan) {
+        mealplanView.days.forEach((d, i) => grid.appendChild(buildMealCard(d.day, d.meal, i)));
+    }
+}
+
+// Local-only: rebuild the plan live via scripts/serve.py (claude -p). Exports
+// the current prefs first so the generator honours fresh meal votes. The button
+// only shows when the dev API is reachable (localApi), so the exportPrefs POST
+// here hits serve.py rather than falling back to a download.
+async function regenerateMealplan() {
+    const btn = document.getElementById('pk-mealplan-regen');
+    const intro = document.getElementById('pk-mealplan-intro');
+    const orig = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; btn.textContent = '⏳ Generiere…'; }
+    try {
+        await exportPrefs();   // persist fresh meal votes into data/preferences.json
+        const res = await fetch('/api/mealplan/regenerate', { method: 'POST' });
+        if (!res.ok) {
+            let msg = `Fehler ${res.status}`;
+            try { const j = await res.json(); if (j && j.error) msg = j.error; } catch (e) { /* non-JSON */ }
+            throw new Error(msg);
+        }
+        await loadMealplan();
+        renderMealplan();
+    } catch (err) {
+        if (intro) {
+            intro.style.display = '';
+            intro.textContent = 'Neu-Generierung fehlgeschlagen: ' + (err && err.message ? err.message : err);
+        }
+    } finally {
+        if (btn) { btn.disabled = false; btn.textContent = orig || '↻ Neu generieren'; }
+    }
+}
+
 function renderAll() {
     renderHero();
 
@@ -1034,6 +1272,8 @@ function renderAll() {
     }
     const forYouSection = document.getElementById('pk-foryou');
     if (forYouSection) forYouSection.style.display = (fy.list.length + discoveries.length) ? '' : 'none';
+
+    renderMealplan();
 
     fillSection('pk-vegan-grid', 'pk-vegan-intro',
         offersWhere(o => /vegan|vegetar/i.test(o.title || '')), 'vegan', { limit: 12 });

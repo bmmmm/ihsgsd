@@ -32,10 +32,20 @@ falls back to a plain download with `http.server`.
 - **`index.html`** — Single-page app with dark theme, contains all CSS inline in `<style>`.
 - **`table.html`** — Alternative table view of the same offer data (different layout/presentation).
 - **`dashboard.html`** — EDEKA Dashboard — separate analytics/summary view of the offer data.
-- **`script.js`** — All frontend logic: data fetching, table rendering, search, category filtering, image toggle, clipboard export.
+- **`prospekt.html` / `prospekt.js`** — Curated weekly flyer: personalised "Für dich" picks, a vegan Mo–So meal plan, and per-topic sections. Pure client-side prefs in localStorage (interest chips + 👍/👎 votes + per-meal votes), exported to `data/preferences.json` for the generators.
+- **`script.js`** — All frontend logic for `index.html`: data fetching, table rendering, search, category filtering, image toggle, clipboard export.
 - **`data/`** — Weekly JSON snapshots organized as `data/{YEAR}/KW{XX}/{DATE}.json`. ~17MB total, 70+ files.
 - **`data/folder-structure.json`** — Auto-generated index of all data files (used by the dropdown).
-- **`.github/workflows/fetch-offers.yml`** — Cron job (every Monday 5AM) that fetches from EDEKA API, sorts by category, commits JSON to `data/`.
+- **`data/prospekt.json` / `data/mealplan.json`** — Optional AI editorial (flyer copy / vegan week plan), generated locally; the page renders additively (absence never breaks it).
+- **`.github/workflows/fetch-offers.yml`** — Cron job (every Monday 5AM) that fetches from EDEKA API, sorts by category, commits JSON to `data/`. Does **not** run the generators.
+
+### Local generation pipeline (manual, needs the `claude` CLI)
+
+Run by hand after a fetch — these call `claude -p` and are never part of CI:
+
+- **`scripts/generate_prospekt.py`** — flyer lead + section intros + ranked "Für dich" picks → `data/prospekt.json`.
+- **`scripts/generate_mealplan.py`** — 12-14 vegan dinners (first 7 = Mo–So plan, rest = swap "bench") from this week's vegan offers + a `VEGAN_STAPLES` pantry + the reader's prefs → `data/mealplan.json`. Imports shared helpers from `generate_prospekt`.
+- **`scripts/serve.py`** — dev server (127.0.0.1) with `POST /api/preferences` (saves the export) and `POST /api/mealplan/regenerate` (runs the meal-plan generator live for the page's "↻ Neu generieren" button). `ThreadingHTTPServer` so the long generation doesn't block static serving.
 
 ## Data Flow
 
