@@ -176,6 +176,15 @@ class DevHandler(SimpleHTTPRequestHandler):
             return
         super().do_GET()
 
+    def end_headers(self):
+        # Dev server only: never cache the app's own source (HTML/JS/CSS) or the
+        # JSON it reads, so edits show on a plain reload — no hard-refresh. The
+        # archived product images keep their default caching (they don't change).
+        path = self.path.split("?", 1)[0]
+        if path == "/" or path.startswith("/api/") or path.endswith((".html", ".js", ".css", ".json")):
+            self.send_header("Cache-Control", "no-store, max-age=0")
+        super().end_headers()
+
     def do_POST(self):
         route = self.path.split("?", 1)[0]
         if route == "/api/preferences":
