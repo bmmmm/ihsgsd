@@ -192,6 +192,11 @@ const TOPICS = [
 // The reader told us up front what they love — seed those at "Favorit".
 const DEFAULT_INTERESTS = { vegan: 2, obstgemuese: 2, bier: 2, spezi: 2, bio: 1 };
 
+// How many cards the "Für dich" highlights grid shows at most (LLM-ranked picks
+// plus client-score fallback). Matches the generator's foryou target so a full
+// week of good matches isn't truncated.
+const FORYOU_MAX = 16;
+
 // Topics whose membership is a plain category match (catName === X), so a vote's
 // category is unambiguous. Used when a category is switched OFF to drop its now
 // redundant 👎 votes. Title-based topics (vegan/bio/spezi/bier/knueller) overlap
@@ -981,16 +986,16 @@ function buildForYou() {
             const o = currentOffers.find(x => (x.title || '') === entry.title && !inForYou.has(x));
             if (!o || scoreOffer(o) < 0) continue;     // muted/down-voted since Monday -> drop
             inForYou.add(o); list.push(o);
-            if (list.length >= 8) break;
+            if (list.length >= FORYOU_MAX) break;
         }
     }
-    if (list.length < 8) {
+    if (list.length < FORYOU_MAX) {
         currentOffers
             .filter(o => !inForYou.has(o))
             .map(o => ({ o, s: scoreOffer(o) }))
             .filter(x => x.s > 0)
             .sort((a, b) => b.s - a.s || String(a.o.title || '').localeCompare(String(b.o.title || '')))
-            .forEach(x => { if (list.length < 8) { inForYou.add(x.o); list.push(x.o); } });
+            .forEach(x => { if (list.length < FORYOU_MAX) { inForYou.add(x.o); list.push(x.o); } });
     }
     return { list, inForYou };
 }
