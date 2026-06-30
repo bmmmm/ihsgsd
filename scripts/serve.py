@@ -13,14 +13,19 @@ dropping a download you have to move into data/ by hand.
 
 Usage:
 
-    python3 scripts/serve.py            # http://127.0.0.1:8888
-    python3 scripts/serve.py 9000       # pick another port
+    python3 scripts/serve.py                        # http://127.0.0.1:8888
+    python3 scripts/serve.py 9000                   # pick another port
+    python3 scripts/serve.py --prefs ~/p.json       # save elsewhere this run
 
-The save target defaults to data/preferences.json. Override it with the
-EDEKA_PREFS_PATH env var (absolute, ~-expanded, or relative to the repo root) —
-keep it in ~/.env so a personal path never lands in this public repo, e.g.
+The save target defaults to data/preferences.json (option 1). Switch it to a
+different location (option 2) two ways, in precedence order:
 
-    export EDEKA_PREFS_PATH=~/edeka-prefs/preferences.json
+  1. --prefs <path> on the command line — an ad-hoc switch for one run.
+  2. the EDEKA_PREFS_PATH env var — a persistent default; keep it in ~/.env so a
+     personal path never lands in this public repo, e.g.
+         export EDEKA_PREFS_PATH=~/edeka-prefs/preferences.json
+
+A path may be absolute, ~-expanded, or relative to the repo root.
 
 Bound to 127.0.0.1 only: the write endpoint is for your own machine, never the
 LAN. If you serve the site some other way (plain http.server), the page's export
@@ -38,12 +43,13 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 MAX_BODY = 2 * 1024 * 1024  # 2 MB — preferences are a few KB; cap abuse/runaways.
 
 
-def _resolve_prefs_path():
-    """Where to store the posted preferences. Override via the EDEKA_PREFS_PATH
-    env var (absolute, ~-expanded, or relative to the repo root); defaults to
-    data/preferences.json. Keeping a personal path in an env var rather than this
+def _resolve_prefs_path(override=None):
+    """Where to store the posted preferences. Precedence: the `override` (the
+    --prefs switch) wins, else the EDEKA_PREFS_PATH env var, else the default
+    data/preferences.json. A path may be absolute, ~-expanded, or relative to the
+    repo root. Keeping a personal path in a switch/env var rather than this
     tracked, public source avoids leaking a home path into the repo."""
-    raw = os.environ.get("EDEKA_PREFS_PATH", "").strip()
+    raw = (override if override is not None else os.environ.get("EDEKA_PREFS_PATH", "")).strip()
     if not raw:
         return REPO_ROOT / "data" / "preferences.json"
     p = Path(raw).expanduser()
@@ -131,17 +137,42 @@ class DevHandler(SimpleHTTPRequestHandler):
               f"({n_votes} votes, {n_bought} bought)")
 
 
-def main():
+def parse_args(argv):
+    """Parse an optional port number and an optional `--prefs <path>` switch, in
+    any order. Returns (port, prefs_override). Exits with an actionable message
+    on a bad argument."""
     port = 8888
-    if len(sys.argv) > 1:
+    prefs_override = None
+    i = 0
+    while i < len(argv):
+        a = argv[i]
+        if a == "--prefs":
+            if i + 1 >= len(argv):
+                sys.exit("serve: --prefs needs a path, e.g. --prefs ~/edeka-prefs/preferences.json")
+            prefs_override = argv[i + 1]
+            i += 2
+            continue
         try:
-            port = int(sys.argv[1])
+            port = int(a)
         except ValueError:
-            sys.exit(f"serve: port must be a number, got {sys.argv[1]!r}")
+            sys.exit(f"serve: unexpected argument {a!r} (expected a port number or --prefs <path>)")
+        i += 1
+    return port, prefs_override
+
+
+def main():
+    global PREFS_PATH
+    port, prefs_override = parse_args(sys.argv[1:])
+    if prefs_override is not None:
+        PREFS_PATH = _resolve_prefs_path(prefs_override)
+        src = "--prefs"
+    elif os.environ.get("EDEKA_PREFS_PATH", "").strip():
+        src = "EDEKA_PREFS_PATH"
+    else:
+        src = "default"
     handler = partial(DevHandler, directory=str(REPO_ROOT))
     server = HTTPServer(("127.0.0.1", port), handler)
     print(f"Serving {REPO_ROOT} at http://127.0.0.1:{port}")
-    src = "EDEKA_PREFS_PATH" if os.environ.get("EDEKA_PREFS_PATH", "").strip() else "default"
     print(f"  POST /api/preferences -> {display_path(PREFS_PATH)}  ({src})")
     print("Press Ctrl+C to stop.")
     try:
