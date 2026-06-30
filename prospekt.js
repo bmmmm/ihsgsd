@@ -546,10 +546,11 @@ function renderBrowse() {
         items = items.filter(o =>
             (o.title || '').toLowerCase().includes(q) || catName(o).toLowerCase().includes(q));
     }
-    // Hidden (score < 0) first so wrongly-excluded items are easy to rescue.
+    // Still-shown items first, the ausgeblendeten (score < 0) sink to the bottom;
+    // alphabetical within each group.
     items.sort((a, b) => {
         const ha = scoreOffer(a) < 0, hb = scoreOffer(b) < 0;
-        if (ha !== hb) return ha ? -1 : 1;
+        if (ha !== hb) return ha ? 1 : -1;
         return String(a.title || '').localeCompare(String(b.title || ''));
     });
 
