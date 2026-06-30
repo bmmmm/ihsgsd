@@ -63,6 +63,10 @@ TOPIC_LABELS = {
     "suess": "Süßes",
     "fleisch": "Fleisch & Wurst",
     "tk": "Tiefkühl",
+    "grundnahrung": "Grundnahrung",
+    "drogerie": "Drogerie",
+    "tiernahrung": "Tiernahrung",
+    "fisch": "Fisch & Meeresfrüchte",
 }
 
 PROMPT_TEMPLATE = """You are the personal shopping recommender for a German supermarket (EDEKA) offers tracker. Return ONLY valid JSON — no prose, no markdown, no text outside the JSON.
