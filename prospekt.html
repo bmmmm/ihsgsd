@@ -385,12 +385,12 @@
         }
         .pk-sl-group.pantry h3 { color: #cdb88a; }
         .pk-sl-group.custom h3 { color: #9fb8d8; }
-        .pk-sl-list { list-style: none; margin: 0; padding: 0; }
-        .pk-sl-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 0.9rem; color: #e0e0e0; }
+        .pk-sl-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); column-gap: 22px; }
+        .pk-sl-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 0.9rem; color: #e0e0e0; min-width: 0; }
         .pk-sl-check { flex-shrink: 0; cursor: pointer; background: none; border: none; padding: 0; font-size: 1rem; line-height: 1; color: #777; transition: color 0.12s; }
         .pk-sl-check:hover { color: #aaa; }
         .pk-sl-check.on { color: #7fae7f; }
-        .pk-sl-name { flex: 1; min-width: 0; }
+        .pk-sl-name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
         .pk-sl-price { color: #9be29e; font-size: 0.84rem; font-weight: 600; flex-shrink: 0; }
         .pk-sl-del { flex-shrink: 0; cursor: pointer; background: none; border: none; padding: 0 2px; font-size: 1.15rem; line-height: 1; color: #555; transition: color 0.12s; }
         .pk-sl-del:hover { color: #ef5350; }
