@@ -397,6 +397,7 @@ async function loadWeek(filePath) {
         currentOffers = [];
         showError('Angebote dieser Woche konnten nicht geladen werden.');
     }
+    backfillVoteCategories();      // enrich votes with `c` before reconcile uses it
     reconcileOffCategoryVotes();
     renderAll();
 }
@@ -630,6 +631,27 @@ function pruneDownVotesForCategory(topicKey) {
         if (voteCat === cat) { delete prefs.votes[id]; removed++; }
     }
     return removed;
+}
+
+// Backfill the category (`c`) on votes stored before votes carried it, resolving
+// each against the loaded week by id. Pure frontend metadata for robust
+// cross-week pruning — the generator never reads it and it does not change the
+// reader's actual choices, so it persists QUIETLY (no updatedAt bump, hence no
+// spurious "re-export" prompt). Votes whose id is absent from this week are left
+// untouched until a week that contains them is loaded.
+function backfillVoteCategories() {
+    if (!prefs || !prefs.votes || !currentOffers.length) return;
+    const catById = new Map(currentOffers.map(o => [String(o.id), catName(o)]));
+    let changed = false;
+    for (const [id, e] of Object.entries(prefs.votes)) {
+        if (!e || e.c) continue;
+        const cat = catById.get(String(id));
+        if (cat) { e.c = cat; changed = true; }
+    }
+    if (changed) {
+        try { localStorage.setItem(PREFS_STORE, JSON.stringify(prefs)); }
+        catch (err) { /* storage disabled — in-memory enrichment still helps this session */ }
+    }
 }
 
 // Self-heal already-stored prefs: a category may have been switched off BEFORE
