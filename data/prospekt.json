@@ -1,107 +1,157 @@
 {
   "generatedAt": "2026-06-29",
   "weekLabel": "KW27",
-  "lead": "Diese Woche warten zwei echte Allzeit-Tiefs im Obst & Gemüse: Tafeläpfel für historisch günstige 75 Ct pro Kilo und Bio-Zucchini auf dem niedrigsten Preis seit Aufzeichnung. Dazu gibt's Beck's und Bitburger aus deiner Bier-Kategorie im Angebot.",
+  "lead": "Diese Woche trifft's dich gleich dreifach am Allzeit-Tief: die Bio-Zucchini aus Spanien für €1,49 (1 kg = €2,98), Tafeläpfel für nur €0,75 je Kilogramm – und die Bionade ist so günstig wie noch nie, der Kasten für €8,99. Im Gemüseregal warten außerdem Auberginen für €0,99, Staudensellerie und Brokkoli – allesamt Favoriten, die direkt in den Korb wandern. Bier-Fans freuen sich: Bitburger Pils kommt als Kasten auf €10,99, das macht schlanke €1,10 pro Liter. Eine starke Woche fürs vegane und vegetarische Kochen!",
   "sections": {
-    "vegan": "Planted bringt pflanzliche Fleischalternativen ins Regal — praktisch für schnelle vegane Mahlzeiten ohne Tierprodukte.",
-    "obstgemuese": "Starke Woche: Tafeläpfel und Bio-Zucchini sind auf Allzeit-Tief, Auberginen für 99 Cent und Plattpfirsiche für €1,11 runden das Angebot ab.",
-    "bierspezi": "Beck's Pils (auch alkoholfrei als Blue Lemon) und Bitburger stehen im Angebot — guter Zeitpunkt, den Bier-Vorrat aufzufrischen.",
-    "knueller": "Bionade und Coca-Cola sind auf Allzeit-Tief — ideal zum Vorratskauf. Drogerie-Klassiker wie Dove und L'Oréal gibt's ebenfalls zum Tiefstpreis."
+    "vegan": "Planted bietet diese Woche vegane Produkte im Angebot – gut zum Reinschnuppern für alle, die pflanzlich kochen möchten.",
+    "obstgemuese": "Starke Woche im Gemüseregal: drei Allzeit-Tiefs, fünf Favoriten und Avocados für nur €0,66 – der Korb füllt sich fast von selbst.",
+    "bierspezi": "Bionade am Allzeit-Tief, dazu Bitburger und Beck's Pils – für Bier- und Bionade-Fans gibt's diesmal Einiges zu holen.",
+    "knueller": "Aus dem Superknüller-Regal sticht die Bertolli Pastasauce am Allzeit-Tief hervor – prima Basis für vegane Pasta. Den Rest der Deals kannst du meist ignorieren."
   },
   "foryou": [
     {
-      "title": "Deutschland - GUT & GÜNSTIG - Tafeläpfel",
-      "rank": 1,
-      "reason": "Allzeit-Tief: nur 75 Ct pro Kilo — in 4 Wochen Geschichte nie günstiger gewesen.",
-      "evidenceTag": "Allzeit-Tief"
-    },
-    {
       "title": "Spanien - Bio-Zucchini",
-      "rank": 2,
-      "reason": "Allzeit-Tief nach 3 Wochen: €2,98/kg ist der niedrigste bisher gesehene Preis.",
+      "rank": 1,
+      "reason": "Dein Favorit am Allzeit-Tief – 1 kg = €2,98, günstiger war's nie.",
       "evidenceTag": "Allzeit-Tief"
-    },
-    {
-      "title": "Beck's Pils oder Blue Lemon 0,0% Alkoholfrei",
-      "rank": 3,
-      "reason": "Aus deiner Bier-Kategorie: €2,27/l, auch als alkoholfreie Blue Lemon erhältlich.",
-      "evidenceTag": ""
-    },
-    {
-      "title": "Bitburger Pils",
-      "rank": 4,
-      "reason": "Klassisches Pils für €1,10 pro Liter — guter Wert aus deiner Bier-Kategorie.",
-      "evidenceTag": ""
-    },
-    {
-      "title": "Deutschland - Auberginen",
-      "rank": 5,
-      "reason": "Nur 99 Cent pro Stück — günstig und vielseitig für vegane Küche einsetzbar.",
-      "evidenceTag": "guter Preis"
-    },
-    {
-      "title": "Planted vegane Produkte",
-      "rank": 6,
-      "reason": "Pflanzliche Alternative aus deiner Vegan-Kategorie, diese Woche im Regal.",
-      "evidenceTag": ""
     },
     {
       "title": "Bionade",
-      "rank": 7,
-      "reason": "Allzeit-Tief: €2,27 pro Liter — günstigstes Bio-Erfrischungsgetränk seit 2 Wochen.",
+      "rank": 2,
+      "reason": "Dein Lieblingsgetränk am Allzeit-Tief – 1 l = €2,27, noch nie so günstig.",
       "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Spanien - GUT & GÜNSTIG - Plattpfirsiche",
-      "rank": 8,
-      "reason": "Saisonale Plattpfirsiche für €1,11 — günstig, fruchtig, sommerlich.",
-      "evidenceTag": "guter Preis"
+      "title": "Deutschland - GUT & GÜNSTIG - Tafeläpfel",
+      "rank": 3,
+      "reason": "Allzeit-Tief: 1 kg = €0,75 – günstiger waren Tafeläpfel noch nie.",
+      "evidenceTag": "Allzeit-Tief"
+    },
+    {
+      "title": "Deutschland - Auberginen",
+      "rank": 4,
+      "reason": "Dein Favorit für nur €0,99 – ein echter Klassenpreis.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Deutschland - Staudensellerie",
+      "rank": 5,
+      "reason": "Dein Favorit – immer einen festen Platz im Gemüsekorb wert.",
+      "evidenceTag": "Favorit"
     },
     {
       "title": "Deutschland - Champignons",
+      "rank": 6,
+      "reason": "Dein Favorit: €1,79 für die Packung – top für Pfannen und Saucen.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Deutschland - Brokkoli",
+      "rank": 7,
+      "reason": "Dein Favorit: knackig grün für €1,29 (1 kg = €3,23).",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Planted vegane Produkte",
+      "rank": 8,
+      "reason": "Vegan (Favorit-Kategorie) – lohnt sich reinzuschauen.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Bitburger Pils",
       "rank": 9,
-      "reason": "Frische Champignons für €1,79 — vielseitig vegan einsetzbar, solider Grundpreis.",
-      "evidenceTag": ""
+      "reason": "Bier-Favorit: Kasten für €10,99 – nur €1,10/l, sehr solider Preis.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Beck's Pils oder Blue Lemon 0,0% Alkoholfrei",
+      "rank": 10,
+      "reason": "Bier-Favorit als 6er für €4,49 – auch alkoholfrei im Angebot.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Deutschland - EDEKA Regional - Mini-Pak-Choi",
+      "rank": 11,
+      "reason": "Dein Favorit – regional & knackig; aktuell leider am Preishoch.",
+      "evidenceTag": "mag ich"
+    },
+    {
+      "title": "Peru - Avocados",
+      "rank": 12,
+      "reason": "Nur €0,66 je Stück – selten so günstig für eine reife Avocado.",
+      "evidenceTag": "guter Preis"
+    },
+    {
+      "title": "Bertolli Pastasauce",
+      "rank": 13,
+      "reason": "Allzeit-Tief: €1,99 (1 kg = €4,98) – prima Basis für vegane Pasta.",
+      "evidenceTag": "Allzeit-Tief"
+    },
+    {
+      "title": "Deutschland - EDEKA Regional - Bio-Mini-Romanasalat",
+      "rank": 14,
+      "reason": "Bio & regional – ein frischer Sommersalat direkt aus der Region.",
+      "evidenceTag": "mag ich"
     }
   ],
   "model": "sonnet",
   "picks": [
     {
-      "title": "Deutschland - GUT & GÜNSTIG - Tafeläpfel",
-      "reason": "Allzeit-Tief: nur 75 Ct pro Kilo — in 4 Wochen Geschichte nie günstiger gewesen."
-    },
-    {
       "title": "Spanien - Bio-Zucchini",
-      "reason": "Allzeit-Tief nach 3 Wochen: €2,98/kg ist der niedrigste bisher gesehene Preis."
-    },
-    {
-      "title": "Beck's Pils oder Blue Lemon 0,0% Alkoholfrei",
-      "reason": "Aus deiner Bier-Kategorie: €2,27/l, auch als alkoholfreie Blue Lemon erhältlich."
-    },
-    {
-      "title": "Bitburger Pils",
-      "reason": "Klassisches Pils für €1,10 pro Liter — guter Wert aus deiner Bier-Kategorie."
-    },
-    {
-      "title": "Deutschland - Auberginen",
-      "reason": "Nur 99 Cent pro Stück — günstig und vielseitig für vegane Küche einsetzbar."
-    },
-    {
-      "title": "Planted vegane Produkte",
-      "reason": "Pflanzliche Alternative aus deiner Vegan-Kategorie, diese Woche im Regal."
+      "reason": "Dein Favorit am Allzeit-Tief – 1 kg = €2,98, günstiger war's nie."
     },
     {
       "title": "Bionade",
-      "reason": "Allzeit-Tief: €2,27 pro Liter — günstigstes Bio-Erfrischungsgetränk seit 2 Wochen."
+      "reason": "Dein Lieblingsgetränk am Allzeit-Tief – 1 l = €2,27, noch nie so günstig."
     },
     {
-      "title": "Spanien - GUT & GÜNSTIG - Plattpfirsiche",
-      "reason": "Saisonale Plattpfirsiche für €1,11 — günstig, fruchtig, sommerlich."
+      "title": "Deutschland - GUT & GÜNSTIG - Tafeläpfel",
+      "reason": "Allzeit-Tief: 1 kg = €0,75 – günstiger waren Tafeläpfel noch nie."
+    },
+    {
+      "title": "Deutschland - Auberginen",
+      "reason": "Dein Favorit für nur €0,99 – ein echter Klassenpreis."
+    },
+    {
+      "title": "Deutschland - Staudensellerie",
+      "reason": "Dein Favorit – immer einen festen Platz im Gemüsekorb wert."
     },
     {
       "title": "Deutschland - Champignons",
-      "reason": "Frische Champignons für €1,79 — vielseitig vegan einsetzbar, solider Grundpreis."
+      "reason": "Dein Favorit: €1,79 für die Packung – top für Pfannen und Saucen."
+    },
+    {
+      "title": "Deutschland - Brokkoli",
+      "reason": "Dein Favorit: knackig grün für €1,29 (1 kg = €3,23)."
+    },
+    {
+      "title": "Planted vegane Produkte",
+      "reason": "Vegan (Favorit-Kategorie) – lohnt sich reinzuschauen."
+    },
+    {
+      "title": "Bitburger Pils",
+      "reason": "Bier-Favorit: Kasten für €10,99 – nur €1,10/l, sehr solider Preis."
+    },
+    {
+      "title": "Beck's Pils oder Blue Lemon 0,0% Alkoholfrei",
+      "reason": "Bier-Favorit als 6er für €4,49 – auch alkoholfrei im Angebot."
+    },
+    {
+      "title": "Deutschland - EDEKA Regional - Mini-Pak-Choi",
+      "reason": "Dein Favorit – regional & knackig; aktuell leider am Preishoch."
+    },
+    {
+      "title": "Peru - Avocados",
+      "reason": "Nur €0,66 je Stück – selten so günstig für eine reife Avocado."
+    },
+    {
+      "title": "Bertolli Pastasauce",
+      "reason": "Allzeit-Tief: €1,99 (1 kg = €4,98) – prima Basis für vegane Pasta."
+    },
+    {
+      "title": "Deutschland - EDEKA Regional - Bio-Mini-Romanasalat",
+      "reason": "Bio & regional – ein frischer Sommersalat direkt aus der Region."
     }
   ],
-  "generatedFor": "default"
+  "generatedFor": "2026-06-30T10:27:37.023Z"
 }

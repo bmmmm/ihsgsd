@@ -45,7 +45,7 @@ PRICE_HISTORY_PATH = REPO_ROOT / "data" / "price-history-index.json"
 RECEIPTS_PATH = REPO_ROOT / "data" / "receipts.json"
 OUT_PATH = REPO_ROOT / "data" / "prospekt.json"
 
-PER_SECTION_CAP = 12   # how many candidates per section we hand to the model
+PER_SECTION_CAP = 18   # how many candidates per section we hand to the model
 GP_EPS = 1e-9
 # evidenceTag values the model may emit; anything else is dropped to "".
 EVIDENCE_TAGS = {"Favorit", "mag ich", "guter Preis", "Allzeit-Tief", "Knüller", ""}
@@ -84,7 +84,7 @@ Return exactly this JSON structure (no extra keys, no trailing text):
 {
   "generatedAt": "LATEST_DATE_PLACEHOLDER",
   "weekLabel": "WEEK_LABEL_PLACEHOLDER",
-  "lead": "<warm, inviting 2-4 sentence German intro to this week's flyer. Mention 1-2 concrete highlights by name. Max 360 chars.>",
+  "lead": "<warm, inviting 4-6 sentence German intro to this week's flyer. Name 4-6 concrete highlights with their price or price fact (e.g. 'Allzeit-Tief', 'nur €1,00'), spread across the reader's interests: fruit & veg, vegan/plant-based, and beer/Spezi. Make it feel hand-curated for THIS reader, not generic. Max 700 chars.>",
   "sections": {
     "vegan": "<1-2 sentence German intro for the vegan/vegetarian picks. Max 200 chars.>",
     "obstgemuese": "<1-2 sentence German intro for fruit & veg. Max 200 chars.>",
@@ -104,7 +104,7 @@ Return exactly this JSON structure (no extra keys, no trailing text):
 
 Rules:
 - Write ALL text in German, friendly and concrete (not corporate).
-- "foryou" is an ORDERED personal recommendation of the 6-10 best products for THIS reader, across all sections. rank starts at 1 (best) and increases by 1 with no gaps. Copy each "title" verbatim from the input so the page can match it.
+- "foryou" is an ORDERED personal recommendation of the 12-16 best products for THIS reader, across all sections. Aim for at least 12 when enough candidates fit the reader's tastes; include every genuinely good match rather than stopping early. rank starts at 1 (best) and increases by 1 with no gaps. Copy each "title" verbatim from the input so the page can match it.
 - Ranking rubric, in priority order:
   1. Honour the reader's preferences: push "Loves (Favorit)", "Thumbs-up" and "bought"-before products to the top; NEVER include products from a section the reader switched off or thumbed down.
   2. Prefer genuinely good prices: ph.best or a low ph.pctile is a strong signal. Only make a price claim ("Allzeit-Tief", "guter Preis") when the item actually has ph evidence supporting it.
@@ -265,12 +265,28 @@ def build_digest(offers, price_map=None, latest_date="", receipts=None):
     def cat_of(o):
         return (o.get("category") or {}).get("name") or ""
 
-    vegan = [o for o in offers if re.search(r"vegan|vegetar", title_of(o), re.I)]
+    # Broad enough to catch the reader's plant-based staples, not just titles
+    # that literally say "vegan": tofu/tempeh, oat/soy/almond drinks, the big
+    # meat-substitute brands. Obst & Gemüse is covered by its own section.
+    vegan = [
+        o for o in offers
+        if re.search(
+            r"vegan|vegetar|tofu|tempeh|seitan|planted|"
+            r"hafer(drink|milch)|sojadrink|sojamilch|mandeldrink|"
+            r"pflanzlich|veggie",
+            title_of(o), re.I,
+        )
+    ]
     obst = [o for o in offers if cat_of(o) == "Obst & Gemüse"]
+    # The reader's drinks profile is wider than "Bier": alcohol-free beer,
+    # Radler, plus the Bionade / Booster / Spezi soft drinks they favour.
     bier = [
         o for o in offers
-        if re.search(r"spezi", title_of(o), re.I)
-        or (cat_of(o) == "Getränke" and re.search(r"\bbier\b|pils", title_of(o), re.I))
+        if re.search(r"spezi|bionade|booster", title_of(o), re.I)
+        or (
+            cat_of(o) == "Getränke"
+            and re.search(r"\bbier\b|pils|radler|alkoholfrei|0[,.]0\s*%", title_of(o), re.I)
+        )
     ]
     knueller = [o for o in offers if is_knuller(o)]
 
