@@ -332,6 +332,34 @@
         .mp-btn.up.on { opacity: 1; border-color: #66bb6a; background: rgba(102,187,106,0.18); }
         .mp-btn.down.on { opacity: 1; border-color: #ef5350; background: rgba(239,83,80,0.18); }
 
+        /* ── gluten-free toggle + swapped ingredient chips ── */
+        .pk-mp-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .mp-gf-toggle {
+            display: inline-flex; align-items: center; gap: 7px;
+            font-family: inherit; font-size: 0.82rem; color: #cdb88a; cursor: pointer;
+            padding: 6px 12px; border-radius: 999px; user-select: none;
+            border: 1px solid #4a3b1e; background: rgba(200,160,80,0.08); transition: all 0.15s;
+        }
+        .mp-gf-toggle:hover { border-color: #6b5526; }
+        .mp-gf-toggle input { accent-color: #d9a441; margin: 0; }
+        .mp-gf-toggle.on { color: #f0d49a; border-color: #8a6c2e; background: rgba(217,164,65,0.16); }
+        .mp-chip.gf { border-color: #6b5526; background: rgba(217,164,65,0.12); color: #f0d49a; cursor: help; }
+
+        /* ── content clusters (group the sections) ── */
+        .pk-cluster { margin: 30px 0 10px; }
+        .pk-cluster-head { margin: 0 0 16px; }
+        .pk-cluster-head h2 {
+            margin: 0; font-size: 1.5rem; color: #fff; letter-spacing: 0.2px;
+            display: flex; align-items: center; gap: 14px;
+        }
+        .pk-cluster-head h2::after {
+            content: ""; flex: 1; height: 1px;
+            background: linear-gradient(90deg, #2e2e2e, transparent);
+        }
+        .pk-cluster-sub { margin: 7px 0 0; color: #888; font-size: 0.88rem; max-width: 75ch; }
+        .pk-cluster > .pk-section { margin-bottom: 24px; }
+        .pk-cluster > .pk-section:last-child { margin-bottom: 0; }
+
         .footer { margin-top: 28px; padding-top: 16px; border-top: 1px solid #222; color: #666; font-size: 0.82rem; }
     </style>
 </head>
@@ -355,70 +383,96 @@
             <p id="pk-lead"></p>
         </section>
 
-        <section class="panel" aria-labelledby="steer-title">
-            <h2 id="steer-title">Meine Vorlieben</h2>
-            <p class="panel-sub">Tipp pro Thema durch: neutral &rarr; mag ich &rarr; Favorit &rarr; aus. Karten ordnen sich sofort danach.</p>
-            <div id="steer-chips" class="steer-chips"></div>
-            <div class="steer-bar">
-                <button type="button" id="steer-export" class="steer-btn primary">Für Montag exportieren</button>
-                <button type="button" id="steer-reset" class="steer-btn">Zurücksetzen</button>
-                <label class="show-hidden"><input type="checkbox" id="show-hidden"> Ausgeblendete zeigen</label>
-                <span id="hidden-count" class="hidden-count"></span>
+        <div class="pk-cluster" id="cluster-foryou">
+            <div class="pk-cluster-head">
+                <h2>Für dich</h2>
+                <p class="pk-cluster-sub">Deine Top-Picks und der vegane Wochenplan &mdash; aus den Angeboten dieser Woche und deinen Vorlieben.</p>
             </div>
-            <p id="steer-status" aria-live="polite"></p>
-            <p id="steer-hint"></p>
-            <p class="steer-legend">Mit &#128077; / &#128683; auf den Karten verfeinerst du einzelne Produkte. Der Export (preferences.json) personalisiert montags die KI-Texte.</p>
-        </section>
 
-        <section class="panel" id="browse-panel" aria-labelledby="browse-toggle">
-            <button type="button" id="browse-toggle" class="browse-head" aria-expanded="false" aria-controls="browse-body">
-                <span>Alle Angebote der Woche</span>
-                <span id="browse-count" class="browse-count"></span>
-            </button>
-            <div class="browse-body" id="browse-body" hidden>
-                <input type="text" id="browse-search" placeholder="In allen Angeboten suchen&hellip;" aria-label="Alle Angebote durchsuchen" />
-                <p class="browse-hint">Hier siehst du auch <strong>ausgeblendete</strong> &amp; herabgestufte Produkte. &#128077; holt eins zur&uuml;ck in deine Listen, &#128683; blendet es aus.</p>
-                <ul id="browse-list" class="browse-list"></ul>
+            <section class="pk-section" id="pk-foryou">
+                <h2><span class="pk-emoji">&#11088;</span>Top-Picks der Woche</h2>
+                <div id="pk-foryou-grid" class="pk-grid"></div>
+            </section>
+
+            <section class="pk-section" id="pk-mealplan">
+                <div class="pk-mp-head">
+                    <h2><span class="pk-emoji">&#127869;</span>Veganer Wochenplan</h2>
+                    <div class="pk-mp-controls">
+                        <label class="mp-gf-toggle" id="pk-mealplan-gf-label" title="Nudeln, Mehl &amp; Co. durch glutenfreie Alternativen ersetzen">
+                            <input type="checkbox" id="pk-mealplan-gf"> &#127806; glutenfrei
+                        </label>
+                        <button type="button" id="pk-mealplan-regen" class="pk-mp-regen" hidden>&#8635; Neu generieren</button>
+                    </div>
+                </div>
+                <p id="pk-mealplan-intro" class="pk-intro"></p>
+                <div id="pk-mealplan-grid" class="mp-grid"></div>
+            </section>
+        </div>
+
+        <div class="pk-cluster" id="cluster-themen">
+            <div class="pk-cluster-head">
+                <h2>Angebote nach Thema</h2>
+                <p class="pk-cluster-sub">St&ouml;bere durch die kuratierten Listen der Woche.</p>
             </div>
-        </section>
 
-        <section class="pk-section" id="pk-foryou">
-            <h2><span class="pk-emoji">&#11088;</span>Für dich diese Woche</h2>
-            <div id="pk-foryou-grid" class="pk-grid"></div>
-        </section>
+            <section class="pk-section" id="pk-vegan">
+                <h2><span class="pk-emoji">&#127793;</span>Vegan &amp; vegetarisch</h2>
+                <p id="pk-vegan-intro" class="pk-intro"></p>
+                <div id="pk-vegan-grid" class="pk-grid"></div>
+            </section>
 
-        <section class="pk-section" id="pk-mealplan">
-            <div class="pk-mp-head">
-                <h2><span class="pk-emoji">&#127869;</span>Veganer Wochenplan</h2>
-                <button type="button" id="pk-mealplan-regen" class="pk-mp-regen" hidden>&#8635; Neu generieren</button>
+            <section class="pk-section" id="pk-obst">
+                <h2><span class="pk-emoji">&#129382;</span>Obst &amp; Gemüse</h2>
+                <p id="pk-obst-intro" class="pk-intro"></p>
+                <div id="pk-obst-grid" class="pk-grid"></div>
+            </section>
+
+            <section class="pk-section" id="pk-bier">
+                <h2><span class="pk-emoji">&#127866;</span>Bier &amp; Spezi</h2>
+                <p id="pk-bier-intro" class="pk-intro"></p>
+                <div id="pk-bier-grid" class="pk-grid"></div>
+            </section>
+
+            <section class="pk-section" id="pk-knueller">
+                <h2><span class="pk-emoji">&#128293;</span>Top-Knüller</h2>
+                <p id="pk-knueller-intro" class="pk-intro"></p>
+                <div id="pk-knueller-grid" class="pk-grid"></div>
+            </section>
+        </div>
+
+        <div class="pk-cluster" id="cluster-controls">
+            <div class="pk-cluster-head">
+                <h2>Personalisieren &amp; stöbern</h2>
+                <p class="pk-cluster-sub">Stell deine Vorlieben ein und durchsuche alle Angebote der Woche.</p>
             </div>
-            <p id="pk-mealplan-intro" class="pk-intro"></p>
-            <div id="pk-mealplan-grid" class="mp-grid"></div>
-        </section>
 
-        <section class="pk-section" id="pk-vegan">
-            <h2><span class="pk-emoji">&#127793;</span>Vegan &amp; vegetarisch</h2>
-            <p id="pk-vegan-intro" class="pk-intro"></p>
-            <div id="pk-vegan-grid" class="pk-grid"></div>
-        </section>
+            <section class="panel" aria-labelledby="steer-title">
+                <h2 id="steer-title">Meine Vorlieben</h2>
+                <p class="panel-sub">Tipp pro Thema durch: neutral &rarr; mag ich &rarr; Favorit &rarr; aus. Karten ordnen sich sofort danach.</p>
+                <div id="steer-chips" class="steer-chips"></div>
+                <div class="steer-bar">
+                    <button type="button" id="steer-export" class="steer-btn primary">Für Montag exportieren</button>
+                    <button type="button" id="steer-reset" class="steer-btn">Zurücksetzen</button>
+                    <label class="show-hidden"><input type="checkbox" id="show-hidden"> Ausgeblendete zeigen</label>
+                    <span id="hidden-count" class="hidden-count"></span>
+                </div>
+                <p id="steer-status" aria-live="polite"></p>
+                <p id="steer-hint"></p>
+                <p class="steer-legend">Mit &#128077; / &#128683; auf den Karten verfeinerst du einzelne Produkte. Der Export (preferences.json) personalisiert montags die KI-Texte.</p>
+            </section>
 
-        <section class="pk-section" id="pk-obst">
-            <h2><span class="pk-emoji">&#129382;</span>Obst &amp; Gemüse</h2>
-            <p id="pk-obst-intro" class="pk-intro"></p>
-            <div id="pk-obst-grid" class="pk-grid"></div>
-        </section>
-
-        <section class="pk-section" id="pk-bier">
-            <h2><span class="pk-emoji">&#127866;</span>Bier &amp; Spezi</h2>
-            <p id="pk-bier-intro" class="pk-intro"></p>
-            <div id="pk-bier-grid" class="pk-grid"></div>
-        </section>
-
-        <section class="pk-section" id="pk-knueller">
-            <h2><span class="pk-emoji">&#128293;</span>Top-Knüller</h2>
-            <p id="pk-knueller-intro" class="pk-intro"></p>
-            <div id="pk-knueller-grid" class="pk-grid"></div>
-        </section>
+            <section class="panel" id="browse-panel" aria-labelledby="browse-toggle">
+                <button type="button" id="browse-toggle" class="browse-head" aria-expanded="false" aria-controls="browse-body">
+                    <span>Alle Angebote der Woche</span>
+                    <span id="browse-count" class="browse-count"></span>
+                </button>
+                <div class="browse-body" id="browse-body" hidden>
+                    <input type="text" id="browse-search" placeholder="In allen Angeboten suchen&hellip;" aria-label="Alle Angebote durchsuchen" />
+                    <p class="browse-hint">Hier siehst du auch <strong>ausgeblendete</strong> &amp; herabgestufte Produkte. &#128077; holt eins zur&uuml;ck in deine Listen, &#128683; blendet es aus.</p>
+                    <ul id="browse-list" class="browse-list"></ul>
+                </div>
+            </section>
+        </div>
 
         <div class="footer">
             EDEKA Wochen-Prospekt &mdash; kuratiert aus den Wochenangeboten. Texte optional lokal via <code>claude -p</code> erzeugt.
