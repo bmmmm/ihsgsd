@@ -17,6 +17,16 @@ python3 -m http.server 8888
 
 No build step, no npm, no package.json. Just serve the root directory.
 
+To let the Prospekt page save preferences straight into `data/preferences.json`
+(instead of downloading a file you move by hand), use the dev server instead:
+
+```bash
+python3 scripts/serve.py        # serves the repo AND POST /api/preferences
+```
+
+The "Für Montag exportieren" button posts to that endpoint when available and
+falls back to a plain download with `http.server`.
+
 ## Architecture
 
 - **`index.html`** — Single-page app with dark theme, contains all CSS inline in `<style>`.
