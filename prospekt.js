@@ -227,8 +227,27 @@ const VOTE_WEIGHT = 6;               // a thumb outweighs topic interest
 const BOUGHT_WEIGHT = 1;             // a mild loyalty nudge for items you actually buy
 
 // ── preferences (localStorage) ──
+// The shopping basket is the curated weekly list. It is deliberately separate
+// from votes (👍/🚫 = taste/ranking) and bought (🛒 = loyalty): only the 🧺
+// gesture and the meal plan feed it. Overlay state (removed/checked/custom) is
+// bound to a plan key so a new week or regeneration starts a fresh list.
+function emptyBasket() {
+    return { planKey: '', offers: {}, custom: [], removed: {}, checked: {} };
+}
+
+function normalizeBasket(b) {
+    if (!b || typeof b !== 'object') return emptyBasket();
+    return {
+        planKey: typeof b.planKey === 'string' ? b.planKey : '',
+        offers: (b.offers && typeof b.offers === 'object') ? b.offers : {},
+        custom: Array.isArray(b.custom) ? b.custom.filter(c => c && typeof c.name === 'string') : [],
+        removed: (b.removed && typeof b.removed === 'object') ? b.removed : {},
+        checked: (b.checked && typeof b.checked === 'object') ? b.checked : {},
+    };
+}
+
 function defaultPrefs() {
-    return { version: 1, interests: { ...DEFAULT_INTERESTS }, votes: {}, bought: {}, meals: {}, glutenFree: false };
+    return { version: 1, interests: { ...DEFAULT_INTERESTS }, votes: {}, bought: {}, meals: {}, glutenFree: false, basket: emptyBasket() };
 }
 
 function loadPrefs() {
@@ -247,6 +266,9 @@ function loadPrefs() {
             // alternatives in the meal plan. Display-only preference, persisted
             // quietly (no re-export nag) — see persistPrefsQuiet.
             glutenFree: (p && typeof p.glutenFree === 'boolean') ? p.glutenFree : false,
+            // Shopping list (🧺-added offers + meal plan + own items). View
+            // state, persisted quietly; reset per plan via ensureBasketForPlan.
+            basket: normalizeBasket(p && p.basket),
             // Keep the last-changed stamp across reloads so the page can tell
             // whether data/preferences.json still matches the live prefs.
             updatedAt: (p && typeof p.updatedAt === 'string') ? p.updatedAt : undefined,
@@ -522,6 +544,12 @@ function buildSteering() {
     if (slCopy) slCopy.addEventListener('click', copyShoppingList);
     const slSave = document.getElementById('pk-shopping-save');
     if (slSave) slSave.addEventListener('click', saveShoppingList);
+    const slAdd = document.getElementById('pk-shopping-add');
+    if (slAdd) slAdd.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const inp = document.getElementById('pk-shopping-add-input');
+        if (inp) { addCustomItem(inp.value); inp.value = ''; inp.focus(); }
+    });
 
     const hiddenToggle = document.getElementById('show-hidden');
     if (hiddenToggle) hiddenToggle.addEventListener('change', renderAll);
@@ -975,12 +1003,20 @@ function buildCard(o, opts) {
     buy.type = 'button';
     buy.className = 'pk-vote buy' + (boughtFor(o) > 0 ? ' on' : '');
     buy.textContent = '🛒';
-    buy.title = boughtFor(o) > 0 ? 'Als gekauft markiert (klick zum Entfernen)' : 'Schon gekauft';
+    buy.title = boughtFor(o) > 0 ? 'Als gekauft markiert (klick zum Entfernen)' : 'Schon gekauft (Loyalität)';
     buy.setAttribute('aria-label', 'Als gekauft markieren');
     buy.addEventListener('click', () => toggleBought(o));
+    const basket = document.createElement('button');
+    basket.type = 'button';
+    basket.className = 'pk-vote basket' + (basketHas(o) ? ' on' : '');
+    basket.textContent = '🧺';
+    basket.title = basketHas(o) ? 'Auf dem Einkaufszettel (klick zum Entfernen)' : 'Auf den Einkaufszettel';
+    basket.setAttribute('aria-label', 'Auf den Einkaufszettel');
+    basket.addEventListener('click', () => toggleBasket(o));
     actions.appendChild(up);
     actions.appendChild(down);
     actions.appendChild(buy);
+    actions.appendChild(basket);
     body.appendChild(actions);
 
     card.appendChild(body);
@@ -1346,11 +1382,12 @@ async function regenerateMealplan() {
     }
 }
 
-// ── shopping list (minimal, copyable, saved on disk via serve.py) ──
-// "diese Woche" = the meal plan's ingredients (current view incl. swaps + GF
-// substitution) combined with the offers the reader marked (🛒 bought / 👍).
-// Deduplicated by normalised name into two groups: offers (with price) and
-// pantry/basics. Built fresh on each render and on every copy/save click.
+// ── shopping list (curated, editable, saved on disk via serve.py) ──
+// The list is its own thing, fed ONLY by the meal plan and the 🧺 gesture —
+// NOT by 👍 (taste) or 🛒 (loyalty), which stay separate signals. Rows merge by
+// normalised name into offers / pantry / own items; the reader can remove (×),
+// check off, and type their own. Overlay state lives in prefs.basket and resets
+// when the plan changes (new week or regeneration). Built fresh on each render.
 
 // KW label + date of the selected week, parsed from the dropdown's file path
 // (data/{YEAR}/KW{XX}/{DATE}.json). The date names the saved file server-side.
@@ -1360,20 +1397,67 @@ function selectedWeekMeta() {
     return { weekLabel: m ? m[1] : '', date: m ? m[2] : '' };
 }
 
-function buildShoppingList() {
-    const gf = !!(prefs && prefs.glutenFree);
-    const offersMap = new Map();   // normName -> { name, price }
-    const pantryMap = new Map();   // normName -> { name }
+// Identity of the current plan: the list is bound to it, so a new week or a
+// regenerated plan starts a fresh basket (matches "checked stays until the next
+// plan"). Includes the meal plan's generatedAt so a live regen also resets.
+function currentPlanKey() {
+    const m = selectedWeekMeta();
+    const gen = (mealplanData && typeof mealplanData.generatedAt === 'string') ? mealplanData.generatedAt : '';
+    return `${m.weekLabel}|${m.date}|${gen}`;
+}
 
-    const addOffer = (name, price) => {
-        const key = normTitle(name);
-        if (!key) return;
-        if (!offersMap.has(key)) offersMap.set(key, { name, price: price || '' });
-        else if (price && !offersMap.get(key).price) offersMap.get(key).price = price;
-    };
-    const addPantry = (name) => {
-        const key = normTitle(name);
-        if (key && !pantryMap.has(key)) pantryMap.set(key, { name });
+function ensureBasketForPlan() {
+    if (!prefs) return;
+    if (!prefs.basket) prefs.basket = emptyBasket();
+    const key = currentPlanKey();
+    if (prefs.basket.planKey !== key) {
+        prefs.basket = emptyBasket();
+        prefs.basket.planKey = key;
+        persistPrefsQuiet();
+    }
+}
+
+// ── 🧺 membership (card gesture; separate from votes/bought) ──
+function basketHas(o) {
+    return !!(prefs && prefs.basket && o && o.id != null && prefs.basket.offers[o.id]);
+}
+
+function toggleBasket(o) {
+    const id = o && o.id;
+    if (id == null || !prefs) return;
+    if (!prefs.basket) prefs.basket = emptyBasket();
+    const b = prefs.basket;
+    if (b.offers[id]) {
+        delete b.offers[id];
+    } else {
+        b.offers[id] = { t: o.title || '', c: catName(o) };
+        delete b.removed[normTitle(o.title || '')];   // un-hide if it had been ×'d
+    }
+    persistPrefsQuiet();
+    renderAll();   // refresh the card button state and the list together
+}
+
+// Build the list rows by merging the plan, the 🧺 offers, and own items,
+// applying the removed/checked overlay. Each row carries its origins so a ×
+// can clean up the right source. Groups: offers (priced) / pantry / own.
+function buildShoppingList() {
+    ensureBasketForPlan();
+    const b = prefs.basket;
+    const gf = !!(prefs && prefs.glutenFree);
+    const rows = new Map();   // normName -> row
+    const RANK = { offer: 3, custom: 2, pantry: 1 };
+
+    const ensureRow = (name, group) => {
+        const nn = normTitle(name);
+        if (!nn || b.removed[nn]) return null;
+        let r = rows.get(nn);
+        if (!r) {
+            r = { name, price: '', checked: !!b.checked[nn], normName: nn, group, origins: { offerIds: [], customIds: [], plan: false } };
+            rows.set(nn, r);
+        } else if (RANK[group] > RANK[r.group]) {
+            r.group = group;
+        }
+        return r;
     };
 
     // 1) meal-plan ingredients — mirror buildMealCard's offer/pantry/GF split.
@@ -1383,48 +1467,121 @@ function buildShoppingList() {
             (meal && Array.isArray(meal.ingredients) ? meal.ingredients : []).forEach(ing => {
                 if (!ing || !ing.name) return;
                 const swapped = gf ? glutenFreeText(ing.name) : ing.name;
-                if (gf && swapped !== ing.name) addPantry(swapped);   // GF substitute (not on offer)
-                else if (ing.offerTitle) addOffer(ing.name, ing.price);
-                else addPantry(ing.name);
+                let group = 'pantry', price = '';
+                if (gf && swapped !== ing.name) group = 'pantry';         // GF substitute (not on offer)
+                else if (ing.offerTitle) { group = 'offer'; price = ing.price || ''; }
+                const r = ensureRow(swapped, group);
+                if (r) { r.origins.plan = true; if (price && !r.price) r.price = price; }
             });
         });
     }
 
-    // 2) offers the reader explicitly marked this week.
-    currentOffers.forEach(o => {
-        if (boughtFor(o) > 0 || voteFor(o) === 1) {
-            const pr = offerPrice(o);
-            // German format (€ first, comma) to match the plan's verbatim prices.
-            addOffer(o.title || '', pr === null ? '' : `€${pr.toFixed(2).replace('.', ',')}`);
+    // 2) offers added with 🧺 — resolve against this week for a live price.
+    Object.keys(b.offers).forEach(id => {
+        const o = currentOffers.find(x => String(x.id) === String(id));
+        const name = o ? (o.title || '') : (b.offers[id].t || '');
+        const r = ensureRow(name, 'offer');
+        if (!r) return;
+        r.origins.offerIds.push(id);
+        if (!r.price) {
+            const pr = o ? offerPrice(o) : null;
+            if (pr !== null) r.price = `€${pr.toFixed(2).replace('.', ',')}`;
         }
     });
 
-    // A real offer must not also appear under pantry.
-    for (const key of offersMap.keys()) pantryMap.delete(key);
+    // 3) own typed-in items.
+    (Array.isArray(b.custom) ? b.custom : []).forEach(c => {
+        const r = ensureRow(c.name, 'custom');
+        if (r) r.origins.customIds.push(c.id);
+    });
 
-    const byName = (a, b) => a.name.localeCompare(b.name, 'de');
+    const byName = (a, b2) => a.name.localeCompare(b2.name, 'de');
+    const titles = { offer: 'Angebote diese Woche', pantry: 'Vorrat & Basis', custom: 'Eigene Posten' };
+    const groups = ['offer', 'pantry', 'custom']
+        .map(k => ({ key: k, title: titles[k], items: [...rows.values()].filter(r => r.group === k).sort(byName) }))
+        .filter(g => g.items.length);
     const meta = selectedWeekMeta();
-    return {
-        weekLabel: meta.weekLabel,
-        date: meta.date,
-        offers: [...offersMap.values()].sort(byName),
-        pantry: [...pantryMap.values()].sort(byName),
-    };
+    return { weekLabel: meta.weekLabel, date: meta.date, groups, total: rows.size };
 }
 
-// Plain-text render — what the copy button puts on the clipboard and what's
-// stored on disk's `text` field for a ready-to-paste list.
+// ── edits ──
+// × a row: hide it (removed by name) and drop its 🧺/own sources so the card
+// button and the typed list stay consistent.
+function removeRow(row) {
+    if (!prefs || !prefs.basket || !row) return;
+    const b = prefs.basket;
+    b.removed[row.normName] = true;
+    row.origins.offerIds.forEach(id => { delete b.offers[id]; });
+    if (row.origins.customIds.length) {
+        const drop = new Set(row.origins.customIds.map(String));
+        b.custom = b.custom.filter(c => !drop.has(String(c.id)));
+    }
+    persistPrefsQuiet();
+    renderAll();   // a removed 🧺 offer must also un-light its card button
+}
+
+function toggleChecked(normName) {
+    if (!prefs || !prefs.basket || !normName) return;
+    const b = prefs.basket;
+    if (b.checked[normName]) delete b.checked[normName];
+    else b.checked[normName] = true;
+    persistPrefsQuiet();
+    renderShopping();
+}
+
+function addCustomItem(name) {
+    name = (name || '').trim();
+    if (!name || !prefs) return;
+    if (!prefs.basket) prefs.basket = emptyBasket();
+    const b = prefs.basket;
+    const nn = normTitle(name);
+    delete b.removed[nn];   // typing it back un-removes it
+    if (!b.custom.some(c => normTitle(c.name) === nn)) {
+        b.custom.push({ id: 'c' + Date.now().toString(36), name });
+    }
+    persistPrefsQuiet();
+    renderShopping();
+}
+
+// Plain-text render — a Markdown-style checklist, ready to paste anywhere. Same
+// text goes onto the clipboard and into the saved file's `text` field.
 function shoppingListText(list) {
     const lines = [`Einkaufszettel${list.weekLabel ? ' ' + list.weekLabel : ''}`];
-    if (list.offers.length) {
-        lines.push('', 'Angebote diese Woche');
-        list.offers.forEach(it => lines.push(`- ${it.name}${it.price ? ' — ' + it.price : ''}`));
-    }
-    if (list.pantry.length) {
-        lines.push('', 'Vorrat / Basis');
-        list.pantry.forEach(it => lines.push(`- ${it.name}`));
-    }
+    list.groups.forEach(g => {
+        lines.push('', g.title);
+        g.items.forEach(it => lines.push(`- [${it.checked ? 'x' : ' '}] ${it.name}${it.price ? ' — ' + it.price : ''}`));
+    });
     return lines.join('\n') + '\n';
+}
+
+function buildShoppingRow(it) {
+    const li = document.createElement('li');
+    li.className = 'pk-sl-item' + (it.checked ? ' checked' : '');
+    const check = document.createElement('button');
+    check.type = 'button';
+    check.className = 'pk-sl-check' + (it.checked ? ' on' : '');
+    check.textContent = it.checked ? '☑' : '☐';
+    check.setAttribute('aria-label', (it.checked ? 'Haken entfernen: ' : 'Abhaken: ') + it.name);
+    check.addEventListener('click', () => toggleChecked(it.normName));
+    li.appendChild(check);
+    const name = document.createElement('span');
+    name.className = 'pk-sl-name';
+    name.textContent = it.name;
+    li.appendChild(name);
+    if (it.price) {
+        const p = document.createElement('span');
+        p.className = 'pk-sl-price';
+        p.textContent = it.price;
+        li.appendChild(p);
+    }
+    const del = document.createElement('button');
+    del.type = 'button';
+    del.className = 'pk-sl-del';
+    del.textContent = '×';
+    del.setAttribute('aria-label', 'Entfernen: ' + it.name);
+    del.addEventListener('click', () => removeRow(it));
+    li.appendChild(del);
+    return li;
 }
 
 function renderShopping() {
@@ -1433,51 +1590,43 @@ function renderShopping() {
     if (!section || !body) return;
 
     const list = buildShoppingList();
-    const total = list.offers.length + list.pantry.length;
+    const hasPlan = !!(mealplanView && mealplanView.days.length);
+    const show = list.total > 0 || hasPlan;   // keep visible with a plan so you can add/re-add
 
     const saveBtn = document.getElementById('pk-shopping-save');
     if (saveBtn) saveBtn.hidden = !localApi;          // disk save only on the dev server
     const copyBtn = document.getElementById('pk-shopping-copy');
-    if (copyBtn) copyBtn.disabled = total === 0;
+    if (copyBtn) copyBtn.disabled = list.total === 0;
+    const addForm = document.getElementById('pk-shopping-add');
+    if (addForm) addForm.style.display = show ? '' : 'none';
 
-    if (total === 0) { section.style.display = 'none'; return; }
+    if (!show) { section.style.display = 'none'; return; }
     section.style.display = '';
 
     body.innerHTML = '';
-    [
-        { key: 'offer', title: 'Angebote diese Woche', items: list.offers },
-        { key: 'pantry', title: 'Vorrat / Basis', items: list.pantry },
-    ].forEach(g => {
-        if (!g.items.length) return;
+    list.groups.forEach(g => {
         const wrap = document.createElement('div');
-        wrap.className = 'pk-sl-group' + (g.key === 'pantry' ? ' pantry' : '');
+        wrap.className = 'pk-sl-group ' + g.key;
         const h3 = document.createElement('h3');
         h3.textContent = g.title;
         wrap.appendChild(h3);
         const ul = document.createElement('ul');
         ul.className = 'pk-sl-list';
-        g.items.forEach(it => {
-            const li = document.createElement('li');
-            li.className = 'pk-sl-item';
-            const name = document.createElement('span');
-            name.textContent = it.name;
-            li.appendChild(name);
-            if (it.price) {
-                const p = document.createElement('span');
-                p.className = 'pk-sl-price';
-                p.textContent = it.price;
-                li.appendChild(p);
-            }
-            ul.appendChild(li);
-        });
+        g.items.forEach(it => ul.appendChild(buildShoppingRow(it)));
         wrap.appendChild(ul);
         body.appendChild(wrap);
     });
+    if (list.total === 0) {
+        const empty = document.createElement('p');
+        empty.className = 'pk-sl-empty';
+        empty.textContent = 'Zettel leer — füge unten etwas hinzu oder 🧺 ein Angebot.';
+        body.appendChild(empty);
+    }
 
     const meta = document.getElementById('pk-shopping-meta');
     if (meta) {
         meta.className = 'pk-sl-meta';
-        meta.textContent = `${total} Position${total === 1 ? '' : 'en'}${list.date ? ' · ' + formatDate(list.date) : ''}`;
+        meta.textContent = `${list.total} Position${list.total === 1 ? '' : 'en'}${list.date ? ' · ' + formatDate(list.date) : ''}`;
     }
 }
 
@@ -1513,10 +1662,18 @@ async function copyShoppingList() {
 }
 
 // Local-only: persist the list to data/shopping/<date>.json via serve.py. The
-// button only shows when the dev API is reachable (localApi).
+// button only shows when the dev API is reachable (localApi). Groups are
+// flattened to offers/pantry for the archive; the full checklist is in `text`.
 async function saveShoppingList() {
     const list = buildShoppingList();
     if (!list.date) { setShoppingMeta('Keine Woche gewählt — nichts zu speichern.', 'warn'); return; }
+    const offers = [], pantry = [];
+    list.groups.forEach(g => g.items.forEach(it => {
+        const entry = { name: it.name };
+        if (it.price) entry.price = it.price;
+        if (it.checked) entry.checked = true;
+        (g.key === 'offer' ? offers : pantry).push(entry);
+    }));
     const btn = document.getElementById('pk-shopping-save');
     const orig = btn ? btn.textContent : '';
     if (btn) { btn.disabled = true; btn.textContent = '⏳ …'; }
@@ -1525,8 +1682,8 @@ async function saveShoppingList() {
             weekLabel: list.weekLabel,
             date: list.date,
             savedAt: new Date().toISOString(),
-            offers: list.offers,
-            pantry: list.pantry,
+            offers,
+            pantry,
             text: shoppingListText(list),
         }, null, 2) + '\n';
         const res = await fetch('/api/shopping', {
@@ -1536,8 +1693,7 @@ async function saveShoppingList() {
         });
         if (!res.ok) throw new Error(`Fehler ${res.status}`);
         const j = await res.json().catch(() => ({}));
-        const total = list.offers.length + list.pantry.length;
-        setShoppingMeta(`✓ Abgelegt in ${j.path || 'data/shopping/'} (${total} Position${total === 1 ? '' : 'en'}).`, 'ok');
+        setShoppingMeta(`✓ Abgelegt in ${j.path || 'data/shopping/'} (${list.total} Position${list.total === 1 ? '' : 'en'}).`, 'ok');
     } catch (err) {
         setShoppingMeta('Ablegen fehlgeschlagen: ' + (err && err.message ? err.message : err), 'warn');
     } finally {

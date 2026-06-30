@@ -269,7 +269,7 @@
         .pk-pricecheck.pc-good { color: #cdebb5; background: rgba(102,187,106,0.10); border: 1px solid rgba(102,187,106,0.28); }
         .pk-pricecheck.pc-wait { color: #ffcc80; background: rgba(255,167,38,0.12); border: 1px solid rgba(255,167,38,0.38); }
         .pk-reason { font-size: 0.8rem; color: #cdebb5; line-height: 1.4; background: rgba(102,187,106,0.08); border-radius: 8px; padding: 6px 8px; }
-        .pk-actions { display: flex; gap: 8px; margin-top: auto; padding-top: 6px; }
+        .pk-actions { display: flex; gap: 6px; margin-top: auto; padding-top: 6px; }
         .pk-vote {
             flex: 1;
             cursor: pointer;
@@ -285,6 +285,7 @@
         .pk-vote.up.on { opacity: 1; border-color: #66bb6a; background: rgba(102,187,106,0.18); }
         .pk-vote.down.on { opacity: 1; border-color: #ef5350; background: rgba(239,83,80,0.18); }
         .pk-vote.buy.on { opacity: 1; border-color: #42a5f5; background: rgba(66,165,245,0.18); }
+        .pk-vote.basket.on { opacity: 1; border-color: #ffb74d; background: rgba(255,183,77,0.18); }
 
         /* ── meal plan (vegan week) ── */
         #pk-mealplan .pk-mp-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
@@ -383,10 +384,22 @@
             letter-spacing: 0.6px; color: #7fae7f;
         }
         .pk-sl-group.pantry h3 { color: #cdb88a; }
+        .pk-sl-group.custom h3 { color: #9fb8d8; }
         .pk-sl-list { list-style: none; margin: 0; padding: 0; }
-        .pk-sl-item { display: flex; align-items: baseline; gap: 8px; padding: 3px 0; font-size: 0.9rem; color: #e0e0e0; }
-        .pk-sl-item::before { content: "\2022"; color: #555; }
-        .pk-sl-price { margin-left: auto; color: #9be29e; font-size: 0.84rem; font-weight: 600; }
+        .pk-sl-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 0.9rem; color: #e0e0e0; }
+        .pk-sl-check { flex-shrink: 0; cursor: pointer; background: none; border: none; padding: 0; font-size: 1rem; line-height: 1; color: #777; transition: color 0.12s; }
+        .pk-sl-check:hover { color: #aaa; }
+        .pk-sl-check.on { color: #7fae7f; }
+        .pk-sl-name { flex: 1; min-width: 0; }
+        .pk-sl-price { color: #9be29e; font-size: 0.84rem; font-weight: 600; flex-shrink: 0; }
+        .pk-sl-del { flex-shrink: 0; cursor: pointer; background: none; border: none; padding: 0 2px; font-size: 1.15rem; line-height: 1; color: #555; transition: color 0.12s; }
+        .pk-sl-del:hover { color: #ef5350; }
+        .pk-sl-item.checked .pk-sl-name { text-decoration: line-through; color: #777; }
+        .pk-sl-item.checked .pk-sl-price { text-decoration: line-through; opacity: 0.6; }
+        .pk-sl-empty { color: #777; font-size: 0.88rem; margin: 6px 0 0; }
+        .pk-sl-add { display: flex; gap: 8px; margin-top: 12px; }
+        .pk-sl-add input { flex: 1; min-width: 0; background: #1a1a1a; color: #e0e0e0; border: 1px solid #333; padding: 8px 12px; border-radius: 8px; font-size: 0.9rem; font-family: inherit; }
+        .pk-sl-add input:focus { outline: none; border-color: #4caf50; }
 
         .footer { margin-top: 28px; padding-top: 16px; border-top: 1px solid #222; color: #666; font-size: 0.82rem; }
     </style>
@@ -446,6 +459,10 @@
                 </div>
                 <p id="pk-shopping-meta" class="pk-sl-meta" aria-live="polite"></p>
                 <div id="pk-shopping-body" class="pk-sl-body"></div>
+                <form id="pk-shopping-add" class="pk-sl-add">
+                    <input type="text" id="pk-shopping-add-input" placeholder="+ eigenes hinzuf&uuml;gen&hellip;" aria-label="Eigenes Item hinzuf&uuml;gen" autocomplete="off" />
+                    <button type="submit" class="pk-sl-btn">Hinzuf&uuml;gen</button>
+                </form>
             </section>
         </div>
 
