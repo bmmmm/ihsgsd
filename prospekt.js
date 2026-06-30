@@ -538,8 +538,31 @@ function setVote(o, value) {
     renderAll();
 }
 
-function exportPrefs() {
-    const blob = new Blob([JSON.stringify(prefs, null, 2) + '\n'], { type: 'application/json' });
+async function exportPrefs() {
+    const payload = JSON.stringify(prefs, null, 2) + '\n';
+    const hint = document.getElementById('steer-hint');
+    // Prefer the local dev server (scripts/serve.py): it writes straight into
+    // data/preferences.json, so there's nothing to move by hand. If that server
+    // isn't running (plain http.server, file://, or a fetch error), fall back to
+    // a normal download.
+    try {
+        const res = await fetch('/api/preferences', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: payload,
+        });
+        if (res.ok) {
+            if (hint) hint.textContent = 'In data/preferences.json gespeichert — am Montag generate_prospekt.py ausführen.';
+            return;
+        }
+    } catch (e) {
+        // No local save server reachable — fall through to download.
+    }
+    downloadPrefs(payload, hint);
+}
+
+function downloadPrefs(payload, hint) {
+    const blob = new Blob([payload], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -548,8 +571,7 @@ function exportPrefs() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    const hint = document.getElementById('steer-hint');
-    if (hint) hint.textContent = 'preferences.json gespeichert — leg sie in data/ ab und führ am Montag generate_prospekt.py aus.';
+    if (hint) hint.textContent = 'preferences.json heruntergeladen — leg sie in data/ ab (oder starte scripts/serve.py für direktes Speichern) und führ am Montag generate_prospekt.py aus.';
 }
 
 function resetPrefs() {
