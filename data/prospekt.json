@@ -1,96 +1,106 @@
 {
-  "generatedAt": "2026-06-22",
-  "weekLabel": "KW26",
-  "lead": "KW26 hat echte Frische-Highlights: Mini-Rispentomaten für nur €1,00 und Bio-Kulturheidelbeeren aus Spanien sind auf absolutem Allzeit-Tief – beide nach mehreren Wochen Preisverlauf belegt. Dazu vegane Produkte und solide Bierangebote für den Sommer.",
+  "generatedAt": "2026-06-29",
+  "weekLabel": "KW27",
+  "lead": "Diese Woche warten zwei echte Allzeit-Tiefs im Obst & Gemüse: Tafeläpfel für historisch günstige 75 Ct pro Kilo und Bio-Zucchini auf dem niedrigsten Preis seit Aufzeichnung. Dazu gibt's Beck's und Bitburger aus deiner Bier-Kategorie im Angebot.",
   "sections": {
-    "vegan": "Vegane und vegetarische Produkte stehen diese Woche direkt im Angebot – ergänzt durch Linsen und Erbsen aus dem Knüller-Regal für die pflanzliche Küche.",
-    "obstgemuese": "Starke Saisonwoche: Mini-Rispentomaten und Bio-Heidelbeeren auf Allzeit-Tief, dazu Kohlrabi für 59 Cent und frische Frühkartoffeln für €1,25/kg.",
-    "bierspezi": "Wicküler und Veltins sind die Bier-Picks der Woche – beide ohne Preisverlauf, aber verlässliche Favoriten für den Vorrat.",
-    "knueller": "Viele echte Allzeit-Tiefs im Knüller-Regal: Müller's Mühle Linsen ideal für vegane Küche, Palmolive Duschgel für unter einem Euro."
+    "vegan": "Planted bringt pflanzliche Fleischalternativen ins Regal — praktisch für schnelle vegane Mahlzeiten ohne Tierprodukte.",
+    "obstgemuese": "Starke Woche: Tafeläpfel und Bio-Zucchini sind auf Allzeit-Tief, Auberginen für 99 Cent und Plattpfirsiche für €1,11 runden das Angebot ab.",
+    "bierspezi": "Beck's Pils (auch alkoholfrei als Blue Lemon) und Bitburger stehen im Angebot — guter Zeitpunkt, den Bier-Vorrat aufzufrischen.",
+    "knueller": "Bionade und Coca-Cola sind auf Allzeit-Tief — ideal zum Vorratskauf. Drogerie-Klassiker wie Dove und L'Oréal gibt's ebenfalls zum Tiefstpreis."
   },
   "foryou": [
     {
-      "title": "Niederlande - EDEKA Herzstücke - Mini-Rispentomaten",
+      "title": "Deutschland - GUT & GÜNSTIG - Tafeläpfel",
       "rank": 1,
-      "reason": "Allzeit-Tief nach 6 Wochen Verlauf – günstiger waren sie noch nie.",
+      "reason": "Allzeit-Tief: nur 75 Ct pro Kilo — in 4 Wochen Geschichte nie günstiger gewesen.",
       "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Spanien - Bio-Kulturheidelbeeren",
+      "title": "Spanien - Bio-Zucchini",
       "rank": 2,
-      "reason": "Bio-Heidelbeeren ebenfalls auf Allzeit-Tief – so günstig wie nie erfasst.",
+      "reason": "Allzeit-Tief nach 3 Wochen: €2,98/kg ist der niedrigste bisher gesehene Preis.",
       "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Vegetarische oder Vegane Produkte",
+      "title": "Beck's Pils oder Blue Lemon 0,0% Alkoholfrei",
       "rank": 3,
-      "reason": "Direkt für vegane Ernährung – passt perfekt zu deinen Vorlieben.",
-      "evidenceTag": "Favorit"
+      "reason": "Aus deiner Bier-Kategorie: €2,27/l, auch als alkoholfreie Blue Lemon erhältlich.",
+      "evidenceTag": ""
     },
     {
-      "title": "Deutschland - Kohlrabi",
+      "title": "Bitburger Pils",
       "rank": 4,
-      "reason": "Nur 59 Cent für deutschen Kohlrabi – kaum günstiger zu bekommen.",
-      "evidenceTag": "mag ich"
+      "reason": "Klassisches Pils für €1,10 pro Liter — guter Wert aus deiner Bier-Kategorie.",
+      "evidenceTag": ""
     },
     {
-      "title": "Deutschland - Frühkartoffeln",
+      "title": "Deutschland - Auberginen",
       "rank": 5,
-      "reason": "Saisonale Frühkartoffeln für €1,25/kg – echter Sommerwert.",
-      "evidenceTag": "mag ich"
+      "reason": "Nur 99 Cent pro Stück — günstig und vielseitig für vegane Küche einsetzbar.",
+      "evidenceTag": "guter Preis"
     },
     {
-      "title": "Spanien - Bio-Spitzpaprika",
+      "title": "Planted vegane Produkte",
       "rank": 6,
-      "reason": "Bio-Spitzpaprika aus Spanien für €1,79 – frisch aus der Lieblingskategorie.",
-      "evidenceTag": "mag ich"
+      "reason": "Pflanzliche Alternative aus deiner Vegan-Kategorie, diese Woche im Regal.",
+      "evidenceTag": ""
     },
     {
-      "title": "Wicküler Pils oder Pils 0,0% alkoholfrei",
+      "title": "Bionade",
       "rank": 7,
-      "reason": "Bier-Favorit mit 0,0%-Alternative – klassisches Pils zum Vorratspreis.",
-      "evidenceTag": "mag ich"
+      "reason": "Allzeit-Tief: €2,27 pro Liter — günstigstes Bio-Erfrischungsgetränk seit 2 Wochen.",
+      "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Veltins Pilsener",
+      "title": "Spanien - GUT & GÜNSTIG - Plattpfirsiche",
       "rank": 8,
-      "reason": "Klassischer Kasten Veltins – verlässliches Pils ohne Preisverlauf.",
-      "evidenceTag": "mag ich"
+      "reason": "Saisonale Plattpfirsiche für €1,11 — günstig, fruchtig, sommerlich.",
+      "evidenceTag": "guter Preis"
+    },
+    {
+      "title": "Deutschland - Champignons",
+      "rank": 9,
+      "reason": "Frische Champignons für €1,79 — vielseitig vegan einsetzbar, solider Grundpreis.",
+      "evidenceTag": ""
     }
   ],
   "model": "sonnet",
   "picks": [
     {
-      "title": "Niederlande - EDEKA Herzstücke - Mini-Rispentomaten",
-      "reason": "Allzeit-Tief nach 6 Wochen Verlauf – günstiger waren sie noch nie."
+      "title": "Deutschland - GUT & GÜNSTIG - Tafeläpfel",
+      "reason": "Allzeit-Tief: nur 75 Ct pro Kilo — in 4 Wochen Geschichte nie günstiger gewesen."
     },
     {
-      "title": "Spanien - Bio-Kulturheidelbeeren",
-      "reason": "Bio-Heidelbeeren ebenfalls auf Allzeit-Tief – so günstig wie nie erfasst."
+      "title": "Spanien - Bio-Zucchini",
+      "reason": "Allzeit-Tief nach 3 Wochen: €2,98/kg ist der niedrigste bisher gesehene Preis."
     },
     {
-      "title": "Vegetarische oder Vegane Produkte",
-      "reason": "Direkt für vegane Ernährung – passt perfekt zu deinen Vorlieben."
+      "title": "Beck's Pils oder Blue Lemon 0,0% Alkoholfrei",
+      "reason": "Aus deiner Bier-Kategorie: €2,27/l, auch als alkoholfreie Blue Lemon erhältlich."
     },
     {
-      "title": "Deutschland - Kohlrabi",
-      "reason": "Nur 59 Cent für deutschen Kohlrabi – kaum günstiger zu bekommen."
+      "title": "Bitburger Pils",
+      "reason": "Klassisches Pils für €1,10 pro Liter — guter Wert aus deiner Bier-Kategorie."
     },
     {
-      "title": "Deutschland - Frühkartoffeln",
-      "reason": "Saisonale Frühkartoffeln für €1,25/kg – echter Sommerwert."
+      "title": "Deutschland - Auberginen",
+      "reason": "Nur 99 Cent pro Stück — günstig und vielseitig für vegane Küche einsetzbar."
     },
     {
-      "title": "Spanien - Bio-Spitzpaprika",
-      "reason": "Bio-Spitzpaprika aus Spanien für €1,79 – frisch aus der Lieblingskategorie."
+      "title": "Planted vegane Produkte",
+      "reason": "Pflanzliche Alternative aus deiner Vegan-Kategorie, diese Woche im Regal."
     },
     {
-      "title": "Wicküler Pils oder Pils 0,0% alkoholfrei",
-      "reason": "Bier-Favorit mit 0,0%-Alternative – klassisches Pils zum Vorratspreis."
+      "title": "Bionade",
+      "reason": "Allzeit-Tief: €2,27 pro Liter — günstigstes Bio-Erfrischungsgetränk seit 2 Wochen."
     },
     {
-      "title": "Veltins Pilsener",
-      "reason": "Klassischer Kasten Veltins – verlässliches Pils ohne Preisverlauf."
+      "title": "Spanien - GUT & GÜNSTIG - Plattpfirsiche",
+      "reason": "Saisonale Plattpfirsiche für €1,11 — günstig, fruchtig, sommerlich."
+    },
+    {
+      "title": "Deutschland - Champignons",
+      "reason": "Frische Champignons für €1,79 — vielseitig vegan einsetzbar, solider Grundpreis."
     }
   ],
   "generatedFor": "default"
