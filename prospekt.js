@@ -218,6 +218,9 @@ function loadPrefs() {
             interests: (p && typeof p.interests === 'object' && p.interests) ? p.interests : { ...DEFAULT_INTERESTS },
             votes: (p && typeof p.votes === 'object' && p.votes) ? p.votes : {},
             bought: (p && typeof p.bought === 'object' && p.bought) ? p.bought : {},
+            // Keep the last-changed stamp across reloads so the page can tell
+            // whether data/preferences.json still matches the live prefs.
+            updatedAt: (p && typeof p.updatedAt === 'string') ? p.updatedAt : undefined,
         };
     } catch (err) {
         prefs = defaultPrefs();
@@ -231,6 +234,58 @@ function savePrefs() {
     } catch (err) {
         // private mode / storage disabled — keep working in memory only.
     }
+}
+
+// ── exported-preferences status ──
+// data/preferences.json is the snapshot the Monday generate_prospekt.py reads.
+// It is gitignored (stays local), so it can be missing or lag behind the live
+// localStorage prefs. Surface that on the page so you know to re-export.
+let exportChecked = false;   // has the initial fetch finished? (avoid flicker)
+let exportPresent = false;   // does data/preferences.json exist?
+let exportedAt = null;       // its updatedAt stamp, or null if unknown
+
+async function checkExportStatus() {
+    try {
+        const res = await fetch('data/preferences.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error(`status ${res.status}`);
+        const data = await res.json();
+        exportPresent = true;
+        exportedAt = (data && typeof data.updatedAt === 'string') ? data.updatedAt : null;
+    } catch (e) {
+        exportPresent = false;
+        exportedAt = null;
+    }
+    exportChecked = true;
+    paintExportStatus();
+}
+
+function paintExportStatus() {
+    const el = document.getElementById('steer-status');
+    if (!el) return;
+    el.classList.remove('ok', 'warn');
+    if (!exportChecked) { el.textContent = ''; return; }   // not known yet
+    const live = (prefs && typeof prefs.updatedAt === 'string') ? prefs.updatedAt : null;
+    if (!exportPresent) {
+        el.classList.add('warn');
+        el.textContent = '⚠ Noch nicht exportiert — die Montags-Empfehlungen nutzen aktuell nur den Standard-Fokus. Exportiere deine Vorlieben.';
+        return;
+    }
+    // Both files present: compare stamps. ISO-8601 UTC strings (toISOString)
+    // compare correctly lexicographically.
+    if (live && (!exportedAt || live > exportedAt)) {
+        el.classList.add('warn');
+        el.textContent = `⚠ Vorlieben seit dem letzten Export geändert${exportedAt ? ` (Export: ${formatStamp(exportedAt)})` : ''} — neu exportieren, damit Montag die aktuellen genutzt werden.`;
+        return;
+    }
+    el.classList.add('ok');
+    el.textContent = `✓ Exportierte Vorlieben aktuell${exportedAt ? ` (Stand ${formatStamp(exportedAt)})` : ''}.`;
+}
+
+function formatStamp(iso) {
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return iso;
+    return d.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })
+        + ' ' + d.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
 }
 
 function interestLevel(key) {
@@ -281,6 +336,7 @@ function scoreOffer(o) {
 async function init() {
     loadPrefs();
     buildSteering();
+    checkExportStatus();   // fire-and-forget: reports if data/preferences.json is missing/stale
 
     const weekSelect = document.getElementById('week-select');
     let files = [];
@@ -553,6 +609,7 @@ async function exportPrefs() {
         });
         if (res.ok) {
             if (hint) hint.textContent = 'In data/preferences.json gespeichert — am Montag generate_prospekt.py ausführen.';
+            checkExportStatus();   // re-read the file so the status flips to "aktuell"
             return;
         }
     } catch (e) {
@@ -891,6 +948,7 @@ function renderAll() {
 
     updateHiddenCount();
     renderBrowse();
+    paintExportStatus();   // a vote/interest change may now outdate the export
 }
 
 if (typeof document !== 'undefined') {
