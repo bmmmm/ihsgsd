@@ -5,6 +5,7 @@ Drop-in replacement for `python3 -m http.server`: it serves the repo root
 statically AND adds two endpoints the static server cannot offer —
 
     POST /api/preferences          body = the exported preferences JSON
+    POST /api/shopping             body = this week's shopping list JSON
     POST /api/mealplan/regenerate  (no body) runs scripts/generate_mealplan.py
 
 The first stores the body straight into data/preferences.json, the file the
@@ -39,6 +40,7 @@ button still works — it just falls back to a normal download.
 
 import json
 import os
+import re
 import subprocess
 import sys
 from functools import partial
@@ -104,6 +106,43 @@ def write_preferences(raw):
     return data
 
 
+# Shopping-list file name is the week's date — unique across years and sortable,
+# matching the data/{YEAR}/KW{XX}/{DATE}.json scheme. A strict pattern (digits +
+# dashes only) doubles as the path-traversal guard: the name comes from the
+# client, so nothing but YYYY-MM-DD may reach the filesystem.
+SHOPPING_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def write_shopping(raw):
+    """Validate `raw` (bytes) as a weekly shopping list and write it atomically to
+    data/shopping/<date>.json (gitignored — it's personal). Returns the parsed
+    dict. Raises ValueError with an actionable message on malformed input.
+
+    Socket-free so it can be unit-tested without binding a port."""
+    if len(raw) > MAX_BODY:
+        raise ValueError(f"body too large ({len(raw)} bytes, max {MAX_BODY})")
+    try:
+        data = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError(f"body is not valid UTF-8 JSON: {exc}")
+    if not isinstance(data, dict):
+        raise ValueError(f"expected a JSON object, got {type(data).__name__}")
+    date = data.get("date")
+    if not isinstance(date, str) or not SHOPPING_DATE_RE.match(date):
+        raise ValueError("'date' must be a YYYY-MM-DD string (it names the file)")
+    for key in ("offers", "pantry"):
+        if key in data and not isinstance(data[key], list):
+            raise ValueError(f"'{key}' must be an array, got {type(data[key]).__name__}")
+
+    target = REPO_ROOT / "data" / "shopping" / f"{date}.json"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    text = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
+    tmp = target.with_name(target.name + ".tmp")
+    tmp.write_text(text, encoding="utf-8")
+    os.replace(tmp, target)
+    return data, target
+
+
 def run_mealplan_regen(timeout=660):
     """Run scripts/generate_mealplan.py and return (ok: bool, message: str). The
     generator reads data/preferences.json (the page POSTs /api/preferences first)
@@ -141,6 +180,8 @@ class DevHandler(SimpleHTTPRequestHandler):
         route = self.path.split("?", 1)[0]
         if route == "/api/preferences":
             self._handle_preferences()
+        elif route == "/api/shopping":
+            self._handle_shopping()
         elif route == "/api/mealplan/regenerate":
             self._handle_mealplan_regen()
         else:
@@ -185,6 +226,35 @@ class DevHandler(SimpleHTTPRequestHandler):
         })
         print(f"saved {display_path(PREFS_PATH)} "
               f"({n_votes} votes, {n_bought} bought)")
+
+    def _handle_shopping(self):
+        try:
+            length = int(self.headers.get("Content-Length", 0))
+        except ValueError:
+            self.send_error(400, "Bad Content-Length")
+            return
+        if length <= 0:
+            self.send_error(400, "Empty body")
+            return
+        if length > MAX_BODY:
+            self.close_connection = True
+            self.send_error(413, f"Body too large (max {MAX_BODY} bytes)")
+            return
+        raw = self.rfile.read(length)
+        try:
+            data, target = write_shopping(raw)
+        except ValueError as exc:
+            self.send_error(400, str(exc))
+            return
+        n_offers = len(data.get("offers", []))
+        n_pantry = len(data.get("pantry", []))
+        self._send_json(200, {
+            "ok": True,
+            "path": display_path(target),
+            "offers": n_offers,
+            "pantry": n_pantry,
+        })
+        print(f"saved {display_path(target)} ({n_offers} offers, {n_pantry} pantry)")
 
     def _handle_mealplan_regen(self):
         # The generator ignores the request body (it reads data/preferences.json,
@@ -244,6 +314,7 @@ def main():
     server = ThreadingHTTPServer(("127.0.0.1", port), handler)
     print(f"Serving {REPO_ROOT} at http://127.0.0.1:{port}")
     print(f"  POST /api/preferences          -> {display_path(PREFS_PATH)}  ({src})")
+    print(f"  POST /api/shopping             -> data/shopping/<date>.json")
     print(f"  POST /api/mealplan/regenerate  -> runs scripts/generate_mealplan.py")
     print("Press Ctrl+C to stop.")
     try:

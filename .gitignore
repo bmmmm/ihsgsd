@@ -30,3 +30,6 @@ tmp/
 data/preferences.json*
 data/receipts.json*
 data/receipts/
+# Weekly shopping lists, saved on disk via serve.py's /api/shopping. Personal
+# (what you buy), so the whole dir is ignored — incl. atomic-write .tmp siblings.
+data/shopping/

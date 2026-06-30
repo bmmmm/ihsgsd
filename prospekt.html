@@ -360,6 +360,34 @@
         .pk-cluster > .pk-section { margin-bottom: 24px; }
         .pk-cluster > .pk-section:last-child { margin-bottom: 0; }
 
+        /* ── shopping list (minimal, copyable) ── */
+        #pk-shopping .pk-sl-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+        .pk-sl-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .pk-sl-btn {
+            font-family: inherit; font-size: 0.82rem; cursor: pointer;
+            padding: 7px 14px; border-radius: 8px; border: 1px solid #333;
+            background: #1a1a1a; color: #ddd; transition: all 0.15s;
+        }
+        .pk-sl-btn:hover { border-color: #555; background: #222; }
+        .pk-sl-btn.primary { border-color: #2f5d33; color: #9be29e; background: rgba(76,175,80,0.12); }
+        .pk-sl-btn.primary:hover { border-color: #4caf50; background: rgba(76,175,80,0.20); }
+        .pk-sl-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+        .pk-sl-meta { margin: 0 0 12px; font-size: 0.82rem; color: #888; min-height: 1em; }
+        .pk-sl-meta.ok { color: #7fae7f; }
+        .pk-sl-meta.warn { color: #e0a04d; }
+        .pk-sl-body { background: #141414; border: 1px solid #222; border-radius: 12px; padding: 14px 18px; }
+        .pk-sl-group { margin-bottom: 14px; }
+        .pk-sl-group:last-child { margin-bottom: 0; }
+        .pk-sl-group h3 {
+            margin: 0 0 6px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.6px; color: #7fae7f;
+        }
+        .pk-sl-group.pantry h3 { color: #cdb88a; }
+        .pk-sl-list { list-style: none; margin: 0; padding: 0; }
+        .pk-sl-item { display: flex; align-items: baseline; gap: 8px; padding: 3px 0; font-size: 0.9rem; color: #e0e0e0; }
+        .pk-sl-item::before { content: "\2022"; color: #555; }
+        .pk-sl-price { margin-left: auto; color: #9be29e; font-size: 0.84rem; font-weight: 600; }
+
         .footer { margin-top: 28px; padding-top: 16px; border-top: 1px solid #222; color: #666; font-size: 0.82rem; }
     </style>
 </head>
@@ -406,6 +434,18 @@
                 </div>
                 <p id="pk-mealplan-intro" class="pk-intro"></p>
                 <div id="pk-mealplan-grid" class="mp-grid"></div>
+            </section>
+
+            <section class="pk-section" id="pk-shopping">
+                <div class="pk-sl-head">
+                    <h2><span class="pk-emoji">&#128722;</span>Einkaufszettel</h2>
+                    <div class="pk-sl-actions">
+                        <button type="button" id="pk-shopping-copy" class="pk-sl-btn">&#128203; Kopieren</button>
+                        <button type="button" id="pk-shopping-save" class="pk-sl-btn primary" hidden>&#128190; Ablegen</button>
+                    </div>
+                </div>
+                <p id="pk-shopping-meta" class="pk-sl-meta" aria-live="polite"></p>
+                <div id="pk-shopping-body" class="pk-sl-body"></div>
             </section>
         </div>
 
