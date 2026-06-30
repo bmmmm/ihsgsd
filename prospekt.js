@@ -475,6 +475,13 @@ function buildBrowseRow(o) {
     dot.className = 'pk-dot';
     dot.style.background = CATEGORY_COLORS[catName(o)] || '#888';
     main.appendChild(dot);
+    // Small product thumbnail (local archive first, live URL as fallback) so the
+    // overview is scannable by picture, not just title. Absent image -> dot only.
+    const thumb = buildOfferImage(o);
+    if (thumb) {
+        thumb.className = 'browse-thumb';
+        main.appendChild(thumb);
+    }
     const title = document.createElement('span');
     title.className = 'browse-title';
     title.textContent = o.title || '(ohne Titel)';

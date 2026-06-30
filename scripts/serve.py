@@ -16,6 +16,12 @@ Usage:
     python3 scripts/serve.py            # http://127.0.0.1:8888
     python3 scripts/serve.py 9000       # pick another port
 
+The save target defaults to data/preferences.json. Override it with the
+EDEKA_PREFS_PATH env var (absolute, ~-expanded, or relative to the repo root) —
+keep it in ~/.env so a personal path never lands in this public repo, e.g.
+
+    export EDEKA_PREFS_PATH=~/edeka-prefs/preferences.json
+
 Bound to 127.0.0.1 only: the write endpoint is for your own machine, never the
 LAN. If you serve the site some other way (plain http.server), the page's export
 button still works — it just falls back to a normal download.
@@ -29,8 +35,31 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-PREFS_PATH = REPO_ROOT / "data" / "preferences.json"
 MAX_BODY = 2 * 1024 * 1024  # 2 MB — preferences are a few KB; cap abuse/runaways.
+
+
+def _resolve_prefs_path():
+    """Where to store the posted preferences. Override via the EDEKA_PREFS_PATH
+    env var (absolute, ~-expanded, or relative to the repo root); defaults to
+    data/preferences.json. Keeping a personal path in an env var rather than this
+    tracked, public source avoids leaking a home path into the repo."""
+    raw = os.environ.get("EDEKA_PREFS_PATH", "").strip()
+    if not raw:
+        return REPO_ROOT / "data" / "preferences.json"
+    p = Path(raw).expanduser()
+    return p if p.is_absolute() else (REPO_ROOT / p)
+
+
+PREFS_PATH = _resolve_prefs_path()
+
+
+def display_path(path):
+    """Repo-relative for the common case, absolute when the target lives outside
+    the repo (a custom EDEKA_PREFS_PATH), so logging never crashes on relative_to."""
+    try:
+        return str(path.relative_to(REPO_ROOT))
+    except ValueError:
+        return str(path)
 
 
 def write_preferences(raw):
@@ -57,7 +86,7 @@ def write_preferences(raw):
     text = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
     # Atomic write: a crash mid-write must not leave a half-file that breaks the
     # next generate_prospekt.py run. tmp sibling + os.replace is atomic on POSIX.
-    tmp = PREFS_PATH.with_suffix(".json.tmp")
+    tmp = PREFS_PATH.with_name(PREFS_PATH.name + ".tmp")
     tmp.write_text(text, encoding="utf-8")
     os.replace(tmp, PREFS_PATH)
     return data
@@ -89,7 +118,7 @@ class DevHandler(SimpleHTTPRequestHandler):
         n_bought = len(data.get("bought", {}))
         body = json.dumps({
             "ok": True,
-            "path": str(PREFS_PATH.relative_to(REPO_ROOT)),
+            "path": display_path(PREFS_PATH),
             "votes": n_votes,
             "bought": n_bought,
         }).encode("utf-8")
@@ -98,7 +127,7 @@ class DevHandler(SimpleHTTPRequestHandler):
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)
-        print(f"saved {PREFS_PATH.relative_to(REPO_ROOT)} "
+        print(f"saved {display_path(PREFS_PATH)} "
               f"({n_votes} votes, {n_bought} bought)")
 
 
@@ -112,7 +141,8 @@ def main():
     handler = partial(DevHandler, directory=str(REPO_ROOT))
     server = HTTPServer(("127.0.0.1", port), handler)
     print(f"Serving {REPO_ROOT} at http://127.0.0.1:{port}")
-    print(f"  POST /api/preferences -> {PREFS_PATH.relative_to(REPO_ROOT)}")
+    src = "EDEKA_PREFS_PATH" if os.environ.get("EDEKA_PREFS_PATH", "").strip() else "default"
+    print(f"  POST /api/preferences -> {display_path(PREFS_PATH)}  ({src})")
     print("Press Ctrl+C to stop.")
     try:
         server.serve_forever()
