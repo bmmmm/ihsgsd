@@ -228,7 +228,7 @@ const BOUGHT_WEIGHT = 1;             // a mild loyalty nudge for items you actua
 
 // ── preferences (localStorage) ──
 function defaultPrefs() {
-    return { version: 1, interests: { ...DEFAULT_INTERESTS }, votes: {}, bought: {}, meals: {} };
+    return { version: 1, interests: { ...DEFAULT_INTERESTS }, votes: {}, bought: {}, meals: {}, glutenFree: false };
 }
 
 function loadPrefs() {
@@ -243,6 +243,10 @@ function loadPrefs() {
             bought: (p && typeof p.bought === 'object' && p.bought) ? p.bought : {},
             // Per-meal 👍/👎 (keyed by meal slug) — the meal-plan learning signal.
             meals: (p && typeof p.meals === 'object' && p.meals) ? p.meals : {},
+            // Gluten-free display toggle: swaps pasta/flour/etc. for GF
+            // alternatives in the meal plan. Display-only preference, persisted
+            // quietly (no re-export nag) — see persistPrefsQuiet.
+            glutenFree: (p && typeof p.glutenFree === 'boolean') ? p.glutenFree : false,
             // Keep the last-changed stamp across reloads so the page can tell
             // whether data/preferences.json still matches the live prefs.
             updatedAt: (p && typeof p.updatedAt === 'string') ? p.updatedAt : undefined,
@@ -259,6 +263,14 @@ function savePrefs() {
     } catch (err) {
         // private mode / storage disabled — keep working in memory only.
     }
+}
+
+// Persist prefs WITHOUT bumping updatedAt — for display-only preferences (the
+// gluten-free toggle) the Monday generator doesn't read yet, so a "re-export"
+// prompt would just be noise. Mirrors backfillVoteCategories' quiet write.
+function persistPrefsQuiet() {
+    try { localStorage.setItem(PREFS_STORE, JSON.stringify(prefs)); }
+    catch (err) { /* storage disabled — in-memory state still applies this session */ }
 }
 
 // ── exported-preferences status ──
@@ -491,6 +503,21 @@ function buildSteering() {
     if (resetBtn) resetBtn.addEventListener('click', resetPrefs);
     const regenBtn = document.getElementById('pk-mealplan-regen');
     if (regenBtn) regenBtn.addEventListener('click', regenerateMealplan);
+
+    // Gluten-free toggle (meal plan): a pure client-side display swap, so it
+    // works everywhere (not gated on the dev server) and needs no regeneration.
+    // Persisted quietly — it never triggers a "re-export" prompt.
+    const gfToggle = document.getElementById('pk-mealplan-gf');
+    if (gfToggle) {
+        gfToggle.checked = !!(prefs && prefs.glutenFree);
+        syncGfToggle(gfToggle.checked);
+        gfToggle.addEventListener('change', () => {
+            if (prefs) { prefs.glutenFree = gfToggle.checked; persistPrefsQuiet(); }
+            syncGfToggle(gfToggle.checked);
+            renderMealplan();
+        });
+    }
+
     const hiddenToggle = document.getElementById('show-hidden');
     if (hiddenToggle) hiddenToggle.addEventListener('change', renderAll);
 
@@ -995,7 +1022,7 @@ function renderHero() {
     }
     if (lead) {
         const txt = prospektData && typeof prospektData.lead === 'string' ? prospektData.lead : '';
-        lead.textContent = txt || 'Handverlesene Angebote der Woche — vegan, frisch, mit kühlem Bier und Spezi. Sag uns mit 👍 / 🚫 und den Vorlieben oben, was dich interessiert.';
+        lead.textContent = txt || 'Handverlesene Angebote der Woche — vegan, frisch, mit kühlem Bier und Spezi. Sag uns mit 👍 / 🚫 und den Vorlieben weiter unten, was dich interessiert.';
     }
 }
 
@@ -1103,6 +1130,53 @@ function swapMeal(dayIndex) {
     renderMealplan();
 }
 
+// Gluten-free substitutions for the meal plan. When prefs.glutenFree is on the
+// toggle rewrites gluten-bearing ingredient names and step text to GF
+// alternatives — pasta, flour, couscous, bulgur, seitan, soy sauce, bread, oats.
+// Single regex over the ORIGINAL string (matches replaced once, never rescanned)
+// so "Nudeln" -> "glutenfreie Nudeln" can't double-substitute. Specific compounds
+// listed before generic words; \b stops it matching inside other words (e.g.
+// "Maisgrieß", "Sojadrink" stay untouched). Render-time only -> instant & reversible.
+const GF_RULES = [
+    { re: /\bVollkornnudeln\b/i, to: 'glutenfreie Nudeln' },
+    { re: /\bBandnudeln\b/i,     to: 'glutenfreie Bandnudeln' },
+    { re: /\bNudeln\b/i,         to: 'glutenfreie Nudeln' },
+    { re: /\bSpaghetti\b/i,      to: 'glutenfreie Spaghetti' },
+    { re: /\bTagliatelle\b/i,    to: 'glutenfreie Tagliatelle' },
+    { re: /\bPenne\b/i,          to: 'glutenfreie Penne' },
+    { re: /\bPasta\b/i,          to: 'glutenfreie Pasta' },
+    { re: /\bWeizenmehl\b/i,     to: 'glutenfreies Mehl' },
+    { re: /\bMehl\b/i,           to: 'glutenfreies Mehl' },
+    { re: /\bCouscous\b/i,       to: 'Quinoa' },
+    { re: /\bBulgur\b/i,         to: 'Quinoa' },
+    { re: /\bSeitan\b/i,         to: 'Tofu' },
+    // Trailing \b is unreliable after "ß" (ß ∉ \w in JS), so assert "no letter
+    // follows" instead — still keeps "Maisgrieß"/"Grießbrei" untouched.
+    { re: /\bGrie(?:ss|ß)(?![\wäöüÄÖÜß])/i, to: 'Polenta' },
+    { re: /\bSoja(?:so(?:ß|ss)e|sauce)\b/i, to: 'Tamari (glutenfrei)' },
+    { re: /\bBrötchen\b/i,       to: 'glutenfreie Brötchen' },
+    { re: /\bBaguette\b/i,       to: 'glutenfreies Baguette' },
+    { re: /\bBrot\b/i,           to: 'glutenfreies Brot' },
+    { re: /\bToast\b/i,          to: 'glutenfreier Toast' },
+    { re: /\bHaferflocken\b/i,   to: 'glutenfreie Haferflocken' },
+    { re: /\bTortillas?\b/i,     to: 'Mais-Tortillas' },
+    { re: /\bWraps?\b/i,         to: 'Mais-Wraps' },
+];
+const GF_RE = new RegExp(GF_RULES.map(r => r.re.source).join('|'), 'gi');
+
+function glutenFreeText(s) {
+    return String(s == null ? '' : s).replace(GF_RE, m => {
+        for (const r of GF_RULES) if (r.re.test(m)) return r.to;
+        return m;
+    });
+}
+
+// Reflect the GF toggle's on/off state on its pill label (visual only).
+function syncGfToggle(on) {
+    const label = document.getElementById('pk-mealplan-gf-label');
+    if (label) label.classList.toggle('on', !!on);
+}
+
 function buildMealCard(day, meal, dayIndex) {
     const card = document.createElement('article');
     card.className = 'mp-card';
@@ -1126,12 +1200,20 @@ function buildMealCard(day, meal, dayIndex) {
         card.appendChild(blurb);
     }
 
+    const gf = !!(prefs && prefs.glutenFree);
     const ings = document.createElement('div');
     ings.className = 'mp-ings';
     (Array.isArray(meal.ingredients) ? meal.ingredients : []).forEach(ing => {
         if (!ing || !ing.name) return;
         const chip = document.createElement('span');
-        if (ing.offerTitle) {
+        const swapped = gf ? glutenFreeText(ing.name) : ing.name;
+        if (gf && swapped !== ing.name) {
+            // Gluten ingredient replaced by a GF alternative. Drop any offer
+            // link/price — the GF product is not the one that's on offer.
+            chip.className = 'mp-chip gf';
+            chip.textContent = swapped;
+            chip.title = `glutenfrei statt „${ing.name}“`;
+        } else if (ing.offerTitle) {
             const onOffer = currentOffers.some(o => (o.title || '') === ing.offerTitle);
             chip.className = 'mp-chip offer';
             chip.textContent = ing.name;
@@ -1160,7 +1242,7 @@ function buildMealCard(day, meal, dayIndex) {
         const ol = document.createElement('ol');
         meal.steps.forEach(s => {
             const li = document.createElement('li');
-            li.textContent = s;
+            li.textContent = gf ? glutenFreeText(s) : s;
             ol.appendChild(li);
         });
         details.appendChild(ol);
@@ -1257,6 +1339,19 @@ async function regenerateMealplan() {
     }
 }
 
+// Hide a content cluster's heading when every section inside it is empty (the
+// sections hide themselves via display:none). The controls cluster is always
+// shown, so it's deliberately not listed here.
+function updateClusters() {
+    ['cluster-foryou', 'cluster-themen'].forEach(id => {
+        const c = document.getElementById(id);
+        if (!c) return;
+        const secs = c.querySelectorAll('.pk-section');
+        const anyVisible = Array.from(secs).some(s => s.style.display !== 'none');
+        c.style.display = anyVisible ? '' : 'none';
+    });
+}
+
 function renderAll() {
     renderHero();
 
@@ -1285,6 +1380,7 @@ function renderAll() {
     fillSection('pk-knueller-grid', 'pk-knueller-intro',
         offersWhere(isKnuller), 'knueller', { limit: 12 });
 
+    updateClusters();
     updateHiddenCount();
     renderBrowse();
     paintExportStatus();   // a vote/interest change may now outdate the export

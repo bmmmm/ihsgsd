@@ -32,7 +32,7 @@ falls back to a plain download with `http.server`.
 - **`index.html`** — Single-page app with dark theme, contains all CSS inline in `<style>`.
 - **`table.html`** — Alternative table view of the same offer data (different layout/presentation).
 - **`dashboard.html`** — EDEKA Dashboard — separate analytics/summary view of the offer data.
-- **`prospekt.html` / `prospekt.js`** — Curated weekly flyer: personalised "Für dich" picks, a vegan Mo–So meal plan, and per-topic sections. Pure client-side prefs in localStorage (interest chips + 👍/👎 votes + per-meal votes), exported to `data/preferences.json` for the generators.
+- **`prospekt.html` / `prospekt.js`** — Curated weekly flyer, grouped into three labelled clusters: **Für dich** (top picks + vegan Mo–So meal plan), **Angebote nach Thema** (per-topic sections), and **Personalisieren & stöbern** (interest chips, export, full-week browser) at the bottom. Pure client-side prefs in localStorage (interest chips + 👍/👎 votes + per-meal votes), exported to `data/preferences.json` for the generators. The meal plan has a client-side **gluten-free toggle** (`prefs.glutenFree`) that swaps gluten ingredients/steps (Nudeln, Mehl, Couscous, Seitan…) for GF alternatives at render time — display-only, works without the dev server, persisted quietly (no re-export prompt).
 - **`script.js`** — All frontend logic for `index.html`: data fetching, table rendering, search, category filtering, image toggle, clipboard export.
 - **`data/`** — Weekly JSON snapshots organized as `data/{YEAR}/KW{XX}/{DATE}.json`. ~17MB total, 70+ files.
 - **`data/folder-structure.json`** — Auto-generated index of all data files (used by the dropdown).
