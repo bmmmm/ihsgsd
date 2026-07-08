@@ -1,156 +1,176 @@
 {
-  "generatedAt": "2026-06-29",
-  "weekLabel": "KW27",
-  "lead": "Diese Woche trifft's dich gleich dreifach am Allzeit-Tief: die Bio-Zucchini aus Spanien für €1,49 (1 kg = €2,98), Tafeläpfel für nur €0,75 je Kilogramm – und die Bionade ist so günstig wie noch nie, der Kasten für €8,99. Im Gemüseregal warten außerdem Auberginen für €0,99, Staudensellerie und Brokkoli – allesamt Favoriten, die direkt in den Korb wandern. Bier-Fans freuen sich: Bitburger Pils kommt als Kasten auf €10,99, das macht schlanke €1,10 pro Liter. Eine starke Woche fürs vegane und vegetarische Kochen!",
+  "generatedAt": "2026-07-06",
+  "weekLabel": "KW28",
+  "lead": "Diese Woche warten gleich mehrere Allzeit-Tiefs auf dich: die Mini-Rispentomaten für nur €1,00 und die Bio-Kulturheidelbeeren für €3,99 sind so günstig wie nie zuvor. Auch dein geliebtes Paulaner Spezi gibt's zum historischen Tiefpreis (€1,10/l), und das Maximilian Bayrisch Hell zieht mit einem eigenen Allzeit-Tief nach. Für den veganen Brotzeit-Teller sorgt der Rügenwalder Veganer Aufschnitt für €1,29. Und im Gemüsefach lohnen sich außerdem Frühkartoffeln (€1,50/kg) und Kiwis für nur €0,59 – frisch eingekauft, viel gespart.",
   "sections": {
-    "vegan": "Planted bietet diese Woche vegane Produkte im Angebot – gut zum Reinschnuppern für alle, die pflanzlich kochen möchten.",
-    "obstgemuese": "Starke Woche im Gemüseregal: drei Allzeit-Tiefs, fünf Favoriten und Avocados für nur €0,66 – der Korb füllt sich fast von selbst.",
-    "bierspezi": "Bionade am Allzeit-Tief, dazu Bitburger und Beck's Pils – für Bier- und Bionade-Fans gibt's diesmal Einiges zu holen.",
-    "knueller": "Aus dem Superknüller-Regal sticht die Bertolli Pastasauce am Allzeit-Tief hervor – prima Basis für vegane Pasta. Den Rest der Deals kannst du meist ignorieren."
+    "vegan": "Nur ein veganer Pick diese Woche, aber ein guter: Rügenwalder Veganer Aufschnitt fürs Pausenbrot.",
+    "obstgemuese": "Obst & Gemüse glänzt: Mini-Rispentomaten und Bio-Heidelbeeren im Allzeit-Tief, dazu jede Menge frisches Sommergemüse.",
+    "bierspezi": "Dein Spezi ist im Allzeit-Tief, dazu Bayrisch Hell günstig wie nie und zwei Pilsener-Optionen.",
+    "knueller": "Bei den Superknüllern lohnen sich vor allem Bayrisch Hell und dein Spezi – beide im Allzeit-Tief."
   },
   "foryou": [
     {
-      "title": "Spanien - Bio-Zucchini",
+      "title": "Niederlande - EDEKA Herzstücke - Mini-Rispentomaten",
       "rank": 1,
-      "reason": "Dein Favorit am Allzeit-Tief – 1 kg = €2,98, günstiger war's nie.",
+      "reason": "Allzeit-Tief bei nur €1,00 – günstigster Preis seit 7 Wochen.",
       "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Bionade",
+      "title": "Spanien - EDEKA Bio - Bio-Kulturheidelbeeren",
       "rank": 2,
-      "reason": "Dein Lieblingsgetränk am Allzeit-Tief – 1 l = €2,27, noch nie so günstig.",
+      "reason": "Bio-Heidelbeeren im Allzeit-Tief – günstiger ging's noch nie.",
       "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Deutschland - GUT & GÜNSTIG - Tafeläpfel",
+      "title": "Paulaner Spezi oder Limo",
       "rank": 3,
-      "reason": "Allzeit-Tief: 1 kg = €0,75 – günstiger waren Tafeläpfel noch nie.",
+      "reason": "Dein geliebtes Spezi im Allzeit-Tief, nur €1,10/l.",
       "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Deutschland - Auberginen",
+      "title": "Maximilian Bayrisch Hell",
       "rank": 4,
-      "reason": "Dein Favorit für nur €0,99 – ein echter Klassenpreis.",
-      "evidenceTag": "Favorit"
+      "reason": "Bier im Allzeit-Tief – so günstig war es noch nie.",
+      "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Deutschland - Staudensellerie",
+      "title": "Rügenwalder Mühle - Veganer Aufschnitt",
       "rank": 5,
-      "reason": "Dein Favorit – immer einen festen Platz im Gemüsekorb wert.",
+      "reason": "Veganer Aufschnitt – genau dein Ding.",
       "evidenceTag": "Favorit"
     },
     {
-      "title": "Deutschland - Champignons",
+      "title": "Deutschland - Frühkartoffeln",
       "rank": 6,
-      "reason": "Dein Favorit: €1,79 für die Packung – top für Pfannen und Saucen.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Deutschland - Brokkoli",
-      "rank": 7,
-      "reason": "Dein Favorit: knackig grün für €1,29 (1 kg = €3,23).",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Planted vegane Produkte",
-      "rank": 8,
-      "reason": "Vegan (Favorit-Kategorie) – lohnt sich reinzuschauen.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Bitburger Pils",
-      "rank": 9,
-      "reason": "Bier-Favorit: Kasten für €10,99 – nur €1,10/l, sehr solider Preis.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Beck's Pils oder Blue Lemon 0,0% Alkoholfrei",
-      "rank": 10,
-      "reason": "Bier-Favorit als 6er für €4,49 – auch alkoholfrei im Angebot.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Deutschland - EDEKA Regional - Mini-Pak-Choi",
-      "rank": 11,
-      "reason": "Dein Favorit – regional & knackig; aktuell leider am Preishoch.",
-      "evidenceTag": "mag ich"
-    },
-    {
-      "title": "Peru - Avocados",
-      "rank": 12,
-      "reason": "Nur €0,66 je Stück – selten so günstig für eine reife Avocado.",
+      "reason": "Frühkartoffeln zum Kilopreis von nur €1,50 – top Deal fürs Gemüsefach.",
       "evidenceTag": "guter Preis"
     },
     {
-      "title": "Bertolli Pastasauce",
-      "rank": 13,
-      "reason": "Allzeit-Tief: €1,99 (1 kg = €4,98) – prima Basis für vegane Pasta.",
-      "evidenceTag": "Allzeit-Tief"
+      "title": "Neuseeland - Zespri - Kiwis",
+      "rank": 7,
+      "reason": "Kiwis für nur €0,59 – ein echtes Schnäppchen fürs Obstfach.",
+      "evidenceTag": "guter Preis"
     },
     {
-      "title": "Deutschland - EDEKA Regional - Bio-Mini-Romanasalat",
-      "rank": 14,
-      "reason": "Bio & regional – ein frischer Sommersalat direkt aus der Region.",
+      "title": "Deutschland - Eisbergsalat",
+      "rank": 8,
+      "reason": "Knackiger Eisbergsalat für nur €0,88.",
+      "evidenceTag": "guter Preis"
+    },
+    {
+      "title": "Spanien - Wassermelonen",
+      "rank": 9,
+      "reason": "Erfrischende Wassermelone für nur €0,88.",
+      "evidenceTag": "guter Preis"
+    },
+    {
+      "title": "Spanien - Bio Pfirsiche",
+      "rank": 10,
+      "reason": "Bio-Pfirsiche, saftig und günstig für €2,49.",
       "evidenceTag": "mag ich"
+    },
+    {
+      "title": "Deutschland - Bio Rispentomaten",
+      "rank": 11,
+      "reason": "Bio-Rispentomaten – Bio und Lieblingsgemüse in einem.",
+      "evidenceTag": "mag ich"
+    },
+    {
+      "title": "König Pilsener",
+      "rank": 12,
+      "reason": "Pilsener zum guten Kilopreis – dein Bier-Favorit.",
+      "evidenceTag": "mag ich"
+    },
+    {
+      "title": "Jever Pilsener",
+      "rank": 13,
+      "reason": "Noch ein Pils im Angebot – fürs Bier-Regal.",
+      "evidenceTag": "mag ich"
+    },
+    {
+      "title": "Deutschland - Cherry-Rispentomaten",
+      "rank": 14,
+      "reason": "Süße Cherry-Rispentomaten für €2,22.",
+      "evidenceTag": ""
+    },
+    {
+      "title": "Deutschland - Bundmöhren",
+      "rank": 15,
+      "reason": "Frische Bundmöhren für nur €1,49.",
+      "evidenceTag": ""
+    },
+    {
+      "title": "Spanien - Paprika",
+      "rank": 16,
+      "reason": "Bunte Paprika für €1,49 – schnelles Gemüse für die Pfanne.",
+      "evidenceTag": ""
     }
   ],
   "model": "sonnet",
   "picks": [
     {
-      "title": "Spanien - Bio-Zucchini",
-      "reason": "Dein Favorit am Allzeit-Tief – 1 kg = €2,98, günstiger war's nie."
+      "title": "Niederlande - EDEKA Herzstücke - Mini-Rispentomaten",
+      "reason": "Allzeit-Tief bei nur €1,00 – günstigster Preis seit 7 Wochen."
     },
     {
-      "title": "Bionade",
-      "reason": "Dein Lieblingsgetränk am Allzeit-Tief – 1 l = €2,27, noch nie so günstig."
+      "title": "Spanien - EDEKA Bio - Bio-Kulturheidelbeeren",
+      "reason": "Bio-Heidelbeeren im Allzeit-Tief – günstiger ging's noch nie."
     },
     {
-      "title": "Deutschland - GUT & GÜNSTIG - Tafeläpfel",
-      "reason": "Allzeit-Tief: 1 kg = €0,75 – günstiger waren Tafeläpfel noch nie."
+      "title": "Paulaner Spezi oder Limo",
+      "reason": "Dein geliebtes Spezi im Allzeit-Tief, nur €1,10/l."
     },
     {
-      "title": "Deutschland - Auberginen",
-      "reason": "Dein Favorit für nur €0,99 – ein echter Klassenpreis."
+      "title": "Maximilian Bayrisch Hell",
+      "reason": "Bier im Allzeit-Tief – so günstig war es noch nie."
     },
     {
-      "title": "Deutschland - Staudensellerie",
-      "reason": "Dein Favorit – immer einen festen Platz im Gemüsekorb wert."
+      "title": "Rügenwalder Mühle - Veganer Aufschnitt",
+      "reason": "Veganer Aufschnitt – genau dein Ding."
     },
     {
-      "title": "Deutschland - Champignons",
-      "reason": "Dein Favorit: €1,79 für die Packung – top für Pfannen und Saucen."
+      "title": "Deutschland - Frühkartoffeln",
+      "reason": "Frühkartoffeln zum Kilopreis von nur €1,50 – top Deal fürs Gemüsefach."
     },
     {
-      "title": "Deutschland - Brokkoli",
-      "reason": "Dein Favorit: knackig grün für €1,29 (1 kg = €3,23)."
+      "title": "Neuseeland - Zespri - Kiwis",
+      "reason": "Kiwis für nur €0,59 – ein echtes Schnäppchen fürs Obstfach."
     },
     {
-      "title": "Planted vegane Produkte",
-      "reason": "Vegan (Favorit-Kategorie) – lohnt sich reinzuschauen."
+      "title": "Deutschland - Eisbergsalat",
+      "reason": "Knackiger Eisbergsalat für nur €0,88."
     },
     {
-      "title": "Bitburger Pils",
-      "reason": "Bier-Favorit: Kasten für €10,99 – nur €1,10/l, sehr solider Preis."
+      "title": "Spanien - Wassermelonen",
+      "reason": "Erfrischende Wassermelone für nur €0,88."
     },
     {
-      "title": "Beck's Pils oder Blue Lemon 0,0% Alkoholfrei",
-      "reason": "Bier-Favorit als 6er für €4,49 – auch alkoholfrei im Angebot."
+      "title": "Spanien - Bio Pfirsiche",
+      "reason": "Bio-Pfirsiche, saftig und günstig für €2,49."
     },
     {
-      "title": "Deutschland - EDEKA Regional - Mini-Pak-Choi",
-      "reason": "Dein Favorit – regional & knackig; aktuell leider am Preishoch."
+      "title": "Deutschland - Bio Rispentomaten",
+      "reason": "Bio-Rispentomaten – Bio und Lieblingsgemüse in einem."
     },
     {
-      "title": "Peru - Avocados",
-      "reason": "Nur €0,66 je Stück – selten so günstig für eine reife Avocado."
+      "title": "König Pilsener",
+      "reason": "Pilsener zum guten Kilopreis – dein Bier-Favorit."
     },
     {
-      "title": "Bertolli Pastasauce",
-      "reason": "Allzeit-Tief: €1,99 (1 kg = €4,98) – prima Basis für vegane Pasta."
+      "title": "Jever Pilsener",
+      "reason": "Noch ein Pils im Angebot – fürs Bier-Regal."
     },
     {
-      "title": "Deutschland - EDEKA Regional - Bio-Mini-Romanasalat",
-      "reason": "Bio & regional – ein frischer Sommersalat direkt aus der Region."
+      "title": "Deutschland - Cherry-Rispentomaten",
+      "reason": "Süße Cherry-Rispentomaten für €2,22."
+    },
+    {
+      "title": "Deutschland - Bundmöhren",
+      "reason": "Frische Bundmöhren für nur €1,49."
+    },
+    {
+      "title": "Spanien - Paprika",
+      "reason": "Bunte Paprika für €1,49 – schnelles Gemüse für die Pfanne."
     }
   ],
   "generatedFor": "2026-06-30T10:27:37.023Z"
