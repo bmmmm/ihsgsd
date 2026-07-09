@@ -1030,6 +1030,28 @@ function buildCard(o, opts) {
     body.appendChild(actions);
 
     card.appendChild(body);
+
+    // Card click → shared detail card (price history). Buttons keep their
+    // own behavior — only clicks outside interactive elements open it.
+    if (typeof DetailCard !== 'undefined') {
+        card.classList.add('pk-clickable');
+        card.addEventListener('click', e => {
+            if (e.target.closest('button, a, input, textarea, select')) return;
+            DetailCard.open({
+                title: o.title || '',
+                category: catName(o),
+                color: CATEGORY_COLORS[catName(o)] || '#888',
+                date: selectedWeekDate(),
+                offer: {
+                    price: offerPrice(o),
+                    basicPrice: typeof o.basicPrice === 'string' ? o.basicPrice : '',
+                    description: o.description || '',
+                    imageUrl: (o.images && safeImageUrl(o.images.app || '')) || '',
+                    localImageUrl: localImageUrl(o) || '',
+                },
+            });
+        });
+    }
     return card;
 }
 

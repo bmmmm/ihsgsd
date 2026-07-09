@@ -200,6 +200,8 @@
             transition: border-color 0.15s, opacity 0.15s;
         }
         .pk-card:hover { border-color: #3a3a3a; }
+        /* Cards open the product detail card on click (buttons excluded) */
+        .pk-card.pk-clickable { cursor: pointer; }
         .pk-card.downvoted { opacity: 0.45; }
         .pk-thumb {
             position: relative;
@@ -535,6 +537,7 @@
             EDEKA Wochen-Prospekt &mdash; kuratiert aus den Wochenangeboten. Texte optional lokal via <code>claude -p</code> erzeugt.
         </div>
     </div>
+    <script src="detail-card.js"></script>
     <script src="prospekt.js"></script>
 </body>
 </html>

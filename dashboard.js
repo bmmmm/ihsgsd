@@ -888,6 +888,35 @@ function isKnuller(o) {
     return Array.isArray(o.criteria) && o.criteria.some(c => c && c.name === 'Superknüller');
 }
 
+// ── shared detail card (detail-card.js) — click helpers ──
+function selectedWeekDateDash() {
+    const ws = document.getElementById('week-select');
+    return (ws && fileDate(ws.value)) || (priceHistory && priceHistory.latestDate) || '';
+}
+
+// Wire a list row to open the detail card. `info` carries a full week-offer
+// (from buildProductItem) or just {title, cat} (from buildGpRow / history hits).
+function makeDetailClickable(li, info) {
+    if (typeof DetailCard === 'undefined' || !info || !info.title) return;
+    li.classList.add('pi-click');
+    li.addEventListener('click', () => {
+        const o = info.offer;
+        DetailCard.open({
+            title: info.title,
+            category: info.cat || '',
+            color: CATEGORY_COLORS[info.cat] || '#888',
+            date: selectedWeekDateDash(),
+            offer: o ? {
+                price: offerPrice(o),
+                basicPrice: typeof o.basicPrice === 'string' ? o.basicPrice : '',
+                description: o.description || '',
+                imageUrl: (o.images && safeImageUrl(o.images.app || '')) || '',
+                localImageUrl: localImageUrl(o) || '',
+            } : undefined,
+        });
+    });
+}
+
 // Build one <li> product row via DOM API (XSS-safe — no raw innerHTML for data).
 function buildProductItem(o, opts) {
     opts = opts || {};
@@ -930,6 +959,7 @@ function buildProductItem(o, opts) {
     price.textContent = pr === null ? '—' : formatEuro(pr);
     li.appendChild(price);
 
+    makeDetailClickable(li, { title: o.title, cat: catName, offer: o });
     return li;
 }
 
@@ -970,12 +1000,53 @@ function renderSearchResults(base) {
 
     ul.innerHTML = '';
     if (matches.length === 0) {
-        setEmpty(ul, `Keine Treffer für "${q}".`);
-        return;
+        setEmpty(ul, `Keine Treffer für "${q}" in dieser Woche.`);
+    } else {
+        const frag = document.createDocumentFragment();
+        matches.forEach(o => frag.appendChild(buildProductItem(o, { markKnuller: true })));
+        ul.appendChild(frag);
     }
-    const frag = document.createDocumentFragment();
-    matches.forEach(o => frag.appendChild(buildProductItem(o, { markKnuller: true })));
-    ul.appendChild(frag);
+    appendHistorySearchResults(ul, q, new Set(matches.map(o => (o.title || '').toLowerCase())));
+}
+
+// All-time article search: articles from the price-history index that match
+// the query but are not offered in the selected week. Answers "gab es X
+// schon mal?" — each hit opens the detail card with its full history.
+function appendHistorySearchResults(ul, q, excludeTitles) {
+    if (!priceHistory || q.length < 3) return;
+    // Same title can exist as several unit/size variants — aggregate them so
+    // "zuletzt" reflects the newest observation across ALL variants.
+    const byTitle = new Map();
+    for (const p of priceHistory.products) {
+        const t = (p.title || '').toLowerCase();
+        if (!t.includes(q) || excludeTitles.has(t)) continue;
+        const last = p.obs[p.obs.length - 1];
+        const cur = byTitle.get(t);
+        if (!cur) {
+            byTitle.set(t, { p, last, unit: p.unit });
+        } else if (last.d > cur.last.d) {
+            cur.last = last;
+            cur.unit = p.unit;
+        }
+    }
+    const hits = [...byTitle.values()].slice(0, 10);
+    if (!hits.length) return;
+
+    const sep = document.createElement('li');
+    sep.className = 'feature-empty';
+    sep.textContent = 'Aus der Preishistorie (nicht in dieser Woche):';
+    ul.appendChild(sep);
+
+    hits.forEach(({ p, last, unit }) => {
+        ul.appendChild(buildGpRow({
+            title: p.title,
+            cat: p.cat,
+            sub: `${p.cat || '—'} · zuletzt ${formatDate(last.d)}`,
+            priceText: last.face !== undefined
+                ? formatEuro(last.face)
+                : `${formatEuro(last.gp)}/${unit}`,
+        }));
+    });
 }
 
 function renderTopLists(base) {
@@ -1293,6 +1364,8 @@ function buildGpRow(opts) {
         right.appendChild(b);
     }
     li.appendChild(right);
+
+    makeDetailClickable(li, { title: opts.title, cat: opts.cat });
     return li;
 }
 

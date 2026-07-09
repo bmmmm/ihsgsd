@@ -29,8 +29,9 @@ falls back to a plain download with `http.server`.
 
 ## Architecture
 
-- **`index.html`** — Single-page app with dark theme, contains all CSS inline in `<style>`.
-- **`table.html`** — Alternative table view of the same offer data (different layout/presentation).
+- **`index.html`** — Landing page linking to the three views (table, dashboard, prospekt). All CSS inline.
+- **`table.html`** — Searchable/filterable offer table (logic in `script.js`).
+- **`detail-card.js`** — Shared product detail modal used by all three views: click any article to see its Grundpreis history (SVG chart), all-time low/median, offer frequency, and past offers. Reads `data/price-history-index.json` lazily; articles are matched by normalized title, unit/size variants shown as tabs.
 - **`dashboard.html`** — EDEKA Dashboard — separate analytics/summary view of the offer data.
 - **`prospekt.html` / `prospekt.js`** — Curated weekly flyer, grouped into three labelled clusters: **Für dich** (top picks + vegan Mo–So meal plan + shopping list), **Angebote nach Thema** (per-topic sections), and **Personalisieren & stöbern** (interest chips, export, full-week browser) at the bottom. Pure client-side prefs in localStorage (interest chips + 👍/👎 votes + per-meal votes), exported to `data/preferences.json` for the generators. The meal plan has a client-side **gluten-free toggle** (`prefs.glutenFree`) that swaps gluten ingredients/steps (Nudeln, Mehl, Couscous, Seitan…) for GF alternatives at render time — display-only, works without the dev server, persisted quietly (no re-export prompt). The three card markers are kept **separate**: 👍/🚫 = taste (ranking only), 🛒 = bought (loyalty), 🧺 = shopping list. The **shopping list** (`prefs.basket`) is fed only by the meal plan's ingredients (incl. GF swaps) and 🧺-added offers — never by 👍/🛒 — merged into offers / pantry / own items. It's editable: remove (×), check off, and type own items; the overlay (removed/checked/custom) is bound to a plan key so a new week or regeneration starts fresh. Copy button (clipboard, Markdown checklist) and, on the dev server, a save button (`POST /api/shopping` → gitignored `data/shopping/`).
 - **`script.js`** — All frontend logic for `index.html`: data fetching, table rendering, search, category filtering, image toggle, clipboard export.

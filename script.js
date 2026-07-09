@@ -5,6 +5,11 @@ const HIDDEN_CATEGORIES_DEFAULT = ["Fleisch & Wurst", "Drogerie", "Tiernahrung",
 // Guard so attachImageHoverPreview() registers its listeners only once.
 let hoverPreviewAttached = false;
 
+// State of the currently loaded week, used by the detail-card click handler.
+let currentOffers = [];
+let currentWeekDir = "";
+let currentWeekDate = "";
+
 const SEARCH_DEBOUNCE_MS = 120;
 
 // Extract the "YYYY-MM-DD" date embedded in a data file path for sorting.
@@ -56,6 +61,7 @@ async function initializePage() {
 
     attachSearchFunctionality();
     setupToggleImages();
+    attachDetailCard();
   } catch (error) {
     console.error("Error initializing page:", error);
   }
@@ -110,11 +116,16 @@ async function fetchOffers(filePath) {
 
     offerInfo.textContent = `${totalCount} Angebote vom ${formatDate(validFrom)} bis ${formatDate(validTill)}`;
 
+    currentOffers = offers;
+    currentWeekDir = weekDir;
+    currentWeekDate = fileDate(filePath);
+
     tableBody.innerHTML = "";
     const fragment = document.createDocumentFragment();
-    offers.forEach((offer) => {
+    offers.forEach((offer, index) => {
       const row = document.createElement("tr");
       row.dataset.category = offer.category.name;
+      row.dataset.idx = String(index);
       // Precompute a lowercased search blob (title + category + description +
       // price) so the search handler does not read every cell on each keystroke.
       // Commas are normalized to dots so "1,5 l" and a query of "1,5" both
@@ -388,6 +399,37 @@ function setupToggleImages() {
 
     // Attach hover preview if images are shown
     if (isHidden) attachImageHoverPreview();
+  });
+}
+
+// Row click → shared product detail card (price history, stats). Delegated
+// once; image-cell clicks are left alone so the zoom preview keeps working.
+function attachDetailCard() {
+  const tableBody = document.getElementById("offer-table");
+  if (!tableBody || typeof DetailCard === "undefined") return;
+
+  tableBody.addEventListener("click", (event) => {
+    if (event.target.closest(".image-cell")) return;
+    const row = event.target.closest("tr");
+    if (!row || row.dataset.idx === undefined) return;
+    const offer = currentOffers[Number(row.dataset.idx)];
+    if (!offer) return;
+
+    const price = Number.isFinite(offer.price.rawValue)
+      ? offer.price.rawValue
+      : parseFloat(offer.price.value);
+    DetailCard.open({
+      title: offer.title,
+      category: offer.category.name,
+      date: currentWeekDate,
+      offer: {
+        price: Number.isFinite(price) ? price : null,
+        basicPrice: offer.basicPrice || "",
+        description: offer.description || "",
+        imageUrl: safeImageUrl((offer.images && offer.images.app) || ""),
+        localImageUrl: `data/${currentWeekDir}/img/${encodeURIComponent(offer.id)}.jpg`,
+      },
+    });
   });
 }
 
