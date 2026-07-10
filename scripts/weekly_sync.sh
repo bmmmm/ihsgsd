@@ -82,11 +82,7 @@ print(json.load(p.open()).get('weekLabel', '') if p.exists() else '')
 
 if [ "$LATEST_WEEK" = "$CURRENT_WEEK" ]; then
   echo "Phase B: prospekt/mealplan already generated for $LATEST_WEEK, nothing to do."
-  echo "=== $(date -u +"%Y-%m-%dT%H:%M:%SZ") weekly_sync end ==="
-  exit 0
-fi
-
-if python3 scripts/generate_prospekt.py && python3 scripts/generate_mealplan.py; then
+elif python3 scripts/generate_prospekt.py && python3 scripts/generate_mealplan.py; then
   git add data/prospekt.json data/mealplan.json
   if git diff --staged --quiet; then
     echo "Phase B: nothing to commit"
@@ -100,6 +96,34 @@ else
   notify_forgejo "weekly_sync: Prospekt/Mealplan-Generierung fehlgeschlagen ($LATEST_WEEK)" \
 "python3 scripts/generate_prospekt.py oder scripts/generate_mealplan.py ist fehlgeschlagen.
 Die Offer-Daten wurden trotzdem synchronisiert (Phase A lief durch, falls nötig).
+Log: $LOG_FILE"
+fi
+
+# Phase C: KI-Insights digest (data/insights.json), same freshness pattern as
+# Phase B. insights.json's weekLabel is "YYYY-KWnn" — strip the year prefix.
+INSIGHTS_WEEK=$(python3 -c "
+import json, pathlib
+p = pathlib.Path('data/insights.json')
+label = json.load(p.open()).get('weekLabel', '') if p.exists() else ''
+print(label.split('-', 1)[-1])
+")
+
+if [ "$LATEST_WEEK" = "$INSIGHTS_WEEK" ]; then
+  echo "Phase C: insights already generated for $LATEST_WEEK, nothing to do."
+elif python3 scripts/generate_insights.py; then
+  git add data/insights.json
+  if git diff --staged --quiet; then
+    echo "Phase C: nothing to commit"
+  else
+    git commit -m "Generate weekly insights ($LATEST_WEEK)"
+    push_both main || exit 1
+    echo "Phase C ok: insights synced for $LATEST_WEEK"
+  fi
+else
+  echo "Phase C failed (generate_insights.py) for $LATEST_WEEK." >&2
+  notify_forgejo "weekly_sync: Insights-Generierung fehlgeschlagen ($LATEST_WEEK)" \
+"python3 scripts/generate_insights.py ist fehlgeschlagen.
+Prospekt/Mealplan und Daten-Sync sind davon unabhängig gelaufen.
 Log: $LOG_FILE"
 fi
 

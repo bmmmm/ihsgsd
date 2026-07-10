@@ -22,6 +22,20 @@ function isKnuller(offer) {
   return Array.isArray(offer.criteria) && offer.criteria.some((c) => c && c.name === "Superknüller");
 }
 
+// PAYBACK / App-Preis criteria as badge specs; points or multiplier included
+// when the offer carries them (pbAdditionalPoints / pbPointsMultiplier).
+function extraBadges(offer) {
+  const out = [];
+  const names = Array.isArray(offer.criteria) ? offer.criteria.map((c) => c && c.name) : [];
+  if (names.includes("PAYBACK")) {
+    const pts = Number.isFinite(offer.pbAdditionalPoints) ? `+${offer.pbAdditionalPoints} P`
+      : Number.isFinite(offer.pbPointsMultiplier) ? `${offer.pbPointsMultiplier}× P` : "";
+    out.push({ cls: "payback-badge", text: pts ? `PAYBACK ${pts}` : "PAYBACK" });
+  }
+  if (names.includes("App-Preis")) out.push({ cls: "app-badge", text: "App-Preis" });
+  return out;
+}
+
 // Face price as a number (rawValue preferred, matching the displayed cell).
 function offerFacePrice(offer) {
   const v = Number.isFinite(offer.price.rawValue) ? offer.price.rawValue : parseFloat(offer.price.value);
@@ -168,6 +182,12 @@ async function fetchOffers(filePath) {
         badge.textContent = "Knüller";
         titleTd.appendChild(badge);
       }
+      extraBadges(offer).forEach((b) => {
+        const badge = document.createElement("span");
+        badge.className = `knuller-badge ${b.cls}`;
+        badge.textContent = b.text;
+        titleTd.appendChild(badge);
+      });
       row.appendChild(titleTd);
 
       const cells = [
@@ -508,15 +528,22 @@ function attachImageHoverPreview() {
     const cell = imgCell.closest(".image-cell");
     const originalUrl = safeImageUrl(cell.dataset.originalUrl || "");
     const fallbackUrl = safeImageUrl(cell.dataset.imageUrl || "");
-    if (originalUrl) {
+    const localUrl = cell.dataset.localUrl || "";
+    // EDEKA purges live images ~1-2 months after the offer ends, so for older
+    // weeks both live URLs 404 — the archived local thumbnail is the last stop.
+    const chain = [originalUrl, fallbackUrl, localUrl].filter(Boolean);
+    if (chain.length) {
       const previewImg = document.createElement("img");
-      previewImg.src = originalUrl;
+      previewImg.src = chain.shift();
       previewImg.alt = "Vorschau";
       previewImg.loading = "lazy";
-      // If the original URL 404s, fall back to the app thumbnail once.
       previewImg.onerror = function () {
-        this.onerror = null; // prevent infinite loop
-        if (fallbackUrl) this.src = fallbackUrl;
+        if (chain.length) {
+          this.src = chain.shift();
+        } else {
+          this.onerror = null;
+          imagePreview.classList.remove("visible");
+        }
       };
       imagePreview.innerHTML = "";
       imagePreview.appendChild(previewImg);

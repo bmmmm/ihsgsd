@@ -76,6 +76,20 @@ function isKnuller(o) {
     return Array.isArray(o.criteria) && o.criteria.some(c => c && c.name === 'Superknüller');
 }
 
+// PAYBACK / App-Preis criteria as badge specs; points or multiplier included
+// when the offer carries them (pbAdditionalPoints / pbPointsMultiplier).
+function extraBadges(o) {
+    const out = [];
+    const names = Array.isArray(o.criteria) ? o.criteria.map(c => c && c.name) : [];
+    if (names.includes('PAYBACK')) {
+        const pts = Number.isFinite(o.pbAdditionalPoints) ? `+${o.pbAdditionalPoints} P`
+            : Number.isFinite(o.pbPointsMultiplier) ? `${o.pbPointsMultiplier}× P` : '';
+        out.push({ cls: 'payback-badge', text: pts ? `PAYBACK ${pts}` : 'PAYBACK' });
+    }
+    if (names.includes('App-Preis')) out.push({ cls: 'app-badge', text: 'App-Preis' });
+    return out;
+}
+
 // Local archived thumbnail of the selected week, e.g. data/2026/KW26/img/123.jpg.
 function localImageUrl(o) {
     const sel = document.getElementById('week-select');
@@ -1003,6 +1017,12 @@ function buildCard(o, opts) {
         gp.textContent = o.basicPrice;
         priceRow.appendChild(gp);
     }
+    extraBadges(o).forEach(b => {
+        const badge = document.createElement('span');
+        badge.className = `pk-crit ${b.cls}`;
+        badge.textContent = b.text;
+        priceRow.appendChild(badge);
+    });
     body.appendChild(priceRow);
 
     const pc = priceCheck(o);
