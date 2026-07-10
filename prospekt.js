@@ -200,9 +200,13 @@ const TOPICS = [
 ];
 
 // The reader told us up front what they love — seed those at "Favorit". The
-// drugstore / pet-food / fish categories are seeded OFF (the durable taste
-// profile never wants them); only affects fresh users, existing prefs are kept.
-const DEFAULT_INTERESTS = { vegan: 2, obstgemuese: 2, bier: 2, spezi: 2, bio: 1, drogerie: -1, tiernahrung: -1, fisch: -1 };
+// never-buy topics (meat, cheese, sweets, drugstore, pet food, fish) are seeded
+// OFF so a "Zurücksetzen" restores the durable taste profile instead of
+// re-enabling them; only affects fresh/reset prefs, existing prefs are kept.
+const DEFAULT_INTERESTS = {
+    vegan: 2, obstgemuese: 2, bier: 2, spezi: 2, bio: 1,
+    fleisch: -1, kaese: -1, suess: -1, drogerie: -1, tiernahrung: -1, fisch: -1,
+};
 
 // How many cards the "Für dich" highlights grid shows at most (LLM-ranked picks
 // plus client-score fallback). Matches the generator's foryou target so a full
@@ -312,6 +316,7 @@ function persistPrefsQuiet() {
 let exportChecked = false;   // has the initial fetch finished? (avoid flicker)
 let exportPresent = false;   // does data/preferences.json exist?
 let exportedAt = null;       // its updatedAt stamp, or null if unknown
+let exportedHasMeals = false; // does the export carry any meal ratings?
 
 async function checkExportStatus() {
     try {
@@ -320,9 +325,11 @@ async function checkExportStatus() {
         const data = await res.json();
         exportPresent = true;
         exportedAt = (data && typeof data.updatedAt === 'string') ? data.updatedAt : null;
+        exportedHasMeals = !!(data && data.meals && Object.keys(data.meals).length);
     } catch (e) {
         exportPresent = false;
         exportedAt = null;
+        exportedHasMeals = false;
     }
     exportChecked = true;
     paintExportStatus();
@@ -339,11 +346,23 @@ function paintExportStatus() {
         el.textContent = '⚠ Noch nicht exportiert — die Montags-Empfehlungen nutzen aktuell nur den Standard-Fokus. Exportiere deine Vorlieben.';
         return;
     }
+    // Meal ratings are the meal-plan generator's only learning signal — call
+    // out specifically when they exist locally but are missing from the export
+    // (e.g. an export from before the meal-vote feature).
+    const mealsPending = !exportedHasMeals
+        && prefs && prefs.meals && Object.keys(prefs.meals).length > 0;
     // Both files present: compare stamps. ISO-8601 UTC strings (toISOString)
     // compare correctly lexicographically.
     if (live && (!exportedAt || live > exportedAt)) {
         el.classList.add('warn');
-        el.textContent = `⚠ Vorlieben seit dem letzten Export geändert${exportedAt ? ` (Export: ${formatStamp(exportedAt)})` : ''} — neu exportieren, damit Montag die aktuellen genutzt werden.`;
+        el.textContent = mealsPending
+            ? '⚠ Deine Gericht-Bewertungen (👍/👎 am Wochenplan) sind noch nicht im Export — neu exportieren, sonst lernt der Essensplan nichts daraus.'
+            : `⚠ Vorlieben seit dem letzten Export geändert${exportedAt ? ` (Export: ${formatStamp(exportedAt)})` : ''} — neu exportieren, damit Montag die aktuellen genutzt werden.`;
+        return;
+    }
+    if (mealsPending) {
+        el.classList.add('warn');
+        el.textContent = '⚠ Der Export enthält keine Gericht-Bewertungen, lokal sind aber welche vorhanden — neu exportieren, damit der Essensplan daraus lernt.';
         return;
     }
     el.classList.add('ok');
@@ -906,6 +925,14 @@ function pickReason(title) {
         if (hit && typeof hit.reason === 'string' && hit.reason) return hit.reason;
     }
     return '';
+}
+
+// Short evidence label ("Bestpreis", "unter Üblich", …) the generator attaches
+// to a foryou pick — shown as the card tag so the ranked picks say WHY.
+function pickEvidenceTag(title) {
+    if (!prospektData || !Array.isArray(prospektData.foryou)) return undefined;
+    const hit = prospektData.foryou.find(p => p && p.title === title);
+    return (hit && typeof hit.evidenceTag === 'string' && hit.evidenceTag) ? hit.evidenceTag : undefined;
 }
 
 function buildCard(o, opts) {
@@ -1756,7 +1783,7 @@ function renderAll() {
     const forYouGrid = document.getElementById('pk-foryou-grid');
     if (forYouGrid) {
         forYouGrid.innerHTML = '';
-        fy.list.forEach(o => forYouGrid.appendChild(buildCard(o)));
+        fy.list.forEach(o => forYouGrid.appendChild(buildCard(o, { tag: pickEvidenceTag(o.title || '') })));
         discoveries.forEach(o => forYouGrid.appendChild(buildCard(o, { tag: '✨ Entdeckung' })));
     }
     const forYouSection = document.getElementById('pk-foryou');

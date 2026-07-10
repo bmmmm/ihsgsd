@@ -293,6 +293,9 @@ def main():
     ml = meal_learning(prefs_path)
     if ml:
         prefs_block += "\n" + ml
+    else:
+        print("  note: no meal ratings in preferences.json — the plan runs "
+              "unpersonalized. Vote dishes (👍/👎) on prospekt.html and re-export.")
 
     prompt = (PROMPT_TEMPLATE
               .replace("READER_PREFS_PLACEHOLDER", prefs_block)

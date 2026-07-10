@@ -549,9 +549,6 @@ def main():
             reason = reason[:89].rstrip() + "…"
         foryou.append({"title": p["title"], "rank": i, "reason": reason, "evidenceTag": tag})
     data["foryou"] = foryou
-    # Legacy alias so an older cached client (and external consumers) still find
-    # reasons under 'picks'; can be dropped after one regeneration cycle.
-    data["picks"] = [{"title": p["title"], "reason": p["reason"]} for p in foryou]
 
     missing = {"vegan", "obstgemuese", "bierspezi", "knueller"} - set(data["sections"].keys())
     if missing:
