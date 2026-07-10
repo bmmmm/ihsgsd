@@ -19,11 +19,28 @@ window.DetailCard = (function () {
     const EPS = 1e-9;
     let indexPromise = null;   // fetch-once cache
     let byTitle = null;        // Map<normTitle, product[]>
+    let byCompact = null;      // Map<compactTitle, product[]> \u2014 spelling-tolerant
+    let byTokens = null;       // Map<sortedTokens, product[]> \u2014 order-tolerant
     let weeks = [];            // all snapshot dates, sorted
     let root = null;           // modal DOM, built once
 
+    // Mirrors build_indexes.py norm_title: NBSP \u2192 space, collapse whitespace.
     function norm(s) {
         return String(s || '').replace(/\u00a0/g, ' ').trim().replace(/\s+/g, ' ').toLowerCase();
+    }
+
+    // EDEKA respells titles across weeks ("Zott Sahne Joghurt" vs
+    // "Sahnejoghurt", "Schlemmer-Filet" vs "Schlemmerfilet", reordered "X oder
+    // Y") which splits one product into several index entries. Two tolerant
+    // keys reunite most families: compact (all non-alphanumerics stripped)
+    // catches hyphen/space/concatenation variants, sortedTokens catches
+    // reordered word lists. Combined compound+reorder respellings stay split.
+    function compactKey(s) {
+        return norm(s).replace(/[^a-z0-9\u00e4\u00f6\u00fc\u00df]/g, '');
+    }
+
+    function tokenKey(s) {
+        return norm(s).replace(/-/g, '').split(/[^a-z0-9\u00e4\u00f6\u00fc\u00df]+/).filter(Boolean).sort().join(' ');
     }
 
     function fmtDate(d) {
@@ -38,11 +55,36 @@ window.DetailCard = (function () {
     function buildIndex(idx) {
         weeks = Array.isArray(idx.weeks) ? idx.weeks : [];
         byTitle = new Map();
+        byCompact = new Map();
+        byTokens = new Map();
+        const add = (map, k, p) => {
+            if (!k) return;
+            if (!map.has(k)) map.set(k, []);
+            map.get(k).push(p);
+        };
         (idx.products || []).forEach(p => {
-            const k = norm(p.title);
-            if (!byTitle.has(k)) byTitle.set(k, []);
-            byTitle.get(k).push(p);
+            add(byTitle, norm(p.title), p);
+            add(byCompact, compactKey(p.title), p);
+            add(byTokens, tokenKey(p.title), p);
         });
+    }
+
+    // Union of exact + spelling-tolerant + order-tolerant matches, deduped.
+    function matchProducts(title) {
+        const seen = new Set();
+        const out = [];
+        for (const hit of [
+            byTitle.get(norm(title)),
+            byCompact.get(compactKey(title)),
+            byTokens.get(tokenKey(title)),
+        ]) {
+            (hit || []).forEach(p => {
+                if (seen.has(p.key)) return;
+                seen.add(p.key);
+                out.push(p);
+            });
+        }
+        return out;
     }
 
     // Pages that already fetched price-history-index.json (the dashboard)
@@ -393,6 +435,9 @@ window.DetailCard = (function () {
                     ` · ${new Set(prod.obs.map(o => o.d)).size} Wo.`;
                 const tab = el('button', 'dcard-tab' + (i === 0 ? ' on' : ''), label);
                 tab.type = 'button';
+                // Fuzzy-matched spelling variants can share unit+size — the
+                // tooltip shows which index title this series belongs to.
+                tab.title = prod.title || '';
                 tab.addEventListener('click', () => {
                     tabs.querySelectorAll('.dcard-tab').forEach(t => t.classList.remove('on'));
                     tab.classList.add('on');
@@ -413,8 +458,7 @@ window.DetailCard = (function () {
         document.body.style.overflow = 'hidden';
         card.innerHTML = '<div class="dcard-body dcard-empty">Lade Preishistorie…</div>';
         await ensureIndex();
-        const matches = byTitle.get(norm(payload.title)) || [];
-        render(card, payload, matches);
+        render(card, payload, matchProducts(payload.title));
         root.scrollTop = 0;
     }
 
