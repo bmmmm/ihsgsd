@@ -125,12 +125,47 @@
         }
 
         /* Column widths */
-        col.col-id { width: 7%; }
-        col.col-produkt { width: 20%; }
-        col.col-kategorie { width: 13%; }
+        col.col-produkt { width: 24%; }
+        col.col-kategorie { width: 12%; }
         col.col-preis { width: 8%; }
-        col.col-beschreibung { width: 40%; }
+        col.col-grundpreis { width: 13%; }
+        col.col-beschreibung { width: 31%; }
         col.col-bild { width: 12%; }
+
+        /* Sortable headers */
+        th.sortable {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        th.sortable:hover {
+            background-color: #2e2e2e;
+        }
+
+        th.sortable::after {
+            content: '↕';
+            margin-left: 6px;
+            color: #666;
+            font-size: 0.8em;
+        }
+
+        th.sortable.sorted-asc::after { content: '▲'; color: #4caf50; }
+        th.sortable.sorted-desc::after { content: '▼'; color: #4caf50; }
+
+        /* Superknüller marker on the product cell */
+        .knuller-badge {
+            display: inline-block;
+            background: #3a1220;
+            color: #ff3b6b;
+            border: 1px solid #ff3b6b44;
+            border-radius: 999px;
+            padding: 0 7px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-left: 6px;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
 
         .hidden {
             display: none;
@@ -263,19 +298,19 @@
 
     <table>
         <colgroup>
-            <col class="col-id">
             <col class="col-produkt">
             <col class="col-kategorie">
             <col class="col-preis">
+            <col class="col-grundpreis">
             <col class="col-beschreibung">
             <col class="col-bild">
         </colgroup>
         <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Produkt</th>
-                <th scope="col">Kategorie</th>
-                <th scope="col">Preis</th>
+                <th scope="col" class="sortable" data-sort="title">Produkt</th>
+                <th scope="col" class="sortable" data-sort="category">Kategorie</th>
+                <th scope="col" class="sortable" data-sort="price">Preis</th>
+                <th scope="col" class="sortable" data-sort="gp">Grundpreis</th>
                 <th scope="col">Beschreibung</th>
                 <th scope="col" id="image-column-header" class="hidden">Bild</th>
             </tr>

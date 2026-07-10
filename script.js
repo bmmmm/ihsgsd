@@ -18,6 +18,25 @@ function fileDate(file) {
   return m ? m[0] : "";
 }
 
+function isKnuller(offer) {
+  return Array.isArray(offer.criteria) && offer.criteria.some((c) => c && c.name === "Superknüller");
+}
+
+// Face price as a number (rawValue preferred, matching the displayed cell).
+function offerFacePrice(offer) {
+  const v = Number.isFinite(offer.price.rawValue) ? offer.price.rawValue : parseFloat(offer.price.value);
+  return Number.isFinite(v) ? v : null;
+}
+
+// First euro amount out of a basicPrice string like "1 kg = € 7.04" or
+// "1 l = € 1.13 / € 1.51" — good enough as a sort key, not shown anywhere.
+function gpSortValue(offer) {
+  const m = typeof offer.basicPrice === "string" && offer.basicPrice.match(/€\s*([\d.,]+)/);
+  if (!m) return null;
+  const v = parseFloat(m[1].replace(",", "."));
+  return Number.isFinite(v) ? v : null;
+}
+
 // HTML-escape a string before it is interpolated into innerHTML.
 function escapeHtml(s) {
   return String(s)
@@ -62,6 +81,7 @@ async function initializePage() {
     attachSearchFunctionality();
     setupToggleImages();
     attachDetailCard();
+    attachSorting();
   } catch (error) {
     console.error("Error initializing page:", error);
   }
@@ -135,15 +155,25 @@ async function fetchOffers(filePath) {
       // shown in the price cell matches even when the two disagree (e.g. the one
       // real rawValue:0 item).
       const priceShown = (Number.isFinite(offer.price.rawValue) ? offer.price.rawValue : parseFloat(offer.price.value)).toFixed(2);
-      row.dataset.search = `${offer.title} ${offer.category.name} ${offer.description} ${offer.price.value} ${priceShown}`
+      const basicPrice = typeof offer.basicPrice === "string" ? offer.basicPrice.trim() : "";
+      row.dataset.search = `${offer.title} ${offer.category.name} ${offer.description} ${offer.price.value} ${priceShown} ${basicPrice}`
         .toLowerCase()
         .replace(/,/g, ".");
 
+      const titleTd = document.createElement("td");
+      titleTd.textContent = offer.title;
+      if (isKnuller(offer)) {
+        const badge = document.createElement("span");
+        badge.className = "knuller-badge";
+        badge.textContent = "Knüller";
+        titleTd.appendChild(badge);
+      }
+      row.appendChild(titleTd);
+
       const cells = [
-        offer.id,
-        offer.title,
         offer.category.name,
         `${priceShown} €`,
+        basicPrice,
         offer.description,
       ];
       cells.forEach((text) => {
@@ -168,6 +198,7 @@ async function fetchOffers(filePath) {
       fragment.appendChild(row);
     });
     tableBody.appendChild(fragment);
+    applySort();
 
     // Reset image-column UI to the hidden baseline so the toggle button stays
     // in sync after the user switches weeks while images are shown.
@@ -297,42 +328,70 @@ function attachSearchFunctionality() {
   });
 }
 
+// Sort state survives week switches (applySort re-runs after each load);
+// clicking the active header flips direction, a different header resets to asc.
+let currentSort = null; // { key: 'title'|'category'|'price'|'gp', dir: 1|-1 }
+
+const SORT_VALUE = {
+  title: (o) => (o.title || "").toLowerCase(),
+  category: (o) => (o.category.name || "").toLowerCase(),
+  price: offerFacePrice,
+  gp: gpSortValue,
+};
+
+function attachSorting() {
+  document.querySelectorAll("th.sortable").forEach((th) => {
+    th.addEventListener("click", () => {
+      const key = th.dataset.sort;
+      currentSort = currentSort && currentSort.key === key
+        ? { key, dir: -currentSort.dir }
+        : { key, dir: 1 };
+      applySort();
+    });
+  });
+}
+
+function applySort() {
+  document.querySelectorAll("th.sortable").forEach((th) => {
+    th.classList.toggle("sorted-asc", !!currentSort && th.dataset.sort === currentSort.key && currentSort.dir === 1);
+    th.classList.toggle("sorted-desc", !!currentSort && th.dataset.sort === currentSort.key && currentSort.dir === -1);
+  });
+  if (!currentSort) return;
+
+  const tableBody = document.getElementById("offer-table");
+  const getValue = SORT_VALUE[currentSort.key];
+  const rows = [...tableBody.querySelectorAll("tr")];
+  rows.sort((a, b) => {
+    const va = getValue(currentOffers[Number(a.dataset.idx)]);
+    const vb = getValue(currentOffers[Number(b.dataset.idx)]);
+    // Missing values (no price / no Grundpreis) always sink to the bottom.
+    const aMissing = va === null || va === undefined || va === "";
+    const bMissing = vb === null || vb === undefined || vb === "";
+    if (aMissing || bMissing) return aMissing === bMissing ? 0 : aMissing ? 1 : -1;
+    return (va < vb ? -1 : va > vb ? 1 : 0) * currentSort.dir;
+  });
+  rows.forEach((row) => tableBody.appendChild(row));
+}
+
 function copyVisibleProducts() {
   const rows = document.querySelectorAll("#offer-table tr:not(.hidden)");
   const products = [];
 
   rows.forEach((row) => {
-    const cells = row.querySelectorAll("td");
-    if (cells.length) {
-      const product = {
-        id: cells[0].textContent.trim(),
-        title: cells[1].textContent.trim(),
-        category: cells[2].textContent.trim(),
-        price: cells[3].textContent.trim(),
-        description: cells[4].textContent.trim(),
-      };
-      products.push(product);
-    }
+    const offer = currentOffers[Number(row.dataset.idx)];
+    if (!offer) return;
+    const price = offerFacePrice(offer);
+    products.push({
+      title: offer.title,
+      category: offer.category.name,
+      price: price === null ? offer.price.value : `${price.toFixed(2)} €`,
+      basicPrice: typeof offer.basicPrice === "string" ? offer.basicPrice : "",
+      superknueller: isKnuller(offer),
+      description: offer.description,
+    });
   });
 
-  const jsonString = JSON.stringify(products, null, 2);
-
-  // Add LLM-friendly instructions and formatting
-  const promptString = `
-[LLM PROMPT START]
-Below is a JSON list of filtered products. Use this data to answer questions, generate summaries, or provide insights based on the product information.
-
-\`\`\`json
-${jsonString}
-\`\`\`
-
-Please follow the steps below in your response:
-1. Reference product data by 'id' or 'title'.
-2. If you need to provide reasoning, consider the context of 'category', 'price', and 'description'.
-3. Keep answers factual and based on the provided data.
-
-[LLM PROMPT END]
-`;
+  const promptString = `EDEKA-Angebote (gefilterte Auswahl, Woche ab ${currentWeekDate}):\n\n\`\`\`json\n${JSON.stringify(products, null, 2)}\n\`\`\`\n`;
 
   navigator.clipboard
     .writeText(promptString)
