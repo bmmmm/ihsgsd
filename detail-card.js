@@ -35,19 +35,29 @@ window.DetailCard = (function () {
         return v === null || v === undefined ? '—' : v.toFixed(2).replace('.', ',') + ' €';
     }
 
+    function buildIndex(idx) {
+        weeks = Array.isArray(idx.weeks) ? idx.weeks : [];
+        byTitle = new Map();
+        (idx.products || []).forEach(p => {
+            const k = norm(p.title);
+            if (!byTitle.has(k)) byTitle.set(k, []);
+            byTitle.get(k).push(p);
+        });
+    }
+
+    // Pages that already fetched price-history-index.json (the dashboard)
+    // hand it over so the card does not download the 600+ KB file again.
+    function primeIndex(idx) {
+        if (!idx || byTitle) return;
+        buildIndex(idx);
+        indexPromise = Promise.resolve();
+    }
+
     function ensureIndex() {
         if (!indexPromise) {
             indexPromise = fetch('data/price-history-index.json')
                 .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-                .then(idx => {
-                    weeks = Array.isArray(idx.weeks) ? idx.weeks : [];
-                    byTitle = new Map();
-                    (idx.products || []).forEach(p => {
-                        const k = norm(p.title);
-                        if (!byTitle.has(k)) byTitle.set(k, []);
-                        byTitle.get(k).push(p);
-                    });
-                })
+                .then(buildIndex)
                 .catch(err => {
                     console.error('DetailCard: price history load failed:', err);
                     byTitle = new Map();
@@ -408,5 +418,5 @@ window.DetailCard = (function () {
         root.scrollTop = 0;
     }
 
-    return { open, close };
+    return { open, close, primeIndex };
 })();

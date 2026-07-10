@@ -141,12 +141,9 @@ async function init() {
     }
 
     renderTrend();
-    // Global cross-week KPI panels — independent of week and category, so they
-    // only need to render once after the trend data is loaded.
-    renderKnullerPuls();
-    renderTransparenz();
-    renderArchitektur();
-    setupNetworkZoomGuard();
+    // Global cross-week KPI panel — independent of week and category, so it
+    // only needs to render once after the trend data is loaded.
+    renderMarktKpis();
 
     // Single resize handler for all charts (trend lives in charts.trend).
     resizeHandler = () => {
@@ -274,10 +271,8 @@ function getChart(name, domId) {
 }
 
 function renderFilteredWeekCharts() {
-    networkZoomLevel = 1;
     const filtered = currentOffers.filter(o => activeCategories.has(o.category.name));
     renderStats(filtered);
-    renderNetwork(filtered);
     renderTreemap(filtered);
     renderPriceChart(filtered);
     renderInsights();   // honors activeCategories, so it must follow filter toggles
@@ -491,146 +486,6 @@ function updateCategoryButtons() {
     });
 }
 
-// ── Network Graph ──────────────────────────────────────
-let networkFitTimer = null;
-
-function renderNetwork(offers) {
-    // Cancel any pending auto-fit from a previous render so it can't
-    // fire setOption on a re-rendered chart and clobber networkZoomLevel.
-    clearTimeout(networkFitTimer);
-
-    const chart = getChart('network', 'chart-network');
-
-    const categories = [...new Set(offers.map(o => o.category.name))];
-    // Precompute category → index once instead of indexOf per product.
-    const catIndex = new Map(categories.map((cat, i) => [cat, i]));
-
-    const categoryNodes = categories.map(cat => ({
-        id: `cat_${cat}`,
-        name: cat,
-        symbolSize: 50,
-        category: catIndex.get(cat),
-        itemStyle: {
-            color: CATEGORY_COLORS[cat] || '#888',
-            borderColor: '#fff',
-            borderWidth: 2,
-        },
-        label: {
-            show: true,
-            fontSize: 13,
-            fontWeight: 'bold',
-            color: '#fff',
-        },
-    }));
-
-    const productNodes = offers.map(o => {
-        const price = offerPrice(o) ?? 0; // outlier/no-price -> 0 in the decorative graph
-        return {
-            id: `p_${o.id}`,
-            name: o.title,
-            symbolSize: Math.max(8, Math.min(30, price * 3)),
-            category: catIndex.get(o.category.name),
-            value: price,
-            itemStyle: {
-                color: CATEGORY_COLORS[o.category.name] || '#888',
-                opacity: 0.85,
-            },
-            label: { show: false },
-        };
-    });
-
-    const links = offers.map(o => ({
-        source: `p_${o.id}`,
-        target: `cat_${o.category.name}`,
-        lineStyle: {
-            color: CATEGORY_COLORS[o.category.name] || '#888',
-            opacity: 0.15,
-            width: 1,
-        },
-    }));
-
-    chart.setOption({
-        backgroundColor: 'transparent',
-        tooltip: {
-            trigger: 'item',
-            formatter: (params) => {
-                if (params.dataType === 'node') {
-                    const name = escapeHtml(params.data.name);
-                    if (params.data.id.startsWith('cat_')) {
-                        const count = offers.filter(o => o.category.name === params.data.name).length;
-                        return `<b>${name}</b><br/>${count} Produkte`;
-                    }
-                    return `<b>${name}</b><br/>${formatEuro(params.data.value)}`;
-                }
-                return '';
-            },
-        },
-        legend: {
-            data: categories,
-            textStyle: { color: '#aaa' },
-            bottom: 10,
-            type: 'scroll',
-        },
-        series: [{
-            type: 'graph',
-            layout: 'force',
-            roam: 'move',
-            draggable: true,
-            categories: categories.map(cat => ({
-                name: cat,
-                itemStyle: { color: CATEGORY_COLORS[cat] || '#888' },
-            })),
-            nodes: [...categoryNodes, ...productNodes],
-            links: links,
-            force: {
-                repulsion: 80,
-                gravity: 0.25,
-                edgeLength: [30, 80],
-                friction: 0.6,
-            },
-            scaleLimit: { min: 0.1, max: 5 },
-            zoom: 0.55,
-            emphasis: {
-                focus: 'adjacency',
-                lineStyle: { opacity: 0.6, width: 2 },
-            },
-            animation: true,
-            animationDuration: 1500,
-        }],
-    }, { notMerge: true });
-
-    // Auto-fit after force layout settles. The roam guard must only be
-    // attached once (the chart instance is reused across renders).
-    if (!chart._roamGuardAttached) {
-        chart.on('graphRoamEnd', () => clearTimeout(networkFitTimer));
-        chart._roamGuardAttached = true;
-    }
-    networkFitTimer = setTimeout(() => {
-        const model = chart.getModel().getSeries()[0];
-        const nodes = model.getData();
-        if (!nodes.count()) return;
-        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-        nodes.each((idx) => {
-            const layout = nodes.getItemLayout(idx);
-            if (!layout) return;
-            minX = Math.min(minX, layout[0]);
-            maxX = Math.max(maxX, layout[0]);
-            minY = Math.min(minY, layout[1]);
-            maxY = Math.max(maxY, layout[1]);
-        });
-        const container = chart.getDom();
-        const w = container.clientWidth;
-        const h = container.clientHeight;
-        const graphW = maxX - minX || 1;
-        const graphH = maxY - minY || 1;
-        const padding = 0.8;
-        const zoom = Math.min(w / graphW, h / graphH) * padding;
-        const clampedZoom = Math.max(0.2, Math.min(zoom, 1.2));
-        chart.setOption({ series: [{ zoom: clampedZoom, center: [(minX + maxX) / 2, (minY + maxY) / 2] }] });
-        networkZoomLevel = clampedZoom;
-    }, 1800);
-}
-
 // ── Treemap ────────────────────────────────────────────
 function renderTreemap(offers) {
     const chart = getChart('treemap', 'chart-treemap');
@@ -835,55 +690,6 @@ function renderTrend() {
     }, { notMerge: true });
 }
 
-// ── Ctrl-to-zoom for network chart ───────────────────
-let networkZoomLevel = 1;
-
-function applyNetworkZoom(factor) {
-    const chart = charts.network;
-    if (!chart) return;
-    // Cancel a pending post-layout auto-fit so a manual zoom right after a
-    // week switch isn't reset 1.8s later (auto-fit otherwise only cancels on drag).
-    clearTimeout(networkFitTimer);
-    networkZoomLevel *= factor;
-    chart.setOption({
-        series: [{
-            zoom: networkZoomLevel,
-        }],
-    });
-}
-
-function setupNetworkZoomGuard() {
-    const container = document.getElementById('chart-network');
-    const hint = document.getElementById('network-zoom-hint');
-    let hintTimeout = null;
-    // Only hijack Ctrl +/- while the pointer is over the network panel, so the
-    // shortcut doesn't steal page zoom everywhere else on the page.
-    let pointerOver = false;
-    container.addEventListener('mouseenter', () => { pointerOver = true; });
-    container.addEventListener('mouseleave', () => { pointerOver = false; });
-
-    container.addEventListener('wheel', (e) => {
-        if (e.ctrlKey || e.metaKey) {
-            e.preventDefault();
-            applyNetworkZoom(e.deltaY < 0 ? 1.15 : 0.87);
-        } else {
-            hint.classList.add('visible');
-            clearTimeout(hintTimeout);
-            hintTimeout = setTimeout(() => hint.classList.remove('visible'), 1200);
-        }
-    }, { passive: false });
-
-    document.addEventListener('keydown', (e) => {
-        if (!pointerOver || !(e.ctrlKey || e.metaKey)) return;
-        if (e.key === '+' || e.key === '=') {
-            e.preventDefault();
-            applyNetworkZoom(1.2);
-        } else if (e.key === '-') {
-            e.preventDefault();
-            applyNetworkZoom(0.83);
-        }
-    });
-}
 
 // ══════════════════════════════════════════════════════════
 // FEATURE BLOCK (appended — self-contained, additive)
@@ -1225,7 +1031,6 @@ function renderFeatures() {
     renderCategoryDelta();
     renderPreisRadar();
     renderErosionTrend();
-    renderKaufjetzt();
     renderPreisDuerre();
     renderLangtrend();
     renderLigatabelle();
@@ -1334,6 +1139,10 @@ async function loadPriceHistory() {
         priceHistory = await fetchJSON('data/price-history-index.json');
         precomputeHistory();
         populateGpPicker();
+        // Share the parsed index with the detail card (saves a second download).
+        if (typeof DetailCard !== 'undefined' && DetailCard.primeIndex) {
+            DetailCard.primeIndex(priceHistory);
+        }
     } catch (err) {
         // Additive feature — a failure here must not break the dashboard.
         console.error('Price history load failed:', err);
@@ -1440,7 +1249,7 @@ function renderPreisRadar() {
 
     if (sub) {
         sub.textContent = cands.length
-            ? `Woche ${formatDate(date)}: ${cands.length} angebotene Artikel mit ≥3 Wochen Preishistorie, verglichen mit ihrem eigenen Allzeit-Tief (€/Einheit).`
+            ? `Woche ${formatDate(date)}: ${cands.length} angebotene Artikel mit ≥3 Wochen Preishistorie, verglichen mit ihrem eigenen Allzeit-Tief (€/Einheit). Perzentil = Lage des heutigen Grundpreises in der eigenen Preisspanne (0 % = so günstig wie nie).`
             : `Für die Woche ${formatDate(date)} gibt es keine angebotenen Artikel mit genug Preishistorie.`;
     }
 
@@ -1468,75 +1277,20 @@ function renderDealList(ul, items, kind) {
             if (kind === 'low') badgeClass = pct <= 10 ? 'good' : 'flat';
             else badgeClass = pct >= 20 ? 'bad' : 'flat';
         }
+        // Percentile of today's Grundpreis within the article's own history
+        // (absorbed from the former "Kaufen oder warten?" panel).
+        let pctile = '';
+        if (d.p._exWeeks >= 4) {
+            const below = d.p._ex.filter(x => x < d.cur).length;
+            pctile = ` · ${Math.round(100 * below / (d.p._exWeeks - 1))}. Perzentil`;
+        }
         frag.appendChild(buildGpRow({
             rank: i + 1,
             title: d.p.title,
             cat: d.p.cat,
-            sub: `Tief €${d.p._min.toFixed(2)} · Median €${(d.p._med != null ? d.p._med : 0).toFixed(2)} /${d.p.unit}`,
+            sub: `Tief €${d.p._min.toFixed(2)} · Median €${(d.p._med != null ? d.p._med : 0).toFixed(2)} /${d.p.unit}${pctile}`,
             priceText: formatGp(d.cur, d.p.unit),
             badgeText,
-            badgeClass,
-        }));
-    });
-    ul.appendChild(frag);
-}
-
-// ── Panel: Kaufen oder warten? (GP-percentile this week) ───
-// Where today's Grundpreis sits within the article's own historical range:
-// 0th percentile = as cheap as it has ever been offered.
-function renderKaufjetzt() {
-    const nowUl = document.getElementById('kaufjetzt-now');
-    const waitUl = document.getElementById('kaufjetzt-wait');
-    const sub = document.getElementById('kaufjetzt-sub');
-    if (!nowUl || !waitUl) return;
-    if (!priceHistory) {
-        setEmpty(nowUl, 'Keine Preishistorie geladen.');
-        setEmpty(waitUl, '—');
-        if (sub) sub.textContent = '';
-        return;
-    }
-
-    const ws = document.getElementById('week-select');
-    const date = (ws && fileDate(ws.value)) || priceHistory.latestDate;
-
-    const cands = [];
-    for (const p of priceHistory.products) {
-        if (!activeCategories.has(p.cat)) continue;
-        if (p._exWeeks < 4) continue; // need a real distribution
-        const cur = currentExactGp(p, date);
-        if (cur === null) continue;
-        const below = p._ex.filter(x => x < cur).length;
-        const pct = Math.round(100 * below / (p._exWeeks - 1));
-        cands.push({ p, cur, pct });
-    }
-
-    if (sub) {
-        sub.textContent = cands.length
-            ? `Woche ${formatDate(date)}: ${cands.length} angebotene Artikel mit ≥4 Wochen Historie — wo liegt der heutige Grundpreis in der eigenen Preisspanne (0 % = so günstig wie nie).`
-            : `Für die Woche ${formatDate(date)} gibt es keine angebotenen Artikel mit genug Preishistorie.`;
-    }
-
-    const now = [...cands].sort((a, b) => a.pct - b.pct).slice(0, 8);
-    const wait = [...cands].sort((a, b) => b.pct - a.pct).slice(0, 8);
-    fillPercentileList(nowUl, now, 'now');
-    fillPercentileList(waitUl, wait, 'wait');
-}
-
-function fillPercentileList(ul, items, kind) {
-    ul.innerHTML = '';
-    if (!items.length) { setEmpty(ul, 'Keine Artikel mit genug Historie.'); return; }
-    const frag = document.createDocumentFragment();
-    items.forEach((d, i) => {
-        const badgeClass = kind === 'now'
-            ? (d.pct <= 15 ? 'good' : 'flat')
-            : (d.pct >= 80 ? 'bad' : 'flat');
-        frag.appendChild(buildGpRow({
-            rank: i + 1,
-            title: d.p.title,
-            cat: d.p.cat,
-            sub: `Tief €${d.p._min.toFixed(2)} · Median €${(d.p._med != null ? d.p._med : 0).toFixed(2)} /${d.p.unit}`,
-            priceText: formatGp(d.cur, d.p.unit),
-            badgeText: `${d.pct}. Perzentil`,
             badgeClass,
         }));
     });
@@ -1934,67 +1688,52 @@ function renderGpTrend(p) {
 // cuts. All additive; each guards its own DOM and the loaded data.
 // ══════════════════════════════════════════════════════════
 
-// Generic date-axis line chart over allTrendData (drives the global KPI
-// panels). series items: {name, color, get(week)->number, area?, markLine?}.
-function renderDateLineChart(chartName, domId, series, yAxis) {
+// ── Markt-KPIs: the trend-index scalars in ONE chart instead of three thin
+// panels (Superknüller-Puls / Transparenz-Index / Preis-Architektur). Counts
+// and % share the left axis (similar 0-100+ range), € prices sit on the
+// right; the legend toggles individual series.
+function renderMarktKpis() {
     if (!allTrendData.length) return;
     const data = allTrendData;
     const dates = data.map(w => w.date);
     const labelByDate = new Map(data.map(w => [w.date, `${weekLabel(w.week)}\n${shortDate(w.date)}`]));
-    const chart = getChart(chartName, domId);
+    const chart = getChart('marktKpis', 'chart-markt-kpis');
+    const mk = (name, color, get, yAxisIndex, extra) => Object.assign({
+        name, type: 'line', smooth: true, symbol: 'circle', symbolSize: 5,
+        lineStyle: { width: 2, color }, itemStyle: { color },
+        yAxisIndex, data: data.map(get),
+    }, extra || {});
     chart.setOption({
         backgroundColor: 'transparent',
         tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
-        legend: { data: series.map(s => s.name), textStyle: { color: '#aaa', fontSize: 11 }, bottom: 40, type: 'scroll' },
+        legend: {
+            data: ['Superknüller', 'PAYBACK', 'GP-Abdeckung %', 'Ø Preis', 'Median-Preis'],
+            textStyle: { color: '#aaa', fontSize: 11 }, bottom: 40, type: 'scroll',
+        },
         grid: chartGrid(90),
         dataZoom: sliderZoom(),
         xAxis: {
             type: 'category', data: dates,
             axisLabel: { color: '#888', rotate: 45, formatter: (d) => labelByDate.get(d) || d },
         },
-        yAxis: Object.assign({
-            type: 'value', nameTextStyle: { color: '#888' },
-            axisLabel: { color: '#888' }, splitLine: { lineStyle: { color: '#222' } },
-        }, yAxis),
-        series: series.map(s => ({
-            name: s.name, type: 'line', smooth: true, symbol: 'circle', symbolSize: 6,
-            lineStyle: { width: 2, color: s.color }, itemStyle: { color: s.color },
-            areaStyle: s.area ? { opacity: 0.06 } : undefined,
-            data: data.map(s.get), markLine: s.markLine,
-        })),
+        yAxis: [
+            {
+                type: 'value', name: 'Anzahl / %', nameTextStyle: { color: '#888' },
+                axisLabel: { color: '#888' }, splitLine: { lineStyle: { color: '#222' } },
+            },
+            {
+                type: 'value', name: '€', nameTextStyle: { color: '#888' },
+                axisLabel: { color: '#888', formatter: '{value} €' }, splitLine: { show: false },
+            },
+        ],
+        series: [
+            mk('Superknüller', '#ff3b6b', w => w.knuller || 0, 0, { areaStyle: { opacity: 0.06 } }),
+            mk('PAYBACK', '#42a5f5', w => w.payback || 0, 0),
+            mk('GP-Abdeckung %', '#66bb6a', w => +((w.gpCoverage || 0) * 100).toFixed(1), 0),
+            mk('Ø Preis', '#ffa726', w => w.avgFace, 1),
+            mk('Median-Preis', '#ab47bc', w => w.medFace, 1),
+        ],
     }, { notMerge: true });
-}
-
-// ── Superknüller-Puls: action-tag counts over time (global) ──
-function renderKnullerPuls() {
-    renderDateLineChart('knullerPuls', 'chart-knuller-puls', [
-        { name: 'Superknüller', color: '#ff3b6b', get: w => w.knuller || 0, area: true },
-        { name: 'PAYBACK', color: '#42a5f5', get: w => w.payback || 0 },
-    ], { name: 'Aktionen' });
-}
-
-// ── Transparenz-Index: Grundpreis coverage over time (global) ──
-function renderTransparenz() {
-    if (!allTrendData.length) return;
-    const vals = allTrendData.map(w => (w.gpCoverage || 0) * 100);
-    const mean = vals.reduce((a, b) => a + b, 0) / vals.length;
-    renderDateLineChart('transparenz', 'chart-transparenz', [{
-        name: 'Grundpreis-Abdeckung', color: '#66bb6a', area: true,
-        get: w => +((w.gpCoverage || 0) * 100).toFixed(1),
-        markLine: {
-            silent: true, symbol: 'none', lineStyle: { color: '#666', type: 'dashed' },
-            label: { color: '#999', formatter: `Ø ${mean.toFixed(0)}%` },
-            data: [{ yAxis: +mean.toFixed(1) }],
-        },
-    }], { name: '%', min: 0, max: 100, axisLabel: { color: '#888', formatter: '{value}%' } });
-}
-
-// ── Preis-Architektur: avg vs median face price = skew (global) ──
-function renderArchitektur() {
-    renderDateLineChart('architektur', 'chart-architektur', [
-        { name: 'Ø Preis', color: '#ffa726', get: w => w.avgFace },
-        { name: 'Median', color: '#42a5f5', get: w => w.medFace, area: true },
-    ], { name: '€', axisLabel: { color: '#888', formatter: '{value} €' } });
 }
 
 // ── Superknüller-Ehrlichkeitscheck: is the "Knüller" price low? ──

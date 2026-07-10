@@ -288,31 +288,6 @@
             font-size: 1.1rem;
         }
 
-        /* Ctrl-to-zoom overlay */
-        .zoom-hint-wrapper {
-            position: relative;
-        }
-
-        .zoom-hint {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.6);
-            color: #fff;
-            font-size: 1rem;
-            z-index: 10;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-            border-radius: 12px;
-        }
-
-        .zoom-hint.visible {
-            opacity: 1;
-        }
-
         @media (max-width: 900px) {
             .grid {
                 grid-template-columns: 1fr;
@@ -844,30 +819,6 @@
             </div>
         </div>
 
-        <!-- FEATURE: kauf-jetzt-perzentil -->
-        <div class="panel panel-full panel--auto">
-            <h2>Kaufen oder warten? &mdash; Grundpreis-Perzentil diese Woche</h2>
-            <p id="kaufjetzt-sub" class="panel-sub"></p>
-            <div class="feature-cols">
-                <div>
-                    <h3>Jetzt kaufen (g&uuml;nstig wie selten)</h3>
-                    <ul id="kaufjetzt-now" class="product-list"></ul>
-                </div>
-                <div>
-                    <h3>Lieber warten (teuer f&uuml;r diesen Artikel)</h3>
-                    <ul id="kaufjetzt-wait" class="product-list"></ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-full">
-            <h2>Produkt-Netzwerk</h2>
-            <div class="zoom-hint-wrapper">
-                <div id="network-zoom-hint" class="zoom-hint">Ctrl + Scrollen zum Zoomen</div>
-                <div id="chart-network" class="chart-container-large" role="img" aria-label="Produkt-Netzwerk: Kategorien und Produkte als Kraftgraph"></div>
-            </div>
-        </div>
-
         <!-- ── SECTION: across weeks (independent of the week dropdown) ── -->
         <div class="section-head">
             <h2>Verlauf über Wochen</h2>
@@ -896,25 +847,11 @@
             <div id="chart-trend" class="chart-container-large" role="img" aria-label="Wochen-Trend: Produkte pro Kategorie über die Zeit"></div>
         </div>
 
-        <!-- FEATURE: superknueller-puls -->
+        <!-- FEATURE: markt-kpis (merged Superknüller-Puls / Transparenz-Index / Preis-Architektur) -->
         <div class="panel panel-full">
-            <h2>Superkn&uuml;ller-Puls &mdash; Aktionen pro Woche</h2>
-            <p id="puls-sub" class="panel-sub">Anzahl der als Superkn&uuml;ller bzw. PAYBACK markierten Angebote je Woche.</p>
-            <div id="chart-knuller-puls" class="chart-container-large" role="img" aria-label="Superknüller- und PAYBACK-Anzahl pro Woche"></div>
-        </div>
-
-        <!-- FEATURE: transparenz-index -->
-        <div class="panel">
-            <h2>Transparenz-Index &mdash; Grundpreis-Abdeckung</h2>
-            <p id="transparenz-sub" class="panel-sub">Anteil der Angebote mit ausgewiesenem Grundpreis (&euro;/Einheit) je Woche.</p>
-            <div id="chart-transparenz" class="chart-container" role="img" aria-label="Grundpreis-Abdeckung in Prozent pro Woche"></div>
-        </div>
-
-        <!-- FEATURE: preis-architektur -->
-        <div class="panel">
-            <h2>Preis-Architektur &mdash; &Oslash; vs. Median</h2>
-            <p id="architektur-sub" class="panel-sub">Durchschnitt &uuml;ber Median = wenige teure Artikel ziehen den Schnitt hoch (Korbschiefe, kein Pro-Artikel-Vergleich).</p>
-            <div id="chart-architektur" class="chart-container" role="img" aria-label="Durchschnitts- vs. Median-Angebotspreis pro Woche"></div>
+            <h2>Markt-KPIs pro Woche</h2>
+            <p id="markt-kpis-sub" class="panel-sub">Superkn&uuml;ller- und PAYBACK-Anzahl, Grundpreis-Abdeckung (%) sowie &Oslash;- und Median-Angebotspreis (&euro;, rechte Achse) je Woche &mdash; Serien &uuml;ber die Legende zuschaltbar. &Oslash; deutlich &uuml;ber Median = wenige teure Artikel ziehen den Schnitt hoch.</p>
+            <div id="chart-markt-kpis" class="chart-container-large" role="img" aria-label="Markt-KPIs pro Woche: Superknüller, PAYBACK, Grundpreis-Abdeckung, Durchschnitts- und Medianpreis"></div>
         </div>
 
         <!-- FEATURE: aktionspreis-trend -->
