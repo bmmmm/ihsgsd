@@ -175,6 +175,7 @@ async function fetchOffers(filePath) {
         .replace(/,/g, ".");
 
       const titleTd = document.createElement("td");
+      titleTd.dataset.label = "Produkt";
       titleTd.textContent = offer.title;
       if (isKnuller(offer)) {
         const badge = document.createElement("span");
@@ -191,13 +192,14 @@ async function fetchOffers(filePath) {
       row.appendChild(titleTd);
 
       const cells = [
-        offer.category.name,
-        `${priceShown} €`,
-        basicPrice,
-        offer.description,
+        { label: "Kategorie", text: offer.category.name },
+        { label: "Preis", text: `${priceShown} €` },
+        { label: "Grundpreis", text: basicPrice },
+        { label: "Beschreibung", text: offer.description },
       ];
-      cells.forEach((text) => {
+      cells.forEach(({ label, text }) => {
         const td = document.createElement("td");
+        td.dataset.label = label;
         td.textContent = text;
         row.appendChild(td);
       });
@@ -210,6 +212,7 @@ async function fetchOffers(filePath) {
       // keeps older weeks' images alive.
       const imgCell = document.createElement("td");
       imgCell.className = "image-cell hidden";
+      imgCell.dataset.label = "Bild";
       imgCell.dataset.localUrl = `data/${weekDir}/img/${encodeURIComponent(offer.id)}.jpg`;
       imgCell.dataset.imageUrl = offer.images.app || "";
       imgCell.dataset.originalUrl = offer.images.original || "";
@@ -512,8 +515,16 @@ function attachDetailCard() {
   });
 }
 
+// True on devices with an actual pointing device (mouse/trackpad). On touch
+// devices the hover preview is meaningless — tapping a row opens the shared
+// detail card instead — so we never wire up the preview listeners there.
+function supportsHover() {
+  return typeof window.matchMedia === "function" && window.matchMedia("(hover: hover)").matches;
+}
+
 function attachImageHoverPreview() {
   if (hoverPreviewAttached) return;
+  if (!supportsHover()) return;
   hoverPreviewAttached = true;
 
   const table = document.getElementById("offer-table");
