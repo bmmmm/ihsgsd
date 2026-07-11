@@ -115,13 +115,57 @@ async function fetchFolderStructure() {
   }
 }
 
+// ISO-8601 week of a UTC date, as { label: "KW07", year: <ISO week-year> }.
+function isoWeekOf(date) {
+  const t = new Date(date.getTime());
+  t.setUTCDate(t.getUTCDate() + 4 - (t.getUTCDay() || 7)); // shift to Thursday
+  const yearStart = Date.UTC(t.getUTCFullYear(), 0, 1);
+  const week = Math.ceil(((t - yearStart) / 86400000 + 1) / 7);
+  return { label: "KW" + String(week).padStart(2, "0"), year: t.getUTCFullYear() };
+}
+
+// Weeks without a snapshot between two adjacent ones ("YYYY-MM-DD", older
+// first): step 7-day hops from the older date; every hop ending ≥4 days before
+// the newer snapshot is a missing week. Computed from the data itself — a
+// failed Monday fetch shows up here without any hardcoded week list.
+function missingWeeksBetween(olderDate, newerDate) {
+  const out = [];
+  const cur = new Date(olderDate + "T00:00:00Z");
+  const end = new Date(newerDate + "T00:00:00Z");
+  for (;;) {
+    cur.setUTCDate(cur.getUTCDate() + 7);
+    if (end - cur < 4 * 86400000) break;
+    const w = isoWeekOf(cur);
+    out.push(`${w.label} ${w.year}`);
+  }
+  return out;
+}
+
+function missingWeekOption(text) {
+  const option = document.createElement("option");
+  option.disabled = true;
+  option.textContent = `${text} — keine Daten`;
+  return option;
+}
+
 function populateDropdown(dropdown, files) {
   dropdown.innerHTML = "";
+  let prevDate = "";
   files.forEach((file) => {
     // "2026/KW11/2026-03-09.json" → "KW11 — 09.03.2026". Skip non-week artifacts
     // (e.g. insights.json) so they can't become a junk option that errors on load.
     const match = file.match(/(\d{4})\/(KW\d+)\/(\d{4})-(\d{2})-(\d{2})\.json/);
     if (!match) return;
+    // Files come newest-first; surface any gap down to the previous (newer)
+    // snapshot as disabled "keine Daten" rows so missing weeks are visible,
+    // not silent. Reversed so the rows keep the list's descending order.
+    const date = `${match[3]}-${match[4]}-${match[5]}`;
+    if (prevDate) {
+      missingWeeksBetween(date, prevDate).reverse().forEach((text) => {
+        dropdown.appendChild(missingWeekOption(text));
+      });
+    }
+    prevDate = date;
     const option = document.createElement("option");
     option.value = file;
     // Year from the filename (match[3]), not the folder (match[1]) — they differ

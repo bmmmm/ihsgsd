@@ -59,8 +59,8 @@ Run by hand after a fetch — these call `claude -p` and are never part of CI:
 ## Key Patterns
 
 - Event listeners for search, category filter, and image toggle are registered **once** in `initializePage()` — not per data load. The image toggle queries `.image-cell` elements dynamically inside its click handler.
-- Category filter uses a `<select multiple>` — "Fleisch & Wurst" and "Tiernahrung" are pre-selected by default.
-- Images use two URLs from the API: `web90` for thumbnails, `original` for hover preview.
+- Category filter is checkbox pills (`#category-filters`); `HIDDEN_CATEGORIES_DEFAULT` in script.js (Fleisch & Wurst, Drogerie, Tiernahrung, Fisch & Meeresfrüchte) starts unchecked/hidden.
+- Images use two URLs from the API: `web90` for thumbnails, `original` for hover preview (desktop only — preview is gated on `(hover: hover)`).
 - The "Produkte kopieren" button formats visible products as a JSON block wrapped in an LLM prompt template.
 - Table column widths are controlled via `<colgroup>` with percentage-based `col` classes.
 

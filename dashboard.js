@@ -70,6 +70,39 @@ function offerPrice(o) {
     return (Number.isFinite(v) && v >= 0 && v <= FACE_MAX) ? v : null;
 }
 
+// ISO-8601 week of a UTC date, as { label: "KW07", year: <ISO week-year> }.
+function isoWeekOf(date) {
+    const t = new Date(date.getTime());
+    t.setUTCDate(t.getUTCDate() + 4 - (t.getUTCDay() || 7)); // shift to Thursday
+    const yearStart = Date.UTC(t.getUTCFullYear(), 0, 1);
+    const week = Math.ceil(((t - yearStart) / 86400000 + 1) / 7);
+    return { label: 'KW' + String(week).padStart(2, '0'), year: t.getUTCFullYear() };
+}
+
+// Weeks without a snapshot between two adjacent ones ("YYYY-MM-DD", older
+// first): step 7-day hops from the older date; every hop ending ≥4 days before
+// the newer snapshot is a missing week. Computed from the data itself — a
+// failed Monday fetch shows up here without any hardcoded week list.
+function missingWeeksBetween(olderDate, newerDate) {
+    const out = [];
+    const cur = new Date(olderDate + 'T00:00:00Z');
+    const end = new Date(newerDate + 'T00:00:00Z');
+    for (;;) {
+        cur.setUTCDate(cur.getUTCDate() + 7);
+        if (end - cur < 4 * 86400000) break;
+        const w = isoWeekOf(cur);
+        out.push(`${w.label} ${w.year}`);
+    }
+    return out;
+}
+
+function missingWeekOption(text) {
+    const opt = document.createElement('option');
+    opt.disabled = true;
+    opt.textContent = `${text} — keine Daten`;
+    return opt;
+}
+
 // Null-safe category accessor — a handful of offers ship without a category
 // object; treat them as an explicit "—" bucket instead of crashing.
 function catName(o) {
@@ -120,11 +153,21 @@ async function init() {
     // reverse() breaks at the year boundary.
     files.sort((a, b) => fileDate(b).localeCompare(fileDate(a)));
 
+    let prevDate = '';
     files.forEach(file => {
         const m = file.match(/(\d{4})\/(KW\d+)\/(\d{4})-(\d{2})-(\d{2})\.json/);
         // Skip non-week artifacts (e.g. insights.json): they fail the regex and
         // would otherwise become a junk dropdown option that errors on selection.
         if (!m) return;
+        // Newest-first list: surface any gap down to the previous (newer)
+        // snapshot as disabled "keine Daten" rows, in descending order.
+        const date = `${m[3]}-${m[4]}-${m[5]}`;
+        if (prevDate) {
+            missingWeeksBetween(date, prevDate).reverse().forEach(text => {
+                weekSelect.appendChild(missingWeekOption(text));
+            });
+        }
+        prevDate = date;
         const opt = document.createElement('option');
         opt.value = file;
         // Date label from the filename's own year (m[3]), not the folder year
