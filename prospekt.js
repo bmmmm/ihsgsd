@@ -149,7 +149,11 @@ function parseNumberDe(s) {
     return parseFloat(s);
 }
 
-// { val, unit, flag } for the Grundpreis, or all-null. flag: exact|range|lower.
+// { val, unit, flag, low } for the Grundpreis, or all-null. flag: exact|range|lower.
+// `low` is the optimistic lower-bound comparable: same as val for exact/lower
+// (an "ab €" price has only one number, which already is the lower bound), and
+// the smaller of the two range values for range ("€ X / € Y" — X isn't always
+// the smaller one, see build_indexes.py's parse_gp).
 function parseGp(offer) {
     for (const src of [offer && offer.basicPrice, offer && offer.description]) {
         const m = GP_RE.exec(gpNormStr(src));
@@ -158,9 +162,14 @@ function parseGp(offer) {
         if (!Number.isFinite(val)) continue;
         const flag = m[2] ? 'lower' : (m[4] ? 'range' : 'exact');
         const unit = m[1].toLowerCase();
-        return { val, unit: UNIT_DISPLAY[unit] || unit, flag };
+        let low = val;
+        if (flag === 'range') {
+            const val2 = parseNumberDe(m[4]);
+            if (Number.isFinite(val2)) low = Math.min(val, val2);
+        }
+        return { val, unit: UNIT_DISPLAY[unit] || unit, flag, low };
     }
-    return { val: null, unit: null, flag: null };
+    return { val: null, unit: null, flag: null, low: null };
 }
 
 function normTitle(title) {
@@ -660,6 +669,9 @@ function buildBrowseRow(o) {
     price.textContent = pr === null ? '' : formatEuro(pr);
     li.appendChild(price);
 
+    const mini = buildPriceCheckMini(o);
+    if (mini) li.appendChild(mini);
+
     const vote = voteFor(o);
     const up = document.createElement('button');
     up.type = 'button';
@@ -892,29 +904,38 @@ function selectedWeekDate() {
 function priceCheck(o) {
     if (!phByKey) return null;
     const gp = parseGp(o);
-    if (gp.val === null || gp.flag !== 'exact') return null;   // need an unambiguous €/unit
+    if (gp.val === null) return null;   // no parseable €/unit at all
+    // Range/"ab €" Grundpreise (mainly beer multipacks) have no single exact
+    // value, so the comparison uses the optimistic lower bound instead — and
+    // the badge says so (approx=true) rather than pretending it's exact.
+    const approx = gp.flag !== 'exact';
+    const cur = approx ? gp.low : gp.val;
     const prod = phByKey.get(productKey(o, gp.unit));
     if (!prod || !Array.isArray(prod.obs)) return null;
 
     const date = selectedWeekDate();
-    // One exact Grundpreis per distinct PRIOR week (min), like dashboard.js
+    // One Grundpreis per distinct PRIOR week (min), like dashboard.js
     // precomputeHistory — strictly earlier weeks form the comparison history.
+    // Exact products keep excluding range/"ab €" history observations, byte-
+    // identical to before; approx products fold them in (by their stored gp,
+    // itself the same optimistic lower-bound style value) alongside exact obs.
     const perWeek = new Map();
     for (const ob of prod.obs) {
-        if (ob.gpf !== undefined) continue;        // exclude range / "ab €"
-        if (!ob.d || ob.d >= date) continue;       // only weeks before the selected one
-        const cur = perWeek.get(ob.d);
-        perWeek.set(ob.d, cur === undefined ? ob.gp : Math.min(cur, ob.gp));
+        if (!approx && ob.gpf !== undefined) continue;   // exclude range / "ab €"
+        if (!ob.d || ob.d >= date) continue;             // only weeks before the selected one
+        const v = perWeek.get(ob.d);
+        perWeek.set(ob.d, v === undefined ? ob.gp : Math.min(v, ob.gp));
     }
     const priorDates = [...perWeek.keys()].sort();
     if (priorDates.length < 2) return null;        // not enough history to judge
 
-    const cur = gp.val;
     const priorVals = priorDates.map(d => perWeek.get(d));
     const min = Math.min(...priorVals);
     const over = min > 0 ? (cur / min - 1) : 0;
     const pctOver = Math.round(over * 100);
     const depth = `Tief €${min.toFixed(2)}/${gp.unit} · ${priorVals.length} Vergleichswochen`;
+    const abSuffix = approx ? ' (ab)' : '';
+    const abNote = approx ? ' — Vergleich auf ab-Preis-Basis' : '';
 
     if (cur <= min + PC_EPS) {
         // At or below everything seen before — how long was it pricier than now?
@@ -922,11 +943,30 @@ function priceCheck(o) {
         for (let i = priorDates.length - 1; i >= 0; i--) {
             if (perWeek.get(priorDates[i]) > cur + PC_EPS) run++; else break;
         }
-        return { tier: 'best', text: run >= 2 ? `Bestpreis seit ${run} Wochen` : 'Bestpreis', title: depth };
+        return { tier: 'best', approx, text: (run >= 2 ? `Bestpreis seit ${run} Wochen` : 'Bestpreis') + abSuffix, title: depth + abNote };
     }
-    if (pctOver <= 10) return { tier: 'good', text: 'Guter Preis', title: `+${pctOver}% über ${depth}` };
-    if (pctOver >= 20) return { tier: 'wait', text: `+${pctOver}% über Tief`, title: `schon mal günstiger — ${depth}` };
+    if (pctOver <= 10) return { tier: 'good', approx, text: 'Guter Preis' + abSuffix, title: `+${pctOver}% über ${depth}` + abNote };
+    if (pctOver >= 20) return { tier: 'wait', approx, text: `+${pctOver}% über Tief` + abSuffix, title: `schon mal günstiger — ${depth}` + abNote };
     return null;   // 11–19% over: unremarkable, keep the card clean
+}
+
+// Compact badge for secondary surfaces (browse rows, shopping list, meal-plan
+// ingredient chips) — same tiers as the card badge, terser text (full detail
+// stays in the title attribute) so it doesn't overwhelm a dense list row.
+function priceCheckMiniText(pc) {
+    if (pc.tier === 'best') return 'Bestpreis' + (pc.approx ? ' (ab)' : '');
+    if (pc.tier === 'good') return 'Gut' + (pc.approx ? ' (ab)' : '');
+    return pc.text;   // 'wait' tier ("+N% über Tief") is already compact
+}
+
+function buildPriceCheckMini(o) {
+    const pc = priceCheck(o);
+    if (!pc) return null;
+    const badge = document.createElement('span');
+    badge.className = 'pk-pricecheck-mini pc-' + pc.tier;
+    badge.textContent = priceCheckMiniText(pc);
+    if (pc.title) badge.title = pc.title;
+    return badge;
 }
 
 // ── rendering ──
@@ -1334,7 +1374,7 @@ function buildMealCard(day, meal, dayIndex) {
             chip.textContent = swapped;
             chip.title = `glutenfrei statt „${ing.name}“`;
         } else if (ing.offerTitle) {
-            const onOffer = currentOffers.some(o => (o.title || '') === ing.offerTitle);
+            const offer = currentOffers.find(o => (o.title || '') === ing.offerTitle) || null;
             chip.className = 'mp-chip offer';
             chip.textContent = ing.name;
             if (ing.price) {
@@ -1343,7 +1383,11 @@ function buildMealCard(day, meal, dayIndex) {
                 p.textContent = ing.price;
                 chip.appendChild(p);
             }
-            chip.title = onOffer ? `Im Angebot: ${ing.offerTitle}` : `${ing.offerTitle} (diese Woche nicht gefunden)`;
+            chip.title = offer ? `Im Angebot: ${ing.offerTitle}` : `${ing.offerTitle} (diese Woche nicht gefunden)`;
+            if (offer) {
+                const mini = buildPriceCheckMini(offer);
+                if (mini) chip.appendChild(mini);
+            }
         } else {
             chip.className = 'mp-chip pantry';
             chip.textContent = ing.name;
@@ -1531,7 +1575,7 @@ function buildShoppingList() {
         if (!nn || b.removed[nn]) return null;
         let r = rows.get(nn);
         if (!r) {
-            r = { name, price: '', checked: !!b.checked[nn], normName: nn, group, origins: { offerIds: [], customIds: [], plan: false } };
+            r = { name, price: '', checked: !!b.checked[nn], normName: nn, group, offer: null, origins: { offerIds: [], customIds: [], plan: false } };
             rows.set(nn, r);
         } else if (RANK[group] > RANK[r.group]) {
             r.group = group;
@@ -1546,11 +1590,18 @@ function buildShoppingList() {
             (meal && Array.isArray(meal.ingredients) ? meal.ingredients : []).forEach(ing => {
                 if (!ing || !ing.name) return;
                 const swapped = gf ? glutenFreeText(ing.name) : ing.name;
-                let group = 'pantry', price = '';
+                let group = 'pantry', price = '', offer = null;
                 if (gf && swapped !== ing.name) group = 'pantry';         // GF substitute (not on offer)
-                else if (ing.offerTitle) { group = 'offer'; price = ing.price || ''; }
+                else if (ing.offerTitle) {
+                    group = 'offer'; price = ing.price || '';
+                    offer = currentOffers.find(o => (o.title || '') === ing.offerTitle) || null;
+                }
                 const r = ensureRow(swapped, group);
-                if (r) { r.origins.plan = true; if (price && !r.price) r.price = price; }
+                if (r) {
+                    r.origins.plan = true;
+                    if (price && !r.price) r.price = price;
+                    if (offer && !r.offer) r.offer = offer;
+                }
             });
         });
     }
@@ -1562,6 +1613,7 @@ function buildShoppingList() {
         const r = ensureRow(name, 'offer');
         if (!r) return;
         r.origins.offerIds.push(id);
+        if (o && !r.offer) r.offer = o;
         if (!r.price) {
             const pr = o ? offerPrice(o) : null;
             if (pr !== null) r.price = `€${pr.toFixed(2).replace('.', ',')}`;
@@ -1647,6 +1699,10 @@ function buildShoppingRow(it) {
     name.className = 'pk-sl-name';
     name.textContent = it.name;
     li.appendChild(name);
+    if (it.offer) {
+        const mini = buildPriceCheckMini(it.offer);
+        if (mini) li.appendChild(mini);
+    }
     if (it.price) {
         const p = document.createElement('span');
         p.className = 'pk-sl-price';
