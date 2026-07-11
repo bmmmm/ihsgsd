@@ -69,6 +69,34 @@ else
   echo "Phase A: nothing new from github/main."
 fi
 
+# Watchdog: the Monday fetch workflow (with its own retries) should have
+# landed a snapshot for the current week by Tuesday. Mirrors the workflow's
+# own year/week scheme — calendar %Y, ISO week %V (not %G; see the workflow's
+# comment on why). Observational only: never aborts, Phases B/C still run.
+if [ "$(date -u +%u)" -ge 2 ]; then
+  WATCHDOG_YEAR=$(date -u +%Y)
+  WATCHDOG_WEEK="KW$(date -u +%V)"
+  if grep -q "\"$WATCHDOG_YEAR/$WATCHDOG_WEEK/" data/folder-structure.json; then
+    echo "Watchdog: snapshot for $WATCHDOG_YEAR/$WATCHDOG_WEEK present."
+  else
+    STAMP="$HOME/ops/logs/ihsgsd-missing-$WATCHDOG_YEAR-$WATCHDOG_WEEK.stamp"
+    if [ -f "$STAMP" ]; then
+      echo "Watchdog: $WATCHDOG_YEAR/$WATCHDOG_WEEK still missing, already notified."
+    else
+      echo "Watchdog: no snapshot for $WATCHDOG_YEAR/$WATCHDOG_WEEK, notifying." >&2
+      notify_forgejo "weekly_sync: Monday-Fetch für $WATCHDOG_YEAR/$WATCHDOG_WEEK fehlt" \
+"Für $WATCHDOG_YEAR/$WATCHDOG_WEEK gibt es noch keinen Snapshot in data/folder-structure.json.
+Der Monday-Fetch-Workflow ist vermutlich fehlgeschlagen (auch nach seinen eigenen Retries).
+Bitte manuell anstoßen: GitHub -> Actions -> Fetch EDEKA Offers -> Run workflow (workflow_dispatch).
+Log: $LOG_FILE"
+      mkdir -p "$(dirname "$STAMP")"
+      touch "$STAMP"
+    fi
+  fi
+else
+  echo "Watchdog: skipped (before Tuesday)."
+fi
+
 LATEST_WEEK=$(python3 -c "
 import json
 fs = json.load(open('data/folder-structure.json'))

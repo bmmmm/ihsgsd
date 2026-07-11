@@ -32,9 +32,28 @@ jobs:
         id: fetch-data
         run: |
           API_URL="https://www.edeka.de/api/auth-proxy/?path=api%2Foffers%3Flimit%3D999%26marketId%3D5625811"
-          RESPONSE=$(curl -sf "$API_URL") || { echo "EDEKA API fetch failed (HTTP error or network failure)"; exit 1; }
-          echo "$RESPONSE" | jq -e '.offers | type == "array"' >/dev/null || { echo "EDEKA API returned no offers array"; exit 1; }
-          echo "$RESPONSE" > data.json
+          # Cron only runs once a week, so a transient hiccup (network blip or
+          # the API briefly returning garbage) must not lose the whole week's
+          # data. Retry both failure modes with increasing backoff before
+          # finally giving up.
+          SLEEPS=(30 120 300)
+          for attempt in 1 2 3 4; do
+            if ! RESPONSE=$(curl -sf "$API_URL"); then
+              echo "EDEKA API fetch failed (HTTP error or network failure) on attempt $attempt/4"
+            elif ! echo "$RESPONSE" | jq -e '.offers | type == "array"' >/dev/null; then
+              echo "EDEKA API returned no offers array on attempt $attempt/4"
+            else
+              echo "$RESPONSE" > data.json
+              exit 0
+            fi
+            if [ "$attempt" -lt 4 ]; then
+              SLEEP="${SLEEPS[$((attempt - 1))]}"
+              echo "Retrying in ${SLEEP}s..."
+              sleep "$SLEEP"
+            fi
+          done
+          echo "EDEKA API fetch failed after 4 attempts, giving up"
+          exit 1
 
       - name: Sort JSON by category
         run: |
