@@ -1030,9 +1030,8 @@ function renderFeatures() {
     renderTopLists(base);
     renderCategoryDelta();
     renderPreisRadar();
-    renderErosionTrend();
     renderPreisDuerre();
-    renderLangtrend();
+    renderTrendPanel();
     renderLigatabelle();
     renderEhrlichkeit();
     renderVolatilitaet();
@@ -1067,7 +1066,8 @@ function setupFeatures() {
 // Reads data/price-history-index.json: per-product €/unit series
 // keyed on a composite identity. Powers three panels:
 //  1. Preis-Radar      — this week's offers vs. their all-time low
-//  2. Aktionspreis-Trend — structural offer-price erosion over time
+//  2. Grundpreis-Trend — structural price trend (regression slope,
+//                        corroborated by a half-split median comparison)
 //  3. Grundpreis-Verlauf — €/unit line for one picked article
 // ══════════════════════════════════════════════════════════
 
@@ -1103,8 +1103,10 @@ function precomputeHistory() {
         let lastLowIdx = -1;
         for (let i = 0; i < g.length; i++) if (g[i] <= p._min + 1e-9) lastLowIdx = i;
         p._weeksSinceLow = lastLowIdx >= 0 ? (g.length - 1 - lastLowIdx) : null;
-        // Offer-price erosion: median of the later half vs the earlier
-        // half of this article's per-week exact Grundpreise. Needs >=4 weeks.
+        // Half-split erosion: median of the later half vs the earlier half
+        // of this article's per-week exact Grundpreise. Needs >=4 weeks.
+        // Secondary/corroborating signal for the Grundpreis-Trend panel —
+        // the regression slope below is the primary ranking signal.
         if (g.length >= 4) {
             const half = Math.floor(g.length / 2);
             const oldM = medianOf(g.slice(0, half));
@@ -1338,51 +1340,17 @@ function renderPreisDuerre() {
     ul.appendChild(frag);
 }
 
-// ── Panel: Langfrist-Trend (linear GP regression slope) ────
-function renderLangtrend() {
-    const ul = document.getElementById('langtrend-list');
-    const sub = document.getElementById('langtrend-sub');
-    if (!ul) return;
-    if (!priceHistory) { setEmpty(ul, 'Keine Preishistorie geladen.'); if (sub) sub.textContent = ''; return; }
-
-    const cands = [];
-    for (const p of priceHistory.products) {
-        if (!activeCategories.has(p.cat)) continue;
-        if (p._slope == null || p._exWeeks < 4) continue;
-        if (p._slope <= 0) continue; // only steady risers — "nicht mehr so günstig"
-        cands.push(p);
-    }
-
-    if (sub) {
-        sub.textContent = cands.length
-            ? `${cands.length} Artikel mit stetig steigendem Grundpreis (lineare Regression über ≥4 Angebots-Wochen) — fängt schleichendes Kriechen, das der Halbjahres-Vergleich übersieht.`
-            : 'Keine Artikel mit steigendem Langfrist-Trend in den aktiven Kategorien.';
-    }
-
-    const top = cands.sort((a, b) => b._slope - a._slope).slice(0, 10);
-    ul.innerHTML = '';
-    const frag = document.createDocumentFragment();
-    top.forEach((p, i) => {
-        const perWk = Math.round(p._slope * 1000) / 10; // % per offered-week
-        frag.appendChild(buildGpRow({
-            rank: i + 1,
-            title: p.title,
-            cat: p.cat,
-            sub: `${p._exWeeks} Wo. · €${p._min.toFixed(2)} Tief → ${formatGp(p._latest, p.unit)}`,
-            priceText: `+${perWk}%/Wo.`,
-            priceColor: '#ef5350',
-            badgeText: `Median €${(p._med != null ? p._med : 0).toFixed(2)}`,
-            badgeClass: 'flat',
-        }));
-    });
-    ul.appendChild(frag);
-}
-
-// ── Panel 2: Aktionspreis-Trend (structural erosion) ───────
-function renderErosionTrend() {
-    const upUl = document.getElementById('erosion-up');
-    const downUl = document.getElementById('erosion-down');
-    const sub = document.getElementById('erosion-sub');
+// ── Panel: Grundpreis-Trend (merged Langfrist-Trend + Aktionspreis-Trend) ──
+// Both former panels ranked the exact same per-week Grundpreis series
+// (p._ex) — the linear regression slope is the statistically sounder
+// signal (uses every week, not just two halves), so it drives ranking
+// and the up/down split here. The half-split median comparison
+// (p._erosion, formerly its own "Aktionspreis-Trend" panel) rides along
+// per row as a corroborating badge instead of being dropped.
+function renderTrendPanel() {
+    const upUl = document.getElementById('trend-up');
+    const downUl = document.getElementById('trend-down');
+    const sub = document.getElementById('trend-sub');
     if (!upUl || !downUl) return;
     if (!priceHistory) {
         setEmpty(upUl, 'Keine Preishistorie geladen.');
@@ -1391,14 +1359,14 @@ function renderErosionTrend() {
     }
 
     const cands = priceHistory.products.filter(p =>
-        activeCategories.has(p.cat) && p._erosion != null && p._ex.length >= 4);
-    const up = cands.filter(p => p._erosion > 0.05)
-        .sort((a, b) => b._erosion - a._erosion).slice(0, 10);
-    const down = cands.filter(p => p._erosion < -0.05)
-        .sort((a, b) => a._erosion - b._erosion).slice(0, 10);
+        activeCategories.has(p.cat) && p._slope != null && p._exWeeks >= 4);
+    const up = cands.filter(p => p._slope > 0)
+        .sort((a, b) => b._slope - a._slope).slice(0, 10);
+    const down = cands.filter(p => p._slope < 0)
+        .sort((a, b) => a._slope - b._slope).slice(0, 10);
 
     if (sub) {
-        sub.textContent = `Median-Grundpreis der frühen vs. späten Angebote je Artikel (≥4 Wochen exakter Grundpreis, ${cands.length} Artikel). Unabhängig von der gewählten Woche.`;
+        sub.textContent = `Lineare Regression über die Grundpreis-Historie je Artikel (≥4 Wochen exakter Grundpreis, ${cands.length} Artikel) als Haupt-Signal für einen stetigen Trend. Badge zeigt zur Bestätigung den Median-Vergleich erste vs. zweite Hälfte der Historie (Halbjahres-Vergleich). Unabhängig von der gewählten Woche.`;
     }
 
     const fill = (ul, list, rising) => {
@@ -1409,17 +1377,18 @@ function renderErosionTrend() {
         }
         const frag = document.createDocumentFragment();
         list.forEach((p, i) => {
-            const pct = Math.round(p._erosion * 100);
+            const perWk = Math.round(p._slope * 1000) / 10; // % per offered-week
+            const halfPct = p._erosion != null ? Math.round(p._erosion * 100) : null;
             frag.appendChild(buildGpRow({
                 rank: i + 1,
                 title: p.title,
                 cat: p.cat,
-                sub: `früher €${p._oldM.toFixed(2)} → jetzt €${p._newM.toFixed(2)} /${p.unit}`,
+                sub: `${p._exWeeks} Wo. · €${p._min.toFixed(2)} Tief → ${formatGp(p._latest, p.unit)}`,
                 // Arrow glyph so direction isn't conveyed by colour alone (a11y).
-                priceText: `${rising ? '▲' : '▼'} ${pct > 0 ? '+' : ''}${pct}%`,
+                priceText: `${rising ? '▲' : '▼'} ${perWk > 0 ? '+' : ''}${perWk}%/Wo.`,
                 priceColor: rising ? '#ef5350' : '#66bb6a',
-                badgeText: `${p._exWeeks} Wo.`,
-                badgeClass: 'flat',
+                badgeText: halfPct != null ? `Halbjahres-Vgl. ${halfPct > 0 ? '+' : ''}${halfPct}%` : '—',
+                badgeClass: halfPct == null ? 'flat' : (halfPct > 5 ? 'bad' : halfPct < -5 ? 'good' : 'flat'),
             }));
         });
         ul.appendChild(frag);

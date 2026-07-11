@@ -854,18 +854,20 @@
             <div id="chart-markt-kpis" class="chart-container-large" role="img" aria-label="Markt-KPIs pro Woche: Superknüller, PAYBACK, Grundpreis-Abdeckung, Durchschnitts- und Medianpreis"></div>
         </div>
 
-        <!-- FEATURE: aktionspreis-trend -->
+        <!-- FEATURE: grundpreis-trend (merged aktionspreis-trend + langfrist-trend:
+             regression slope is the primary ranking signal, the half-split
+             median comparison rides along per row as a corroborating badge) -->
         <div class="panel panel-full panel--auto">
-            <h2>Aktionspreis-Trend &mdash; teurer oder g&uuml;nstiger geworden?</h2>
-            <p id="erosion-sub" class="panel-sub"></p>
+            <h2>Grundpreis-Trend &mdash; teurer oder g&uuml;nstiger geworden?</h2>
+            <p id="trend-sub" class="panel-sub"></p>
             <div class="feature-cols">
                 <div>
-                    <h3>Nicht mehr so g&uuml;nstig (Aktionspreis gestiegen)</h3>
-                    <ul id="erosion-up" class="product-list"></ul>
+                    <h3>Nicht mehr so g&uuml;nstig (Grundpreis steigt)</h3>
+                    <ul id="trend-up" class="product-list"></ul>
                 </div>
                 <div>
-                    <h3>G&uuml;nstiger geworden (Aktionspreis gefallen)</h3>
-                    <ul id="erosion-down" class="product-list"></ul>
+                    <h3>G&uuml;nstiger geworden (Grundpreis f&auml;llt)</h3>
+                    <ul id="trend-down" class="product-list"></ul>
                 </div>
             </div>
         </div>
@@ -875,13 +877,6 @@
             <h2>Preis-D&uuml;rre &mdash; am l&auml;ngsten nicht mehr so g&uuml;nstig</h2>
             <p id="duerre-sub" class="panel-sub"></p>
             <ul id="duerre-list" class="product-list"></ul>
-        </div>
-
-        <!-- FEATURE: langfrist-trend -->
-        <div class="panel panel--auto">
-            <h2>Langfrist-Trend &mdash; stetig teurer (lineare Regression)</h2>
-            <p id="langtrend-sub" class="panel-sub"></p>
-            <ul id="langtrend-list" class="product-list"></ul>
         </div>
 
         <!-- FEATURE: superknueller-ehrlichkeitscheck -->
