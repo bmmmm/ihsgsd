@@ -128,6 +128,62 @@ window.DetailCard = (function () {
         return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
     }
 
+    // ── offer-cadence prediction ──
+
+    // ISO-8601 week number: nearest Thursday determines the ISO year, then
+    // count weeks since that year's first Thursday. Independent of the KW
+    // label baked into data file paths (those are known to collide/mis-file
+    // around year boundaries — see edeka-data-quirks memory).
+    function isoWeek(date) {
+        const d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+        const dayNum = (d.getUTCDay() + 6) % 7; // Mon=0 .. Sun=6
+        d.setUTCDate(d.getUTCDate() - dayNum + 3);
+        const firstThursday = new Date(Date.UTC(d.getUTCFullYear(), 0, 4));
+        const firstDayNum = (firstThursday.getUTCDay() + 6) % 7;
+        firstThursday.setUTCDate(firstThursday.getUTCDate() - firstDayNum + 3);
+        return { year: d.getUTCFullYear(), week: 1 + Math.round((d - firstThursday) / (7 * 86400000)) };
+    }
+
+    function fmtKW(date) {
+        return `KW ${isoWeek(date).week}`;
+    }
+
+    // Whole-week gaps between consecutive distinct offer dates (sorted asc).
+    // Snapshots are taken weekly, so a gap rounds to a clean week count even
+    // across the few known irregular fetch dates (see edeka-data-quirks);
+    // clamp to >=1 so no two distinct dates ever produce a "0-week" gap.
+    function weekGaps(datesSorted) {
+        const ts = datesSorted.map(d => Date.parse(d + 'T00:00:00Z'));
+        const gaps = [];
+        for (let i = 1; i < ts.length; i++) {
+            gaps.push(Math.max(1, Math.round((ts[i] - ts[i - 1]) / (7 * 86400000))));
+        }
+        return gaps;
+    }
+
+    // { text, title } for the compact "Kommt ca. alle N Wochen" line, or null
+    // when there isn't enough history to say anything (< 3 distinct offer
+    // weeks). Honesty guard: if the gaps have no stable rhythm (median
+    // absolute deviation > half the median gap), report "unregelmäßig" with
+    // the evidence instead of fabricating a next-offer date.
+    function cadenceInfo(datesSorted, now) {
+        if (datesSorted.length < 3) return null;
+        const gaps = weekGaps(datesSorted);
+        const med = medianOf(gaps);
+        const mad = medianOf(gaps.map(g => Math.abs(g - med)));
+        const evidence = `${datesSorted.length} Auftritte, Abstände: ${gaps.join('-')} Wochen`;
+        if (mad > med / 2) {
+            return { text: 'Unregelmäßig im Angebot', title: evidence, irregular: true };
+        }
+        const cadence = Math.round(med);
+        const lastDate = new Date(datesSorted[datesSorted.length - 1] + 'T00:00:00Z');
+        const nextDate = new Date(lastDate.getTime() + cadence * 7 * 86400000);
+        const kw = fmtKW(nextDate);
+        const nowRef = now instanceof Date ? now : new Date();
+        const tail = nextDate < nowRef ? `überfällig seit ~${kw}` : `nächstes Angebot vsl. ~${kw}`;
+        return { text: `Kommt ca. alle ${cadence} Wochen · ${tail}`, title: evidence, irregular: false };
+    }
+
     // ── modal shell ──
     function buildRoot() {
         const style = document.createElement('style');
@@ -159,6 +215,8 @@ window.DetailCard = (function () {
 .dcard-badge{display:inline-block;border-radius:999px;padding:3px 10px;font-size:.78rem;font-weight:600;margin-left:8px;vertical-align:middle}
 .dcard-badge.best{background:#1e3a24;color:#7ee787;border:1px solid #2e7d32}
 .dcard-badge.over{background:#3a2a1e;color:#ffb74d;border:1px solid #8d6e63}
+.dcard-cadence{grid-column:1/-1;background:#1d1d1d;border:1px solid #2a2a2a;border-radius:10px;padding:8px 10px;font-size:.82rem;color:#dfffe2}
+.dcard-cadence.irregular{color:#ffb74d}
 .dcard-chart{width:100%;height:auto;display:block;margin:6px 0 2px;background:#131313;border:1px solid #262626;border-radius:10px}
 .dcard-chart-hint{font-size:.72rem;color:#777;margin-bottom:10px}
 .dcard-sec{font-size:.8rem;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin:16px 0 8px}
@@ -333,6 +391,12 @@ window.DetailCard = (function () {
             weeksSince === 0 ? 'diese Woche' : `vor ${weeksSince} Wo.`,
             `Zuletzt im Angebot (${fmtDate(lastD)})`
         ));
+        const cadence = cadenceInfo([...distinctWeeks].sort());
+        if (cadence) {
+            const line = el('div', 'dcard-cadence' + (cadence.irregular ? ' irregular' : ''), cadence.text);
+            line.title = cadence.title;
+            grid.appendChild(line);
+        }
         wrap.appendChild(grid);
 
         const chart = buildChart(prod, selectedDate);
