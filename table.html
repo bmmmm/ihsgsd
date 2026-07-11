@@ -274,6 +274,138 @@
         #offer-table tr {
             cursor: pointer;
         }
+
+        /* Mobile layout: table rows become stacked cards with data-label
+           columns instead of the fixed-width desktop grid. Desktop (above
+           the breakpoint) is untouched. */
+        @media (max-width: 700px) {
+            #search-input {
+                flex: 1 1 100%;
+            }
+
+            button,
+            select,
+            input[type="text"] {
+                padding: 10px 14px;
+                font-size: 15px;
+                min-height: 44px;
+            }
+
+            .category-filters label {
+                padding: 8px 12px;
+                min-height: 44px;
+                box-sizing: border-box;
+                font-size: 14px;
+            }
+
+            .file-select-row select {
+                flex: 1 1 auto;
+            }
+
+            colgroup {
+                display: none;
+            }
+
+            table {
+                table-layout: auto;
+            }
+
+            /* Header becomes a wrapping strip of sort buttons; the two
+               non-sortable columns (Beschreibung, Bild) have no card-grid
+               to align to, so they're dropped from the header entirely. */
+            thead tr {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                position: sticky;
+                top: 0;
+                background-color: #252525;
+                padding: 6px;
+                border: 1px solid #333;
+                border-radius: 6px;
+            }
+
+            thead th {
+                display: flex;
+                align-items: center;
+                border: 1px solid #444;
+                border-radius: 4px;
+                background-color: #2a2a2a;
+                padding: 8px 10px;
+                min-height: 44px;
+                box-sizing: border-box;
+            }
+
+            th:not(.sortable) {
+                display: none;
+            }
+
+            tbody,
+            tr {
+                display: block;
+            }
+
+            #offer-table tr,
+            #offer-table tr:nth-child(even) {
+                background-color: #1e1e1e;
+                border: 1px solid #333;
+                border-radius: 8px;
+                padding: 4px 10px;
+                margin-top: 10px;
+            }
+
+            td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 10px;
+                border: none;
+                border-bottom: 1px solid #2a2a2a;
+                padding: 8px 2px;
+                text-align: right;
+                white-space: normal;
+            }
+
+            td:last-child {
+                border-bottom: none;
+            }
+
+            td::before {
+                content: attr(data-label);
+                color: #888;
+                font-weight: bold;
+                text-align: left;
+                flex-shrink: 0;
+            }
+
+            /* Product title acts as the card heading, not a labeled row. */
+            td:first-child {
+                justify-content: flex-start;
+                font-weight: bold;
+                font-size: 1.05rem;
+                border-bottom: 1px solid #333;
+                padding-bottom: 10px;
+                margin-bottom: 4px;
+            }
+
+            td:first-child::before {
+                display: none;
+            }
+
+            td.image-cell {
+                justify-content: flex-end;
+            }
+        }
+
+        /* Hover preview only makes sense on devices that actually support
+           hover (mouse/trackpad) — on touch, tapping a row opens the detail
+           card instead, so the preview panel never gets populated (see
+           attachImageHoverPreview() in script.js) and is hidden here too. */
+        @media (hover: none) {
+            .image-preview {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 
