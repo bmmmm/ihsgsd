@@ -70,6 +70,12 @@ function offerPrice(o) {
     return (Number.isFinite(v) && v >= 0 && v <= FACE_MAX) ? v : null;
 }
 
+// Null-safe category accessor — a handful of offers ship without a category
+// object; treat them as an explicit "—" bucket instead of crashing.
+function catName(o) {
+    return (o && o.category && o.category.name) ? o.category.name : '—';
+}
+
 // Build the <img> for an offer (local archive first, live URL as onerror
 // fallback), or null if no usable source. Shared by the KPI card and list rows.
 function buildOfferImage(o) {
@@ -271,7 +277,7 @@ function getChart(name, domId) {
 }
 
 function renderFilteredWeekCharts() {
-    const filtered = currentOffers.filter(o => activeCategories.has(o.category.name));
+    const filtered = currentOffers.filter(o => activeCategories.has(catName(o)));
     renderStats(filtered);
     renderTreemap(filtered);
     renderPriceChart(filtered);
@@ -492,7 +498,7 @@ function renderTreemap(offers) {
 
     const catData = {};
     offers.forEach(o => {
-        const cat = o.category.name;
+        const cat = catName(o);
         if (!catData[cat]) catData[cat] = { count: 0, totalPrice: 0, priced: 0 };
         catData[cat].count++;
         const pr = offerPrice(o);
@@ -542,7 +548,7 @@ function renderPriceChart(offers) {
 
     const catPrices = {};
     offers.forEach(o => {
-        const cat = o.category.name;
+        const cat = catName(o);
         const price = offerPrice(o);
         if (price === null) return; // skip the outlier / no-price offers
         if (!catPrices[cat]) catPrices[cat] = [];
@@ -550,9 +556,12 @@ function renderPriceChart(offers) {
     });
 
     const categories = Object.keys(catPrices).sort();
-    const avgData = categories.map(cat => {
-        const prices = catPrices[cat];
-        return +(prices.reduce((a, b) => a + b, 0) / prices.length).toFixed(2);
+    // Median, not mean — one expensive outlier (a spirits crate) would drag
+    // the mean far above what the category typically costs.
+    const medianData = categories.map(cat => {
+        const s = [...catPrices[cat]].sort((a, b) => a - b);
+        const mid = Math.floor(s.length / 2);
+        return +(s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2).toFixed(2);
     });
     const minData = categories.map(cat => +Math.min(...catPrices[cat]).toFixed(2));
     const maxData = categories.map(cat => +Math.max(...catPrices[cat]).toFixed(2));
@@ -598,10 +607,10 @@ function renderPriceChart(offers) {
                 })),
             },
             {
-                name: 'Ø Preis',
+                name: 'Median-Preis',
                 type: 'scatter',
                 data: categories.map((cat, i) => ({
-                    value: avgData[i],
+                    value: medianData[i],
                     itemStyle: { color: CATEGORY_COLORS[cat] || '#888' },
                 })),
                 symbolSize: 12,
@@ -784,12 +793,12 @@ function buildProductItem(o, opts) {
 
     const catLine = document.createElement('div');
     catLine.className = 'pi-cat';
-    const catName = o.category && o.category.name ? o.category.name : '—';
+    const cat = catName(o);
     const dot = document.createElement('span');
     dot.className = 'cat-dot';
-    dot.style.background = CATEGORY_COLORS[catName] || '#888';
+    dot.style.background = CATEGORY_COLORS[cat] || '#888';
     catLine.appendChild(dot);
-    catLine.appendChild(document.createTextNode(catName));
+    catLine.appendChild(document.createTextNode(cat));
     body.appendChild(catLine);
 
     li.appendChild(body);
@@ -815,7 +824,7 @@ function setEmpty(ul, msg) {
 // Offers in active categories, optionally Superknüller-only.
 function featureBaseOffers() {
     return currentOffers.filter(o =>
-        activeCategories.has(o.category.name) &&
+        activeCategories.has(catName(o)) &&
         (!featureOnlyKnuller || isKnuller(o))
     );
 }

@@ -130,7 +130,7 @@ def write_shopping(raw):
     date = data.get("date")
     if not isinstance(date, str) or not SHOPPING_DATE_RE.match(date):
         raise ValueError("'date' must be a YYYY-MM-DD string (it names the file)")
-    for key in ("offers", "pantry"):
+    for key in ("offers", "pantry", "custom"):
         if key in data and not isinstance(data[key], list):
             raise ValueError(f"'{key}' must be an array, got {type(data[key]).__name__}")
 

@@ -326,7 +326,7 @@ function savePrefs() {
 
 // Persist prefs WITHOUT bumping updatedAt — for display-only preferences (the
 // gluten-free toggle) the Monday generator doesn't read yet, so a "re-export"
-// prompt would just be noise. Mirrors backfillVoteCategories' quiet write.
+// prompt would just be noise.
 function persistPrefsQuiet() {
     try { localStorage.setItem(PREFS_STORE, JSON.stringify(prefs)); }
     catch (err) { /* storage disabled — in-memory state still applies this session */ }
@@ -496,8 +496,6 @@ async function loadWeek(filePath) {
         currentOffers = [];
         showError('Angebote dieser Woche konnten nicht geladen werden.');
     }
-    backfillVoteCategories();      // enrich votes with `c` before reconcile uses it
-    reconcileOffCategoryVotes();
     renderAll();
 }
 
@@ -774,9 +772,8 @@ function cycleInterest(key) {
 // Drop the redundant 👎 votes inside a switched-off category, keeping 👍 votes
 // (deliberate "category off, but THIS one yes" exceptions). Returns the count
 // removed. Only category-based topics qualify; for others this is a no-op.
-// A vote's category comes from its stored `c`; older exports without it are
-// resolved against this week's loaded offers by id (cross-week votes that no
-// longer appear this week can't be classified and are left untouched).
+// Votes are resolved against this week's loaded offers by id — votes whose
+// offer no longer appears this week can't be classified and are left alone.
 function pruneDownVotesForCategory(topicKey) {
     const cat = CATEGORY_FOR_TOPIC[topicKey];
     if (!cat || !prefs || !prefs.votes) return 0;
@@ -784,50 +781,10 @@ function pruneDownVotesForCategory(topicKey) {
     let removed = 0;
     for (const [id, e] of Object.entries(prefs.votes)) {
         if (!e || e.v !== -1) continue;          // keep 👍 exceptions
-        const voteCat = e.c || catById.get(String(id));
+        const voteCat = catById.get(String(id));
         if (voteCat === cat) { delete prefs.votes[id]; removed++; }
     }
     return removed;
-}
-
-// Backfill the category (`c`) on votes stored before votes carried it, resolving
-// each against the loaded week by id. Pure frontend metadata for robust
-// cross-week pruning — the generator never reads it and it does not change the
-// reader's actual choices, so it persists QUIETLY (no updatedAt bump, hence no
-// spurious "re-export" prompt). Votes whose id is absent from this week are left
-// untouched until a week that contains them is loaded.
-function backfillVoteCategories() {
-    if (!prefs || !prefs.votes || !currentOffers.length) return;
-    const catById = new Map(currentOffers.map(o => [String(o.id), catName(o)]));
-    let changed = false;
-    for (const [id, e] of Object.entries(prefs.votes)) {
-        if (!e || e.c) continue;
-        const cat = catById.get(String(id));
-        if (cat) { e.c = cat; changed = true; }
-    }
-    if (changed) {
-        try { localStorage.setItem(PREFS_STORE, JSON.stringify(prefs)); }
-        catch (err) { /* storage disabled — in-memory enrichment still helps this session */ }
-    }
-}
-
-// Self-heal already-stored prefs: a category may have been switched off BEFORE
-// the auto-prune existed, leaving its redundant 👎 in the file. Run once after a
-// week loads (offers available for resolving pre-`c` votes). Idempotent — once
-// pruned it removes nothing, so re-running on every loadWeek is harmless.
-function reconcileOffCategoryVotes() {
-    if (!prefs || !prefs.interests) return;
-    let removed = 0;
-    for (const key of Object.keys(CATEGORY_FOR_TOPIC)) {
-        if (interestLevel(key) === -1) removed += pruneDownVotesForCategory(key);
-    }
-    if (removed > 0) {
-        savePrefs();
-        const hint = document.getElementById('steer-hint');
-        if (hint) {
-            hint.textContent = `${removed} überflüssige Bewertung${removed === 1 ? '' : 'en'} in ausgeschalteten Kategorien bereinigt — bitte neu exportieren.`;
-        }
-    }
 }
 
 function setVote(o, value) {
@@ -837,7 +794,7 @@ function setVote(o, value) {
     if (cur === value) {
         delete prefs.votes[id];        // second click on the same thumb clears it
     } else {
-        prefs.votes[id] = { v: value, t: o.title || '', c: catName(o) };
+        prefs.votes[id] = { v: value, t: o.title || '' };
     }
     savePrefs();
     renderAll();
@@ -1797,17 +1754,18 @@ async function copyShoppingList() {
 }
 
 // Local-only: persist the list to data/shopping/<date>.json via serve.py. The
-// button only shows when the dev API is reachable (localApi). Groups are
-// flattened to offers/pantry for the archive; the full checklist is in `text`.
+// button only shows when the dev API is reachable (localApi). Groups map 1:1
+// to offers/pantry/custom in the archive; the full checklist is in `text`.
 async function saveShoppingList() {
     const list = buildShoppingList();
     if (!list.date) { setShoppingMeta('Keine Woche gewählt — nichts zu speichern.', 'warn'); return; }
-    const offers = [], pantry = [];
+    const offers = [], pantry = [], custom = [];
+    const buckets = { offer: offers, pantry: pantry, custom: custom };
     list.groups.forEach(g => g.items.forEach(it => {
         const entry = { name: it.name };
         if (it.price) entry.price = it.price;
         if (it.checked) entry.checked = true;
-        (g.key === 'offer' ? offers : pantry).push(entry);
+        (buckets[g.key] || pantry).push(entry);
     }));
     const btn = document.getElementById('pk-shopping-save');
     const orig = btn ? btn.textContent : '';
@@ -1819,6 +1777,7 @@ async function saveShoppingList() {
             savedAt: new Date().toISOString(),
             offers,
             pantry,
+            custom,
             text: shoppingListText(list),
         }, null, 2) + '\n';
         const res = await fetch('/api/shopping', {
