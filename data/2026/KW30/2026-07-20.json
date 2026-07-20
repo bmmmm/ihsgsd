@@ -3528,12 +3528,12 @@
       },
       "criteria": [
         {
-          "id": 236,
-          "name": "Superknüller"
-        },
-        {
           "id": 1081,
           "name": "App-Preis"
+        },
+        {
+          "id": 236,
+          "name": "Superknüller"
         }
       ],
       "priceType": "SHOW",
@@ -4080,12 +4080,12 @@
       },
       "criteria": [
         {
-          "id": 236,
-          "name": "Superknüller"
-        },
-        {
           "id": 1081,
           "name": "App-Preis"
+        },
+        {
+          "id": 236,
+          "name": "Superknüller"
         }
       ],
       "priceType": "SHOW",
@@ -5860,12 +5860,12 @@
       },
       "criteria": [
         {
-          "id": 236,
-          "name": "Superknüller"
-        },
-        {
           "id": 1081,
           "name": "App-Preis"
+        },
+        {
+          "id": 236,
+          "name": "Superknüller"
         }
       ],
       "priceType": "SHOW",
