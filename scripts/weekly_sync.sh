@@ -12,7 +12,11 @@
 # reusing Phase A's git-ahead check.
 set -uo pipefail
 export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
-cd "$(dirname "${BASH_SOURCE[0]}")/.."
+# Hardcoded, not relative to BASH_SOURCE: the launchagent-icons wrapper copies
+# this script verbatim into an .app bundle elsewhere, so a
+# dirname-of-own-location cd would resolve inside that bundle instead of the
+# repo (broke the launchd job for weeks — silently exited before Phase A).
+cd "$HOME/offline_coding/ihsgsd"
 
 LOG_FILE="$HOME/ops/logs/ihsgsd-sync.log"
 exec >>"$LOG_FILE" 2>&1
