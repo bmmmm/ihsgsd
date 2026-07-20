@@ -1,42 +1,39 @@
 {
-  "weekLabel": "KW28",
-  "generatedAt": "2026-07-06",
+  "weekLabel": "KW30",
+  "generatedAt": "2026-07-20",
   "generatedFor": "2026-06-30T10:27:37.023Z",
   "model": "sonnet",
-  "intro": "Diese Woche gibt's Frühkartoffeln, Mini-Rispentomaten und Bio-Kulturheidelbeeren zum Bestpreis – ideal für eine bunte, vegane Woche voller Obst & Gemüse.",
+  "intro": "Diese Woche gibt's Auberginen für nur 99 Cent und knackigen Stangenbrokkoli im Angebot – ideal für 13 bunte vegane Abendessen von Ofengemüse bis Wok, ganz nach deinem Geschmack.",
   "days": [
     {
       "day": "Mo",
       "meal": {
-        "slug": "schnelles-kichererbsen-tomaten-curry",
-        "title": "Schnelles Kichererbsen-Tomaten-Curry",
-        "blurb": "Cremiges Curry mit den günstigen Mini-Rispentomaten und knusprigen Frühkartoffeln, in 25 Minuten fertig.",
+        "slug": "ofen-auberginen-mit-cherry-tomaten-kichererbsen",
+        "title": "Ofen-Auberginen mit Cherry-Tomaten & Kichererbsen",
+        "blurb": "Schnell im Ofen, herzhaft-mediterran und mit den knackigen Auberginen im Angebot.",
         "tags": [
-          "curry",
-          "huelsenfruechte",
+          "ofen",
+          "mediterran",
+          "auberginen",
           "schnell"
         ],
         "ingredients": [
           {
-            "name": "Mini-Rispentomaten",
-            "offerTitle": "Niederlande - EDEKA Herzstücke - Mini-Rispentomaten",
-            "price": "€1,00"
+            "name": "Auberginen",
+            "offerTitle": "Deutschland - Auberginen",
+            "price": "€0,99"
           },
           {
-            "name": "Frühkartoffeln",
-            "offerTitle": "Deutschland - Frühkartoffeln",
-            "price": "€2,99"
+            "name": "Cherry-Rispentomaten",
+            "offerTitle": "Deutschland - Cherry-Rispentomaten",
+            "price": "€2,49"
           },
           {
             "name": "Kichererbsen",
             "pantry": true
           },
           {
-            "name": "Kokosmilch",
-            "pantry": true
-          },
-          {
-            "name": "Zwiebeln",
+            "name": "Olivenöl",
             "pantry": true
           },
           {
@@ -44,44 +41,142 @@
             "pantry": true
           },
           {
-            "name": "Currypulver",
-            "pantry": true
-          },
-          {
-            "name": "Ingwer",
+            "name": "Paprikapulver",
             "pantry": true
           }
         ],
         "steps": [
-          "Frühkartoffeln würfeln und in Rapsöl anbraten.",
-          "Zwiebel, Knoblauch und Ingwer dazugeben, kurz mitschwitzen.",
-          "Currypulver, Mini-Rispentomaten und Kokosmilch einrühren.",
-          "Kichererbsen zugeben, 15 Minuten köcheln lassen.",
-          "Mit Salz und Pfeffer abschmecken und servieren."
+          "Auberginen und Tomaten würfeln, mit Olivenöl und Paprikapulver vermengen.",
+          "Auf einem Blech verteilen und 20 Minuten bei 200°C rösten.",
+          "Kichererbsen abtropfen lassen und die letzten 10 Minuten dazugeben.",
+          "Mit Knoblauch und Salz abschmecken.",
+          "Heiß servieren, z. B. mit Fladenbrot."
         ]
       }
     },
     {
       "day": "Di",
       "meal": {
-        "slug": "sommer-spaghetti-mit-cherry-tomaten-basilikum",
-        "title": "Sommer-Spaghetti mit Cherry-Tomaten & Basilikum",
-        "blurb": "Ein schnelles Pasta-Klassiker mit frischem Basilikum aus dem Angebot.",
+        "slug": "sellerie-moehren-eintopf-mit-raeuchertofu",
+        "title": "Sellerie-Möhren-Eintopf mit Räuchertofu",
+        "blurb": "Cremiger Eintopf mit Möhren im Angebot und einem Schuss Oatly für extra Sämigkeit.",
         "tags": [
-          "pasta",
-          "schnell",
-          "sommer"
+          "eintopf",
+          "cremig",
+          "herbstlich",
+          "proteinreich"
         ],
         "ingredients": [
           {
-            "name": "Cherry-Rispentomaten",
-            "offerTitle": "Deutschland - Cherry-Rispentomaten",
-            "price": "€2,22"
+            "name": "Möhren",
+            "offerTitle": "Deutschland - Möhren",
+            "price": "€1,49"
+          },
+          {
+            "name": "Staudensellerie",
+            "pantry": true
+          },
+          {
+            "name": "Räuchertofu",
+            "pantry": true
+          },
+          {
+            "name": "Oatly Haferdrink",
+            "offerTitle": "Oatly Haferdrink",
+            "price": "€1,79"
+          },
+          {
+            "name": "Zwiebeln",
+            "pantry": true
+          },
+          {
+            "name": "Gemüsebrühe",
+            "pantry": true
+          }
+        ],
+        "steps": [
+          "Zwiebeln anschwitzen, Möhren und Sellerie klein schneiden und mitdünsten.",
+          "Räuchertofu würfeln und dazugeben, kurz mitbraten.",
+          "Mit Gemüsebrühe ablöschen und 15 Minuten köcheln.",
+          "Oatly Haferdrink einrühren für die Cremigkeit.",
+          "Mit Salz und Pfeffer abschmecken."
+        ]
+      }
+    },
+    {
+      "day": "Mi",
+      "meal": {
+        "slug": "asia-wok-mit-stangenbrokkoli-pak-choi-tempeh",
+        "title": "Asia-Wok mit Stangenbrokkoli, Pak-Choi & Tempeh",
+        "blurb": "Knackiger Stangenbrokkoli im Angebot trifft würzige Sojasauce und schnelles Tempeh.",
+        "tags": [
+          "wok",
+          "asiatisch",
+          "schnell",
+          "gemüse"
+        ],
+        "ingredients": [
+          {
+            "name": "Stangenbrokkoli",
+            "offerTitle": "Niederlande - Stangenbrokkoli",
+            "price": "€1,99"
+          },
+          {
+            "name": "Mini-Pak-Choi",
+            "pantry": true
+          },
+          {
+            "name": "Tempeh",
+            "pantry": true
+          },
+          {
+            "name": "Sojasauce",
+            "pantry": true
+          },
+          {
+            "name": "Ingwer",
+            "pantry": true
+          },
+          {
+            "name": "Reis",
+            "pantry": true
+          }
+        ],
+        "steps": [
+          "Reis nach Packungsanweisung kochen.",
+          "Tempeh würfeln und knusprig anbraten.",
+          "Stangenbrokkoli und Pak-Choi klein schneiden und dazugeben.",
+          "Mit Ingwer, Knoblauch und Sojasauce ablöschen.",
+          "Kurz wokken, bis das Gemüse bissfest ist, mit Reis servieren."
+        ]
+      }
+    },
+    {
+      "day": "Do",
+      "meal": {
+        "slug": "spaghetti-mit-mini-rispentomaten-basilikum-champignons",
+        "title": "Spaghetti mit Mini-Rispentomaten, Basilikum & Champignons",
+        "blurb": "Sommerliche Pasta mit den kleinen Rispentomaten aus dem Angebot und frischem Basilikum.",
+        "tags": [
+          "pasta",
+          "italienisch",
+          "schnell",
+          "tomaten"
+        ],
+        "ingredients": [
+          {
+            "name": "Mini-Rispentomaten",
+            "offerTitle": "Niederlande - EDEKA Herzstücke - Mini-Rispentomaten",
+            "price": "€1,11"
           },
           {
             "name": "Basilikum",
-            "offerTitle": "Deutschland - Basilikum",
-            "price": "€1,29"
+            "offerTitle": "Niederlande - Basilikum",
+            "price": "€1,49"
+          },
+          {
+            "name": "Champignons",
+            "pantry": true
           },
           {
             "name": "Nudeln",
@@ -97,39 +192,36 @@
           }
         ],
         "steps": [
-          "Nudeln nach Packungsangabe kochen.",
-          "Cherry-Rispentomaten halbieren, in Olivenöl mit Knoblauch anschwitzen.",
-          "Nudeln unterheben, mit etwas Nudelwasser binden.",
-          "Basilikum grob zupfen und untermischen.",
-          "Mit Salz und Pfeffer abschmecken."
+          "Nudeln nach Packungsanweisung kochen.",
+          "Champignons in Scheiben schneiden und in Olivenöl anbraten.",
+          "Mini-Rispentomaten halbieren und mitbraten, bis sie platzen.",
+          "Knoblauch dazugeben, kurz mitschwitzen.",
+          "Mit Nudeln vermengen und mit frischem Basilikum bestreuen."
         ]
       }
     },
     {
-      "day": "Mi",
+      "day": "Fr",
       "meal": {
-        "slug": "asia-wok-mit-tofu-paprika-bundmoehren",
-        "title": "Asia-Wok mit Tofu, Paprika & Bundmöhren",
-        "blurb": "Knackiges Gemüse aus dem Angebot, schnell im Wok gebraten.",
+        "slug": "like-meat-bowl-mit-reis-salatmischung-sesam-sosse",
+        "title": "Like-Meat-Bowl mit Reis, Salatmischung & Sesam-Soße",
+        "blurb": "Herzhafte Bowl mit dem pflanzlichen Like Meat aus dem Angebot und knackiger Salatmischung.",
         "tags": [
+          "bowl",
+          "proteinreich",
           "asiatisch",
-          "wok",
           "schnell"
         ],
         "ingredients": [
           {
-            "name": "Paprika",
-            "offerTitle": "Spanien - Paprika",
-            "price": "€1,49"
+            "name": "Like Meat - Rein pflanzlich aus Soja",
+            "offerTitle": "Like Meat - Rein pflanzlich aus Soja",
+            "price": "€2,79"
           },
           {
-            "name": "Bundmöhren",
-            "offerTitle": "Deutschland - Bundmöhren",
-            "price": "€1,49"
-          },
-          {
-            "name": "Tofu",
-            "pantry": true
+            "name": "Salatmischung",
+            "offerTitle": "Bonduelle - Salatmischung",
+            "price": "€2,99"
           },
           {
             "name": "Reis",
@@ -140,52 +232,98 @@
             "pantry": true
           },
           {
-            "name": "Ingwer",
+            "name": "Sriracha",
             "pantry": true
           },
           {
-            "name": "Sriracha",
+            "name": "Agavendicksaft",
             "pantry": true
           }
         ],
         "steps": [
           "Reis kochen.",
-          "Tofu würfeln und knusprig anbraten.",
-          "Paprika und Bundmöhren in Streifen schneiden, dazugeben.",
-          "Mit Ingwer, Sojasauce und Sriracha ablöschen.",
-          "Alles kurz durchschwenken und mit Reis servieren."
+          "Like Meat nach Packungsanweisung anbraten.",
+          "Für die Soße Sojasauce, Sriracha und Agavendicksaft verrühren.",
+          "Reis, Like Meat und Salatmischung in einer Bowl anrichten.",
+          "Mit der Soße beträufeln und servieren."
         ]
       }
     },
     {
-      "day": "Do",
+      "day": "Sa",
       "meal": {
-        "slug": "ofen-blech-mit-fruehkartoffeln-kohlrabi",
-        "title": "Ofen-Blech mit Frühkartoffeln & Kohlrabi",
-        "blurb": "Ein unkompliziertes Blech-Gericht, das fast von allein gart.",
+        "slug": "rote-linsen-curry-mit-bundmoehren-kokosmilch",
+        "title": "Rote-Linsen-Curry mit Bundmöhren & Kokosmilch",
+        "blurb": "Wärmendes Curry mit knackigen Bundmöhren im Angebot und cremiger Kokosmilch.",
         "tags": [
-          "ofen",
-          "einfach",
-          "gemuese"
+          "curry",
+          "huelsenfruechte",
+          "cremig",
+          "würzig"
         ],
         "ingredients": [
           {
-            "name": "Frühkartoffeln",
-            "offerTitle": "Deutschland - Frühkartoffeln",
+            "name": "Bundmöhren",
+            "offerTitle": "Deutschland - Bundmöhren",
+            "price": "€1,49"
+          },
+          {
+            "name": "Rote Linsen",
+            "pantry": true
+          },
+          {
+            "name": "Kokosmilch",
+            "pantry": true
+          },
+          {
+            "name": "Currypulver",
+            "pantry": true
+          },
+          {
+            "name": "Zwiebeln",
+            "pantry": true
+          },
+          {
+            "name": "Ingwer",
+            "pantry": true
+          }
+        ],
+        "steps": [
+          "Zwiebeln, Knoblauch und Ingwer anschwitzen.",
+          "Currypulver kurz mitrösten.",
+          "Bundmöhren in Scheiben schneiden und dazugeben.",
+          "Rote Linsen und Kokosmilch einrühren, 15 Minuten köcheln.",
+          "Mit Salz abschmecken und mit Reis servieren."
+        ]
+      }
+    },
+    {
+      "day": "So",
+      "meal": {
+        "slug": "ofenkartoffeln-back-grill-mit-zwiebel-dip-eisbergsalat",
+        "title": "Ofenkartoffeln „Back&Grill“ mit Zwiebel-Dip & Eisbergsalat",
+        "blurb": "Knusprige Frühkartoffeln aus dem Angebot mit cremigem Dip und frischem Salat.",
+        "tags": [
+          "ofen",
+          "kartoffeln",
+          "salat",
+          "schnell"
+        ],
+        "ingredients": [
+          {
+            "name": "Frühkartoffeln „Back&Grill“",
+            "offerTitle": "Deutschland - Frühkartoffeln „Back&Grill“",
             "price": "€2,99"
           },
           {
-            "name": "Kohlrabi",
-            "offerTitle": "Deutschland - Kohlrabi",
-            "price": "€0,55"
+            "name": "Zwiebeln",
+            "offerTitle": "Deutschland - Zwiebeln",
+            "price": "€1,49"
           },
           {
-            "name": "Olivenöl",
-            "pantry": true
-          },
-          {
-            "name": "Paprikapulver",
-            "pantry": true
+            "name": "Eisbergsalat",
+            "offerTitle": "Deutschland - Eisbergsalat",
+            "price": "€0,99"
           },
           {
             "name": "Sojajoghurt",
@@ -197,171 +335,79 @@
           }
         ],
         "steps": [
-          "Ofen auf 200°C vorheizen.",
-          "Frühkartoffeln halbieren, Kohlrabi in Spalten schneiden.",
-          "Mit Öl und Paprikapulver mischen, 25 Minuten rösten.",
-          "Sojajoghurt mit Senf zu einem Dip verrühren.",
-          "Gemüse mit Dip servieren."
-        ]
-      }
-    },
-    {
-      "day": "Fr",
-      "meal": {
-        "slug": "bulgur-bowl-mit-bio-rispentomaten-eisbergsalat",
-        "title": "Bulgur-Bowl mit Bio-Rispentomaten & Eisbergsalat",
-        "blurb": "Frische Bowl mit Bio-Tomaten, leicht und schnell gemacht.",
-        "tags": [
-          "bowl",
-          "bio",
-          "frisch"
-        ],
-        "ingredients": [
-          {
-            "name": "Bio-Rispentomaten",
-            "offerTitle": "Deutschland - Bio Rispentomaten",
-            "price": "€2,49"
-          },
-          {
-            "name": "Eisbergsalat",
-            "offerTitle": "Deutschland - Eisbergsalat",
-            "price": "€0,88"
-          },
-          {
-            "name": "Bulgur",
-            "pantry": true
-          },
-          {
-            "name": "Zitrone/Essig",
-            "pantry": true
-          },
-          {
-            "name": "Olivenöl",
-            "pantry": true
-          }
-        ],
-        "steps": [
-          "Bulgur nach Packungsangabe quellen lassen.",
-          "Bio-Rispentomaten würfeln, Eisbergsalat in Streifen schneiden.",
-          "Alles mit Bulgur mischen.",
-          "Mit Olivenöl, Essig, Salz und Pfeffer anmachen."
-        ]
-      }
-    },
-    {
-      "day": "Sa",
-      "meal": {
-        "slug": "raeuchertofu-salat-mit-kopfsalat-paprika-bio-pfirsich",
-        "title": "Räuchertofu-Salat mit Kopfsalat, Paprika & Bio-Pfirsich",
-        "blurb": "Herzhaft-fruchtiger Salat mit rauchigem Tofu und süßem Bio-Pfirsich.",
-        "tags": [
-          "salat",
-          "bio",
-          "sommer"
-        ],
-        "ingredients": [
-          {
-            "name": "Kopfsalat",
-            "offerTitle": "Bonduelle - Kopfsalat",
-            "price": "€2,49"
-          },
-          {
-            "name": "Paprika",
-            "offerTitle": "Spanien - Paprika",
-            "price": "€1,49"
-          },
-          {
-            "name": "Bio-Pfirsiche",
-            "offerTitle": "Spanien - Bio Pfirsiche",
-            "price": "€2,49"
-          },
-          {
-            "name": "Räuchertofu",
-            "pantry": true
-          },
-          {
-            "name": "Olivenöl",
-            "pantry": true
-          }
-        ],
-        "steps": [
-          "Räuchertofu in Streifen schneiden und knusprig anbraten.",
-          "Kopfsalat, Paprika und Bio-Pfirsich klein schneiden.",
-          "Alles in einer Schüssel mischen.",
-          "Mit Olivenöl, Salz und Pfeffer anmachen und Tofu daraufgeben."
-        ]
-      }
-    },
-    {
-      "day": "So",
-      "meal": {
-        "slug": "moehren-spitzkohl-suppe",
-        "title": "Möhren-Spitzkohl-Suppe",
-        "blurb": "Wärmende, einfache Suppe mit dem frischen Spitzkohl aus dem Angebot.",
-        "tags": [
-          "suppe",
-          "einfach",
-          "gemuese"
-        ],
-        "ingredients": [
-          {
-            "name": "Spitzkohl",
-            "offerTitle": "Deutschland - Spitzkohl",
-            "price": "€1,29"
-          },
-          {
-            "name": "Bundmöhren",
-            "offerTitle": "Deutschland - Bundmöhren",
-            "price": "€1,49"
-          },
-          {
-            "name": "Gemüsebrühe",
-            "pantry": true
-          },
-          {
-            "name": "Zwiebeln",
-            "pantry": true
-          },
-          {
-            "name": "Kreuzkümmel",
-            "pantry": true
-          }
-        ],
-        "steps": [
-          "Zwiebel anschwitzen, Spitzkohl und Möhren in Streifen dazugeben.",
-          "Mit Gemüsebrühe aufgießen.",
-          "Mit Kreuzkümmel würzen und 15 Minuten köcheln.",
-          "Mit Salz und Pfeffer abschmecken."
+          "Frühkartoffeln mit Olivenöl würzen und 25 Minuten im Ofen backen.",
+          "Zwiebeln fein würfeln und mit Sojajoghurt und Senf zu einem Dip verrühren.",
+          "Eisbergsalat waschen und in Streifen schneiden.",
+          "Kartoffeln aus dem Ofen nehmen und mit Salat anrichten.",
+          "Mit dem Zwiebel-Dip servieren."
         ]
       }
     }
   ],
   "bench": [
     {
-      "slug": "gefuellte-paprika-mit-reis-kidneybohnen",
-      "title": "Gefüllte Paprika mit Reis & Kidneybohnen",
-      "blurb": "Klassiker aus dem Ofen, herzhaft gefüllt mit Reis und Bohnen.",
+      "slug": "bulgur-salat-mit-johannisbeeren-moehren-petersilie",
+      "title": "Bulgur-Salat mit Johannisbeeren, Möhren & Petersilie",
+      "blurb": "Fruchtig-frischer Salat mit süßsauren Johannisbeeren im Angebot.",
       "tags": [
-        "ofen",
-        "huelsenfruechte",
-        "herzhaft"
+        "salat",
+        "bowl",
+        "fruchtig",
+        "sommer"
       ],
       "ingredients": [
         {
-          "name": "Paprika",
-          "offerTitle": "Spanien - Paprika",
-          "price": "€1,49"
+          "name": "Johannisbeeren",
+          "offerTitle": "Deutschland - Johannisbeeren",
+          "price": "€2,49"
         },
         {
-          "name": "Reis",
+          "name": "Möhren",
           "pantry": true
         },
         {
-          "name": "Kidneybohnen",
+          "name": "Bulgur",
           "pantry": true
         },
         {
-          "name": "passierte Tomaten",
+          "name": "Petersilie",
+          "pantry": true
+        },
+        {
+          "name": "Olivenöl",
+          "pantry": true
+        },
+        {
+          "name": "Senf",
+          "pantry": true
+        }
+      ],
+      "steps": [
+        "Bulgur nach Packungsanweisung quellen lassen.",
+        "Möhren raspeln, Johannisbeeren waschen.",
+        "Bulgur mit Möhren, Johannisbeeren und Petersilie mischen.",
+        "Mit Olivenöl, Senf, Salz und Pfeffer anmachen.",
+        "Kurz durchziehen lassen und servieren."
+      ]
+    },
+    {
+      "slug": "kartoffel-gulasch-mit-champignons-paprikapulver",
+      "title": "Kartoffel-Gulasch mit Champignons & Paprikapulver",
+      "blurb": "Deftiger Eintopf mit den günstigen Speisekartoffeln im Angebot.",
+      "tags": [
+        "eintopf",
+        "kartoffeln",
+        "herzhaft",
+        "günstig"
+      ],
+      "ingredients": [
+        {
+          "name": "Speisekartoffeln",
+          "offerTitle": "Deutschland - Speisekartoffeln",
+          "price": "€2,77"
+        },
+        {
+          "name": "Champignons",
           "pantry": true
         },
         {
@@ -371,172 +417,148 @@
         {
           "name": "Paprikapulver",
           "pantry": true
-        }
-      ],
-      "steps": [
-        "Reis vorkochen.",
-        "Paprika Deckel abschneiden, entkernen.",
-        "Reis mit Kidneybohnen, Zwiebel und Paprikapulver mischen und einfüllen.",
-        "Mit passierten Tomaten übergießen, 30 Minuten bei 200°C backen."
-      ]
-    },
-    {
-      "slug": "reispfanne-mit-tempeh-kohlrabi-moehren",
-      "title": "Reispfanne mit Tempeh, Kohlrabi & Möhren",
-      "blurb": "Herzhafte Pfanne mit knusprigem Tempeh, alles aus einer Pfanne.",
-      "tags": [
-        "pfanne",
-        "huelsenfruechte",
-        "schnell"
-      ],
-      "ingredients": [
-        {
-          "name": "Kohlrabi",
-          "offerTitle": "Deutschland - Kohlrabi",
-          "price": "€0,55"
-        },
-        {
-          "name": "Bundmöhren",
-          "offerTitle": "Deutschland - Bundmöhren",
-          "price": "€1,49"
-        },
-        {
-          "name": "Tempeh",
-          "pantry": true
-        },
-        {
-          "name": "Reis",
-          "pantry": true
-        },
-        {
-          "name": "Sojasauce",
-          "pantry": true
-        }
-      ],
-      "steps": [
-        "Tempeh würfeln und knusprig anbraten.",
-        "Kohlrabi und Möhren in dünne Stifte schneiden, dazugeben.",
-        "Gekochten Reis unterheben.",
-        "Mit Sojasauce abschmecken und servieren."
-      ]
-    },
-    {
-      "slug": "linsensalat-mit-wassermelone-eisbergsalat",
-      "title": "Linsensalat mit Wassermelone & Eisbergsalat",
-      "blurb": "Ungewöhnlich frisch: würzige Linsen treffen auf süße Wassermelone.",
-      "tags": [
-        "salat",
-        "sommer",
-        "huelsenfruechte"
-      ],
-      "ingredients": [
-        {
-          "name": "Wassermelonen",
-          "offerTitle": "Spanien - Wassermelonen",
-          "price": "€0,88"
-        },
-        {
-          "name": "Eisbergsalat",
-          "offerTitle": "Deutschland - Eisbergsalat",
-          "price": "€0,88"
-        },
-        {
-          "name": "Belugalinsen",
-          "pantry": true
-        },
-        {
-          "name": "Olivenöl",
-          "pantry": true
-        },
-        {
-          "name": "Zitrone/Essig",
-          "pantry": true
-        }
-      ],
-      "steps": [
-        "Belugalinsen nach Packungsangabe kochen und abkühlen lassen.",
-        "Wassermelone entkernen und würfeln, Eisbergsalat in Streifen schneiden.",
-        "Alles mit den Linsen mischen.",
-        "Mit Olivenöl, Essig, Salz und Pfeffer anmachen."
-      ]
-    },
-    {
-      "slug": "seitan-geschnetzeltes-mit-bio-rispentomaten-sauce",
-      "title": "Seitan-Geschnetzeltes mit Bio-Rispentomaten-Sauce",
-      "blurb": "Schnelles Pfannengericht mit würziger Tomatensauce.",
-      "tags": [
-        "pfanne",
-        "herzhaft",
-        "schnell"
-      ],
-      "ingredients": [
-        {
-          "name": "Bio-Rispentomaten",
-          "offerTitle": "Deutschland - Bio Rispentomaten",
-          "price": "€2,49"
-        },
-        {
-          "name": "Seitan",
-          "pantry": true
-        },
-        {
-          "name": "Zwiebeln",
-          "pantry": true
         },
         {
           "name": "Tomatenmark",
           "pantry": true
         },
         {
-          "name": "Kartoffeln",
+          "name": "Gemüsebrühe",
           "pantry": true
         }
       ],
       "steps": [
-        "Kartoffeln kochen.",
-        "Seitan in Streifen anbraten, Zwiebel dazugeben.",
-        "Bio-Rispentomaten grob würfeln, mit Tomatenmark einrühren.",
-        "Kurz köcheln lassen und mit Kartoffeln servieren."
+        "Zwiebeln anschwitzen, Paprikapulver kurz mitrösten.",
+        "Kartoffeln würfeln und dazugeben.",
+        "Champignons vierteln und mitbraten.",
+        "Tomatenmark und Gemüsebrühe einrühren, 20 Minuten köcheln.",
+        "Mit Salz und Pfeffer abschmecken."
       ]
     },
     {
-      "slug": "quinoa-beeren-salat-mit-kiwi",
-      "title": "Quinoa-Beeren-Salat mit Kiwi",
-      "blurb": "Leichtes, fruchtiges Sommer-Dinner mit den frischen Bio-Kulturheidelbeeren.",
+      "slug": "gebratener-raeuchertofu-mit-zucchini-in-sojasosse",
+      "title": "Gebratener Räuchertofu mit Zucchini in Sojasoße",
+      "blurb": "Schnelle Pfanne mit knackiger Zucchini und würziger Sojasoße.",
       "tags": [
-        "salat",
-        "bio",
-        "sommer"
+        "pfanne",
+        "schnell",
+        "asiatisch",
+        "proteinreich"
       ],
       "ingredients": [
         {
-          "name": "Bio-Kulturheidelbeeren",
-          "offerTitle": "Spanien - EDEKA Bio - Bio-Kulturheidelbeeren",
-          "price": "€3,99"
-        },
-        {
-          "name": "Kiwis",
-          "offerTitle": "Neuseeland - Zespri - Kiwis",
-          "price": "€0,59"
-        },
-        {
-          "name": "Quinoa",
+          "name": "Zucchini",
           "pantry": true
         },
         {
-          "name": "Agavendicksaft",
+          "name": "Räuchertofu",
+          "pantry": true
+        },
+        {
+          "name": "Sojasauce",
+          "pantry": true
+        },
+        {
+          "name": "Knoblauch",
+          "pantry": true
+        },
+        {
+          "name": "Reis",
+          "pantry": true
+        }
+      ],
+      "steps": [
+        "Reis kochen.",
+        "Räuchertofu würfeln und knusprig anbraten.",
+        "Zucchini in Scheiben schneiden und dazugeben.",
+        "Mit Knoblauch und Sojasauce würzen.",
+        "Mit Reis servieren."
+      ]
+    },
+    {
+      "slug": "couscous-bowl-mit-gegrillten-nektarinen-blattsalat",
+      "title": "Couscous-Bowl mit gegrillten Nektarinen & Blattsalat",
+      "blurb": "Sommerliche Bowl mit süßen Plattnektarinen im Angebot und frischem Couscous.",
+      "tags": [
+        "bowl",
+        "sommer",
+        "fruchtig",
+        "salat"
+      ],
+      "ingredients": [
+        {
+          "name": "Plattnektarinen",
+          "offerTitle": "Spanien - Plattnektarinen",
+          "price": "€1,99"
+        },
+        {
+          "name": "Couscous",
+          "pantry": true
+        },
+        {
+          "name": "Blattsalat",
           "pantry": true
         },
         {
           "name": "Olivenöl",
           "pantry": true
+        },
+        {
+          "name": "Agavendicksaft",
+          "pantry": true
         }
       ],
       "steps": [
-        "Quinoa kochen und abkühlen lassen.",
-        "Kiwis schälen und würfeln, Heidelbeeren waschen.",
-        "Alles mit Quinoa mischen.",
-        "Mit Olivenöl, Agavendicksaft und etwas Zitrone anmachen."
+        "Couscous mit heißer Gemüsebrühe übergießen und quellen lassen.",
+        "Nektarinen in Spalten schneiden und in einer Pfanne kurz angrillen.",
+        "Couscous mit Öl auflockern und mit Blattsalat mischen.",
+        "Nektarinen und einen Spritzer Agavendicksaft dazugeben.",
+        "Lauwarm servieren."
+      ]
+    },
+    {
+      "slug": "pasta-alla-norma-mit-auberginen-tomaten-sosse",
+      "title": "Pasta alla Norma mit Auberginen-Tomaten-Soße",
+      "blurb": "Klassiker vegan: Auberginen im Angebot treffen würzige Tomatensoße.",
+      "tags": [
+        "pasta",
+        "italienisch",
+        "auberginen",
+        "klassiker"
+      ],
+      "ingredients": [
+        {
+          "name": "Auberginen",
+          "offerTitle": "Deutschland - Auberginen",
+          "price": "€0,99"
+        },
+        {
+          "name": "Tomatenmark",
+          "pantry": true
+        },
+        {
+          "name": "passierte Tomaten",
+          "pantry": true
+        },
+        {
+          "name": "Nudeln",
+          "pantry": true
+        },
+        {
+          "name": "Knoblauch",
+          "pantry": true
+        },
+        {
+          "name": "Hefeflocken",
+          "pantry": true
+        }
+      ],
+      "steps": [
+        "Auberginen würfeln und in Olivenöl knusprig braten.",
+        "Knoblauch und Tomatenmark kurz mitrösten.",
+        "Passierte Tomaten dazugeben und 10 Minuten köcheln.",
+        "Nudeln kochen und unterheben.",
+        "Mit Hefeflocken bestreuen und servieren."
       ]
     }
   ]
