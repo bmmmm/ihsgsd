@@ -16,15 +16,33 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 # this script verbatim into an .app bundle elsewhere, so a
 # dirname-of-own-location cd would resolve inside that bundle instead of the
 # repo (broke the launchd job for weeks — silently exited before Phase A).
-cd "$HOME/offline_coding/ihsgsd"
+# `set -uo pipefail` has no -e, so a failed cd here used to fall through
+# silently and run every git command against the wrong cwd ("not a git
+# repository"), filing a fresh notify_forgejo issue each time (4 duplicates
+# 2026-07-13..07-20, all early-morning launchd wake races) instead of failing
+# loud once.
+cd "$HOME/offline_coding/ihsgsd" || {
+  echo "FATAL: cd to \$HOME/offline_coding/ihsgsd failed, aborting before touching git" >&2
+  exit 1
+}
 
 LOG_FILE="$HOME/ops/logs/ihsgsd-sync.log"
 exec >>"$LOG_FILE" 2>&1
 echo "=== $(date -u +"%Y-%m-%dT%H:%M:%SZ") weekly_sync start ==="
 
+# Skips creating a new issue if an open one with the exact same title already
+# exists — without this, a recurring failure (e.g. the launchd cd race above)
+# re-files a duplicate on every run instead of the one already open.
 notify_forgejo() {
+  local title="$1" body="$2"
+  local existing
+  existing=$(tea issues list --repo bsz/ihsgsd --login fjbsz --state open -f title -o tsv 2>/dev/null)
+  if printf '%s\n' "$existing" | grep -qxF "$title"; then
+    echo "notify_forgejo: open issue '$title' already exists, skipping duplicate"
+    return 0
+  fi
   tea issues create --repo bsz/ihsgsd --login fjbsz \
-    --title "$1" --description "$2" >/dev/null 2>&1 \
+    --title "$title" --description "$body" >/dev/null 2>&1 \
     || echo "WARN: could not file Forgejo notification issue"
 }
 
