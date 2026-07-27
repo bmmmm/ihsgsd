@@ -172,6 +172,63 @@ function parseGp(offer) {
     return { val: null, unit: null, flag: null, low: null };
 }
 
+// Guards + all-matches variants for deriveGp — see build_indexes.derive_gp for
+// why multipacks and loose goods are skipped rather than special-cased.
+const MULT_RE = /\d\s*[x×]\s*\d|\bà\b/i;
+const LOOSE_RE = /offen/i;
+const SIZE_ALL_RE = /(\d+(?:[.,]\d+)?)\s*(ml|l|g|kg)\b/gi;
+const COUNT_ALL_RE = /(\d+(?:[.,]\d+)?)\s*(WA|Tabs?|Caps?|St(?:ü|ue)ck|Stk|WL)\b/gi;
+const COUNT_UNIT = {
+    'stück': 'st', 'stueck': 'st', 'stk': 'st', 'st': 'st',
+    'wl': 'wa', 'wa': 'wa', 'tab': 'tab', 'cap': 'tab',
+};
+
+// { val, unit } computed from face price / pack size, or all-null. EDEKA omits
+// the Grundpreis where the pack already IS the base unit ("1 kg Schale"), which
+// is 26% of offers — deriving it is what gives Möhren, Porree and Bananen a
+// price history at all. Port of build_indexes.derive_gp; keep the two in sync.
+function deriveGp(offer) {
+    const bu = gpNormStr(offer && offer.baseUnit);
+    if (!bu || MULT_RE.test(bu) || LOOSE_RE.test(bu)) return { val: null, unit: null };
+    const face = offerPrice(offer);
+    if (!Number.isFinite(face) || face <= 0) return { val: null, unit: null };
+
+    const sizes = [...bu.matchAll(SIZE_ALL_RE)];
+    if (sizes.length === 1) {
+        const val = parseNumberDe(sizes[0][1]);
+        const unit = sizes[0][2].toLowerCase();
+        const base = val * VOL_WEIGHT_FACTOR[unit];
+        if (!Number.isFinite(base) || base <= 0) return { val: null, unit: null };
+        return {
+            val: Math.round((face / base) * 100) / 100,
+            unit: (unit === 'ml' || unit === 'l') ? 'l' : 'kg',
+        };
+    }
+    // Count-priced goods only when no weight/volume is present at all —
+    // "20 Stück = 1000 g Beutel" must use the weight, not the count.
+    if (!sizes.length) {
+        const counts = [...bu.matchAll(COUNT_ALL_RE)];
+        if (counts.length === 1) {
+            const val = parseNumberDe(counts[0][1]);
+            if (!Number.isFinite(val) || val <= 0) return { val: null, unit: null };
+            const key = COUNT_UNIT[counts[0][2].toLowerCase().replace(/s$/, '')]
+                || counts[0][2].toLowerCase();
+            return { val: Math.round((face / val) * 100) / 100, unit: UNIT_DISPLAY[key] || key };
+        }
+    }
+    return { val: null, unit: null };
+}
+
+// EDEKA's own Grundpreis when present, else one derived from the pack size.
+// `derived` tells the card to label it as computed rather than quoted.
+function resolveGp(offer) {
+    const parsed = parseGp(offer);
+    if (parsed.val !== null) return { ...parsed, derived: false };
+    const d = deriveGp(offer);
+    if (d.val === null) return { val: null, unit: null, flag: null, low: null, derived: false };
+    return { val: d.val, unit: d.unit, flag: 'exact', low: d.val, derived: true };
+}
+
 function normTitle(title) {
     return gpNormStr(title).toLowerCase().replace(/\s+/g, ' ');
 }
@@ -202,6 +259,66 @@ function productKey(offer, unit) {
     return `${normTitle(offer && offer.title)}|${unit}|${sizeBucket(offer && offer.baseUnit)}`;
 }
 
+// ── diet detectors ──
+// Meat and fish do not stay inside their own categories: fish sticks and
+// chicken nuggets sit in Tiefkühl, Bockwurst and tuna in Grundnahrung,
+// Räucherlachs in Molkerei & Käse. A category-only "Fleisch aus" chip therefore
+// left all of those visible. These title detectors close that gap.
+//
+// Word boundaries are load-bearing: a plain substring list matched "mett" in
+// LiMETTen and "ente" in GENUSSMOMENTE / WC-Ente, i.e. it flagged fruit and
+// toilet cleaner as meat. Verified against every title in data/: zero hits in
+// Obst & Gemüse and Getränke, zero hits on vegan/vegetarian products.
+// JS \b is ASCII-only, which silently breaks German: in "Rumänien" the "ä" is
+// not a word character, so /\brum\b/ matched the "Rum" prefix and filed
+// blueberries under spirits. These Unicode-aware boundaries count every letter
+// and digit as a word character, so umlauts no longer split words.
+const WB = '(?<![\\p{L}\\p{N}])';
+const WE = '(?![\\p{L}\\p{N}])';
+const W = '[\\p{L}\\p{N}]*';   // Unicode-aware \w* for suffixes (Lachs -> Lachsfilet)
+const dietRe = body => new RegExp(WB + '(?:' + body + ')' + WE, 'iu');
+
+const VEGAN_RE = /vegan|vegetar|pflanzlich|veggie|like\s*meat|beyond\s*meat|rügenwalder|wheaty|taifun|tofu|seitan|tempeh|jackfruit/iu;
+const MEAT_RE = dietRe(
+    `h[äa]hnchen${W}|h[üu]hner${W}|huhn|pute|puten${W}|truthahn${W}|rind|rinder${W}|rinds${W}|` +
+    `schwein${W}|kalb|kalbs${W}|lamm${W}|gans|g[äa]nse${W}|wurst|w[üu]rstchen|w[üu]rste|salami|` +
+    `schinken${W}|speck|bacon|hackfleisch|hack|frikadelle${W}|bratwurst${W}|bockwurst${W}|` +
+    `leberk[äa]se|nuggets?|schnitzel|gyros${W}|d[öo]ner${W}|kasseler|mettwurst|mett|s[üu]lze|` +
+    `geflügel${W}|steaks?|gulasch|braten|cabanossi|mortadella|chorizo|prosciutto|salame|` +
+    `landj[äa]ger|rippchen|haxe|keule|kotelett${W}|leberwurst|teewurst|fleisch${W}|frankfurter|` +
+    `bratw[üu]rste|grillfackel${W}|chicken|beef|pork`
+);
+// "Wiener Boden" is a cake base, not a sausage — the only false friend left.
+const WIENER_RE = new RegExp(WB + 'wiener' + WE + '(?!\\s*boden)', 'iu');
+const FISH_RE = dietRe(
+    `fisch${W}|${W}fisch|lachs${W}|${W}lachs|thunfisch${W}|garnelen?|shrimps?|scampi|forelle${W}|` +
+    `hering${W}|matjes|makrele${W}|sardine${W}|sardelle${W}|kabeljau${W}|seelachs${W}|scholle|` +
+    `dorsch|zander|pangasius|tintenfisch${W}|muschel${W}|krabben${W}|surimi|schlemmerfilet${W}|` +
+    `filegro|meeresfr[üu]chte|calamari|austern?`
+);
+// Spirits, wine and sparkling wine — deliberately NOT beer (verified: zero
+// overlap with the beer detector), since beer is a favourite.
+const SPIRITS_RE = dietRe(
+    `likör|liqueur|whisk${W}|vodka|wodka|gin|rum|tequila|brandy|cognac|weinbrand|schnaps|korn|` +
+    `aperitif|aperol|campari|jägermeister|fernet|branca|ouzo|grappa|sambuca|absinth|bacardi|` +
+    `jack\\s*daniel${W}|sekt|prosecco|champagner|crémant|cava|winzersekt|wein|weine|weins|` +
+    `rotwein${W}|weißwein${W}|ros[eé]wein${W}|riesling|merlot|cabernet|syrah|chardonnay|` +
+    `sauvignon|primitivo|tempranillo|sangria|glühwein|portwein|sherry|vermouth|martini|` +
+    `baileys|amaretto`
+);
+
+function looksVegan(o) {
+    return VEGAN_RE.test(`${(o && o.title) || ''} ${(o && o.description) || ''}`);
+}
+// A vegan sausage is not meat — the exemption must win, or turning "Fleisch"
+// off would hide exactly the products the reader wants most.
+function looksMeat(o) {
+    const t = (o && o.title) || '';
+    return (MEAT_RE.test(t) || WIENER_RE.test(t)) && !looksVegan(o);
+}
+function looksFish(o) { return FISH_RE.test((o && o.title) || '') && !looksVegan(o); }
+function looksSpirits(o) { return SPIRITS_RE.test((o && o.title) || ''); }
+
 // ── interest topics: the steering chips + the detectors used for scoring ──
 // `key` doubles as the localStorage interest key and (for the section topics)
 // the prospekt.json `sections` key.
@@ -214,12 +331,18 @@ const TOPICS = [
     { key: 'knueller',    label: 'Knüller',         emoji: '🔥', test: isKnuller },
     { key: 'kaese',       label: 'Käse',            emoji: '🧀', test: o => catName(o) === 'Molkerei & Käse' },
     { key: 'suess',       label: 'Süßes',           emoji: '🍫', test: o => catName(o) === 'Knabbern & Naschen' },
-    { key: 'fleisch',     label: 'Fleisch & Wurst', emoji: '🥩', test: o => catName(o) === 'Fleisch & Wurst' },
+    // Category OR title: catches Bockwurst in Grundnahrung and Fischstäbchen
+    // in Tiefkühl, which the category test alone let through.
+    // diet: true — turning these off is absolute. "Kein Fleisch" must not be
+    // overridable by a Knüller badge or a favourite category the item also hits.
+    { key: 'fleisch',     label: 'Fleisch & Wurst', emoji: '🥩', diet: true, test: o => catName(o) === 'Fleisch & Wurst' || looksMeat(o) },
+    { key: 'fisch',       label: 'Fisch',           emoji: '🐟', diet: true, test: o => catName(o) === 'Fisch & Meeresfrüchte' || looksFish(o) },
+    { key: 'spirituosen', label: 'Wein & Spirituosen', emoji: '🥃', diet: true, test: looksSpirits },
     { key: 'tk',          label: 'Tiefkühl',        emoji: '❄️', test: o => catName(o) === 'Tiefkühl' },
     { key: 'grundnahrung',label: 'Grundnahrung',    emoji: '🍝', test: o => catName(o) === 'Grundnahrung' },
+    { key: 'getraenke',   label: 'Getränke',        emoji: '🧃', test: o => catName(o) === 'Getränke' },
     { key: 'drogerie',    label: 'Drogerie',        emoji: '🧴', test: o => catName(o) === 'Drogerie' },
     { key: 'tiernahrung', label: 'Tiernahrung',     emoji: '🐾', test: o => catName(o) === 'Tiernahrung' },
-    { key: 'fisch',       label: 'Fisch',           emoji: '🐟', test: o => catName(o) === 'Fisch & Meeresfrüchte' },
 ];
 
 // The reader told us up front what they love — seed those at "Favorit". The
@@ -229,6 +352,7 @@ const TOPICS = [
 const DEFAULT_INTERESTS = {
     vegan: 2, obstgemuese: 2, bier: 2, spezi: 2, bio: 1,
     fleisch: -1, kaese: -1, suess: -1, drogerie: -1, tiernahrung: -1, fisch: -1,
+    spirituosen: -1,
 };
 
 // How many cards the "Für dich" highlights grid shows at most (LLM-ranked picks
@@ -238,18 +362,18 @@ const FORYOU_MAX = 16;
 
 // Topics whose membership is a plain category match (catName === X), so a vote's
 // category is unambiguous. Used when a category is switched OFF to drop its now
-// redundant 👎 votes. Title-based topics (vegan/bio/spezi/bier/knueller) overlap
-// across categories and are deliberately absent here — they are never auto-pruned.
+// redundant 👎 votes. Topics that also match by title (vegan/bio/spezi/bier/
+// knueller, and now fleisch/fisch/spirituosen) overlap across categories and are
+// deliberately absent here — they are never auto-pruned.
 const CATEGORY_FOR_TOPIC = {
     obstgemuese: 'Obst & Gemüse',
     kaese: 'Molkerei & Käse',
     suess: 'Knabbern & Naschen',
-    fleisch: 'Fleisch & Wurst',
     tk: 'Tiefkühl',
     grundnahrung: 'Grundnahrung',
+    getraenke: 'Getränke',
     drogerie: 'Drogerie',
     tiernahrung: 'Tiernahrung',
-    fisch: 'Fisch & Meeresfrüchte',
 };
 
 // Interest levels and how each one weighs into an offer's score.
@@ -400,11 +524,47 @@ function formatStamp(iso) {
 }
 
 function interestLevel(key) {
-    const v = prefs && prefs.interests ? prefs.interests[key] : 0;
+    const v = prefs && prefs.interests ? prefs.interests[key] : undefined;
     // Only trust levels we know how to weigh; a corrupt/hand-edited prefs file
     // with an out-of-range level must not crash scoreOffer().
-    return (Number.isInteger(v) && LEVELS[String(v)]) ? v : 0;
+    if (Number.isInteger(v) && LEVELS[String(v)]) return v;
+    // A topic added after the reader's prefs were saved has no stored level.
+    // Falling back to 0 would silently ship new diet chips as "neutral", so a
+    // never-decided topic inherits its default instead — existing explicit
+    // choices above still win.
+    const d = DEFAULT_INTERESTS[key];
+    return (Number.isInteger(d) && LEVELS[String(d)]) ? d : 0;
 }
+
+// Which "aus" topic vetoes this offer, or null. Score alone was not enough: a
+// −4 mute could be outvoted by a couple of +4 matches, which is how Jägermeister
+// and Fischstäbchen kept showing up under Knüller. A veto is absolute.
+// Non-diet topics yield to an explicitly liked one, so "Getränke aus" + "Bier
+// Favorit" still shows the pils; diet vetoes never yield.
+function vetoedBy(o) {
+    let soft = null;
+    let liked = false;
+    for (const t of TOPICS) {
+        let hit = false;
+        try { hit = !!t.test(o); } catch (e) { hit = false; }
+        if (!hit) continue;
+        const lvl = interestLevel(t.key);
+        if (lvl === -1) {
+            if (t.diet) return t;          // absolute — stop looking
+            if (!soft) soft = t;
+        } else if (lvl >= 1) {
+            liked = true;
+        }
+    }
+    return (soft && !liked) ? soft : null;
+}
+
+function isVetoed(o) { return vetoedBy(o) !== null; }
+
+// The single visibility rule every surface shares — sections, the "Für dich"
+// picks, the browse list and the hidden counter. Keeping it in one place is
+// what stops the counter from disagreeing with what is actually rendered.
+function isHidden(o) { return isVetoed(o) || scoreOffer(o) < 0; }
 
 // Votes are keyed by the stable offer id (titles are neither unique — the data
 // has real duplicates — nor always present). The title is stored alongside so
@@ -749,7 +909,7 @@ function renderBrowse() {
     // Still-shown items first, the ausgeblendeten (score < 0) sink to the bottom;
     // alphabetical within each group.
     items.sort((a, b) => {
-        const ha = scoreOffer(a) < 0, hb = scoreOffer(b) < 0;
+        const ha = isHidden(a), hb = isHidden(b);
         if (ha !== hb) return ha ? 1 : -1;
         return String(a.title || '').localeCompare(String(b.title || ''));
     });
@@ -761,7 +921,7 @@ function renderBrowse() {
 }
 
 function updateHiddenCount() {
-    const n = currentOffers.reduce((c, o) => c + (scoreOffer(o) < 0 ? 1 : 0), 0);
+    const n = currentOffers.reduce((c, o) => c + (isHidden(o) ? 1 : 0), 0);
     const el = document.getElementById('hidden-count');
     if (el) el.textContent = n ? `${n} ausgeblendet` : '';
     const bc = document.getElementById('browse-count');
@@ -904,7 +1064,10 @@ function selectedWeekDate() {
 
 function priceCheck(o) {
     if (!phByKey) return null;
-    const gp = parseGp(o);
+    // resolveGp, not parseGp: offers whose pack already IS the base unit carry
+    // no quoted Grundpreis, and comparing them was impossible before — that is
+    // why Möhren/Porree/Bananen never showed a price-check badge.
+    const gp = resolveGp(o);
     if (gp.val === null) return null;   // no parseable €/unit at all
     // Range/"ab €" Grundpreise (mainly beer multipacks) have no single exact
     // value, so the comparison uses the optimistic lower bound instead — and
@@ -1052,11 +1215,23 @@ function buildCard(o, opts) {
     const pr = offerPrice(o);
     price.textContent = pr === null ? '—' : formatEuro(pr);
     priceRow.appendChild(price);
+    // EDEKA's own Grundpreis line when quoted, else the one we derive from the
+    // pack size (marked with "≈" so a computed value is never mistaken for a
+    // quoted one).
     if (typeof o.basicPrice === 'string' && o.basicPrice.trim()) {
         const gp = document.createElement('span');
         gp.className = 'pk-gp';
         gp.textContent = o.basicPrice;
         priceRow.appendChild(gp);
+    } else {
+        const rg = resolveGp(o);
+        if (rg.derived) {
+            const gp = document.createElement('span');
+            gp.className = 'pk-gp';
+            gp.textContent = `≈ 1 ${rg.unit} = ${formatEuro(rg.val)}`;
+            gp.title = 'Aus Preis und Packungsgröße berechnet — EDEKA gibt hier keinen Grundpreis an.';
+            priceRow.appendChild(gp);
+        }
     }
     extraBadges(o).forEach(b => {
         const badge = document.createElement('span');
@@ -1154,11 +1329,11 @@ function fillSection(gridId, introId, offers, sectionKey, opts) {
     const showHidden = document.getElementById('show-hidden');
     const includeHidden = showHidden && showHidden.checked;
 
-    // Sections keep neutral items too (score >= 0); only muted topics or
-    // down-voted products (score < 0) drop out unless "Ausgeblendete zeigen".
+    // Sections keep neutral items too; muted topics, vetoed items and
+    // down-voted products drop out unless "Ausgeblendete zeigen".
     let list = offers
         .map(o => ({ o, s: scoreOffer(o) }))
-        .filter(x => includeHidden || x.s >= 0)
+        .filter(x => includeHidden || !isHidden(x.o))
         .sort((a, b) => b.s - a.s || String(a.o.title || '').localeCompare(String(b.o.title || '')));
     if (opts.limit) list = list.slice(0, opts.limit);
 
@@ -1209,14 +1384,16 @@ function buildForYou() {
         for (const entry of ordered) {
             if (!entry || !entry.title) continue;
             const o = currentOffers.find(x => (x.title || '') === entry.title && !inForYou.has(x));
-            if (!o || scoreOffer(o) < 0) continue;     // muted/down-voted since Monday -> drop
+            // Monday's LLM ranking is a snapshot; a topic muted since then (or a
+            // diet veto the generator did not know about) still wins here.
+            if (!o || isHidden(o)) continue;
             inForYou.add(o); list.push(o);
             if (list.length >= FORYOU_MAX) break;
         }
     }
     if (list.length < FORYOU_MAX) {
         currentOffers
-            .filter(o => !inForYou.has(o))
+            .filter(o => !inForYou.has(o) && !isVetoed(o))
             .map(o => ({ o, s: scoreOffer(o) }))
             .filter(x => x.s > 0)
             .sort((a, b) => b.s - a.s || String(a.o.title || '').localeCompare(String(b.o.title || '')))
@@ -1232,6 +1409,7 @@ function pickDiscoveries(inForYou, limit) {
     const found = [];
     for (const o of currentOffers) {
         if (inForYou.has(o)) continue;
+        if (isVetoed(o)) continue;                  // a discovery must respect diet vetoes too
         if (scoreOffer(o) !== 0) continue;          // only truly-neutral items
         if (voteFor(o) === -1) continue;
         const pc = priceCheck(o);
