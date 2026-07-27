@@ -40,7 +40,8 @@ on GitHub Pages — only route 1 can tell whether an export actually exists ther
 - **`detail-card.js`** — Shared product detail modal used by all three views: click any article to see its Grundpreis history (SVG chart), all-time low/median, offer frequency, and past offers. Reads `data/price-history-index.json` lazily; articles are matched by normalized title, unit/size variants shown as tabs.
 - **`dashboard.html`** — EDEKA Dashboard — separate analytics/summary view of the offer data.
 - **`prospekt.html` / `prospekt.js`** — Curated weekly flyer with a sticky quick-nav (jump targets + a shopping-list counter that scrolls to the list). Three labelled clusters: **Für dich** (vegan Mo–So meal plan + shopping list first, then the top picks), **Angebote nach Thema** (per-topic sections, which skip anything "Für dich" already showed — both draw from the same offers and used to repeat each other), and **Personalisieren & stöbern** (interest chips, export, full-week browser) at the bottom. Sections collapse by clicking their heading; that state lives in its own localStorage key, deliberately *not* in `prefs`, since the generators must never read view state. Pure client-side prefs in localStorage (interest chips + 👍/👎 votes + per-meal votes), exported to `data/preferences.json` for the generators. The meal plan has a client-side **gluten-free toggle** (`prefs.glutenFree`) that swaps gluten ingredients/steps (Nudeln, Mehl, Couscous, Seitan…) for GF alternatives at render time — display-only, works without the dev server, persisted quietly (no re-export prompt). The three card markers are kept **separate**: 👍/🚫 = taste (ranking only), 🛒 = bought (loyalty), 🧺 = shopping list. The **shopping list** (`prefs.basket`) is fed only by the meal plan's ingredients (incl. GF swaps) and 🧺-added offers — never by 👍/🛒 — merged into offers / pantry / own items. It's editable: remove (×), check off, and type own items; the overlay (removed/checked/custom) is bound to a plan key so a new week or regeneration starts fresh. Copy button (clipboard, Markdown checklist) and, on the dev server, a save button (`POST /api/shopping` → gitignored `data/shopping/`).
-- **`script.js`** — All frontend logic for `index.html`: data fetching, table rendering, search, category filtering, image toggle, clipboard export.
+- **`grundpreis.js`** — Shared Grundpreis logic (parse, derive, product key, size buckets) loaded by all three views before their own scripts. Mirrors `scripts/build_indexes.py`; `scripts/test_parity.py` checks the two against each other.
+- **`script.js`** — All frontend logic for `table.html`: data fetching, table rendering, search, category filtering, image toggle, clipboard export. The Grundpreis column and its sort key go through `resolveGp`, so offers where EDEKA quotes no Grundpreis still show and sort by one (marked "≈").
 - **`data/`** — Weekly JSON snapshots organized as `data/{YEAR}/KW{XX}/{DATE}.json`. ~17MB total, 70+ files.
 - **`data/folder-structure.json`** — Auto-generated index of all data files (used by the dropdown).
 - **`data/prospekt.json` / `data/mealplan.json`** — Optional AI editorial (flyer copy / vegan week plan), generated locally; the page renders additively (absence never breaks it).
@@ -52,6 +53,7 @@ Run by hand after a fetch — these call `claude -p` and are never part of CI:
 
 - **`scripts/generate_prospekt.py`** — flyer lead + section intros + ranked "Für dich" picks → `data/prospekt.json`. Applies the reader's diet vetoes *before* ranking, so the model never sees Grillrippen or Fischstäbchen as candidates (the page would hide them anyway — this just stops it writing lead copy about offers nobody will see). A topic the export never decided on falls back to `DEFAULT_INTERESTS`, mirroring `prospekt.js`.
 - **`scripts/generate_mealplan.py`** — 12-14 vegan dinners (first 7 = Mo–So plan, rest = swap "bench") from this week's vegan offers + a `VEGAN_STAPLES` pantry + the reader's prefs → `data/mealplan.json`. Imports shared helpers from `generate_prospekt`.
+- **`scripts/test_parity.py`** — the repo's only test. Proves the JS and Python copies of the shared logic still agree, over every offer in `data/`. Needs `node`; no framework, no dependencies. Run it after changing `grundpreis.js`, `build_indexes.py` or any diet detector.
 - **`scripts/serve.py`** — dev server (127.0.0.1) with `POST /api/preferences` (saves the export), `POST /api/shopping` (saves the week's shopping list to `data/shopping/<date>.json`, gitignored; the date is validated `YYYY-MM-DD` and doubles as the path-traversal guard), and `POST /api/mealplan/regenerate` (runs the meal-plan generator live for the page's "↻ Neu generieren" button). `ThreadingHTTPServer` so the long generation doesn't block static serving.
 
 ## Data Flow
@@ -71,9 +73,22 @@ Run by hand after a fetch — these call `claude -p` and are never part of CI:
   price ÷ pack size, skipping multipacks ("6 x 0,33 l", "2 Stück à 50 g") and
   loose goods ("offene 400 g Schale") where that maths would be wrong.
   Validated at 99.7 % against the offers carrying both values, so derived
-  values count as exact and only carry a `gpd` display tag ("≈" on the card).
-  `build_indexes.py` and `prospekt.js` hold parallel implementations — change
-  both together or lookups silently return nothing.
+  values count as exact and only carry a `gpd` display tag — rendered as "≈" in
+  the table, on the cards and in the detail card's history.
+- **Run `scripts/test_parity.py` after touching the shared logic.** The
+  Grundpreis code and the diet detectors exist in both JS and Python
+  (`grundpreis.js` ↔ `build_indexes.py`, `prospekt.js` ↔
+  `generate_prospekt.py`). Drift is silent — a product key off by one character
+  yields zero history lookups, so badges just stop appearing with no error. The
+  test loads the real JS files under Node and compares both sides over every
+  offer in `data/`. Use the full run: `--quick` is a smoke test and provably
+  misses detector drift (deleting "bockwurst" from the JS detector passes
+  `--quick`, because the newest week has no Bockwurst offer).
+- **Shared browser code goes in its own file, loaded first.** `grundpreis.js`
+  and `detail-card.js` are loaded by table/prospekt/dashboard ahead of their own
+  scripts. When moving something there, delete the local copy — `dashboard.js`
+  had its own `const FACE_MAX`, and a second one at global scope is a
+  redeclaration SyntaxError that takes the whole page down.
 - **"aus" is a veto, not a penalty.** A muted topic used to be a −4 score
   summand that two +4 matches could outvote, which is how Jägermeister and
   Fischstäbchen survived under Top-Knüller. `vetoedBy()` makes it absolute:
