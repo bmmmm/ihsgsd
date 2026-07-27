@@ -55,7 +55,7 @@ Run by hand after a fetch — these call `claude -p` and are never part of CI:
 - **`scripts/generate_mealplan.py`** — 12-14 vegan dinners (first 7 = Mo–So plan, rest = swap "bench") from this week's vegan offers + a `VEGAN_STAPLES` pantry + the reader's prefs → `data/mealplan.json`. Imports shared helpers from `generate_prospekt`.
 - **`scripts/test_parity.py`** — the repo's only test. Proves the JS and Python copies of the shared logic still agree, over every offer in `data/`. Needs `node`; no framework, no dependencies. Run it after changing `grundpreis.js`, `build_indexes.py` or any diet detector.
 - **`scripts/layout-probe.js`** — layout regression check, pasted into the browser console (`await layoutProbe()`; optionally `layoutProbe(['prospekt.html'], [560])`). Loads each page in an off-screen iframe at several widths — so media queries resolve against the probe width, not the real window — and reports words torn mid-syllable, horizontal overflow, and touch targets under 44 px. Breaks at a hyphen and words split by `hyphens: auto` count as correct typography, not defects. Run after CSS changes; same role for layout that `test_parity.py` has for the shared JS/Python logic.
-- **`scripts/audit_data.py`** — read-only data-quality audit over every snapshot and both indexes: week identity (folder vs. the API's `validFrom`), duplicate offer weeks, cadence gaps, offer-record sanity, EDEKA's own Grundpreis vs. price ÷ pack size, implausible price swings, index integrity, image-archive coverage. `-v` lists every finding. It deliberately separates *actionable* findings (exit 1) from *historic* ones that cannot be repaired — the three permanently missing weeks, images purged before the archive existed, EDEKA's own typos — which are reported but never fail the run. A check that is permanently red gets ignored, so a non-zero exit always means something changed that is worth fixing.
+- **`scripts/audit_data.py`** — read-only data-quality audit over every snapshot and both indexes: week identity (folder vs. the API's `validFrom`), duplicate offer weeks, cadence gaps, offer-record sanity, EDEKA's own Grundpreis vs. price ÷ pack size, implausible price swings, index integrity, image-archive coverage — plus the ALDI archive (see the ALDI section). `-v` lists every finding. It deliberately separates *actionable* findings (exit 1) from *historic* ones that cannot be repaired — the three permanently missing weeks, images purged before the archive existed, EDEKA's own typos — which are reported but never fail the run. A check that is permanently red gets ignored, so a non-zero exit always means something changed that is worth fixing.
 - **`scripts/serve.py`** — dev server (127.0.0.1) with `POST /api/preferences` (saves the export), `POST /api/shopping` (saves the week's shopping list to `data/shopping/<date>.json`, gitignored; the date is validated `YYYY-MM-DD` and doubles as the path-traversal guard), and `POST /api/mealplan/regenerate` (runs the meal-plan generator live for the page's "↻ Neu generieren" button). `ThreadingHTTPServer` so the long generation doesn't block static serving.
 
 ## Data Flow
@@ -76,7 +76,11 @@ A second, fully separate offer source mirroring the EDEKA pattern:
   `categoryKey=1588161426582123` (food "Wochenangebote", Mo–Sa); plain JSON, no
   auth, no `servicePoint` needed. `limit` must be one of {12,16,24,30,32,48,60};
   pages are merged via `offset` until `meta.pagination.totalCount`. Non-food
-  promotions (`?promotionKey=YYYY-MM-DD`) are a possible later addition.
+  promotions (`?promotionKey=YYYY-MM-DD`) are a possible later addition. Also
+  archives one 320 px thumbnail per offer (~16 KB, keyed by `sku`) into a
+  sibling `img/` dir — from week one, because EDEKA purged 75 weeks of images
+  before its archive existed; missing images are retried on every run, even
+  when the snapshot itself is unchanged.
 - **`data-aldi/{YEAR}/KW{XX}/{monday}.json`** — snapshots of raw API product
   objects, sorted by `sku`. Deliberately a **sibling** of `data/`, not a
   subdirectory: the EDEKA workflow's `find -path "data/*/KW*/*.json"` (where `*`
@@ -109,9 +113,12 @@ A second, fully separate offer source mirroring the EDEKA pattern:
 - **Open observations before building on the data:** whether `sku` /
   `abstractSku` are stable across weeks (if yes, price history needs no
   title-normalization heuristic à la EDEKA); whether the category set and
-  parent-first order hold; whether ALDI purges asset URLs the way EDEKA purged
-  images (EDEKA lost 75 weeks before archiving started); whether the
-  loose-goods per-kg reading matches the printed flyer.
+  parent-first order hold; whether the loose-goods per-kg reading matches the
+  printed flyer.
+- **`audit_data.py` has a compact ALDI section**: misfiled weeks, cadence
+  gaps (a NEW gap = broken cron = exit 1; investigated ones move to
+  `ALDI_KNOWN_MISSING` and become a note), partial snapshots, duplicate skus,
+  image coverage.
 - No UI yet — table/dashboard/prospekt stay EDEKA-only.
 
 ## Key Patterns
