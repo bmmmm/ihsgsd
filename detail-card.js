@@ -402,8 +402,19 @@ window.DetailCard = (function () {
         const chart = buildChart(prod, selectedDate);
         if (chart) {
             wrap.appendChild(chart);
-            wrap.appendChild(el('div', 'dcard-chart-hint',
-                'Grundpreis pro Angebotswoche. Hohle Punkte: „ab"-Preis oder Preisspanne (nicht in der Statistik). Gestrichelt: Allzeit-Tief.'));
+            let hint = 'Grundpreis pro Angebotswoche. Hohle Punkte: „ab"-Preis oder Preisspanne '
+                + '(nicht in der Statistik). Gestrichelt: Allzeit-Tief.';
+            // Only claim it when it is true for THIS product: most series are
+            // EDEKA's own figures, and a blanket disclaimer would understate
+            // them. Derived values are exact (validated at 99.7%), so they do
+            // count in the statistics — the note is about origin, not accuracy.
+            const derived = prod.obs.filter(o => o.gpd).length;
+            if (derived) {
+                hint += derived === prod.obs.length
+                    ? ' ≈ = aus Preis und Packungsgröße berechnet — EDEKA nennt hier keinen Grundpreis.'
+                    : ` ≈ = berechnet statt von EDEKA genannt (${derived} von ${prod.obs.length} Wochen).`;
+            }
+            wrap.appendChild(el('div', 'dcard-chart-hint', hint));
         }
 
         wrap.appendChild(el('div', 'dcard-sec', 'Angebots-Historie'));
@@ -414,7 +425,10 @@ window.DetailCard = (function () {
             const left = el('span', 'd', fmtDate(o.d));
             if (o.k) left.appendChild(el('span', 'k', 'KNÜLLER'));
             li.appendChild(left);
-            const gpTxt = `${fmtEuro(o.gp)}/${prod.unit}` + (o.gpf !== undefined ? ' (ab)' : '');
+            // "≈" marks a Grundpreis we computed from price and pack size
+            // because EDEKA quoted none — accurate, but not their number.
+            const gpTxt = (o.gpd ? '≈ ' : '') + `${fmtEuro(o.gp)}/${prod.unit}`
+                + (o.gpf !== undefined ? ' (ab)' : '');
             li.appendChild(el('span', 'p',
                 o.face !== undefined ? `${fmtEuro(o.face)} · ${gpTxt}` : gpTxt));
             ul.appendChild(li);
