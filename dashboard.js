@@ -57,18 +57,11 @@ function localImageUrl(o) {
     return `data/${dir}/img/${encodeURIComponent(o.id)}.jpg`;
 }
 
-// A single data-entry outlier (a €47,150 Camembert in KW40/2025) poisons every
-// average, extreme and axis range. The producer drops faces above this ceiling
-// (build_indexes.py face_price); the dashboard must too.
-const FACE_MAX = 500;
-
-// Comparable face price in [0, FACE_MAX], or null if missing/implausible.
-// Callers must treat null as "no price" (the real 0.00 item still returns 0).
-function offerPrice(o) {
-    const raw = o && o.price ? o.price.rawValue : undefined;
-    const v = Number.isFinite(raw) ? raw : parseFloat(o && o.price ? o.price.value : NaN);
-    return (Number.isFinite(v) && v >= 0 && v <= FACE_MAX) ? v : null;
-}
+// FACE_MAX and offerPrice() come from grundpreis.js, loaded first by
+// dashboard.html. Redeclaring `const FACE_MAX` here would be a SyntaxError that
+// takes the whole dashboard down. The cap exists because a single data-entry
+// outlier (a €47,150 Camembert in KW40/2025) poisons every average, extreme and
+// axis range; build_indexes.py face_price applies the same ceiling.
 
 // ISO-8601 week of a UTC date, as { label: "KW07", year: <ISO week-year> }.
 function isoWeekOf(date) {

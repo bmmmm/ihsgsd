@@ -54,8 +54,10 @@ import generate_prospekt as gp      # noqa: E402
 JS_HARNESS = r"""
 const fs = require('fs');
 // argv[0]=node, argv[1]=this harness — the real arguments start at 2.
-const [, , prospektPath, offersPath] = process.argv;
-const src = fs.readFileSync(prospektPath, 'utf8');
+const [, , grundpreisPath, prospektPath, offersPath] = process.argv;
+// Both files in one scope, in the same order the pages load them: grundpreis.js
+// defines the Grundpreis logic, prospekt.js the diet detectors on top of it.
+const src = fs.readFileSync(grundpreisPath, 'utf8') + '\n' + fs.readFileSync(prospektPath, 'utf8');
 const api = new Function(src + `
     ; return { resolveGp, productKey, looksMeat, looksFish, looksSpirits, looksVegan };
 `)();
@@ -119,7 +121,8 @@ def run_js(offers):
     harness_path.write_text(JS_HARNESS, encoding="utf-8")
     try:
         proc = subprocess.run(
-            ["node", str(harness_path), str(REPO_ROOT / "prospekt.js"), str(offers_path)],
+            ["node", str(harness_path), str(REPO_ROOT / "grundpreis.js"),
+             str(REPO_ROOT / "prospekt.js"), str(offers_path)],
             capture_output=True, text=True, cwd=str(REPO_ROOT),
         )
     except FileNotFoundError:

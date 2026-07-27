@@ -42,13 +42,23 @@ function offerFacePrice(offer) {
   return Number.isFinite(v) ? v : null;
 }
 
-// First euro amount out of a basicPrice string like "1 kg = € 7.04" or
-// "1 l = € 1.13 / € 1.51" — good enough as a sort key, not shown anywhere.
+// Grundpreis as a sort key. resolveGp (grundpreis.js) rather than reading
+// basicPrice alone: EDEKA omits that field wherever the pack already IS the
+// base unit ("1 kg Schale"), which is 26% of offers — they used to sort as
+// "no Grundpreis" and sank to the bottom regardless of how cheap they were.
 function gpSortValue(offer) {
-  const m = typeof offer.basicPrice === "string" && offer.basicPrice.match(/€\s*([\d.,]+)/);
-  if (!m) return null;
-  const v = parseFloat(m[1].replace(",", "."));
-  return Number.isFinite(v) ? v : null;
+  const gp = resolveGp(offer);
+  return gp.val === null ? null : gp.low;
+}
+
+// The Grundpreis cell: EDEKA's own wording when it quotes one, otherwise the
+// value we derive from price and pack size, marked "≈" so a computed number is
+// never mistaken for a quoted one.
+function gpDisplay(offer) {
+  const quoted = typeof offer.basicPrice === "string" ? offer.basicPrice.trim() : "";
+  if (quoted) return quoted;
+  const gp = resolveGp(offer);
+  return gp.derived ? `≈ 1 ${gp.unit} = € ${gp.val.toFixed(2)}` : "";
 }
 
 // HTML-escape a string before it is interpolated into innerHTML.
@@ -213,7 +223,7 @@ async function fetchOffers(filePath) {
       // shown in the price cell matches even when the two disagree (e.g. the one
       // real rawValue:0 item).
       const priceShown = (Number.isFinite(offer.price.rawValue) ? offer.price.rawValue : parseFloat(offer.price.value)).toFixed(2);
-      const basicPrice = typeof offer.basicPrice === "string" ? offer.basicPrice.trim() : "";
+      const basicPrice = gpDisplay(offer);
       row.dataset.search = `${offer.title} ${offer.category.name} ${offer.description} ${offer.price.value} ${priceShown} ${basicPrice}`
         .toLowerCase()
         .replace(/,/g, ".");
