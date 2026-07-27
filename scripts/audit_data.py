@@ -28,11 +28,12 @@ import build_indexes as bx  # noqa: E402
 
 DATA_DIR = "data"
 ALDI_DATA_DIR = "data-aldi"
-# A missed ALDI week can never be backfilled (the API serves only the current
-# week). A NEW gap means the cron broke and fails the run; once investigated
-# it is added here and becomes a permanent note, keeping a non-zero exit
-# meaningful.
-ALDI_KNOWN_MISSING = set()  # ISO Mondays, e.g. {"2026-08-03"}
+# A missed sibling-archive week can never be backfilled (the sources serve
+# only current flyers). A NEW gap means the cron broke and fails the run; once
+# investigated it is added here and becomes a permanent note, keeping a
+# non-zero exit meaningful. Keys are ISO Mondays, e.g. "2026-08-03".
+ALDI_KNOWN_MISSING = set()
+KAUFDA_KNOWN_MISSING = {"rewe": set(), "lidl": set(), "aldi-sued": set()}
 VERBOSE = "-v" in sys.argv or "--verbose" in sys.argv
 
 # The Grundpreis expression itself contains a measurement ("1 kg = € 3.23"), so
@@ -309,13 +310,14 @@ def check_images(snaps, rep):
         rep.note(f"{lost} week(s) predate the archive — EDEKA purged those images, unrecoverable")
 
 
-def check_aldi(rep):
-    """data-aldi/ is deliberately invisible to every EDEKA check above —
-    audit the second archive in one compact section of its own."""
-    rep.section("ALDI archive (data-aldi/)")
-    paths = sorted(glob.glob(os.path.join(ALDI_DATA_DIR, "20*", "KW*", "*.json")))
+def check_archive(rep, base_dir, label, key_field, known_missing,
+                  min_offers=20, images=False):
+    """One compact audit section for a sibling archive (data-aldi/, one
+    data-kaufda/ retailer) — deliberately invisible to every EDEKA check."""
+    rep.section(f"{label} ({base_dir}/)")
+    paths = sorted(glob.glob(os.path.join(base_dir, "20*", "KW*", "*.json")))
     if not paths:
-        rep.note("no ALDI snapshots yet")
+        rep.note(f"no {label} snapshots yet")
         return
     snaps = []
     for path in paths:
@@ -335,9 +337,9 @@ def check_aldi(rep):
             misfiled.append(f"{s['path']}: weekStart={s['week_start']}, "
                             f"expected a Monday matching {s['year']}/{s['kw']}")
     if misfiled:
-        rep.fail(f"{len(misfiled)} ALDI snapshot(s) filed under the wrong week", misfiled)
+        rep.fail(f"{len(misfiled)} {label} snapshot(s) filed under the wrong week", misfiled)
     else:
-        rep.ok(f"all {len(snaps)} ALDI snapshots sit in the right week")
+        rep.ok(f"all {len(snaps)} {label} snapshots sit in the right week")
 
     dates = sorted(datetime.date.fromisoformat(s["date"]) for s in snaps)
     new_gaps, known_gaps = [], []
@@ -346,47 +348,49 @@ def check_aldi(rep):
         if gap > 8:
             for i in range(1, (gap + 3) // 7):
                 d = a + datetime.timedelta(days=7 * i)
-                bucket = known_gaps if d.isoformat() in ALDI_KNOWN_MISSING else new_gaps
+                bucket = known_gaps if d.isoformat() in known_missing else new_gaps
                 bucket.append(f"{d} (KW{d.isocalendar()[1]:02d})")
     if new_gaps:
-        rep.fail(f"{len(new_gaps)} ALDI week(s) missed — check the cron, then "
-                 f"add them to ALDI_KNOWN_MISSING", new_gaps)
+        rep.fail(f"{len(new_gaps)} {label} week(s) missed — check the cron, "
+                 f"then add them to the known-missing set", new_gaps)
     elif known_gaps:
-        rep.note(f"{len(known_gaps)} ALDI week(s) never captured (permanent)", known_gaps)
+        rep.note(f"{len(known_gaps)} {label} week(s) never captured (permanent)", known_gaps)
     else:
         rep.ok(f"no gaps across {len(dates)} week(s)")
 
     thin = [f"{s['date']}: {len(s['offers'])} offers" for s in snaps
-            if len(s["offers"]) < 20]
+            if len(s["offers"]) < min_offers]
     if thin:
-        rep.fail(f"{len(thin)} ALDI snapshot(s) look like a partial fetch", thin)
+        rep.fail(f"{len(thin)} {label} snapshot(s) look like a partial fetch", thin)
     else:
         rep.ok("offer counts plausible (min "
                f"{min(len(s['offers']) for s in snaps)})")
 
     dupes = []
     for s in snaps:
-        skus = collections.Counter(o.get("sku") for o in s["offers"])
-        dupes += [f"{s['date']}: sku {k} appears {n}x"
-                  for k, n in skus.items() if n > 1]
+        keys = collections.Counter(o.get(key_field) for o in s["offers"])
+        dupes += [f"{s['date']}: {key_field} {k} appears {n}x"
+                  for k, n in keys.items() if n > 1]
     if dupes:
-        rep.fail(f"{len(dupes)} repeated sku(s) within a single ALDI week", dupes)
+        rep.fail(f"{len(dupes)} repeated {key_field}(s) within a single {label} week", dupes)
     else:
-        rep.ok("skus are unique within each week")
+        rep.ok(f"{key_field}s are unique within each week")
 
+    if not images:
+        return
     # Unlike EDEKA there is no pre-archive era: images are archived from week
     # one, so any incomplete week is actionable while the URLs still work.
     incomplete = []
     for s in snaps:
         folder = os.path.dirname(s["path"])
-        skus = [o.get("sku") for o in s["offers"] if o.get("sku")]
-        have = sum(1 for k in skus
+        keys = [o.get(key_field) for o in s["offers"] if o.get(key_field)]
+        have = sum(1 for k in keys
                    if os.path.exists(os.path.join(folder, "img", f"{k}.jpg")))
-        if skus and have / len(skus) < 0.95:
-            incomplete.append(f"{s['date']}: {have}/{len(skus)} images")
+        if keys and have / len(keys) < 0.95:
+            incomplete.append(f"{s['date']}: {have}/{len(keys)} images")
     if incomplete:
-        rep.fail(f"{len(incomplete)} ALDI week(s) incompletely archived — "
-                 f"re-run scripts/fetch_aldi.py while the URLs are live", incomplete)
+        rep.fail(f"{len(incomplete)} {label} week(s) incompletely archived — "
+                 f"re-run the fetcher while the URLs are live", incomplete)
     else:
         rep.ok(f"images fully archived for all {len(snaps)} week(s)")
 
@@ -406,7 +410,13 @@ def main():
     check_history(rep)
     check_indexes(snaps, rep)
     check_images(snaps, rep)
-    check_aldi(rep)
+    check_archive(rep, ALDI_DATA_DIR, "ALDI archive", "sku",
+                  ALDI_KNOWN_MISSING, images=True)
+    for retailer, missing in KAUFDA_KNOWN_MISSING.items():
+        # kaufda images are deliberately not archived (290 KB each, no
+        # server-side resize), so no image check for these archives.
+        check_archive(rep, os.path.join("data-kaufda", retailer),
+                      f"kaufda {retailer}", "id", missing, min_offers=30)
 
     print()
     if rep.blocking:
