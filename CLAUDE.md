@@ -51,7 +51,8 @@ on GitHub Pages — only route 1 can tell whether an export actually exists ther
 
 Run by hand after a fetch — these call `claude -p` and are never part of CI:
 
-- **`scripts/generate_prospekt.py`** — flyer lead + section intros + ranked "Für dich" picks → `data/prospekt.json`. Applies the reader's diet vetoes *before* ranking, so the model never sees Grillrippen or Fischstäbchen as candidates (the page would hide them anyway — this just stops it writing lead copy about offers nobody will see). A topic the export never decided on falls back to `DEFAULT_INTERESTS`, mirroring `prospekt.js`.
+- **`scripts/generate_prospekt.py`** — flyer lead + section intros + ranked "Für dich" picks → `data/prospekt.json`. Applies the reader's diet vetoes *before* ranking, so the model never sees Grillrippen or Fischstäbchen as candidates (the page would hide them anyway — this just stops it writing lead copy about offers nobody will see). A topic the export never decided on falls back to `DEFAULT_INTERESTS`, mirroring `prospekt.js`. Defaults to **Opus**: this is a voice task and the gap shows — Sonnet keeps the facts right but writes them as a list, while the dry asides the prompt asks for only appear on Opus. It runs once a week, locally.
+- **Editorial product links: the model declares them, the page never guesses.** Copy in `lead` and `sections` carries `[[exact offer title|words the reader sees]]`; the title is the join key (same contract as `foryou[]`), the label is free prose. `renderEditorial()` resolves each marker against the week's offers and builds a link that opens the shared detail card; an unmatched or now-hidden product silently loses its link and keeps its prose, so the text can never break. Matching prose back to products afterwards is not a viable alternative — the copy inflects, abbreviates and merges names. Two things fall out of it: hallucinated products become detectable (`resolve_links` reports them), and a label that drops the diet-defining word of its own product is caught rather than shipped — KW31's "Bruzzzler-Würstchen vom Grill" for *"Bruzzzler **veggie** Würstchen"* turned a vegan sausage into a meat one, and the check now replaces such a label with the full title.
 - **`scripts/generate_mealplan.py`** — 12-14 vegan dinners (first 7 = Mo–So plan, rest = swap "bench") from this week's vegan offers + a `VEGAN_STAPLES` pantry + the reader's prefs → `data/mealplan.json`. Imports shared helpers from `generate_prospekt`.
 - **`scripts/test_parity.py`** — the repo's only test. Proves the JS and Python copies of the shared logic still agree, over every offer in `data/`. Needs `node`; no framework, no dependencies. Run it after changing `grundpreis.js`, `build_indexes.py` or any diet detector.
 - **`scripts/layout-probe.js`** — layout regression check, pasted into the browser console (`await layoutProbe()`; optionally `layoutProbe(['prospekt.html'], [560])`). Loads each page in an off-screen iframe at several widths — so media queries resolve against the probe width, not the real window — and reports words torn mid-syllable, horizontal overflow, and touch targets under 44 px. Breaks at a hyphen and words split by `hyphens: auto` count as correct typography, not defects. Run after CSS changes; same role for layout that `test_parity.py` has for the shared JS/Python logic.
@@ -234,6 +235,24 @@ holds ~164 offers incl. non-food vs. 86 food offers in `data-aldi/`.
   alitäten" and "Fisch**spezi**alitäten", scoring biscuits and fish as a
   favourite. Python's `\b` *is* Unicode-aware, so the mirrored regexes in
   `generate_prospekt.py` use plain `\b`.
+- **A brand that sells both proves nothing.** `VEGAN_RE` used to list
+  `rügenwalder`, so real Teewurst (16 weeks) and Pommersche Gutsleberwurst read
+  as vegan — the company sells a meat range beside its plant-based one. Only
+  wording in the title, or a brand that is exclusively plant-based (wheaty,
+  taifun), may exempt a product. `mühlen` was evaluated as a replacement and
+  rejected: "Mühlen Schinken Kochschinken" is real ham. The cost of dropping it
+  is one vegetarian product hidden in 83 weeks — the safe direction for a
+  reader who avoids meat.
+- **The vegan exemption must guard the CATEGORY test too, not just the title
+  detector.** These two bugs hid each other for as long as both existed: JS
+  vetoed anything in "Fleisch & Wurst" before asking whether it was vegan,
+  which correctly hid the mislabelled Teewurst — and also hid the genuinely
+  vegan Bruzzzler that `generate_prospekt.py` (which applies the exemption to
+  both halves) was putting in the flyer at rank 6. Fixing either alone makes it
+  worse. `test_parity.py` compares `vetoMeat`/`vetoFish`, the composite rule
+  including category — comparing the title detectors alone missed this for its
+  whole lifetime, and the gegenprobe (re-introducing the old line) now reports
+  29 mismatches.
 - **Meat and fish are detected by title, not category.** Fish sticks and
   chicken nuggets live in Tiefkühl, Bockwurst and tuna in Grundnahrung,
   Räucherlachs in Molkerei & Käse. A vegan/vegetarian title always wins over a

@@ -390,6 +390,19 @@
         .mp-btn.down.on { opacity: 1; border-color: #ef5350; background: rgba(239,83,80,0.18); }
         .mp-btn.basket.on { opacity: 1; border-color: #4caf50; background: rgba(76,175,80,0.18); color: #9be29e; }
 
+        /* Product mentions in the editorial copy open the detail card. Marked
+           with an underline rather than a button box so a multi-word label
+           still wraps with the sentence around it. */
+        .pk-lead-link {
+            color: #9be29e; cursor: pointer;
+            text-decoration: underline; text-decoration-style: dotted;
+            text-underline-offset: 3px; text-decoration-color: #3d6b3f;
+        }
+        .pk-lead-link:hover, .pk-lead-link:focus-visible {
+            color: #b6f0b8; text-decoration-style: solid; text-decoration-color: #6cc06f;
+        }
+        .pk-lead-link:focus-visible { outline: 2px solid #4caf50; outline-offset: 2px; border-radius: 3px; }
+
         /* ── gluten-free toggle + swapped ingredient chips ── */
         .pk-mp-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
         .mp-gf-toggle {

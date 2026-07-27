@@ -59,8 +59,15 @@ const [, , grundpreisPath, prospektPath, offersPath] = process.argv;
 // defines the Grundpreis logic, prospekt.js the diet detectors on top of it.
 const src = fs.readFileSync(grundpreisPath, 'utf8') + '\n' + fs.readFileSync(prospektPath, 'utf8');
 const api = new Function(src + `
-    ; return { resolveGp, productKey, looksMeat, looksFish, looksSpirits, looksVegan };
+    ; return { resolveGp, productKey, looksMeat, looksFish, looksSpirits, looksVegan, TOPICS };
 `)();
+// The whole veto question, not just the title detector: a diet topic fires on
+// its CATEGORY as well, and that half used to skip the vegan exemption on the
+// JS side only — the page hid vegan sausages filed under "Fleisch & Wurst"
+// while the generator recommended them. Comparing the detectors alone missed
+// it for as long as it existed.
+const meatTopic = api.TOPICS.find(t => t.key === 'fleisch');
+const fishTopic = api.TOPICS.find(t => t.key === 'fisch');
 const offers = JSON.parse(fs.readFileSync(offersPath, 'utf8'));
 const out = offers.map(o => {
     const gp = api.resolveGp(o);
@@ -73,6 +80,8 @@ const out = offers.map(o => {
         fish: api.looksFish(o),
         spirits: api.looksSpirits(o),
         vegan: api.looksVegan(o),
+        vetoMeat: meatTopic.test(o),
+        vetoFish: fishTopic.test(o),
     };
 });
 process.stdout.write(JSON.stringify(out));
@@ -95,6 +104,9 @@ def py_side(offer):
         "fish": bool(gp.FISH_RE.search(title)) and not gp.looks_vegan(offer),
         "spirits": bool(gp.SPIRITS_RE.search(title)),
         "vegan": gp.looks_vegan(offer),
+        # The composite rule, category included — see the JS harness above.
+        "vetoMeat": gp.diet_excluded(offer, {"fleisch"}),
+        "vetoFish": gp.diet_excluded(offer, {"fisch"}),
     }
 
 
@@ -150,7 +162,8 @@ def main():
     if len(js) != len(offers):
         sys.exit(f"JS returned {len(js)} verdicts for {len(offers)} offers")
 
-    fields = ("gp", "unit", "derived", "key", "meat", "fish", "spirits", "vegan")
+    fields = ("gp", "unit", "derived", "key", "meat", "fish", "spirits", "vegan",
+              "vetoMeat", "vetoFish")
     mismatches = {f: [] for f in fields}
     for offer, j in zip(offers, js):
         p = py_side(offer)

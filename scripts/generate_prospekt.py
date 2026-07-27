@@ -89,8 +89,13 @@ DEFAULT_INTERESTS = {
 # sticks and chicken nuggets are filed under Tiefkühl, Bockwurst and tuna under
 # Grundnahrung. Without them the Superknüller section handed the model
 # Grillrippen and Fischstäbchen as candidates for a reader who eats neither.
+# No brand that sells both: "rügenwalder" used to be in here and made real
+# Teewurst (16 weeks) and Pommersche Gutsleberwurst read as vegan, because the
+# company sells a meat range next to its plant-based one. Only wording in the
+# title, or a brand that is exclusively plant-based, may exempt a product. The
+# same word list lives in prospekt.js — test_parity.py compares them.
 VEGAN_RE = re.compile(
-    r"vegan|vegetar|pflanzlich|veggie|like\s*meat|beyond\s*meat|rügenwalder|"
+    r"vegan|vegetar|pflanzlich|veggie|like\s*meat|beyond\s*meat|"
     r"wheaty|taifun|tofu|seitan|tempeh|jackfruit", re.I)
 MEAT_RE = re.compile(
     r"\b(?:h[äa]hnchen\w*|h[üu]hner\w*|huhn|pute|puten\w*|truthahn\w*|rind|rinder\w*|"
@@ -179,12 +184,12 @@ Return exactly this JSON structure (no extra keys, no trailing text):
 {
   "generatedAt": "LATEST_DATE_PLACEHOLDER",
   "weekLabel": "WEEK_LABEL_PLACEHOLDER",
-  "lead": "<warm, inviting 4-6 sentence German intro to this week's flyer. Name 4-6 concrete highlights with their price or price fact (e.g. 'Allzeit-Tief', 'nur €1,00'), spread across the reader's interests: fruit & veg, vegan/plant-based, and beer/Spezi. Make it feel hand-curated for THIS reader, not generic. Max 700 chars.>",
+  "lead": "<4-6 sentence German intro to this week's flyer. Name 4-6 concrete highlights with their price or price fact (e.g. 'Allzeit-Tief', 'nur €1,00'), spread across the reader's interests: fruit & veg, vegan/plant-based, and beer/Spezi. Max 700 chars of VISIBLE text (link markup does not count).>",
   "sections": {
-    "vegan": "<1-2 sentence German intro for the vegan/vegetarian picks. Max 200 chars.>",
-    "obstgemuese": "<1-2 sentence German intro for fruit & veg. Max 200 chars.>",
-    "bierspezi": "<1-2 sentence German intro for beer & Spezi. Max 200 chars.>",
-    "knueller": "<1-2 sentence German intro for the Superknüller deals. Max 200 chars.>"
+    "vegan": "<1-2 sentence German intro for the vegan/vegetarian picks. Max 200 chars of visible text.>",
+    "obstgemuese": "<1-2 sentence German intro for fruit & veg. Max 200 chars of visible text.>",
+    "bierspezi": "<1-2 sentence German intro for beer & Spezi. Max 200 chars of visible text.>",
+    "knueller": "<1-2 sentence German intro for the Superknüller deals. Max 200 chars of visible text.>"
   },
   "foryou": [
     {
@@ -198,7 +203,44 @@ Return exactly this JSON structure (no extra keys, no trailing text):
 }
 
 Rules:
-- Write ALL text in German, friendly and concrete (not corporate).
+- Write ALL text in German.
+
+Voice — dry and understated, the way a friend who shops there anyway would put
+it. State the good deal plainly, then let ONE aside per two or three sentences
+carry the humour: a small observation about the situation, the shop, or the
+absurdity of the offer itself. Never zany — no exclamation marks, no puns for
+their own sake, no enthusiasm the price does not earn. Understatement, not
+jokes. Do not end on a summarising sentence; stop on the last concrete fact.
+
+Aim for this register (invented products, do not reuse them):
+  "Der Rosenkohl ist auf einem Allzeit-Tief, was die Frage aufwirft, wer ihn
+   sonst kauft. Drei Sorten Pils im Angebot, und das an einem Montag — die
+   Woche ist also eingepreist. Die Bio-Möhren kosten 89 Cent das Kilo, ungefähr
+   so viel wie eine einzelne Möhre am Bahnhof."
+Note what it does: every sentence still delivers a product and a price. The
+humour rides along, it never replaces the information.
+- BANNED, they read like catalogue copy: "wie gemacht für dich", "warten auf
+  dich", "ganz nach deinem Geschmack", "greif zu", "schlemmen", "Genuss pur",
+  "das Beste für dich", "freu dich auf", "Kurz:", "wer's ... mag", any sentence
+  opening with "Und wer".
+- Address the reader as "du" at most twice in the lead. The offers are the
+  subject, not the reader.
+
+Product links — every concrete product you name in "lead" or in any "sections"
+text MUST be wrapped in this marker, and products may ONLY be named this way:
+  [[exact title from the input|the words you want the reader to see]]
+Example: [[Wiesenhof - Bruzzzler veggie Würstchen|die veganen Bruzzzler]]
+- The part before "|" must be copied character-for-character from a "title" in
+  the input. It is never shown; it is how the page finds the offer.
+- The part after "|" is what the reader sees. Inflect it to fit your sentence.
+- The visible words must keep any diet-defining part of the product name. A
+  title saying "veggie", "vegan" or "vegetarisch" describes a MEAT-FREE product
+  and the reader avoids meat: writing "Bruzzzler-Würstchen" for
+  "Bruzzzler veggie Würstchen" turns a vegan sausage into a meat one. Keep the
+  word, or pick different words that carry it ("die pflanzlichen Bruzzzler").
+- Never invent a preparation or property that is not in the input ("vom Grill",
+  "aus der Pfanne") — describe only what the title and description say.
+- Do not use the marker in "foryou" reasons; those are already tied to a product.
 - "foryou" is an ORDERED personal recommendation of the 12-16 best products for THIS reader, across all sections. Aim for at least 12 when enough candidates fit the reader's tastes; include every genuinely good match rather than stopping early. rank starts at 1 (best) and increases by 1 with no gaps. Copy each "title" verbatim from the input so the page can match it.
 - Ranking rubric, in priority order:
   1. Honour the reader's preferences: push "Loves (Favorit)", "Thumbs-up" and "bought"-before products to the top; NEVER include products from a section the reader switched off or thumbed down.
@@ -209,6 +251,47 @@ Rules:
 - Numbers/prices: refer to them naturally; never invent a price.
 - No fields besides those listed.
 """
+
+
+# Editorial product links: [[exact offer title|words the reader sees]]. The
+# title is never rendered — it is how the page finds the offer, so the model
+# declares the link itself instead of the page guessing it back out of prose.
+LINK_RE = re.compile(r"\[\[([^|\]]+)\|([^\]]+)\]\]")
+# Words in a title that decide whether the reader may eat the thing at all.
+DIET_WORDS_RE = re.compile(r"veggie|vegan|vegetarisch|fleischfrei", re.I)
+
+
+def resolve_links(text, titles_by_norm):
+    """Validate every link marker in one editorial string.
+
+    Returns (text, problems). Two failures are worth catching, and they differ
+    in how bad they are:
+
+    - A marker naming a product that is not among this week's candidates loses
+      its link and keeps its prose. A missing link is invisible; a link to the
+      wrong offer is not.
+    - A label that drops the diet-defining word of its own product is a factual
+      error, not a style one: "Wiesenhof - Bruzzzler veggie Würstchen" written
+      as "Bruzzzler-Würstchen" turns a vegan sausage into a meat one for a
+      reader who avoids meat — which is exactly what shipped in KW31. The label
+      is replaced by the real title, which is clumsier to read and always true.
+    """
+    problems = []
+
+    def sub(m):
+        raw_title, label = m.group(1).strip(), m.group(2).strip()
+        real = titles_by_norm.get(bx.norm_title(raw_title))
+        if not real:
+            problems.append(f"unknown product {raw_title!r} — link dropped, prose kept")
+            return label
+        diet = DIET_WORDS_RE.search(real)
+        if diet and not DIET_WORDS_RE.search(label):
+            problems.append(
+                f"label {label!r} drops {diet.group(0)!r} from {real!r} — using the full title")
+            label = real
+        return f"[[{real}|{label}]]"
+
+    return LINK_RE.sub(sub, text), problems
 
 
 def fail(msg):
@@ -538,7 +621,11 @@ def extract_json(text):
 def main():
     args = sys.argv[1:]
     dry_run = "--dry-run" in args
-    model = "sonnet"
+    # Opus by default: this is a voice task, and the gap shows. Sonnet keeps the
+    # facts right but writes them as a list — the dry asides the prompt asks for
+    # ("was Montag zu einem vertretbaren Wochentag macht") only appear on Opus.
+    # It runs once a week, locally, so the cost is one call.
+    model = "opus"
     if "--model" in args:
         i = args.index("--model")
         if i + 1 >= len(args):
@@ -665,6 +752,31 @@ def main():
             reason = reason[:89].rstrip() + "…"
         foryou.append({"title": p["title"], "rank": i, "reason": reason, "evidenceTag": tag})
     data["foryou"] = foryou
+
+    # Editorial links — resolve against this week's candidates, not the whole
+    # week: a link may only point at something the reader is actually shown.
+    titles_by_norm = {}
+    for sec in digest.values():
+        for e in sec:
+            if e.get("title"):
+                titles_by_norm.setdefault(bx.norm_title(e["title"]), e["title"])
+    link_problems = []
+    data["lead"], probs = resolve_links(data["lead"], titles_by_norm)
+    link_problems += probs
+    for key, val in list(data["sections"].items()):
+        if isinstance(val, str):
+            data["sections"][key], probs = resolve_links(val, titles_by_norm)
+            link_problems += probs
+    for p in link_problems:
+        print(f"  note: link check — {p}")
+    n_links = len(LINK_RE.findall(data["lead"]))
+    if n_links:
+        print(f"Editorial links: {n_links} in the lead, "
+              f"{sum(len(LINK_RE.findall(v)) for v in data['sections'].values() if isinstance(v, str))} "
+              f"in the section intros.")
+    else:
+        print("  note: the lead links no product — the model ignored the "
+              "[[title|label]] rule, so nothing in it is clickable or checkable.")
 
     missing = {"vegan", "obstgemuese", "bierspezi", "knueller"} - set(data["sections"].keys())
     if missing:

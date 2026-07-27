@@ -1,111 +1,111 @@
 {
   "generatedAt": "2026-07-27",
   "weekLabel": "KW31",
-  "lead": "Diese Woche ist wie gemacht für dich: Die GUT & GÜNSTIG Tafeläpfel gibt's zum Allzeit-Tief für nur €1,49 (Grundpreis € 0,75/kg), und auch Mönchshof-Bier ist so günstig wie nie zuvor. Dein Wicküler Pils gibt's zum Sonderpreis für €9,49 – dazu König und Warsteiner Pilsener für alle Biertage. Bei Obst & Gemüse warten Bio-Zitronen, Bio-Tafeltrauben und Bio-Ingwer für nur €0,49 auf dich. Und wer's herzhaft-vegan mag, greift zu Rügenwalders Veganen Alternativen oder Wiesenhofs Bruzzzler-Würstchen vom Grill. Kurz: viel Bio, viel Gemüse, viel Bier – ganz nach deinem Geschmack.",
+  "lead": "Die [[Deutschland - GUT & GÜNSTIG - Tafeläpfel|Tafeläpfel]] liegen bei 75 Cent das Kilo und damit auf ihrem Allzeit-Tief aus fünf Wochen Historie. Daneben [[Niederlande - Rispentomaten|Rispentomaten für einen Euro]], [[China - Bio-Ingwer|Bio-Ingwer für 49 Cent]] und die [[Deutschland - Bio-Zucchini|Bio-Zucchini]] zu 1,49 — das Gemüsefach ist damit im Wesentlichen abgehandelt. Das [[Wicküler Pils|Wicküler Pils]] kostet 9,49 den Kasten, 95 Cent der Liter, was Montag zu einem vertretbaren Wochentag macht. Die [[Rügenwalder Mühle - Vegane Alternativen|veganen Alternativen von Rügenwalder]] gibt es für 2,49, und beim [[Rheinfels Quelle Mineralwasser|Rheinfels Mineralwasser]] steht der Liter bei 44 Cent.",
   "sections": {
-    "vegan": "Vegane Highlights für dich: herzhafte Alternativen zum Grillen und für die Pfanne, ganz ohne Fleisch.",
-    "obstgemuese": "Frisches Obst & Gemüse, dein Lieblingsbereich – von Bio-Zitronen bis zum Allzeit-Tief bei Äpfeln.",
-    "bierspezi": "Zwei Pils-Kästen für Bierfans – Wicküler zum Sonderpreis, dazu König und Warsteiner.",
-    "knueller": "Superknüller mit echtem Preisvorteil: Bier und Äpfel zum Allzeit-Tief, alles geprüft auf Bestpreis."
+    "vegan": "Zwei pflanzliche Positionen: die [[Rügenwalder Mühle - Vegane Alternativen|veganen Alternativen]] zu 2,49 und die [[Wiesenhof - Bruzzzler veggie Würstchen|veggie Bruzzzler]] zu 2,79.",
+    "obstgemuese": "Achtzehn Posten, davon die [[Deutschland - GUT & GÜNSTIG - Tafeläpfel|Tafeläpfel]] auf dem Allzeit-Tief. Die [[Deutschland - GUT & GÜNSTIG - Zwiebeln|Zwiebeln]] dagegen so teuer wie nie.",
+    "bierspezi": "Drei Pils zur Auswahl, am günstigsten das [[Wicküler Pils|Wicküler]] mit 95 Cent je Liter. Spezi ist diese Woche nicht dabei.",
+    "knueller": "Viel Drogerie und Molkerei unter den Knüllern, wenig Verwertbares. Brauchbar: [[Rheinfels Quelle Mineralwasser|Rheinfels]] zu 44 Cent den Liter."
   },
   "foryou": [
     {
       "title": "Deutschland - GUT & GÜNSTIG - Tafeläpfel",
       "rank": 1,
-      "reason": "Allzeit-Tief bei Grundpreis € 0,75/kg – so günstig waren sie noch nie.",
+      "reason": "75 Cent das Kilo — günstigster Stand in fünf Wochen Historie.",
       "evidenceTag": "Allzeit-Tief"
-    },
-    {
-      "title": "Deutschland - Bio-Zucchini",
-      "rank": 2,
-      "reason": "Bio-Zucchini gehört zu deinen Favoriten – diesmal aus Deutschland, nur €1,49.",
-      "evidenceTag": "mag ich"
     },
     {
       "title": "Wicküler Pils",
+      "rank": 2,
+      "reason": "Dein Pils, 95 Cent der Liter — der günstigste Kasten dieser Woche.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Deutschland - Bio-Zucchini",
       "rank": 3,
-      "reason": "Dein Pils-Favorit, günstig wie selten: nur €9,49 pro Kasten.",
+      "reason": "Schon mal mit Daumen hoch markiert, jetzt bio zu 2,98 das Kilo.",
       "evidenceTag": "mag ich"
     },
     {
-      "title": "Mönchshof",
-      "rank": 4,
-      "reason": "Bier zum Allzeit-Tiefstpreis – Grundpreis € 1,40/l, so günstig wie nie.",
-      "evidenceTag": "Allzeit-Tief"
-    },
-    {
-      "title": "Rügenwalder Mühle - Vegane Alternativen",
-      "rank": 5,
-      "reason": "Vegane Alternative, dein Favorit, für nur €2,49.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Wiesenhof - Bruzzzler veggie Würstchen",
-      "rank": 6,
-      "reason": "Vegane Würstchen für den Grill – genau dein Geschmack.",
-      "evidenceTag": "Favorit"
-    },
-    {
       "title": "China - Bio-Ingwer",
-      "rank": 7,
-      "reason": "Bio und Obst & Gemüse – deine Favoriten, für nur €0,49.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Südafrika - Bio Zitronen",
-      "rank": 8,
-      "reason": "Bio-Zitronen aus deinem Lieblingsbereich Obst & Gemüse.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Italien - Bio Tafeltrauben",
-      "rank": 9,
-      "reason": "Bio-Trauben aus Italien – Obst & Gemüse, dein Favorit-Bereich.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "König Pilsener",
-      "rank": 10,
-      "reason": "Bier ist dein Ding – ganzer Kasten für €11,99.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Warsteiner Pilsener",
-      "rank": 11,
-      "reason": "Noch ein Pils-Kasten für Bierfans wie dich, €10,99.",
+      "rank": 4,
+      "reason": "49 Cent für Bio-Ingwer, der günstigste Posten im ganzen Prospekt.",
       "evidenceTag": "Favorit"
     },
     {
       "title": "Niederlande - Rispentomaten",
-      "rank": 12,
-      "reason": "Frisches Gemüse für nur €1,00 – dein Lieblingsbereich.",
+      "rank": 5,
+      "reason": "Ein Euro glatt, ohne Aktionsrahmen drumherum.",
       "evidenceTag": "Favorit"
     },
     {
-      "title": "Peru - Avocados",
-      "rank": 13,
-      "reason": "Avocados für nur €0,99 – Obst & Gemüse, ganz nach deinem Geschmack.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Deutschland - GUT & GÜNSTIG - Frühkartoffeln",
-      "rank": 14,
-      "reason": "Frühkartoffeln mit gutem Grundpreis € 1,00/kg – dein Bereich.",
+      "title": "Rügenwalder Mühle - Vegane Alternativen",
+      "rank": 6,
+      "reason": "Vegan zu 2,49, die pflanzliche Standardposition der Woche.",
       "evidenceTag": "Favorit"
     },
     {
       "title": "Deutschland - Spitzkohl",
-      "rank": 15,
-      "reason": "Spitzkohl für nur €1,11 – frisches Gemüse für dich.",
+      "rank": 7,
+      "reason": "1,11 der Kopf, hält sich zwei Wochen im Fach.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Deutschland - Möhren",
+      "rank": 8,
+      "reason": "1,29, das Basisgemüse für so ziemlich alles Vegane.",
       "evidenceTag": "Favorit"
     },
     {
       "title": "Deutschland - EDEKA Regional - Mini-Romanasalat",
-      "rank": 16,
-      "reason": "EDEKA Regional Romanasalat für nur €0,99 – frisch und regional.",
+      "rank": 9,
+      "reason": "99 Cent, regional, und klein genug für einen Haushalt.",
       "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Peru - Avocados",
+      "rank": 10,
+      "reason": "99 Cent das Stück, für Avocados eher am unteren Ende.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Südafrika - Bio Zitronen",
+      "rank": 11,
+      "reason": "Bio zu 1,79, deckt die Säure für die ganze Woche.",
+      "evidenceTag": "mag ich"
+    },
+    {
+      "title": "Deutschland - GUT & GÜNSTIG - Frühkartoffeln",
+      "rank": 12,
+      "reason": "Ein Euro das Kilo Frühkartoffeln, glatter geht der Preis nicht.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Wiesenhof - Bruzzzler veggie Würstchen",
+      "rank": 13,
+      "reason": "Die pflanzlichen Bruzzzler zu 2,79, zweite vegane Option der Woche.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Rumänien - Kulturheidelbeeren",
+      "rank": 14,
+      "reason": "1,79 die Schale, die günstigere der beiden Heidelbeer-Herkünfte.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Italien - Bio Tafeltrauben",
+      "rank": 15,
+      "reason": "Bio-Trauben zu 2,99, 7,48 das Kilo.",
+      "evidenceTag": "mag ich"
+    },
+    {
+      "title": "Rheinfels Quelle Mineralwasser",
+      "rank": 16,
+      "reason": "44 Cent der Liter und laut Historie noch nie günstiger.",
+      "evidenceTag": "Allzeit-Tief"
     }
   ],
-  "model": "sonnet",
+  "model": "opus",
   "generatedFor": "2026-06-30T10:27:37.023Z"
 }

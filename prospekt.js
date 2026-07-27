@@ -135,7 +135,11 @@ const WE = '(?![\\p{L}\\p{N}])';
 const W = '[\\p{L}\\p{N}]*';   // Unicode-aware \w* for suffixes (Lachs -> Lachsfilet)
 const dietRe = body => new RegExp(WB + '(?:' + body + ')' + WE, 'iu');
 
-const VEGAN_RE = /vegan|vegetar|pflanzlich|veggie|like\s*meat|beyond\s*meat|rügenwalder|wheaty|taifun|tofu|seitan|tempeh|jackfruit/iu;
+// No brand that sells both: "rügenwalder" used to be in here and made real
+// Teewurst (16 weeks) and Pommersche Gutsleberwurst read as vegan, because the
+// company sells a meat range next to its plant-based one. Only wording in the
+// title, or a brand that is exclusively plant-based, may exempt a product.
+const VEGAN_RE = /vegan|vegetar|pflanzlich|veggie|like\s*meat|beyond\s*meat|wheaty|taifun|tofu|seitan|tempeh|jackfruit/iu;
 const MEAT_RE = dietRe(
     `h[äa]hnchen${W}|h[üu]hner${W}|huhn|pute|puten${W}|truthahn${W}|rind|rinder${W}|rinds${W}|` +
     `schwein${W}|kalb|kalbs${W}|lamm${W}|gans|g[äa]nse${W}|wurst|w[üu]rstchen|w[üu]rste|salami|` +
@@ -208,8 +212,13 @@ const TOPICS = [
     // in Tiefkühl, which the category test alone let through.
     // diet: true — turning these off is absolute. "Kein Fleisch" must not be
     // overridable by a Knüller badge or a favourite category the item also hits.
-    { key: 'fleisch',     label: 'Fleisch & Wurst', emoji: '🥩', diet: true, test: o => catName(o) === 'Fleisch & Wurst' || looksMeat(o) },
-    { key: 'fisch',       label: 'Fisch',           emoji: '🐟', diet: true, test: o => catName(o) === 'Fisch & Meeresfrüchte' || looksFish(o) },
+    // The vegan exemption has to guard the CATEGORY test too, not just the
+    // title detector. Without the leading !looksVegan() a vegan sausage filed
+    // under "Fleisch & Wurst" was vetoed by its shelf alone — so the page hid
+    // the Bruzzzler veggie Würstchen while generate_prospekt.py, which applies
+    // the exemption to both, put them in the flyer at rank 6.
+    { key: 'fleisch',     label: 'Fleisch & Wurst', emoji: '🥩', diet: true, test: o => !looksVegan(o) && (catName(o) === 'Fleisch & Wurst' || looksMeat(o)) },
+    { key: 'fisch',       label: 'Fisch',           emoji: '🐟', diet: true, test: o => !looksVegan(o) && (catName(o) === 'Fisch & Meeresfrüchte' || looksFish(o)) },
     { key: 'spirituosen', label: 'Wein & Spirituosen', emoji: '🥃', diet: true, test: looksSpirits },
     { key: 'tk',          label: 'Tiefkühl',        emoji: '❄️', test: o => catName(o) === 'Tiefkühl' },
     { key: 'grundnahrung',label: 'Grundnahrung',    emoji: '🍝', test: o => catName(o) === 'Grundnahrung' },
@@ -1444,7 +1453,7 @@ function fillSection(gridId, introId, offers, sectionKey, opts) {
     if (intro) {
         const pd = activeProspekt();
         const txt = pd && pd.sections ? pd.sections[sectionKey] : '';
-        intro.textContent = typeof txt === 'string' ? txt : '';
+        renderEditorial(intro, typeof txt === 'string' ? txt : '');
         intro.style.display = txt ? '' : 'none';
     }
     if (section) section.style.display = list.length ? '' : 'none';
@@ -1461,9 +1470,71 @@ function renderHero() {
     if (lead) {
         const pd = activeProspekt();
         const txt = pd && typeof pd.lead === 'string' ? pd.lead : '';
-        lead.textContent = txt || 'Handverlesene Angebote der Woche — vegan, frisch, mit kühlem Bier und Spezi. Sag uns mit 👍 / 🚫 und den Vorlieben weiter unten, was dich interessiert.';
+        renderEditorial(lead, txt || 'Handverlesene Angebote der Woche — vegan, frisch, mit kühlem Bier und Spezi. Sag uns mit 👍 / 🚫 und den Vorlieben weiter unten, was dich interessiert.');
     }
     renderStaleNotice();
+}
+
+// ── editorial product links ──
+// The generator's copy carries [[exact offer title|words the reader sees]].
+// Matching prose back to a product afterwards would be guesswork — inflected,
+// abbreviated, sometimes two products in one phrase — so the model declares the
+// link itself and the title is the join key, exactly as foryou[] already works.
+// Never innerHTML: the title comes from the model, so it is untrusted input.
+const EDITORIAL_LINK_RE = /\[\[([^|\]]+)\|([^\]]+)\]\]/g;
+
+function offerByTitle(title) {
+    const want = normTitle(title || '');
+    if (!want) return null;
+    return currentOffers.find(o => normTitle(o.title || '') === want) || null;
+}
+
+function renderEditorial(host, text) {
+    host.textContent = '';
+    let last = 0, m;
+    EDITORIAL_LINK_RE.lastIndex = 0;
+    while ((m = EDITORIAL_LINK_RE.exec(text))) {
+        if (m.index > last) host.append(text.slice(last, m.index));
+        const offer = offerByTitle(m[1]);
+        // An offer the reader has since muted stays in the prose but loses its
+        // link: isHidden() is the single visibility rule, and opening a detail
+        // card for something the page refuses to show would contradict it.
+        if (offer && !isHidden(offer)) host.appendChild(buildEditorialLink(offer, m[2]));
+        else host.append(m[2]);
+        last = m.index + m[0].length;
+    }
+    if (last < text.length) host.append(text.slice(last));
+}
+
+function buildEditorialLink(offer, label) {
+    // An <a>, not a <button>: a multi-word label has to wrap across lines like
+    // the words around it, and a button box does not.
+    const a = document.createElement('a');
+    a.className = 'pk-lead-link';
+    a.textContent = label;
+    a.setAttribute('role', 'button');
+    a.tabIndex = 0;
+    const price = offerPrice(offer);
+    a.title = `${offer.title || ''}${price !== null ? ` — €${price.toFixed(2).replace('.', ',')}` : ''}`;
+    const open = () => {
+        if (typeof DetailCard === 'undefined') return;
+        DetailCard.open({
+            title: offer.title || '',
+            category: catName(offer),
+            color: CATEGORY_COLORS[catName(offer)] || '#888',
+            date: selectedWeekDate(),
+            offer: {
+                price: offerPrice(offer),
+                basicPrice: typeof offer.basicPrice === 'string' ? offer.basicPrice : '',
+                description: offer.description || '',
+            },
+        });
+    };
+    a.addEventListener('click', open);
+    a.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+    });
+    return a;
 }
 
 // Say plainly when the AI copy belongs to another week. Without this the page
