@@ -64,6 +64,19 @@ push_both() {
   fi
 }
 
+# This job runs unattended and now merges on its own, so it must never touch a
+# working tree someone is mid-edit in: a merge would either abort or drag
+# uncommitted work into a commit. Bail out loudly instead.
+if ! git diff --quiet || ! git diff --cached --quiet; then
+  echo "working tree is dirty, skipping this run entirely." >&2
+  notify_forgejo "weekly_sync: Working Tree nicht sauber, Lauf übersprungen" \
+"scripts/weekly_sync.sh hat uncommittete Änderungen im Repo gefunden und deshalb nichts getan
+(weder gemergt noch generiert noch gepusht), um laufende Arbeit nicht anzufassen.
+Bitte committen oder verwerfen, danach läuft der Job beim nächsten Termin normal weiter.
+Log: $LOG_FILE"
+  exit 1
+fi
+
 if ! git fetch github main --quiet; then
   echo "git fetch github failed" >&2
   notify_forgejo "weekly_sync: git fetch github fehlgeschlagen" "Log: $LOG_FILE"
@@ -75,18 +88,34 @@ REMOTE=$(git rev-parse github/main)
 
 if [ "$LOCAL" != "$REMOTE" ]; then
   BASE=$(git merge-base main github/main)
-  if [ "$LOCAL" != "$BASE" ]; then
-    echo "main has diverged from github/main, refusing to auto-merge." >&2
-    notify_forgejo "weekly_sync: main ist von github/main divergiert" \
-"Der automatische Sync-Job (scripts/weekly_sync.sh) konnte nicht per Fast-Forward mergen.
+  git checkout main --quiet
+  if [ "$REMOTE" = "$BASE" ]; then
+    # Local is merely AHEAD — nothing to merge, just publish. The old check
+    # treated this as a divergence and bailed out, which is exactly how a local
+    # commit that had not reached github yet blocked the job: on 2026-07-27 the
+    # sync aborted with "main has diverged", the week's data never arrived
+    # locally, and the prospekt kept showing the previous week for a full week.
+    echo "Phase A: main is ahead of github/main, pushing local commits."
+  elif [ "$LOCAL" = "$BASE" ]; then
+    git merge --ff-only github/main
+  else
+    # Real divergence (both sides moved). Local work is code, the Actions
+    # commit is data — disjoint files in practice — so attempt the merge and
+    # only involve a human on an actual conflict.
+    echo "Phase A: main and github/main diverged, attempting merge."
+    if ! git merge --no-edit github/main; then
+      git merge --abort 2>/dev/null || true
+      echo "merge conflicted, leaving the tree untouched." >&2
+      notify_forgejo "weekly_sync: Merge-Konflikt zwischen main und github/main" \
+"Der automatische Sync-Job (scripts/weekly_sync.sh) konnte main und github/main nicht automatisch mergen.
+Der Merge wurde abgebrochen, der Working Tree ist unverändert.
 Bitte manuell prüfen: git fetch github && git log main..github/main
 Log: $LOG_FILE"
-    exit 1
+      exit 1
+    fi
   fi
-  git checkout main --quiet
-  git merge --ff-only github/main
   push_both main || exit 1
-  echo "Phase A ok: data synced to origin + github ($REMOTE)"
+  echo "Phase A ok: data synced to origin + github ($(git rev-parse --short main))"
 else
   echo "Phase A: nothing new from github/main."
 fi

@@ -2,7 +2,18 @@ name: Fetch EDEKA Offers
 
 on:
   schedule:
-    - cron: "0 5 * * 1" # Runs every Monday at 05:00 UTC (06:00 CET / 07:00 CEST)
+    # EDEKA publishes the new week's flyer on Sunday (seen live at 11:04), so
+    # the week is fetched Sunday midday and again Sunday evening, with the
+    # Monday run kept as a safety net. Times are UTC; GitHub's scheduler is
+    # routinely 30 min to 3 h late (the 05:00 Monday run fired at 08:33 on
+    # 2026-07-27), which is precisely why there are three attempts.
+    #
+    # Running before the offers are valid is harmless: the snapshot is filed
+    # under the API's own validFrom, so a Sunday run that still sees the old
+    # week writes nothing new (see "Determine folder and file structure").
+    - cron: "0 10 * * 0" # Sunday 12:00 CEST
+    - cron: "0 16 * * 0" # Sunday 18:00 CEST
+    - cron: "0 5 * * 1"  # Monday 07:00 CEST — safety net
   workflow_dispatch: # Allows manual triggering of the workflow
 
 # The built-in GITHUB_TOKEN needs write access to push the fetched data back
@@ -64,20 +75,49 @@ jobs:
       - name: Determine folder and file structure
         id: structure
         run: |
-          CURRENT_DATE=$(date -u +"%Y-%m-%d")
+          # File the snapshot by the API's own validFrom (the Monday the offers
+          # start), NOT by the run date. That makes the destination a property of
+          # the data instead of the clock, which is what allows a Sunday fetch:
+          # if EDEKA has already switched, the offers land under next week; if it
+          # has not, they land on the existing file for the current week and the
+          # run ends up committing nothing. Falls back to the run date if the
+          # field is ever missing.
+          VALID_FROM=$(jq -r '.validFrom // empty' data.json)
+          if [ -n "$VALID_FROM" ] && date -u -d "$VALID_FROM" +%s >/dev/null 2>&1; then
+            REF_DATE="$VALID_FROM"
+          else
+            REF_DATE=$(date -u +"%Y-%m-%d")
+            echo "WARN: no usable validFrom in the response, falling back to $REF_DATE"
+          fi
           # Calendar year (%Y) so the folder year matches the filename's own year.
           # %G (ISO week-numbering year) diverges at the Dec/Jan boundary — e.g.
           # 2025-12-29 would land under data/2026/ while every existing snapshot
           # uses calendar-year folders, and the dropdown label would show the
           # wrong year.
-          YEAR=$(date -u +"%Y")
-          WEEK="KW$(date -u +"%V")"
+          YEAR=$(date -u -d "$REF_DATE" +"%Y")
+          WEEK="KW$(date -u -d "$REF_DATE" +"%V")"
           FOLDER="data/$YEAR/$WEEK"
-          FILE="$CURRENT_DATE.json"
-          mkdir -p "$FOLDER" # Create the full folder structure
-          mv data.json "$FOLDER/$FILE"
+          FILE="$FOLDER/$REF_DATE.json"
+          mkdir -p "$FOLDER"
+
+          # Never let a re-run shrink an existing snapshot. A fetch that catches
+          # EDEKA mid-switch can return a partial list; overwriting a complete
+          # archived week with it would lose offers permanently. Equal or larger
+          # counts may overwrite (that is a genuine correction).
+          if [ -f "$FILE" ]; then
+            OLD=$(jq '.offers | length' "$FILE")
+            NEW=$(jq '.offers | length' data.json)
+            if [ "$NEW" -lt "$OLD" ]; then
+              echo "Existing $FILE has $OLD offers, fetched only $NEW — keeping the existing snapshot."
+              rm -f data.json
+              echo "folder=$FOLDER" >> $GITHUB_OUTPUT
+              echo "file=$FILE" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+          fi
+          mv data.json "$FILE"
           echo "folder=$FOLDER" >> $GITHUB_OUTPUT
-          echo "file=$FOLDER/$FILE" >> $GITHUB_OUTPUT
+          echo "file=$FILE" >> $GITHUB_OUTPUT
 
       - name: Archive product images
         run: |
