@@ -112,6 +112,14 @@
             border: 1px solid #333;
             padding: 5px;
             text-align: left;
+            /* German compounds are long and the category column is narrow: at
+               ~768px "Grundnahrung" needed 103px in a 99px cell and word-break
+               tore it mid-syllable ("Grundnahru/ng"). hyphens:auto uses the
+               browser's German dictionary (the document is lang="de") and
+               breaks it as "Grund-nahrung" instead. word-break stays as the
+               last resort for strings the dictionary cannot split, such as a
+               long unbroken product code. */
+            hyphens: auto;
             word-break: break-word;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -405,6 +413,13 @@
             .image-preview {
                 display: none !important;
             }
+        }
+        /* Category filters were 13x13 px checkboxes — the label is the real hit
+           area, so it gets the height rather than scaling the box itself. */
+        @media (pointer: coarse) {
+            .category-filters label { min-height: 44px; }
+            .category-filters input[type="checkbox"] { width: 18px; height: 18px; }
+            .controls input, .controls select, .controls button { min-height: 44px; }
         }
     </style>
 </head>

@@ -464,7 +464,7 @@
 
         .knuller-badge {
             display: inline-block;
-            font-size: 0.62rem;
+            font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.4px;
@@ -493,6 +493,19 @@
             .feature-cols {
                 grid-template-columns: 1fr;
             }
+            /* The two links wrapped onto separate right-aligned lines at 390px,
+               which read as two unrelated controls. Week picker on its own row,
+               both links side by side below it. They are direct children of
+               .header-controls (no wrapper), so the split is done with flex
+               basis rather than a nested container. */
+            .header { flex-direction: column; align-items: stretch; }
+            .header-controls { flex-wrap: wrap; align-items: stretch; gap: 8px; }
+            .header-controls select { flex: 1 1 100%; }
+            .header-controls .back-link { flex: 1 1 0; text-align: center; }
+        }
+        @media (pointer: coarse) {
+            .cat-btn, .knuller-toggle, .back-link { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+            .feature-search, .gp-typeahead-input, select { min-height: 44px; }
         }
 
         /* Same min-width:auto trap as .panel, one level down: the columns,

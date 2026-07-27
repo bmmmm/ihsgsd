@@ -54,6 +54,7 @@ Run by hand after a fetch — these call `claude -p` and are never part of CI:
 - **`scripts/generate_prospekt.py`** — flyer lead + section intros + ranked "Für dich" picks → `data/prospekt.json`. Applies the reader's diet vetoes *before* ranking, so the model never sees Grillrippen or Fischstäbchen as candidates (the page would hide them anyway — this just stops it writing lead copy about offers nobody will see). A topic the export never decided on falls back to `DEFAULT_INTERESTS`, mirroring `prospekt.js`.
 - **`scripts/generate_mealplan.py`** — 12-14 vegan dinners (first 7 = Mo–So plan, rest = swap "bench") from this week's vegan offers + a `VEGAN_STAPLES` pantry + the reader's prefs → `data/mealplan.json`. Imports shared helpers from `generate_prospekt`.
 - **`scripts/test_parity.py`** — the repo's only test. Proves the JS and Python copies of the shared logic still agree, over every offer in `data/`. Needs `node`; no framework, no dependencies. Run it after changing `grundpreis.js`, `build_indexes.py` or any diet detector.
+- **`scripts/layout-probe.js`** — layout regression check, pasted into the browser console (`await layoutProbe()`; optionally `layoutProbe(['prospekt.html'], [560])`). Loads each page in an off-screen iframe at several widths — so media queries resolve against the probe width, not the real window — and reports words torn mid-syllable, horizontal overflow, and touch targets under 44 px. Breaks at a hyphen and words split by `hyphens: auto` count as correct typography, not defects. Run after CSS changes; same role for layout that `test_parity.py` has for the shared JS/Python logic.
 - **`scripts/audit_data.py`** — read-only data-quality audit over every snapshot and both indexes: week identity (folder vs. the API's `validFrom`), duplicate offer weeks, cadence gaps, offer-record sanity, EDEKA's own Grundpreis vs. price ÷ pack size, implausible price swings, index integrity, image-archive coverage. `-v` lists every finding. It deliberately separates *actionable* findings (exit 1) from *historic* ones that cannot be repaired — the three permanently missing weeks, images purged before the archive existed, EDEKA's own typos — which are reported but never fail the run. A check that is permanently red gets ignored, so a non-zero exit always means something changed that is worth fixing.
 - **`scripts/serve.py`** — dev server (127.0.0.1) with `POST /api/preferences` (saves the export), `POST /api/shopping` (saves the week's shopping list to `data/shopping/<date>.json`, gitignored; the date is validated `YYYY-MM-DD` and doubles as the path-traversal guard), and `POST /api/mealplan/regenerate` (runs the meal-plan generator live for the page's "↻ Neu generieren" button). `ThreadingHTTPServer` so the long generation doesn't block static serving.
 
@@ -67,6 +68,17 @@ Run by hand after a fetch — these call `claude -p` and are never part of CI:
 
 ## Key Patterns
 
+- **German compounds get `hyphens: auto`, never `overflow-wrap: anywhere`.**
+  Product names and category labels are long single words in narrow columns
+  ("Grundnahrung" needed 103 px in a 99 px table cell). `anywhere` permits a
+  break at *any* character and produced "Mö/hre/n" in a 35 px box;
+  `hyphens: auto` uses the browser's German dictionary (documents are
+  `lang="de"`) and yields "Grund-nahrung". Where a row mixes text with badges,
+  give the text a `min-width` in `ch` — that, not the wrap mode, is what stops
+  a flex item from collapsing to nothing.
+- **Touch targets live behind `@media (pointer: coarse)`.** The pages stay dense
+  under a mouse; only coarse pointers get 44 px hit areas. Matters most in the
+  shopping list, where `×` deletes a row right next to the checkbox.
 - **Grundpreis is derived when EDEKA omits it.** EDEKA leaves out the €/kg
   exactly where the pack already IS the base unit ("Möhren, 1 kg Schale,
   € 1.29") — 26 % of offers, which used to drop them from the price history
