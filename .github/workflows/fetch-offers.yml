@@ -2,18 +2,26 @@ name: Fetch EDEKA Offers
 
 on:
   schedule:
-    # EDEKA publishes the new week's flyer on Sunday (seen live at 11:04), so
-    # the week is fetched Sunday midday and again Sunday evening, with the
-    # Monday run kept as a safety net. Times are UTC; GitHub's scheduler is
-    # routinely 30 min to 3 h late (the 05:00 Monday run fired at 08:33 on
-    # 2026-07-27), which is precisely why there are three attempts.
+    # EDEKA publishes the new week's flyer on Sunday (seen live at 11:04). The
+    # schedule is dense around that window and thins out afterwards: missing the
+    # switch costs a whole week, while an extra run costs nothing at all.
     #
-    # Running before the offers are valid is harmless: the snapshot is filed
-    # under the API's own validFrom, so a Sunday run that still sees the old
-    # week writes nothing new (see "Determine folder and file structure").
-    - cron: "0 10 * * 0" # Sunday 12:00 CEST
-    - cron: "0 16 * * 0" # Sunday 18:00 CEST
-    - cron: "0 5 * * 1"  # Monday 07:00 CEST — safety net
+    # Extra runs really are free — the snapshot is filed under the API's own
+    # validFrom, and a response that matches the stored week (modulo EDEKA's
+    # per-request image UUIDs) is discarded without a commit. So a run that is
+    # too early writes nothing, and a run that is too late finds the work done.
+    #
+    # Times are UTC (CEST = UTC+2). GitHub's scheduler is routinely 30 min to
+    # 3 h late — the 05:00 Monday run fired at 08:33 on 2026-07-27 — which is
+    # the other reason for the redundancy.
+    - cron: "0 8 * * 0"   # Sun 10:00 CEST — just before the observed switch
+    - cron: "0 10 * * 0"  # Sun 12:00 CEST
+    - cron: "0 12 * * 0"  # Sun 14:00 CEST
+    - cron: "0 15 * * 0"  # Sun 17:00 CEST
+    - cron: "0 19 * * 0"  # Sun 21:00 CEST
+    - cron: "0 5 * * 1"   # Mon 07:00 CEST — safety net
+    - cron: "0 10 * * 1"  # Mon 12:00 CEST
+    - cron: "0 6 * * 2"   # Tue 08:00 CEST — last resort before the watchdog
   workflow_dispatch: # Allows manual triggering of the workflow
 
 # The built-in GITHUB_TOKEN needs write access to push the fetched data back

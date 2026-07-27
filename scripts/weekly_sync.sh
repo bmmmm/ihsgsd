@@ -64,17 +64,18 @@ push_both() {
   fi
 }
 
-# This job runs unattended and now merges on its own, so it must never touch a
+# This job runs unattended and merges on its own, so it must never touch a
 # working tree someone is mid-edit in: a merge would either abort or drag
-# uncommitted work into a commit. Bail out loudly instead.
+# uncommitted work into a commit.
+#
+# Silent skip, deliberately no Forgejo issue: the job runs a dozen+ times a
+# week, so "dirty while someone is working" is a normal transient state, not an
+# incident — filing it would be pure noise. A tree that stays dirty long enough
+# to actually miss the week surfaces where it matters anyway: the page shows the
+# stale-editorial banner, and the Tuesday watchdog reports a missing snapshot.
 if ! git diff --quiet || ! git diff --cached --quiet; then
-  echo "working tree is dirty, skipping this run entirely." >&2
-  notify_forgejo "weekly_sync: Working Tree nicht sauber, Lauf übersprungen" \
-"scripts/weekly_sync.sh hat uncommittete Änderungen im Repo gefunden und deshalb nichts getan
-(weder gemergt noch generiert noch gepusht), um laufende Arbeit nicht anzufassen.
-Bitte committen oder verwerfen, danach läuft der Job beim nächsten Termin normal weiter.
-Log: $LOG_FILE"
-  exit 1
+  echo "working tree is dirty, skipping this run (no action taken)."
+  exit 0
 fi
 
 if ! git fetch github main --quiet; then
