@@ -717,6 +717,7 @@ function buildSteering() {
         const el = document.getElementById('pk-shopping');
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
+    watchJumpHeight();
     const regenBtn = document.getElementById('pk-mealplan-regen');
     if (regenBtn) regenBtn.addEventListener('click', regenerateMealplan);
 
@@ -738,6 +739,8 @@ function buildSteering() {
     if (slCopy) slCopy.addEventListener('click', copyShoppingList);
     const slSave = document.getElementById('pk-shopping-save');
     if (slSave) slSave.addEventListener('click', saveShoppingList);
+    const slUndo = document.getElementById('pk-sl-undo-btn');
+    if (slUndo) slUndo.addEventListener('click', undoRemove);
     const slAdd = document.getElementById('pk-shopping-add');
     if (slAdd) slAdd.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -1852,10 +1855,13 @@ function toggleBasket(o) {
 
 // Sticky counter for the shopping list — one click jumps to it. Cards can sit
 // far above the list, so without this a 🧺 click had no visible effect at all.
-function paintBasketJump(total) {
+// It doubles as the list's entry in the jump bar (there used to be a plain link
+// beside it going to the same place), which is why it also shows while the list
+// is empty: the section is still there whenever a meal plan exists.
+function paintBasketJump(total, visible) {
     const btn = document.getElementById('pk-basket-jump');
     if (!btn) return;
-    btn.hidden = !total;
+    btn.hidden = !visible;
     // "auf dem Zettel" is a separate span so CSS can drop it on narrow screens
     // without touching the accessible name — at 390px the full label left only
     // one and a half jump links visible beside it.
@@ -1866,9 +1872,33 @@ function paintBasketJump(total) {
         suffix.className = 'pk-basket-jump-suffix';
         suffix.textContent = ' auf dem Zettel';
         btn.appendChild(suffix);
+    } else {
+        btn.append('🧺 Einkaufszettel');   // no count to show, so name the target
     }
     btn.title = 'Zum Einkaufszettel springen';
-    btn.setAttribute('aria-label', total ? `${total} auf dem Zettel — zum Einkaufszettel springen` : '');
+    btn.setAttribute('aria-label', total
+        ? `${total} auf dem Zettel — zum Einkaufszettel springen`
+        : 'Zum Einkaufszettel springen');
+}
+
+// How far an anchor jump must stop short of the top. The sticky bar is one row
+// on a wide screen and two on a phone, and it grows again when the counter
+// appears, so this was measured wrong by a fixed scroll-margin-top at every
+// width but one — the jump landed with the heading already behind the bar.
+// A ResizeObserver covers all three causes at once (viewport, wrapping, count).
+function syncJumpHeight() {
+    const bar = document.getElementById('pk-jump');
+    if (!bar) return;
+    const h = Math.round(bar.getBoundingClientRect().height);
+    if (h) document.documentElement.style.setProperty('--pk-jump-h', h + 'px');
+}
+
+function watchJumpHeight() {
+    const bar = document.getElementById('pk-jump');
+    if (!bar) return;
+    syncJumpHeight();
+    if (window.ResizeObserver) new ResizeObserver(syncJumpHeight).observe(bar);
+    else window.addEventListener('resize', syncJumpHeight);
 }
 
 function bumpBasketJump() {
@@ -1957,17 +1987,69 @@ function buildShoppingList() {
 // ── edits ──
 // × a row: hide it (removed by name) and drop its 🧺/own sources so the card
 // button and the typed list stay consistent.
+//
+// This is the only destructive gesture in the list, and it sits in the same row
+// as the checkbox, so a mis-tap deletes instead of ticking off. Enlarging the
+// button helps but cannot be relied on, so the removal is kept undoable for a
+// short while: what was actually taken out is snapshotted first, because
+// `removed` is keyed by name while the 🧺 offers and own items are keyed by id
+// — re-deriving them afterwards is not possible.
+let lastRemoved = null;
+let undoTimer = null;
+const UNDO_MS = 12000;
+
 function removeRow(row) {
     if (!prefs || !prefs.basket || !row) return;
     const b = prefs.basket;
+    const drop = new Set(row.origins.customIds.map(String));
+    const undo = {
+        name: row.name,
+        normName: row.normName,
+        wasRemoved: !!b.removed[row.normName],
+        planKey: b.planKey,
+        offers: row.origins.offerIds.filter(id => b.offers[id]).map(id => ({ id, val: b.offers[id] })),
+        customs: drop.size ? b.custom.filter(c => drop.has(String(c.id))) : [],
+    };
     b.removed[row.normName] = true;
     row.origins.offerIds.forEach(id => { delete b.offers[id]; });
-    if (row.origins.customIds.length) {
-        const drop = new Set(row.origins.customIds.map(String));
-        b.custom = b.custom.filter(c => !drop.has(String(c.id)));
-    }
+    if (drop.size) b.custom = b.custom.filter(c => !drop.has(String(c.id)));
     persistPrefsQuiet();
+    offerUndo(undo);
     renderAll();   // a removed 🧺 offer must also un-light its card button
+}
+
+function undoRemove() {
+    const u = lastRemoved;
+    if (!u || !prefs || !prefs.basket) return;
+    const b = prefs.basket;
+    // Switching week or regenerating the plan empties the basket. Restoring into
+    // that fresh one would resurrect another week's rows.
+    if (b.planKey !== u.planKey) { clearUndo(); return; }
+    if (!u.wasRemoved) delete b.removed[u.normName];
+    u.offers.forEach(x => { b.offers[x.id] = x.val; });
+    u.customs.forEach(c => {
+        if (!b.custom.some(y => String(y.id) === String(c.id))) b.custom.push(c);
+    });
+    clearUndo();
+    persistPrefsQuiet();
+    renderAll();
+}
+
+function offerUndo(undo) {
+    lastRemoved = undo;
+    const bar = document.getElementById('pk-sl-undo');
+    const text = document.getElementById('pk-sl-undo-text');
+    if (text) text.textContent = `„${undo.name}“ entfernt.`;
+    if (bar) bar.hidden = false;
+    if (undoTimer) clearTimeout(undoTimer);
+    undoTimer = setTimeout(clearUndo, UNDO_MS);
+}
+
+function clearUndo() {
+    lastRemoved = null;
+    if (undoTimer) { clearTimeout(undoTimer); undoTimer = null; }
+    const bar = document.getElementById('pk-sl-undo');
+    if (bar) bar.hidden = true;
 }
 
 function toggleChecked(normName) {
@@ -2045,8 +2127,10 @@ function renderShopping() {
 
     const list = buildShoppingList();
     const hasPlan = !!(mealplanView && mealplanView.days.length);
-    const show = list.total > 0 || hasPlan;   // keep visible with a plan so you can add/re-add
-    paintBasketJump(list.total);
+    // Keep visible with a plan so you can add/re-add — and while an undo is
+    // pending, or removing the last row would take its own undo button away.
+    const show = list.total > 0 || hasPlan || !!lastRemoved;
+    paintBasketJump(list.total, show);
 
     const saveBtn = document.getElementById('pk-shopping-save');
     // Saving needs somewhere to write: the connected repo folder or the dev

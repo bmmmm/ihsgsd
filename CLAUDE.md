@@ -39,7 +39,7 @@ on GitHub Pages — only route 1 can tell whether an export actually exists ther
 - **`table.html`** — Searchable/filterable offer table (logic in `script.js`).
 - **`detail-card.js`** — Shared product detail modal used by all three views: click any article to see its Grundpreis history (SVG chart), all-time low/median, offer frequency, and past offers. Reads `data/price-history-index.json` lazily; articles are matched by normalized title, unit/size variants shown as tabs.
 - **`dashboard.html`** — EDEKA Dashboard — separate analytics/summary view of the offer data.
-- **`prospekt.html` / `prospekt.js`** — Curated weekly flyer with a sticky quick-nav (jump targets + a shopping-list counter that scrolls to the list). Three labelled clusters: **Für dich** (vegan Mo–So meal plan + shopping list first, then the top picks), **Angebote nach Thema** (per-topic sections, which skip anything "Für dich" already showed — both draw from the same offers and used to repeat each other), and **Personalisieren & stöbern** (interest chips, export, full-week browser) at the bottom. Sections collapse by clicking their heading; that state lives in its own localStorage key, deliberately *not* in `prefs`, since the generators must never read view state. Pure client-side prefs in localStorage (interest chips + 👍/👎 votes + per-meal votes), exported to `data/preferences.json` for the generators. The meal plan has a client-side **gluten-free toggle** (`prefs.glutenFree`) that swaps gluten ingredients/steps (Nudeln, Mehl, Couscous, Seitan…) for GF alternatives at render time — display-only, works without the dev server, persisted quietly (no re-export prompt). The three card markers are kept **separate**: 👍/🚫 = taste (ranking only), 🛒 = bought (loyalty), 🧺 = shopping list. The **shopping list** (`prefs.basket`) is fed only by the meal plan's ingredients (incl. GF swaps) and 🧺-added offers — never by 👍/🛒 — merged into offers / pantry / own items. It's editable: remove (×), check off, and type own items; the overlay (removed/checked/custom) is bound to a plan key so a new week or regeneration starts fresh. Copy button (clipboard, Markdown checklist) and, on the dev server, a save button (`POST /api/shopping` → gitignored `data/shopping/`).
+- **`prospekt.html` / `prospekt.js`** — Curated weekly flyer with a sticky quick-nav (jump targets + a shopping-list counter that scrolls to the list). Three labelled clusters: **Für dich** (vegan Mo–So meal plan + shopping list first, then the top picks), **Angebote nach Thema** (per-topic sections, which skip anything "Für dich" already showed — both draw from the same offers and used to repeat each other), and **Personalisieren & stöbern** (interest chips, export, full-week browser) at the bottom. Sections collapse by clicking their heading; that state lives in its own localStorage key, deliberately *not* in `prefs`, since the generators must never read view state. Pure client-side prefs in localStorage (interest chips + 👍/👎 votes + per-meal votes), exported to `data/preferences.json` for the generators. The meal plan has a client-side **gluten-free toggle** (`prefs.glutenFree`) that swaps gluten ingredients/steps (Nudeln, Mehl, Couscous, Seitan…) for GF alternatives at render time — display-only, works without the dev server, persisted quietly (no re-export prompt). The three card markers are kept **separate**: 👍/🚫 = taste (ranking only), 🛒 = bought (loyalty), 🧺 = shopping list. The **shopping list** (`prefs.basket`) is fed only by the meal plan's ingredients (incl. GF swaps) and 🧺-added offers — never by 👍/🛒 — merged into offers / pantry / own items. It's editable: remove (×), check off, and type own items; the overlay (removed/checked/custom) is bound to a plan key so a new week or regeneration starts fresh. Removal is the page's only destructive gesture and sits in the same row as the checkbox, so it is **undoable** for 12 s — what was taken out is snapshotted first (`removed` is keyed by name, the 🧺 offers and own items by id, so it cannot be re-derived), and the undo refuses to fire once the plan key has moved on. Copy button (clipboard, Markdown checklist) and, on the dev server, a save button (`POST /api/shopping` → gitignored `data/shopping/`).
 - **`grundpreis.js`** — Shared Grundpreis logic (parse, derive, product key, size buckets) loaded by all three views before their own scripts. Mirrors `scripts/build_indexes.py`; `scripts/test_parity.py` checks the two against each other.
 - **`script.js`** — All frontend logic for `table.html`: data fetching, table rendering, search, category filtering, image toggle, clipboard export. The Grundpreis column and its sort key go through `resolveGp`, so offers where EDEKA quotes no Grundpreis still show and sort by one (marked "≈").
 - **`data/`** — Weekly JSON snapshots organized as `data/{YEAR}/KW{XX}/{DATE}.json`. ~17MB total, 70+ files.
@@ -134,6 +134,28 @@ A second, fully separate offer source mirroring the EDEKA pattern:
 - **Touch targets live behind `@media (pointer: coarse)`.** The pages stay dense
   under a mouse; only coarse pointers get 44 px hit areas. Matters most in the
   shopping list, where `×` deletes a row right next to the checkbox.
+- **A 44 px button is not a 44 px hit area if the rows are 28 px apart.** The
+  first version of that rule kept the list dense and let the buttons bleed into
+  their neighbours with `margin: -10px 0`. Both buttons measured 44×44 and it
+  was still hard to hit: 27 of 28 consecutive row pairs overlapped by up to
+  12 px, and the row *below* paints over the one above, so the reliably tappable
+  strip was back to the row height. The row itself has to grow (`min-height`).
+  Measuring the button alone cannot see this — check the vertical gap between
+  neighbouring rows' buttons, and expect a real fix to make the list taller.
+- **Anything toggled with the `hidden` property needs `[hidden] { display: none
+  !important }`.** `hidden` only works through the UA rule, which *any* author
+  `display` outranks — so `.pk-sl-undo { display: flex }` left the undo bar
+  visible-but-empty from the first paint, and a `display: inline-flex` inside
+  the `pointer: coarse` block re-showed the emptied basket counter on phones
+  only. Testing `el.hidden` in JS reads the property and passes happily while
+  the thing is on screen; the discriminating check is
+  `getComputedStyle(el).display`.
+- **The sticky bar's height is measured, not assumed.** `scroll-margin-top` has
+  to match the jump bar, which is one row wide, two rows narrow, and taller
+  again when the basket counter appears. Two hardcoded values were wrong at
+  every width but one, and a jump landed with the heading already behind the
+  bar. `syncJumpHeight()` writes the measured height to `--pk-jump-h` under a
+  `ResizeObserver`, which covers viewport, wrapping and counter at once.
 - **Grundpreis is derived when EDEKA omits it.** EDEKA leaves out the €/kg
   exactly where the pack already IS the base unit ("Möhren, 1 kg Schale,
   € 1.29") — 26 % of offers, which used to drop them from the price history

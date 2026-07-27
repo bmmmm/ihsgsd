@@ -7,6 +7,13 @@
     <title>EDEKA Prospekt</title>
     <style>
         * { box-sizing: border-box; }
+        /* Nine elements on this page are toggled through the `hidden` property.
+           That only works via the UA rule `[hidden] { display: none }`, which any
+           author `display` declaration outranks — so `.pk-sl-undo { display:flex }`
+           left the undo bar sitting there empty from the first paint, and the
+           `display:inline-flex` in the pointer:coarse block re-showed the emptied
+           basket counter on phones only. Enforced once, for the whole class. */
+        [hidden] { display: none !important; }
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             background-color: #0a0a0a;
@@ -454,6 +461,15 @@
         .pk-sl-item.checked .pk-sl-name { text-decoration: line-through; color: #777; }
         .pk-sl-item.checked .pk-sl-price { text-decoration: line-through; opacity: 0.6; }
         .pk-sl-empty { color: #777; font-size: 0.88rem; margin: 6px 0 0; }
+        /* × is the only destructive control on the page and it sits a thumb's
+           width from the checkbox. Hit-area size alone cannot make that safe, so
+           every removal stays undoable for a while. */
+        .pk-sl-undo {
+            display: flex; align-items: center; justify-content: space-between; gap: 12px;
+            flex-wrap: wrap; margin: 0 0 12px; padding: 8px 12px;
+            background: #1b1712; border: 1px solid #4a3a20; border-radius: 10px;
+            color: #e0c48a; font-size: 0.86rem;
+        }
         .pk-sl-add { display: flex; gap: 8px; margin-top: 12px; }
         .pk-sl-add input { flex: 1; min-width: 0; background: #1a1a1a; color: #e0e0e0; border: 1px solid #333; padding: 8px 12px; border-radius: 8px; font-size: 0.9rem; font-family: inherit; }
         .pk-sl-add input:focus { outline: none; border-color: #4caf50; }
@@ -507,20 +523,38 @@
            already uses this pattern with @media (hover:none)). The glyph size is
            unchanged — only the hit area grows, via padding and a min size. */
         @media (pointer: coarse) {
+            /* The first attempt kept the rows dense and let the 44px hit areas
+               bleed into the neighbours with margin:-10px. That does not work:
+               consecutive rows sat ~28px apart, so each button's lower third was
+               covered by the next row's button (later in the DOM paints on top)
+               and the reliably tappable strip was back to ~28px. The row itself
+               has to be tall enough — a taller list is the honest price for a
+               delete button that can be hit. */
             .pk-sl-check, .pk-sl-del {
                 min-width: 44px; min-height: 44px;
                 display: inline-flex; align-items: center; justify-content: center;
-                padding: 0; margin: -10px 0;   /* keep the row's visual height */
+                padding: 0; margin: 0;
             }
-            .pk-sl-item { gap: 4px 6px; }
+            .pk-sl-item { gap: 4px 6px; min-height: 48px; padding: 2px 0; }
+            /* Pushed to the far edge, away from the checkbox, and given a visible
+               surface so it reads as a zone rather than a stray glyph. */
+            .pk-sl-del {
+                margin-left: auto; font-size: 1.35rem; color: #8a5a5a;
+                background: #1a1414; border: 1px solid #2e2020; border-radius: 10px;
+            }
+            .pk-sl-del:active { background: #2a1717; color: #ef5350; }
             .pk-vote { min-height: 44px; font-size: 1.05rem; }
             .steer-chip { min-height: 44px; }
             .pk-sl-btn, .steer-btn { min-height: 44px; }
             .mp-btn { min-height: 44px; }
             .pk-jump a, .pk-basket-jump { min-height: 40px; display: inline-flex; align-items: center; }
         }
-        /* Anchor targets must clear the sticky bar. */
-        .pk-cluster, .pk-section { scroll-margin-top: 64px; }
+        /* Anchor targets must clear the sticky bar. Its height is not a constant
+           — one row wide, two rows narrow, and it grows again when the basket
+           counter appears — so the two hardcoded values this replaced were wrong
+           at every width but one, and a jump landed with the section heading
+           already hidden behind the bar. syncJumpHeight() measures it. */
+        .pk-cluster, .pk-section { scroll-margin-top: calc(var(--pk-jump-h, 64px) + 10px); }
 
         .footer { margin-top: 28px; padding-top: 16px; border-top: 1px solid #222; color: #666; font-size: 0.82rem; }
 
@@ -544,19 +578,22 @@
             .nav-links .back-link { flex: 1; text-align: center; }
             .pk-hero h2 { font-size: 1.15rem; }
             #pk-lead { font-size: 0.96rem; }
-            /* One scrollable row of links instead of three wrapped ones: the
-               sticky bar was eating ~15% of a 390px-tall viewport. Only the
-               link track scrolls; the counter stays put beside it. */
-            .pk-jump { gap: 8px; }
-            .pk-jump-links {
-                flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
-                -webkit-overflow-scrolling: touch;
+            /* The links used to scroll sideways in a single nowrap row, which
+               kept the bar short but left every pill half-cut and most of them
+               off-screen — a nav you have to scroll to read is not a nav. They
+               wrap instead, and `display: contents` dissolves the link track so
+               the pills and the counter become flex items of the bar itself:
+               one wrap context, so each row stretches its items across the full
+               width and nothing is left dangling at the edge. */
+            .pk-jump { gap: 6px; flex-wrap: wrap; padding: 6px 2px; }
+            .pk-jump-links { display: contents; }
+            .pk-jump a, .pk-basket-jump {
+                flex: 1 1 auto; justify-content: center; text-align: center;
+                font-size: 0.8rem; padding: 6px 8px;
             }
-            .pk-jump-links::-webkit-scrollbar { display: none; }
-            .pk-basket-jump { margin-left: 0; font-size: 0.8rem; padding: 5px 10px; }
+            .pk-basket-jump { margin-left: 0; }
             /* "🧺 29" is enough here; the full wording stays in aria-label. */
             .pk-basket-jump-suffix { display: none; }
-            .pk-cluster, .pk-section { scroll-margin-top: 52px; }
             /* Cards stay two-up rather than collapsing to one huge column. */
             .pk-grid { grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); }
             .pk-thumb { height: 88px; }
@@ -581,10 +618,11 @@
 
         <p id="pk-stale" class="pk-stale" hidden></p>
 
+        <!-- The basket counter IS the shopping-list jump target; a separate
+             "Einkaufszettel" link next to it was the same destination twice. -->
         <nav class="pk-jump" id="pk-jump" aria-label="Schnellnavigation">
             <div class="pk-jump-links">
                 <a href="#pk-mealplan">&#129367;&nbsp; Wochenplan</a>
-                <a href="#pk-shopping">&#129506;&nbsp; Einkaufszettel</a>
                 <a href="#pk-foryou">&#11088;&nbsp; Top-Picks</a>
                 <a href="#cluster-themen">&#128278;&nbsp; Themen</a>
                 <a href="#cluster-controls">&#9881;&nbsp; Vorlieben</a>
@@ -626,6 +664,10 @@
                     </div>
                 </div>
                 <p id="pk-shopping-meta" class="pk-sl-meta" aria-live="polite"></p>
+                <div id="pk-sl-undo" class="pk-sl-undo" hidden aria-live="polite">
+                    <span id="pk-sl-undo-text"></span>
+                    <button type="button" id="pk-sl-undo-btn" class="pk-sl-btn">&#8630; R&uuml;ckg&auml;ngig</button>
+                </div>
                 <div id="pk-shopping-body" class="pk-sl-body"></div>
                 <form id="pk-shopping-add" class="pk-sl-add">
                     <input type="text" id="pk-shopping-add-input" placeholder="+ eigenes hinzuf&uuml;gen&hellip;" aria-label="Eigenes Item hinzuf&uuml;gen" autocomplete="off" />
