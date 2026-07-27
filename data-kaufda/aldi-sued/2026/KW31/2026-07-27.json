@@ -1,0 +1,3714 @@
+{
+  "source": "kaufda",
+  "retailer": "aldi-sued",
+  "fetchedAt": "2026-07-27T21:20:30Z",
+  "weekStart": "2026-07-27",
+  "brochures": [
+    {
+      "id": "73ed5b9e-6991-4fd0-b068-4528b13d5a11",
+      "legacyId": 2501198960,
+      "title": "Gutes für Alle.",
+      "pageCount": 30,
+      "validFrom": "2026-07-26T22:00:00.000+0000",
+      "validUntil": "2026-08-01T20:00:00.000+0000"
+    }
+  ],
+  "offers": [
+    {
+      "id": "00dbd610478e",
+      "kaufdaId": "f6c7ef6c-ec7d-43b8-bd70-8cfda463363a",
+      "name": "Wassermelone kernarm, lose",
+      "variants": [],
+      "brand": null,
+      "description": "Spanien/Italien Klasse: I; kg-Preis",
+      "price": 0.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Obst",
+        "Melone",
+        "Wassermelone"
+      ],
+      "image": "https://content-media.bonial.biz/f6c7ef6c-ec7d-43b8-bd70-8cfda463363a/main.jpg",
+      "page": 2
+    },
+    {
+      "id": "020ed6ae37f1",
+      "kaufdaId": "e37f8d3e-50cf-46b6-b592-9ca6c9035c69",
+      "name": "Fettarmer Joghurt",
+      "variants": [],
+      "brand": "Milsani",
+      "description": "Versch. Sorten; 1,8 % Fett 200-g-Becher",
+      "price": 0.39,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 1.95",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Milsani"
+      ],
+      "image": "https://content-media.bonial.biz/e37f8d3e-50cf-46b6-b592-9ca6c9035c69/main.jpg",
+      "page": 26
+    },
+    {
+      "id": "03fd83eddd72",
+      "kaufdaId": "712a6c07-3671-418d-8d7a-fa60b051d94c",
+      "name": "Teppich Flecken-Bürste",
+      "variants": [
+        "Multi Textil",
+        "Bad & Anti-Kalk Wonder Gel",
+        "Waschmaschinen Reiniger Anti-Kalk",
+        "Spülmaschinen Hygiene-Reiniger"
+      ],
+      "brand": "Dr. Beckmann",
+      "description": "500-ml-Flasche 650-ml-Flasche 450-g-Dose 250-ml-Flasche Versch. Sorten, z. B. 75-g-Packung",
+      "price": 2.35,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 31.33",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Drogerie und Haushalt",
+        "Marken",
+        "Marken Haushalt",
+        "Dr. Beckmann"
+      ],
+      "image": "https://content-media.bonial.biz/712a6c07-3671-418d-8d7a-fa60b051d94c/main.jpg",
+      "page": 21
+    },
+    {
+      "id": "04ff3c8c7a66",
+      "kaufdaId": "8f8c2af6-d68b-4b20-9913-f5b7537f9b6c",
+      "name": "Laktosefreier Joghurt",
+      "variants": [],
+      "brand": "MILSANI",
+      "description": "Versch. Sorten; 3,8 % Fett 500-g-Becher",
+      "price": 0.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 1.98",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Milsani"
+      ],
+      "image": "https://content-media.bonial.biz/8f8c2af6-d68b-4b20-9913-f5b7537f9b6c/main.jpg",
+      "page": 26
+    },
+    {
+      "id": "0547facc2bc3",
+      "kaufdaId": "6cfa8883-9aff-4829-bdda-564d1a0bf094",
+      "name": "Biscoff",
+      "variants": [],
+      "brand": "Lotus",
+      "description": "Karamellgebäck 279-g-Packung 18 x 2 Stück",
+      "price": 1.59,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 5.70",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Backwaren",
+        "Gebäck"
+      ],
+      "image": "https://content-media.bonial.biz/6cfa8883-9aff-4829-bdda-564d1a0bf094/main.jpg",
+      "page": 19
+    },
+    {
+      "id": "05e6e93b41b6",
+      "kaufdaId": "6a0024ec-80a1-4333-a48a-ff004a3297f6",
+      "name": "Frio-Tee",
+      "variants": [],
+      "brand": "Teekanne",
+      "description": "Versch. Sorten 45-g-Packung",
+      "price": 2.29,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 50.89",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Teekanne"
+      ],
+      "image": "https://content-media.bonial.biz/6a0024ec-80a1-4333-a48a-ff004a3297f6/main.jpg",
+      "page": 20
+    },
+    {
+      "id": "067794517b1b",
+      "kaufdaId": "d056f636-bc71-452f-821f-4955a634d4fd",
+      "name": "Gouda",
+      "variants": [
+        "Butterkäse",
+        "Edamer"
+      ],
+      "brand": "Milsani",
+      "description": "Käse-Snack in Würfeln, Versch. Sorten 2 x 110 g = 220-g-Packung Käse-Snack in Würfeln, Versch. Sorten 2 x 110 g = 220-g-Packung Käse-Snack in Würfeln, Versch. Sorten 2 x 110 g = 220-g-Packung",
+      "price": 1.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 9.05",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Milsani"
+      ],
+      "image": "https://content-media.bonial.biz/d056f636-bc71-452f-821f-4955a634d4fd/main.jpg",
+      "page": 6
+    },
+    {
+      "id": "0ce1f803ee02",
+      "kaufdaId": "361e09d9-1267-43bb-9e00-ad2de2a73a88",
+      "name": "H-Schoko-Drink",
+      "variants": [
+        "H-Schoko-Drink"
+      ],
+      "brand": "MILSANI",
+      "description": "Versch. Sorten; 1,5 % Fett 0,5-l-Packung Versch. Sorten; 3,5 % Fett 0,5-l-Packung",
+      "price": 0.85,
+      "priceMax": null,
+      "grundpreisText": "1 l = 1.70",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Milsani"
+      ],
+      "image": "https://content-media.bonial.biz/361e09d9-1267-43bb-9e00-ad2de2a73a88/main.jpg",
+      "page": 25
+    },
+    {
+      "id": "0f0c672b2f5f",
+      "kaufdaId": "84011ee1-a975-41ca-aad4-d3829c10decd",
+      "name": "Stufenmatten",
+      "variants": [],
+      "brand": "HOME CREATION",
+      "description": "Nutzschicht: 100 % Polypropylen; Rückseite mit Winkelschiene und Klebestreifen; für den Innenbereich ca. 28 x 65 cm 15er-Packung",
+      "price": 19.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Möbel und Wohnen",
+        "Produkte",
+        "Wohnen",
+        "Teppich",
+        "Matte",
+        "Stufenmatte",
+        "Stufenmatten-Set"
+      ],
+      "image": "https://content-media.bonial.biz/84011ee1-a975-41ca-aad4-d3829c10decd/4d510205-e696-427e-b174-1674551492f3.jpg",
+      "page": 17
+    },
+    {
+      "id": "0f8089ebbde6",
+      "kaufdaId": "34962b0c-f8f7-4516-b8d3-26a41120353e",
+      "name": "Fruchtige Cranberries",
+      "variants": [],
+      "brand": "FARMER NATURALS",
+      "description": "200-g-Packung",
+      "price": 1.59,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 7.95",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Farmer"
+      ],
+      "image": "https://content-media.bonial.biz/34962b0c-f8f7-4516-b8d3-26a41120353e/main.jpg",
+      "page": 5
+    },
+    {
+      "id": "1145080356a9",
+      "kaufdaId": "b40efa97-1d36-4559-b68d-3f4b831aac96",
+      "name": "Finello",
+      "variants": [],
+      "brand": "Arla",
+      "description": "Reibekäse; versch. Sorten 225-g-Packung",
+      "price": 1.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 8.84",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Arla"
+      ],
+      "image": "https://content-media.bonial.biz/b40efa97-1d36-4559-b68d-3f4b831aac96/main.jpg",
+      "page": 18
+    },
+    {
+      "id": "11582284d89d",
+      "kaufdaId": "7885922c-1fdb-4b9e-baa3-a424b7d3ec37",
+      "name": "Bio-Landhähnchen-Schenkel",
+      "variants": [],
+      "brand": "NUR NUR NATUR",
+      "description": "FRISCHFLEISCH, versch. Gewichte, z. B. 666 g",
+      "price": 6.99,
+      "priceMax": null,
+      "grundpreisText": "1 kg = 10.49",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "bio"
+      ],
+      "image": "https://content-media.bonial.biz/7885922c-1fdb-4b9e-baa3-a424b7d3ec37/main.jpg",
+      "page": 22
+    },
+    {
+      "id": "118ec62d4966",
+      "kaufdaId": "f3b65c7f-4288-4b75-b0b3-3ba5325851f0",
+      "name": "Shorty-Pyjama",
+      "variants": [],
+      "brand": "LILY & DAN",
+      "description": "95 % Baumwolle, 5 % Elasthan; Größen: 122/128-146/152",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Mode und Accessoires",
+        "Produkte",
+        "Mode",
+        "Bekleidung",
+        "nach Kleidungsstück",
+        "Unterwäsche und Homewear",
+        "Nachtwäsche",
+        "Pyjama"
+      ],
+      "image": "https://content-media.bonial.biz/f3b65c7f-4288-4b75-b0b3-3ba5325851f0/main.jpg",
+      "page": 15
+    },
+    {
+      "id": "11b2689447ff",
+      "kaufdaId": "13cf7a86-481c-4260-97e6-7213b6ca4cc0",
+      "name": "Salzbrezeln",
+      "variants": [],
+      "brand": "SUN SNACKS",
+      "description": "250-g-Packung",
+      "price": 0.69,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 2.76",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Knabberzeug",
+        "Salzgebäck",
+        "Brezel"
+      ],
+      "image": "https://content-media.bonial.biz/13cf7a86-481c-4260-97e6-7213b6ca4cc0/main.jpg",
+      "page": 6
+    },
+    {
+      "id": "197b80731e8b",
+      "kaufdaId": "7fb0ebb0-e411-4786-9f2d-da880f591678",
+      "name": "Tortillas",
+      "variants": [],
+      "brand": "Chio",
+      "description": "Versch. Sorten 225-g-Packung",
+      "price": 1.79,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 7.96",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Backwaren",
+        "Brot",
+        "Weißbrot",
+        "Fladenbrot",
+        "Tortilla"
+      ],
+      "image": "https://content-media.bonial.biz/7fb0ebb0-e411-4786-9f2d-da880f591678/main.jpg",
+      "page": 18
+    },
+    {
+      "id": "1f99be0e48e9",
+      "kaufdaId": "f9b69849-d734-4a9c-8214-f3d16bcdb9be",
+      "name": "Shorts",
+      "variants": [
+        "Shorts"
+      ],
+      "brand": "ADIDAS",
+      "description": "100 % Polyester; Größen: M-XL (Blau); Weitere Farbe 100 % Polyester; Größen: M-XXL (Schwarz)",
+      "price": 8.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Sport und Freizeit",
+        "Marken",
+        "Marken Sport",
+        "Adidas"
+      ],
+      "image": "https://content-media.bonial.biz/f9b69849-d734-4a9c-8214-f3d16bcdb9be/main.jpg",
+      "page": 24
+    },
+    {
+      "id": "21244209a1cb",
+      "kaufdaId": "ce6f21a5-6cba-4fbb-b60e-67b9286fb65a",
+      "name": "Lesehilfe mit selbsttönenden Gläsern",
+      "variants": [],
+      "brand": null,
+      "description": "Schützt die Augen vor UVA- und UVB-Strahlung; inkl. Filz-Etui; mit Federscharnieren\nJe Stück",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Mode und Accessoires",
+        "Produkte",
+        "Optik und Sehhilfen",
+        "Augenoptik",
+        "Brillen"
+      ],
+      "image": "https://content-media.bonial.biz/ce6f21a5-6cba-4fbb-b60e-67b9286fb65a/main.jpg",
+      "page": 17
+    },
+    {
+      "id": "223d9dc5e2d8",
+      "kaufdaId": "3c8b2da8-8401-4cd5-b35d-37f58909a9f7",
+      "name": "Bio-Wiener-Würstchen",
+      "variants": [],
+      "brand": "NUR NUR NATUR",
+      "description": "Klassik; Ohne Nitritpökelsalz, Ohne Zusatzstoffe, Extra Tierwohlkontrollen 200-g-Packung",
+      "price": 3.19,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 15.95",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Fleisch",
+        "Fleischzubereitungen",
+        "Würstchen"
+      ],
+      "image": "https://content-media.bonial.biz/3c8b2da8-8401-4cd5-b35d-37f58909a9f7/main.jpg",
+      "page": 22
+    },
+    {
+      "id": "23f31185341a",
+      "kaufdaId": "431218e9-4bad-47e4-8f97-5f393ce856cf",
+      "name": "10% Gutscheine",
+      "variants": [],
+      "brand": "zalando",
+      "description": "auf zalando",
+      "price": 45,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": " ",
+      "categoryPath": [
+        "Saison und Events",
+        "Produkte",
+        "Aktionen",
+        "Gutschein"
+      ],
+      "image": "https://content-media.bonial.biz/431218e9-4bad-47e4-8f97-5f393ce856cf/2790ccd6-e262-4cf7-9a38-09bf2e9486e5.jpg",
+      "page": 27
+    },
+    {
+      "id": "24638ad9321f",
+      "kaufdaId": "758399a4-0462-45d2-a366-5aa4287b5886",
+      "name": "Chicken Nuggets",
+      "variants": [],
+      "brand": "Jack's Farm",
+      "description": "Tiefkühlung 1,5-kg-Packung",
+      "price": 8.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 5.99",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Fertiggerichte",
+        "Fast Food",
+        "Chicken Nuggets"
+      ],
+      "image": "https://content-media.bonial.biz/758399a4-0462-45d2-a366-5aa4287b5886/main.jpg",
+      "page": 18
+    },
+    {
+      "id": "25e2cc605cb6",
+      "kaufdaId": "cfe7010f-cd3a-4251-9eb6-79171bb335ff",
+      "name": "Heißluft-fritteusen-Zubehör",
+      "variants": [],
+      "brand": "CROFTON",
+      "description": "Backform: Karbonstahl mit Antihaftbeschichtung; Muffin-Form: Silikon; Gitterrost mit Spießen: Edelstahl; Silikonmatte; Kochleitfaden 5er-Set",
+      "price": 3.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Möbel und Wohnen",
+        "Produkte",
+        "Möbel",
+        "Küche",
+        "Küchenutensilien ",
+        "Backzubehör",
+        "Backformen",
+        "Backformen-Set"
+      ],
+      "image": "https://content-media.bonial.biz/cfe7010f-cd3a-4251-9eb6-79171bb335ff/main.jpg",
+      "page": 10
+    },
+    {
+      "id": "2696df90840d",
+      "kaufdaId": "ed391b35-f627-4752-bb31-c54e291967b0",
+      "name": "Stirnleuchte",
+      "variants": [],
+      "brand": "ADVENTURIDGE",
+      "description": "Mit 4 Leuchtmodi: 100 % weiß, 30 % weiß, rot, rotes Blinken, inkl. USB-C-Kabel",
+      "price": 8.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Elektronik und Technik",
+        "Produkte",
+        "Technik",
+        "Elektronik",
+        "Multimedia",
+        "Audiogeräte"
+      ],
+      "image": "https://content-media.bonial.biz/ed391b35-f627-4752-bb31-c54e291967b0/main.jpg",
+      "page": 9
+    },
+    {
+      "id": "26d8301c8a30",
+      "kaufdaId": "e58ba327-ed93-449d-8888-44aa8c72a14e",
+      "name": "Bio-Steinofen-Sauerteigkruste",
+      "variants": [],
+      "brand": "MEINE BACKWELT",
+      "description": "Roggenmischbrot 600-g-Stück",
+      "price": 1.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 3.32",
+      "dealType": "SALES_PRICE",
+      "dealText": "Nur in teilnehmenden BACKWELT Filialen erhältlich.",
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "bio"
+      ],
+      "image": "https://content-media.bonial.biz/e58ba327-ed93-449d-8888-44aa8c72a14e/main.jpg",
+      "page": 23
+    },
+    {
+      "id": "27999f224c47",
+      "kaufdaId": "2a965a11-ba2f-44b4-b9dc-11bf29f926ae",
+      "name": "Sandwich",
+      "variants": [],
+      "brand": "Mucci",
+      "description": "Versch. Sorten, Tiefkühlung 8 x 90 ml = 720-ml-Packung",
+      "price": 1.39,
+      "priceMax": null,
+      "grundpreisText": "l-Preis 1.93",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Dessert",
+        "Eis",
+        "Waffeleis",
+        "Sandwich Eis"
+      ],
+      "image": "https://content-media.bonial.biz/2a965a11-ba2f-44b4-b9dc-11bf29f926ae/main.jpg",
+      "page": 5
+    },
+    {
+      "id": "292c3143f862",
+      "kaufdaId": "04d1c108-232d-447c-8eeb-b272560ce95e",
+      "name": "Bio-Karotten",
+      "variants": [],
+      "brand": null,
+      "description": "Deutschland Klasse: I 1-kg-Beutel",
+      "price": 1.49,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": "Neue Ernte",
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Gemüse",
+        "Wurzelgemüse",
+        "Rüben",
+        "Karotten"
+      ],
+      "image": "https://content-media.bonial.biz/04d1c108-232d-447c-8eeb-b272560ce95e/main.jpg",
+      "page": 2
+    },
+    {
+      "id": "2b222bc4e4f2",
+      "kaufdaId": "46ec0b72-d92a-4420-8b8e-ee3fa089ceb2",
+      "name": "Joghurt",
+      "variants": [
+        "Joghurt"
+      ],
+      "brand": "Milsani",
+      "description": "3,5% Fett 500-g-Becher 1,5% Fett 500-g-Becher",
+      "price": 0.79,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 1.58",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Milsani"
+      ],
+      "image": "https://content-media.bonial.biz/46ec0b72-d92a-4420-8b8e-ee3fa089ceb2/main.jpg",
+      "page": 26
+    },
+    {
+      "id": "2bcdbf95e7f1",
+      "kaufdaId": "0d2ebfa0-5ffb-4b24-9c60-d66e0f141b3d",
+      "name": "Kühlbett für Haustiere",
+      "variants": [
+        "Kühlbett für Haustiere"
+      ],
+      "brand": "ROME0",
+      "description": "Oberes Stoffpanel hält Haustiere kühl; für den Innenbereich; Weitere Farben 75 x 58 x 19 cm Oberes Stoffpanel hält Haustiere kühl; für den Innenbereich; Weitere Farben 105 x 65 x 22 cm",
+      "price": 19.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Tierbedarf und Tierfutter",
+        "Marken für Tiere",
+        "Romeo"
+      ],
+      "image": "https://content-media.bonial.biz/0d2ebfa0-5ffb-4b24-9c60-d66e0f141b3d/main.jpg",
+      "page": 13
+    },
+    {
+      "id": "2c31c324214d",
+      "kaufdaId": "5b8116ba-a809-4e59-ac95-14af1cc987e8",
+      "name": "Gläser mit Sommermotiven",
+      "variants": [],
+      "brand": "Crofton",
+      "description": "Handgefertigt, spülmaschinenegeeignet 2er-Packung",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Möbel und Wohnen",
+        "Produkte",
+        "Möbel",
+        "Küche",
+        "Geschirr",
+        "Glas"
+      ],
+      "image": "https://content-media.bonial.biz/5b8116ba-a809-4e59-ac95-14af1cc987e8/main.jpg",
+      "page": 12
+    },
+    {
+      "id": "2dd056093ae9",
+      "kaufdaId": "46dacd02-00e2-49e2-9aa6-4131bb0654b1",
+      "name": "Sneaker-Socken",
+      "variants": [],
+      "brand": "UP2FASHION",
+      "description": "83 % Bio-Baumwolle, 15 % Polyamid, 2 % Elasthan (LYCRA®) 35/38-43/46 3er-Packung",
+      "price": 2.49,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Mode und Accessoires",
+        "Marken",
+        "Marken Mode",
+        "UP2FASHION"
+      ],
+      "image": "https://content-media.bonial.biz/46dacd02-00e2-49e2-9aa6-4131bb0654b1/d4a21f41-83a8-41d9-881b-5b5537bc5187.jpg",
+      "page": 14
+    },
+    {
+      "id": "2eb4f80173bf",
+      "kaufdaId": "5da46e35-420d-464d-93d9-1d87f0b521bc",
+      "name": "Kaffeeholz-Kauspielzeug",
+      "variants": [],
+      "brand": "ROMEO",
+      "description": "In versch. Größen erhältlich; aus natürlichem Kaffeeholz; mit oder ohne Seil; für Hunde bis ca. 10 kg oder ca. 30 kg",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Tierbedarf und Tierfutter",
+        "Marken für Tiere",
+        "Romeo"
+      ],
+      "image": "https://content-media.bonial.biz/5da46e35-420d-464d-93d9-1d87f0b521bc/main.jpg",
+      "page": 13
+    },
+    {
+      "id": "2edfff1d309b",
+      "kaufdaId": "007e6b36-1279-4d30-b796-142193876b1f",
+      "name": "Heißluftfritteuse",
+      "variants": [],
+      "brand": "AMBIANO",
+      "description": "Mit Schüttelerinnerung; 8 versch. voreingestellte Garprogramme; 40-200 °C; 1180-1400 W; 24-Std.-Digitaltimer; Garkorb und Rost spülmaschinengeeignet; 3 Jahre Garantie 3,5-l-Garkorb",
+      "price": 39.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Elektronik und Technik",
+        "Marken",
+        "Ambiano"
+      ],
+      "image": "https://content-media.bonial.biz/007e6b36-1279-4d30-b796-142193876b1f/d3092edb-f4d6-44c1-8c66-306b56432ba3.jpg",
+      "page": 10
+    },
+    {
+      "id": "2f56fff9b33d",
+      "kaufdaId": "bd447975-651b-4899-8427-f2d555bc7156",
+      "name": "Trekking-Schuhe",
+      "variants": [],
+      "brand": "CRANE",
+      "description": "Obermaterial (mit wasserbasiertem PU) und Futter: 100 % recyceltes Polyester, Decksohle: EVA mit 100 % recyceltem Polyester, Laufsohle: Phylon und TPR, je 50 % recycelt 37-45",
+      "price": 17.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Mode und Accessoires",
+        "Merkmale",
+        "Material",
+        "Bio-Baumwolle",
+        "Recycled"
+      ],
+      "image": "https://content-media.bonial.biz/bd447975-651b-4899-8427-f2d555bc7156/main.jpg",
+      "page": 9
+    },
+    {
+      "id": "3190739c5f26",
+      "kaufdaId": "5fbd97a3-fa64-4c97-a016-abf1edad2411",
+      "name": "Bio-Spaghetti Dinkel",
+      "variants": [],
+      "brand": "Nur Nur Natur",
+      "description": "Deutschland 500-g-Packung",
+      "price": 1.45,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 2.90",
+      "dealType": "SALES_PRICE",
+      "dealText": "Dinkel aus Deutschland",
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Bio",
+        "Naturland"
+      ],
+      "image": "https://content-media.bonial.biz/5fbd97a3-fa64-4c97-a016-abf1edad2411/main.jpg",
+      "page": 23
+    },
+    {
+      "id": "321d81880075",
+      "kaufdaId": "a19fd9ce-61df-4cb0-b42d-a4f0026bc69d",
+      "name": "Hipster",
+      "variants": [],
+      "brand": "UP2FASHION",
+      "description": "Mit Spitzen-Bund; 91 % Polyester, 9 % Elasthan, Zwickel aus 100 % Baumwolle S (36/38) - XL (48/50) 2er-Set",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Mode und Accessoires",
+        "Marken",
+        "Marken Mode",
+        "UP2FASHION"
+      ],
+      "image": "https://content-media.bonial.biz/a19fd9ce-61df-4cb0-b42d-a4f0026bc69d/01e66b59-f280-4497-8077-52c3c40cbf98.jpg",
+      "page": 14
+    },
+    {
+      "id": "34291d44400f",
+      "kaufdaId": "8ff0d7d8-c8d1-4285-a94d-de05cb0ae3ae",
+      "name": "Bio-Steak",
+      "variants": [],
+      "brand": null,
+      "description": "Vom Rind; gewürzt; versch. Sorten und Gewichte, z. B. 249 g",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": "19.99/kg",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "bio"
+      ],
+      "image": "https://content-media.bonial.biz/8ff0d7d8-c8d1-4285-a94d-de05cb0ae3ae/main.jpg",
+      "page": 21
+    },
+    {
+      "id": "3514262507b3",
+      "kaufdaId": "61671bce-bd45-47f9-9c2f-b7a10e80fb23",
+      "name": "T-Shirts",
+      "variants": [],
+      "brand": "UP2FASHION",
+      "description": "100 % Baumwolle bzw. 85 % Baumwolle, 15 % Viskose M-XXL 3er-Set",
+      "price": 12.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Mode und Accessoires",
+        "Marken",
+        "Marken Mode",
+        "UP2FASHION"
+      ],
+      "image": "https://content-media.bonial.biz/61671bce-bd45-47f9-9c2f-b7a10e80fb23/03e01da1-b212-47d1-8768-f06ded0c733f.jpg",
+      "page": 14
+    },
+    {
+      "id": "35afd93a1281",
+      "kaufdaId": "f19b4980-459e-4f33-9a2f-969831777d85",
+      "name": "Bio-Nürnberger-Rostbratwürste",
+      "variants": [],
+      "brand": "NUR NUR NATUR",
+      "description": "Vom Schwein; Ohne Nitritpökelsalz; Extra Tierwohlkontrollen 250-g-Packung",
+      "price": 3.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 15.96",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "bio"
+      ],
+      "image": "https://content-media.bonial.biz/f19b4980-459e-4f33-9a2f-969831777d85/main.jpg",
+      "page": 23
+    },
+    {
+      "id": "3aca038c154b",
+      "kaufdaId": "88b436fe-1880-4a77-bb91-7f6d6e90e4f6",
+      "name": "Türkei",
+      "variants": [],
+      "brand": null,
+      "description": "Kultur, Natur & Strände im Orient erleben, 8-tägig inkl. Flüge in 4-Sterne-Hotels mit Frühstück bzw. Halbpension, Inkl. Ausflüge & Eintritte i. W. v. ca. 200 € p. P., im Doppelzimmer",
+      "price": 399,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": "im Doppelzimmer August 26 - April 27",
+      "categoryPath": [
+        "Dienstleistungen",
+        "weitere Dienstleistungen",
+        "Reiseangebote"
+      ],
+      "image": "https://content-media.bonial.biz/88b436fe-1880-4a77-bb91-7f6d6e90e4f6/main.jpg",
+      "page": 28
+    },
+    {
+      "id": "3be4cf461107",
+      "kaufdaId": "1f39d2cf-300b-4012-bdd7-f03b633d87c0",
+      "name": "All-in-one-Styler",
+      "variants": [],
+      "brand": "Gillette",
+      "description": "Elektrischer Rasierer; 4-in-1-Funktion: Trimmen, Rasieren, Definieren und Körperrasur; 5 Klingen; batteriebetrieben; inkl. 3 versch. Kammaufsätze",
+      "price": 16.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Elektronik und Technik",
+        "Marken",
+        "Braun"
+      ],
+      "image": "https://content-media.bonial.biz/1f39d2cf-300b-4012-bdd7-f03b633d87c0/main.jpg",
+      "page": 21
+    },
+    {
+      "id": "3c17f9d3da28",
+      "kaufdaId": "f6a091e5-29a8-49ae-a275-3f6f3ca66b3e",
+      "name": "Wraps",
+      "variants": [],
+      "brand": "GOLDÄHREN",
+      "description": "",
+      "price": 1,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 2.02",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Saison und Events",
+        "Produkte",
+        "Aktionen",
+        "Vegan"
+      ],
+      "image": "https://content-media.bonial.biz/f6a091e5-29a8-49ae-a275-3f6f3ca66b3e/a9306181-d2d0-46c6-8489-7a871505a4e2.jpg",
+      "page": 0
+    },
+    {
+      "id": "3c36dcd4efa0",
+      "kaufdaId": "4c434beb-d32b-4bd2-b534-04ef46e33a6d",
+      "name": "High-Protein-Skyr-Drink",
+      "variants": [],
+      "brand": "Milsani",
+      "description": "Versch. Sorten 330-ml-Flasche zzgl. 0.25 Pfand",
+      "price": 1.49,
+      "priceMax": null,
+      "grundpreisText": "1 l-Preis 4.52",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Milsani"
+      ],
+      "image": "https://content-media.bonial.biz/4c434beb-d32b-4bd2-b534-04ef46e33a6d/main.jpg",
+      "page": 26
+    },
+    {
+      "id": "3c518a680530",
+      "kaufdaId": "c37c93e8-a195-4a4a-8516-36e519f52104",
+      "name": "Wäscheparfüm",
+      "variants": [],
+      "brand": "Tandil",
+      "description": "Versch. Sorten 400-ml-Flasche",
+      "price": 1.49,
+      "priceMax": null,
+      "grundpreisText": "l-Preis 3.73",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Drogerie und Haushalt",
+        "Marken",
+        "Marken Haushalt",
+        "Lenor"
+      ],
+      "image": "https://content-media.bonial.biz/c37c93e8-a195-4a4a-8516-36e519f52104/main.jpg",
+      "page": 15
+    },
+    {
+      "id": "3c9af2520b53",
+      "kaufdaId": "3999365e-bc96-49ba-9dc7-533c0df1d4c7",
+      "name": "Chicken Nuggets",
+      "variants": [],
+      "brand": "MEINE METZGEREI",
+      "description": "Mit Curry- und Süß-Sauer-Dip 1-kg-Packung",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Aldi Süd",
+        "Meine Metzgerei"
+      ],
+      "image": "https://content-media.bonial.biz/3999365e-bc96-49ba-9dc7-533c0df1d4c7/main.jpg",
+      "page": 3
+    },
+    {
+      "id": "3d0b6cd735bb",
+      "kaufdaId": "22c2d91f-d5a2-4def-ac0d-e7de7d6e4a8d",
+      "name": "Stieleis",
+      "variants": [],
+      "brand": "Magnum",
+      "description": "Versch. Sorten, Tiefkühlung 6 x 100 ml",
+      "price": 2.79,
+      "priceMax": null,
+      "grundpreisText": "I-Preis 4.65",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Magnum"
+      ],
+      "image": "https://content-media.bonial.biz/22c2d91f-d5a2-4def-ac0d-e7de7d6e4a8d/main.jpg",
+      "page": 8
+    },
+    {
+      "id": "3d7d7b411347",
+      "kaufdaId": "ac54d4d4-b5a4-4bb0-88ca-02d0600a60c0",
+      "name": "Küchen-Organizer",
+      "variants": [
+        "Küchen-Organizer",
+        "Küchen-Organizer"
+      ],
+      "brand": "HOME CREATION",
+      "description": "Ordnungshelfer für Töpfe, Pfannen, Deckel oder Backformen 38 x 22 x 26 cm Ordnungshelfer für Töpfe, Pfannen, Deckel oder Backformen 14,45 x 8,6 - 81 x 10,18 cm Ordnungshelfer für Töpfe, Pfannen, Deckel oder Backformen 25,4 x 21,84 x 12,7 cm",
+      "price": 5.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Drogerie und Haushalt",
+        "Produkte",
+        "Haushalt",
+        "Aufbewahrung",
+        "Organizer"
+      ],
+      "image": "https://content-media.bonial.biz/ac54d4d4-b5a4-4bb0-88ca-02d0600a60c0/main.jpg",
+      "page": 11
+    },
+    {
+      "id": "3d887823ed06",
+      "kaufdaId": "5ae0fdf1-2502-4ce3-b255-9648fb74929a",
+      "name": "Familienurlaub und Gipfelglück",
+      "variants": [],
+      "brand": null,
+      "description": "Österreich Tirol 3 Nächte im Hotel-Pension Unterbräu mit Halbpension Plus, Inkl. 3-Tages-Ticket für die Bergbahnen i. W. v. ca. 75 € pro Person",
+      "price": 185,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": "Juli - Oktober 26, Nur buchbar bis 31.7.26",
+      "categoryPath": [
+        "Dienstleistungen",
+        "weitere Dienstleistungen",
+        "Reiseangebote"
+      ],
+      "image": "https://content-media.bonial.biz/5ae0fdf1-2502-4ce3-b255-9648fb74929a/main.jpg",
+      "page": 28
+    },
+    {
+      "id": "3e45d19697ac",
+      "kaufdaId": "3bc958c2-40b4-434a-904a-c3fde44e8a94",
+      "name": "Basmati",
+      "variants": [
+        "Langkornreis"
+      ],
+      "brand": "BON-RI",
+      "description": "Express-Reis 250-g-Packung Express-Reis 250-g-Packung",
+      "price": 1,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 4.00",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Beilagen",
+        "Reis",
+        "Langkornreis"
+      ],
+      "image": "https://content-media.bonial.biz/3bc958c2-40b4-434a-904a-c3fde44e8a94/main.jpg",
+      "page": 4
+    },
+    {
+      "id": "3f0c66f72c20",
+      "kaufdaId": "3824e792-ea47-4135-b650-b0251dcbace4",
+      "name": "Kräuter-Bitter",
+      "variants": [
+        "Uralt",
+        "Original do Brasil",
+        "Premium Caipirinha"
+      ],
+      "brand": "Underberg",
+      "description": "13 x 0,02 l 0,7-l-Flasche 0,7-l-Flasche 10 % vol. 0,33-l-Dose zzgl. 0.25 Pfand",
+      "price": 1.99,
+      "priceMax": null,
+      "grundpreisText": "I-Preis 6.03",
+      "dealType": "SALES_PRICE",
+      "dealText": "Pitú",
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Getränke",
+        "Alkoholische Getränke",
+        "Likör",
+        "Kräuterlikör",
+        "Kräuterschnaps",
+        "Kümmelschnaps",
+        "Aquavit",
+        "Linie Aquavit"
+      ],
+      "image": "https://content-media.bonial.biz/3824e792-ea47-4135-b650-b0251dcbace4/main.jpg",
+      "page": 21
+    },
+    {
+      "id": "4020cb58b727",
+      "kaufdaId": "752e1c0b-6d2a-4bb2-af72-3dd15ceaeec7",
+      "name": "Artischocken-Herzen",
+      "variants": [
+        "Paprika",
+        "Gurken-Fässchen"
+      ],
+      "brand": "Tesoro's del Sur",
+      "description": "6-7 Stück",
+      "price": null,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "OTHER",
+      "dealText": " ",
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Feinkostlebensmittel",
+        "Antipasti",
+        "Artischockenherzen"
+      ],
+      "image": "https://content-media.bonial.biz/752e1c0b-6d2a-4bb2-af72-3dd15ceaeec7/main.jpg",
+      "page": 24
+    },
+    {
+      "id": "41367b4dfda9",
+      "kaufdaId": "ee28be12-3e8b-41b5-b214-784b7d2fda5b",
+      "name": "Leinen-/Baumwoll-Shorts",
+      "variants": [],
+      "brand": "UP2FASHION",
+      "description": "53 % Leinen, 47 % Baumwolle; Elastikbund hinten; Größen: S (36/38) - L (44/46); je Stück; Weiteres Modell",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Mode und Accessoires",
+        "Marken",
+        "Marken Mode",
+        "UP2FASHION"
+      ],
+      "image": "https://content-media.bonial.biz/ee28be12-3e8b-41b5-b214-784b7d2fda5b/main.jpg",
+      "page": 14
+    },
+    {
+      "id": "42710a87fe46",
+      "kaufdaId": "794adae1-30a2-48a9-b763-eb56b868384a",
+      "name": "Joghurt nach türkischer Art",
+      "variants": [],
+      "brand": "Milsani",
+      "description": "3,5 % Fett; stichfest 1-kg-Eimer",
+      "price": 2.09,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Milsani"
+      ],
+      "image": "https://content-media.bonial.biz/794adae1-30a2-48a9-b763-eb56b868384a/main.jpg",
+      "page": 26
+    },
+    {
+      "id": "46d98282a641",
+      "kaufdaId": "eaf799c7-438b-4835-93c6-fa6a784370b0",
+      "name": "Bananenpflanze",
+      "variants": [
+        "Großblättrige Farne"
+      ],
+      "brand": "HOME CREATION",
+      "description": "Deko-Kunstpflanze 96 cm Deko-Kunstpflanze 100 cm",
+      "price": 12.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Dekoration und Geschenkartikel",
+        "Produkte",
+        "Dekoration",
+        "Raumdekoration"
+      ],
+      "image": "https://content-media.bonial.biz/eaf799c7-438b-4835-93c6-fa6a784370b0/main.jpg",
+      "page": 17
+    },
+    {
+      "id": "46f4ffebdaf9",
+      "kaufdaId": "d087be7f-76f7-433d-ba09-9a73c3b6ed1b",
+      "name": "Sprühsahne",
+      "variants": [],
+      "brand": "Milsani",
+      "description": "ultrahocherhitzt, 30 % Fett im Milchanteil 250-ml-Dose",
+      "price": 2.19,
+      "priceMax": null,
+      "grundpreisText": "I-Preis 8.76",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Milchprodukte",
+        "Sahne",
+        "Sprühsahne"
+      ],
+      "image": "https://content-media.bonial.biz/d087be7f-76f7-433d-ba09-9a73c3b6ed1b/main.jpg",
+      "page": 25
+    },
+    {
+      "id": "499a6fea12a4",
+      "kaufdaId": "1ab96a3d-82f0-4d5b-8b67-80eda60bc357",
+      "name": "Coca-Cola",
+      "variants": [
+        "Fanta",
+        "Sprite",
+        "MezzoMix"
+      ],
+      "brand": null,
+      "description": "Versch. Sorten; teilweise koffeinhaltig; Auch als 6er-Pack erhältlich 1,25-l-Flasche zzgl. 0.25 Pfand Versch. Sorten; teilweise koffeinhaltig; Auch als 6er-Pack erhältlich 1,25-l-Flasche zzgl. 0.25 Pfand Versch. Sorten; teilweise koffeinhaltig; Auch als 6er-Pack erhältlich 1,25-l-Flasche zzgl. 0.25 Pfand Versch. Sorten; teilweise koffeinhaltig; Auch als 6er-Pack erhältlich 1,25-l-Flasche zzgl. 0.25 Pfand",
+      "price": 0.99,
+      "priceMax": null,
+      "grundpreisText": "l-Preis 0.79",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Getränke",
+        "Softdrinks",
+        "Softdrinkmarken",
+        "Mezzo Mix"
+      ],
+      "image": "https://content-media.bonial.biz/1ab96a3d-82f0-4d5b-8b67-80eda60bc357/main.jpg",
+      "page": 8
+    },
+    {
+      "id": "4a4b50938e27",
+      "kaufdaId": "6103e244-d458-4694-88b0-c1693be9bb2c",
+      "name": "Saltletts",
+      "variants": [
+        "Saltletts",
+        "Saltletts"
+      ],
+      "brand": "Lorenz",
+      "description": "Versch. Sorten 100-g-Packung Versch. Sorten 130-g-Packung Versch. Sorten 150-g-Packung",
+      "price": 1.49,
+      "priceMax": null,
+      "grundpreisText": "14.90",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Knabberzeug",
+        "Salzgebäck",
+        "Cracker"
+      ],
+      "image": "https://content-media.bonial.biz/6103e244-d458-4694-88b0-c1693be9bb2c/main.jpg",
+      "page": 20
+    },
+    {
+      "id": "4ad80bd76e4f",
+      "kaufdaId": "001f4d58-77ca-4bd7-9ad7-07ea1cf13aa3",
+      "name": "Rinder-Hackfleisch",
+      "variants": [],
+      "brand": "Meine Metzgerei",
+      "description": "Frischfleisch 1-kg-Packung",
+      "price": 9.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Aldi Süd",
+        "Meine Metzgerei"
+      ],
+      "image": "https://content-media.bonial.biz/001f4d58-77ca-4bd7-9ad7-07ea1cf13aa3/main.jpg",
+      "page": 19
+    },
+    {
+      "id": "4afbc48ce439",
+      "kaufdaId": "21f7a1b8-ff9a-4f2b-a541-7fc0ad164628",
+      "name": "Actimel",
+      "variants": [],
+      "brand": "DANONE",
+      "description": "Versch Sorten; Kühlung 12 x 100 g = 1200-g-Packung",
+      "price": 2.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 2.49",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Danone",
+        "Actimel"
+      ],
+      "image": "https://content-media.bonial.biz/21f7a1b8-ff9a-4f2b-a541-7fc0ad164628/main.jpg",
+      "page": 18
+    },
+    {
+      "id": "4d7b54a37b70",
+      "kaufdaId": "2ac63ecb-ffa3-42b5-80e0-af2495d4e136",
+      "name": "Bio-Wienerle",
+      "variants": [
+        "Bio-Wienerle"
+      ],
+      "brand": null,
+      "description": "Vom Schwein 520-g-Glas Geflügel 520-g-Glas",
+      "price": 3,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 12.00 / Abtropfgewicht",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Fleisch",
+        "Geflügel"
+      ],
+      "image": "https://content-media.bonial.biz/2ac63ecb-ffa3-42b5-80e0-af2495d4e136/main.jpg",
+      "page": 5
+    },
+    {
+      "id": "4f5f02a9d004",
+      "kaufdaId": "341d2926-dba5-438a-a1bf-379b3b912585",
+      "name": "Kiwi, grün",
+      "variants": [],
+      "brand": "Zespri",
+      "description": "Neuseeland Klasse: I",
+      "price": 0.44,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Obst",
+        "Kiwi"
+      ],
+      "image": "https://content-media.bonial.biz/341d2926-dba5-438a-a1bf-379b3b912585/main.jpg",
+      "page": 2
+    },
+    {
+      "id": "4fcd3b71599d",
+      "kaufdaId": "aa5c7cb6-2643-4a40-b761-b2987f640a07",
+      "name": "Activia",
+      "variants": [],
+      "brand": "Danone",
+      "description": "Versch. Sorten 8 x 115 g",
+      "price": 2.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 3,25",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Danone",
+        "Activia"
+      ],
+      "image": "https://content-media.bonial.biz/aa5c7cb6-2643-4a40-b761-b2987f640a07/main.jpg",
+      "page": 18
+    },
+    {
+      "id": "515bf89e3273",
+      "kaufdaId": "d16da2bb-d383-4e02-b0e8-9314d0f6b820",
+      "name": "Bratwurst",
+      "variants": [],
+      "brand": "GUT DREI EICHEN",
+      "description": "Vom Schwein; für Grill und Pfanne 1-kg-Packung",
+      "price": 4.29,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Fleisch",
+        "Fleischzubereitungen",
+        "Würstchen",
+        "Bratwurst"
+      ],
+      "image": "https://content-media.bonial.biz/d16da2bb-d383-4e02-b0e8-9314d0f6b820/main.jpg",
+      "page": 6
+    },
+    {
+      "id": "5469af44f46e",
+      "kaufdaId": "e504f197-9e98-4cc7-85f3-eb5cd365005c",
+      "name": "Jute-Teppich",
+      "variants": [],
+      "brand": "HOME CREATION",
+      "description": "Reine Jute bzw. Jute-Baumwoll-Mix; für Fußbodenheizung geeignet 120 x 80 cm bzw. Ø 100 cm; je Stück",
+      "price": 7.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Möbel und Wohnen",
+        "Marken Möbel und Wohnen",
+        "Home Creation"
+      ],
+      "image": "https://content-media.bonial.biz/e504f197-9e98-4cc7-85f3-eb5cd365005c/9b3f4dc1-f785-4fb5-9692-103e56aacf2a.jpg",
+      "page": 16
+    },
+    {
+      "id": "54c10f49f8f0",
+      "kaufdaId": "6da0586c-157b-4e60-8926-13a81335249e",
+      "name": "Waffelpikee-Geschirrtücher",
+      "variants": [],
+      "brand": "CROFTON",
+      "description": "100 % Baumwolle; Besonders saugfähig, 40 x 60 cm, 3er-Set",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Drogerie und Haushalt",
+        "Produkte",
+        "Haushalt",
+        "Reinigen",
+        "Reinigungsartikel",
+        "Tücher",
+        "Geschirrtuch"
+      ],
+      "image": "https://content-media.bonial.biz/6da0586c-157b-4e60-8926-13a81335249e/5c08b477-f838-4f22-8447-523bb4392ec7.jpg",
+      "page": 10
+    },
+    {
+      "id": "5ee2a20e5962",
+      "kaufdaId": "c6ecc285-2fea-451b-8e84-6b94584747ea",
+      "name": "Nic Nac’s",
+      "variants": [],
+      "brand": "Lorenz",
+      "description": "600-g-Packung",
+      "price": 5.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 9.98",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Lorenz",
+        "Nic Nac's"
+      ],
+      "image": "https://content-media.bonial.biz/c6ecc285-2fea-451b-8e84-6b94584747ea/main.jpg",
+      "page": 18
+    },
+    {
+      "id": "5fa1cb56f057",
+      "kaufdaId": "af684fee-76ce-45e4-9f95-b65cdcd66ce5",
+      "name": "Grissotti",
+      "variants": [],
+      "brand": "CUCINA",
+      "description": "Versch. Sorten 200-g-Packung",
+      "price": 1,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 5.00",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Aldi Süd",
+        "Cucina"
+      ],
+      "image": "https://content-media.bonial.biz/af684fee-76ce-45e4-9f95-b65cdcd66ce5/main.jpg",
+      "page": 4
+    },
+    {
+      "id": "6183793a14e4",
+      "kaufdaId": "33764239-1980-482d-88a5-cfb8ca1d49c6",
+      "name": "Nuggets",
+      "variants": [],
+      "brand": null,
+      "description": "",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 8.32",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "ja!"
+      ],
+      "image": "https://content-media.bonial.biz/33764239-1980-482d-88a5-cfb8ca1d49c6/main.jpg",
+      "page": 0
+    },
+    {
+      "id": "654548ac5b1c",
+      "kaufdaId": "0e3ccb17-364e-47e3-bbfc-a0fafe0a00f4",
+      "name": "Wanderstöcke Kork-Griff",
+      "variants": [
+        "Wanderstöcke EVA-Griff"
+      ],
+      "brand": "ADVENTURIDGE",
+      "description": "3-teiliges Aluminium-Rohr; Hartmetallspitzen; abnehmbare Pads/Teller; verstellbare Handschlaufen; Höhe (zusammengeschoben) ca. 67 cm; Gewicht ca.: 600 g; 3 Jahre Garantie; Mit Dämpfungssystem ca. 95-135 cm, auch Weitere Farbe, Je Paar 3-teiliges Aluminium-Rohr; Hartmetallspitzen; abnehmbare Pads/Teller; verstellbare Handschlaufen; Höhe (zusammengeschoben) ca. 67 cm; Gewicht ca.: 600 g; 3 Jahre Garantie; Mit Dämpfungssystem ca. 95-135 cm, Je Paar",
+      "price": 6.49,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": "Wanderstöcke Kork-Griff",
+      "categoryPath": [
+        "Sport und Freizeit",
+        "Produkte",
+        "Freizeit",
+        "Outdoor",
+        "Nordic Walking",
+        "Wanderstock"
+      ],
+      "image": "https://content-media.bonial.biz/0e3ccb17-364e-47e3-bbfc-a0fafe0a00f4/c208468c-1b1b-4e6a-ae6a-a12c2d5c66b3.jpg",
+      "page": 9
+    },
+    {
+      "id": "65b3e4860628",
+      "kaufdaId": "9ace8978-3750-4cc1-a6fe-d92e023eb362",
+      "name": "Puten-Ministeaks",
+      "variants": [],
+      "brand": null,
+      "description": "FRISCHFLEISCH 800-g-Packung",
+      "price": 7.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 9.99",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Aldi Süd",
+        "Meine Metzgerei"
+      ],
+      "image": "https://content-media.bonial.biz/9ace8978-3750-4cc1-a6fe-d92e023eb362/main.jpg",
+      "page": 19
+    },
+    {
+      "id": "66be43e941b8",
+      "kaufdaId": "b3aa6a87-52f9-4b4e-b860-f23f447958e0",
+      "name": "Mozzarella, gerieben",
+      "variants": [],
+      "brand": "Milsani",
+      "description": "Der Milde, schnittfest, 40 % Fett i. Tr. 250-g-Packung",
+      "price": 1.39,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 5.56",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Milchprodukte",
+        "Käse",
+        "Weichkäse",
+        "Mozzarella"
+      ],
+      "image": "https://content-media.bonial.biz/b3aa6a87-52f9-4b4e-b860-f23f447958e0/main.jpg",
+      "page": 6
+    },
+    {
+      "id": "66f493dd39a1",
+      "kaufdaId": "8a899f76-b516-4be7-b848-ef1039ef77ed",
+      "name": "Schoko-Banane",
+      "variants": [
+        "Schoko"
+      ],
+      "brand": "CORNY",
+      "description": "Versch. Sorten 120-g-Packung 4 Stück Versch. Sorten 150-g-Packung 6 Stück",
+      "price": 1.59,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 13.25",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Corny"
+      ],
+      "image": "https://content-media.bonial.biz/8a899f76-b516-4be7-b848-ef1039ef77ed/main.jpg",
+      "page": 8
+    },
+    {
+      "id": "685bb4a3b47e",
+      "kaufdaId": "93a49348-b015-482c-9090-1d820dd3f32f",
+      "name": "Seersucker-Bettwäsche",
+      "variants": [
+        "Seersucker-Bettwäsche"
+      ],
+      "brand": "NOVITESSE",
+      "description": "100 % Baumwolle; Maße ca.: Kissenbezug: 80 x 80 cm, Bett-bezug: Normal-Größe 100 % Baumwolle; Kissenbezug: 80 x 80 cm, Doppelbett-Größe, mit 2 Kissenbezügen 200 x 200 cm",
+      "price": 14.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": "Normal-Größe",
+      "categoryPath": [
+        "Möbel und Wohnen",
+        "Produkte",
+        "Möbel",
+        "Schlafzimmer",
+        "Bettzeug",
+        "Bettwäsche",
+        "Microfaserbettwäsche",
+        "Seersuckerbettwäsche"
+      ],
+      "image": "https://content-media.bonial.biz/93a49348-b015-482c-9090-1d820dd3f32f/main.jpg",
+      "page": 16
+    },
+    {
+      "id": "68a37e7dda16",
+      "kaufdaId": "3fb9f063-f2f4-4743-b81e-b81cdb6c30ef",
+      "name": "Lachsfilet-Portionen",
+      "variants": [],
+      "brand": "Golden Seafood",
+      "description": "Norwegen mit Haut 8 x 125 g",
+      "price": 15.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Getränke",
+        "Alkoholische Getränke",
+        "Bier",
+        "Biermarken",
+        "Golden"
+      ],
+      "image": "https://content-media.bonial.biz/3fb9f063-f2f4-4743-b81e-b81cdb6c30ef/main.jpg",
+      "page": 19
+    },
+    {
+      "id": "6a02dd1889c4",
+      "kaufdaId": "e7832150-a77e-424a-8b88-8cdf1d3252e2",
+      "name": "Shorty-Pyjama \"Glow in the Dark\"",
+      "variants": [
+        "Shorty-Pyjama \"Glow in the Dark\""
+      ],
+      "brand": "LILY & DAN",
+      "description": "Druck leuchtet im Dunkeln; 100 % Baumwolle 98/104 Druck leuchtet im Dunkeln; 100 % Baumwolle 122/128",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Mode und Accessoires",
+        "Produkte",
+        "Mode",
+        "Bekleidung",
+        "nach Kleidungsstück",
+        "Unterwäsche und Homewear",
+        "Nachtwäsche",
+        "Pyjama"
+      ],
+      "image": "https://content-media.bonial.biz/e7832150-a77e-424a-8b88-8cdf1d3252e2/3ab47346-bbdd-4835-98a0-676141806d26.jpg",
+      "page": 15
+    },
+    {
+      "id": "6b35b5289092",
+      "kaufdaId": "fd6a573e-efab-45df-aad2-6583d7f2c777",
+      "name": "Geschirr-Abtropfgestell",
+      "variants": [],
+      "brand": "HOME CREATION",
+      "description": "Herausnehmbarer Besteckhalter; Wasserrinne ist frei einstellbar 45 x 33 x 16,2 cm 3-tlg.",
+      "price": 12.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Drogerie und Haushalt",
+        "Produkte",
+        "Haushalt",
+        "Haushaltsartikel",
+        "Abtropfgestell"
+      ],
+      "image": "https://content-media.bonial.biz/fd6a573e-efab-45df-aad2-6583d7f2c777/main.jpg",
+      "page": 11
+    },
+    {
+      "id": "6bb1d8fdf5ad",
+      "kaufdaId": "ca39703e-ecf1-4e38-bf58-c8944394b9aa",
+      "name": "Mozzarella",
+      "variants": [],
+      "brand": "cheestrings",
+      "description": "schnittfest 4 x 20 g",
+      "price": 1.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 24.88",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Milchprodukte",
+        "Käse",
+        "Weichkäse",
+        "Mozzarella"
+      ],
+      "image": "https://content-media.bonial.biz/ca39703e-ecf1-4e38-bf58-c8944394b9aa/main.jpg",
+      "page": 20
+    },
+    {
+      "id": "6d4dc5ccf6b1",
+      "kaufdaId": "5ae9a3c2-e94a-473b-aee5-a2399678833b",
+      "name": "Sport- und Laufsocken",
+      "variants": [],
+      "brand": "CRANE",
+      "description": "Versch. Materialzusammensetzungen. Größen: 35/38–43/46",
+      "price": 3.49,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Mode und Accessoires",
+        "Marken",
+        "Marken Mode",
+        "Crane"
+      ],
+      "image": "https://content-media.bonial.biz/5ae9a3c2-e94a-473b-aee5-a2399678833b/main.jpg",
+      "page": 9
+    },
+    {
+      "id": "6f61ed6d72bd",
+      "kaufdaId": "c022d5e1-8e81-4576-a1e7-47b6a51fcf3c",
+      "name": "Hähnchen-brustfilet",
+      "variants": [],
+      "brand": "Meine Metzgerei",
+      "description": "Teilstücke 1,5-kg-Packung",
+      "price": 12.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 8.66",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Aldi Süd",
+        "Meine Metzgerei"
+      ],
+      "image": "https://content-media.bonial.biz/c022d5e1-8e81-4576-a1e7-47b6a51fcf3c/main.jpg",
+      "page": 19
+    },
+    {
+      "id": "6fb6055ee57e",
+      "kaufdaId": "051a61d4-1a4f-4403-8b71-7b6f5ceb3b67",
+      "name": "Beefsteak",
+      "variants": [],
+      "brand": "TASTE OF BRITISH ISLES / AMERICAN",
+      "description": "Versch. Sorten und Gewichte, z. B. 249 g",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 19.99",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Fleisch",
+        "Rindfleisch",
+        "Rindersteak",
+        "Beefsteak"
+      ],
+      "image": "https://content-media.bonial.biz/051a61d4-1a4f-4403-8b71-7b6f5ceb3b67/main.jpg",
+      "page": 3
+    },
+    {
+      "id": "7746248cc5bb",
+      "kaufdaId": "6371c748-0c9e-45a1-981c-8e0d90080484",
+      "name": "Mayo-Spezialität",
+      "variants": [],
+      "brand": "Delikato",
+      "description": "Versch. Sorten 250-ml-Flasche",
+      "price": 1.19,
+      "priceMax": null,
+      "grundpreisText": "l-Preis 4.76",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Aldi",
+        "Delikato"
+      ],
+      "image": "https://content-media.bonial.biz/6371c748-0c9e-45a1-981c-8e0d90080484/main.jpg",
+      "page": 6
+    },
+    {
+      "id": "7797c0a32cff",
+      "kaufdaId": "12802010-ac22-4d63-88f0-22196b68a024",
+      "name": "Kunststoff-Korb",
+      "variants": [],
+      "brand": "HOME CREATION",
+      "description": "Mit Griffmulden und Tragegriff; Maße ca.: 57,5 x 38 x 25,5 cm ca. 35 l",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Möbel und Wohnen",
+        "Marken Möbel und Wohnen",
+        "Home Creation"
+      ],
+      "image": "https://content-media.bonial.biz/12802010-ac22-4d63-88f0-22196b68a024/main.jpg",
+      "page": 13
+    },
+    {
+      "id": "784fc1849a5d",
+      "kaufdaId": "c6e46e7a-8b95-4389-94d3-95db85ec7e35",
+      "name": "Aubergine",
+      "variants": [],
+      "brand": null,
+      "description": "Deutschland/Niederlande Klasse: I; Stück",
+      "price": 0.59,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Gemüse",
+        "Auberginen"
+      ],
+      "image": "https://content-media.bonial.biz/c6e46e7a-8b95-4389-94d3-95db85ec7e35/main.jpg",
+      "page": 2
+    },
+    {
+      "id": "7a2e9dd62cba",
+      "kaufdaId": "68a338d8-0f13-44eb-8019-8d1754844f12",
+      "name": "Faltbare Gäste-Matratze",
+      "variants": [],
+      "brand": "NOVITESSE",
+      "description": "Platzsparend zusammenfaltbar; 52 % Polyester, 48 % Baumwolle ca. 195 x 70 x 10 cm",
+      "price": 24.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Möbel und Wohnen",
+        "Marken Möbel und Wohnen",
+        "Novitesse"
+      ],
+      "image": "https://content-media.bonial.biz/68a338d8-0f13-44eb-8019-8d1754844f12/main.jpg",
+      "page": 16
+    },
+    {
+      "id": "7b0fd3a290e0",
+      "kaufdaId": "77d1ab7f-467c-4dfa-9f60-28eb1be31dea",
+      "name": "Gallseife-Flecken-Bürste",
+      "variants": [
+        "Gallseife-Flecken-Spray"
+      ],
+      "brand": "Dr. Beckmann",
+      "description": "250-ml-Flasche 250-ml-Flasche",
+      "price": 1.95,
+      "priceMax": null,
+      "grundpreisText": "l-Preis 7.80",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Drogerie und Haushalt",
+        "Marken",
+        "Marken Haushalt",
+        "Dr. Beckmann"
+      ],
+      "image": "https://content-media.bonial.biz/77d1ab7f-467c-4dfa-9f60-28eb1be31dea/main.jpg",
+      "page": 15
+    },
+    {
+      "id": "7b57b969f152",
+      "kaufdaId": "374c06fb-6515-40ae-9dec-cc6a15b87ace",
+      "name": "Gewürzketchup",
+      "variants": [
+        "Gewürzketchup"
+      ],
+      "brand": "Hela",
+      "description": "Curry Delikat 800-ml-Flasche Curry Leicht Scharf 800-ml-Flasche",
+      "price": 1.99,
+      "priceMax": null,
+      "grundpreisText": "I-Preis 2.49",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Hela"
+      ],
+      "image": "https://content-media.bonial.biz/374c06fb-6515-40ae-9dec-cc6a15b87ace/main.jpg",
+      "page": 8
+    },
+    {
+      "id": "7fe4cd87cb9d",
+      "kaufdaId": "2806357d-744b-487a-8626-6445ed43e39b",
+      "name": "KNAX",
+      "variants": [],
+      "brand": "HENGSTENBERG",
+      "description": "knackig-würzig 720-ml-Glas",
+      "price": 1.79,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 4.97 / Abtropfgewicht",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Hengstenberg"
+      ],
+      "image": "https://content-media.bonial.biz/2806357d-744b-487a-8626-6445ed43e39b/main.jpg",
+      "page": 20
+    },
+    {
+      "id": "80712d6716c3",
+      "kaufdaId": "c8c4aeed-dcb1-482b-bdb1-2e2ad7b03472",
+      "name": "Kaffee",
+      "variants": [],
+      "brand": "Lavazza",
+      "description": "Versch. Sorten; ganze Bohnen, je 1-kg-Packung",
+      "price": 12.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Getränke",
+        "Heißgetränk",
+        "Kaffee"
+      ],
+      "image": "https://content-media.bonial.biz/c8c4aeed-dcb1-482b-bdb1-2e2ad7b03472/main.jpg",
+      "page": 8
+    },
+    {
+      "id": "8281c48c626e",
+      "kaufdaId": "8d8bcd9f-06e8-49ba-9fe4-fb444e93bd37",
+      "name": "Heidelbeeren",
+      "variants": [],
+      "brand": null,
+      "description": "Neue Ernte, Ursprung: siehe Etikett; Klasse: I 500-g-Schale",
+      "price": 2.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 5.98",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Tierbedarf und Tierfutter",
+        "Marken für Tiere"
+      ],
+      "image": "https://content-media.bonial.biz/8d8bcd9f-06e8-49ba-9fe4-fb444e93bd37/main.jpg",
+      "page": 2
+    },
+    {
+      "id": "85b15c36c0a2",
+      "kaufdaId": "ba1932c0-8355-4a46-bd6f-b0b9600f1195",
+      "name": "H-Milch",
+      "variants": [],
+      "brand": "Milchwolke",
+      "description": "1,5 % Fett 1-l-Packung",
+      "price": 0.65,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Milchprodukte",
+        "Milch",
+        "Kuhmilch",
+        "H-Milch"
+      ],
+      "image": "https://content-media.bonial.biz/ba1932c0-8355-4a46-bd6f-b0b9600f1195/main.jpg",
+      "page": 20
+    },
+    {
+      "id": "876b4944384c",
+      "kaufdaId": "11750567-b04d-4875-b6c5-4d95ab5741d5",
+      "name": "Supersoft-Spannbetttuch",
+      "variants": [
+        "Supersoft-Spannbetttuch",
+        "Supersoft-Spannbetttuch",
+        "Supersoft-Spannbetttuch"
+      ],
+      "brand": "NOVITESSE",
+      "description": "95 % Baumwolle, 5 % Elasthan; Normal-Größe 90-100 x 200 cm 95 % Baumwolle, 5 % Elasthan; Komfort-Größe 140-160 x 200 cm 95 % Baumwolle, 5 % Elasthan; für Topper in Doppelbett-Größe 180-200 x 200 cm (Höhe: 8 cm) 95 % Baumwolle, 5 % Elasthan; Doppelbett-Größe 180-200 x 200 cm",
+      "price": 7.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Möbel und Wohnen",
+        "Marken Möbel und Wohnen",
+        "Novitesse"
+      ],
+      "image": "https://content-media.bonial.biz/11750567-b04d-4875-b6c5-4d95ab5741d5/main.jpg",
+      "page": 16
+    },
+    {
+      "id": "888623448bc9",
+      "kaufdaId": "a7e71a3a-39f2-4127-a814-90bf26ee504b",
+      "name": "Hähnchenflügel",
+      "variants": [],
+      "brand": "MEINE METZGEREI",
+      "description": "Versch. Sorten 1,1-kg-Packung",
+      "price": 4.79,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 4.35",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Aldi Süd",
+        "Meine Metzgerei"
+      ],
+      "image": "https://content-media.bonial.biz/a7e71a3a-39f2-4127-a814-90bf26ee504b/main.jpg",
+      "page": 3
+    },
+    {
+      "id": "8c4bb3d7e8c5",
+      "kaufdaId": "ec159fbd-db54-4a19-aea5-d0903cae7fa3",
+      "name": "Tomato Ketchup",
+      "variants": [
+        "Mayo"
+      ],
+      "brand": "Heinz",
+      "description": "800-ml-Flasche 1170-ml-Flasche",
+      "price": 2.79,
+      "priceMax": null,
+      "grundpreisText": "l-Preis 3.49",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Heinz"
+      ],
+      "image": "https://content-media.bonial.biz/ec159fbd-db54-4a19-aea5-d0903cae7fa3/main.jpg",
+      "page": 19
+    },
+    {
+      "id": "8c6957ae5301",
+      "kaufdaId": "ea0e68f1-16b6-41bc-9fdb-e243a016d11a",
+      "name": "Kefir",
+      "variants": [],
+      "brand": "Milsani",
+      "description": "500-g-Becher",
+      "price": 0.79,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 1.58",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Milsani"
+      ],
+      "image": "https://content-media.bonial.biz/ea0e68f1-16b6-41bc-9fdb-e243a016d11a/main.jpg",
+      "page": 26
+    },
+    {
+      "id": "8cac78fa6a27",
+      "kaufdaId": "d2d6c27f-8beb-4aef-aa19-0f6fbdddb320",
+      "name": "Genießer schinken",
+      "variants": [],
+      "brand": "Gut Drei Eichen",
+      "description": "Vom Schwein; versch. Sorten 80-g-Packung",
+      "price": 0.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 12.38",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Wurstwaren",
+        "Schinken",
+        "Rohschinken",
+        "Räucherschinken",
+        "Bauernschinken"
+      ],
+      "image": "https://content-media.bonial.biz/d2d6c27f-8beb-4aef-aa19-0f6fbdddb320/main.jpg",
+      "page": 6
+    },
+    {
+      "id": "8e8090063426",
+      "kaufdaId": "27814205-6c99-4ae2-a6ae-74e661c66bf2",
+      "name": "Nahtlose Bralettes",
+      "variants": [],
+      "brand": "UP2FASHION",
+      "description": "92 % Polyamid, 8 % Elasthan 2er-Set, auch Weiteres 2er-Set, Größen: S-XL",
+      "price": 7.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Mode und Accessoires",
+        "Marken",
+        "Marken Mode",
+        "UP2FASHION"
+      ],
+      "image": "https://content-media.bonial.biz/27814205-6c99-4ae2-a6ae-74e661c66bf2/5b0b8642-cc59-4b15-a83e-da65ca9f6749.jpg",
+      "page": 14
+    },
+    {
+      "id": "8ea49d892189",
+      "kaufdaId": "bb107ca6-c55d-4211-bf79-0fdb1bf688fa",
+      "name": "Mamba Fruit Party",
+      "variants": [],
+      "brand": "Storck",
+      "description": "500-g-Packung",
+      "price": 2.79,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 5.58",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Storck"
+      ],
+      "image": "https://content-media.bonial.biz/bb107ca6-c55d-4211-bf79-0fdb1bf688fa/main.jpg",
+      "page": 18
+    },
+    {
+      "id": "8f37dde0d147",
+      "kaufdaId": "1ac7ca70-fbe1-4900-b428-1b8321f679e3",
+      "name": "Stickado",
+      "variants": [
+        "Stickado"
+      ],
+      "brand": "Aoste",
+      "description": "Versch. Sorten 60-g-Packung Versch. Sorten 70-g-Packung",
+      "price": 1.79,
+      "priceMax": null,
+      "grundpreisText": "29.83",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Aoste"
+      ],
+      "image": "https://content-media.bonial.biz/1ac7ca70-fbe1-4900-b428-1b8321f679e3/main.jpg",
+      "page": 20
+    },
+    {
+      "id": "8fe5f7d72b57",
+      "kaufdaId": "b279a502-b566-4fc2-a97b-01b77330426e",
+      "name": "Eisbox",
+      "variants": [
+        "Eis-Crusher",
+        "Smoothie- und Slushy-Maker"
+      ],
+      "brand": "CROFTON",
+      "description": "Weitere Farbe 6er-Set Stück, Weitere Farbe Weitere Farbe 400 ml Zer-Set",
+      "price": 1.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Elektronik und Technik",
+        "Produkte",
+        "Technik",
+        "Elektronik",
+        "Haushaltselektronik",
+        "Küchenkleingeräte",
+        "Küchenmaschine",
+        "Mixer",
+        "Smoothiemaker"
+      ],
+      "image": "https://content-media.bonial.biz/b279a502-b566-4fc2-a97b-01b77330426e/main.jpg",
+      "page": 12
+    },
+    {
+      "id": "90036307835d",
+      "kaufdaId": "1347fb87-d94a-4734-a30e-af0b1933211b",
+      "name": "Smoothie",
+      "variants": [],
+      "brand": "True Fruits",
+      "description": "versch. Sorten 750-ml-Flasche",
+      "price": 3.29,
+      "priceMax": null,
+      "grundpreisText": "l-Preis 4.39",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Getränke",
+        "Saft",
+        "Saftmarken",
+        "True Fruits Juice"
+      ],
+      "image": "https://content-media.bonial.biz/1347fb87-d94a-4734-a30e-af0b1933211b/main.jpg",
+      "page": 20
+    },
+    {
+      "id": "90eaca1c9887",
+      "kaufdaId": "2ef5f8e9-b1f5-4075-9ac3-6c8a8f7f4f1d",
+      "name": "Bio-Dinkel-Steinofenpizza Margherita",
+      "variants": [
+        "Bio-Dinkel-Steinofenpizza Grillgemüse"
+      ],
+      "brand": "Nur Nur Natur",
+      "description": "48 Std. Teigführung, 100% natürliche Inhaltsstoffe, für die Latte Mozzarella pasteurisiert, nicht homogenisiert, ohne Zuckerzusatz, handgezogener Teig, 100% Dinkelmehl 315-g-Packung 48 Std. Teigführung, 100% natürliche Inhaltsstoffe, für die Latte Mozzarella pasteurisiert, nicht homogenisiert, ohne Zuckerzusatz, handgezogener Teig, 100% Dinkelmehl 335-g-Packung",
+      "price": 2.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 9.49, 9.06 bzw. 8.93",
+      "dealType": "SALES_PRICE",
+      "dealText": "Versch Sorten",
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Bio",
+        "Naturland"
+      ],
+      "image": "https://content-media.bonial.biz/2ef5f8e9-b1f5-4075-9ac3-6c8a8f7f4f1d/main.jpg",
+      "page": 23
+    },
+    {
+      "id": "91a86c431a2f",
+      "kaufdaId": "e22a2af1-1af5-46d6-ab06-92700e080923",
+      "name": "Glas-Frischhaltedosen",
+      "variants": [
+        "Glas-Frischhaltedosen"
+      ],
+      "brand": "CROFTON",
+      "description": "Behälter: gehärtetes Borosilikatglas; Deckel: Polypropylen (weichmacherfrei); spülmaschinen-, gefrier-, mikrowellen- und backofengeeignet (ohne Deckel); auslaufsicher und luftdicht Volumen ca.: 560 ml, 1,1 l bzw. 2 l 3er-Set Behälter: gehärtetes Borosilikatglas; Deckel: Polypropylen (weichmacherfrei); spülmaschinen-, gefrier-, mikrowellen- und backofengeeignet (ohne Deckel); auslaufsicher und luftdicht Volumen ca.: 570 ml, 1,18 l bzw. 2,1 l 3er-Set",
+      "price": 5.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Drogerie und Haushalt",
+        "Produkte",
+        "Haushalt",
+        "Haushaltsartikel",
+        "Lebensmittelaufbewahrung",
+        "Aufbewahrungsdosen",
+        "Frischhaltedose"
+      ],
+      "image": "https://content-media.bonial.biz/e22a2af1-1af5-46d6-ab06-92700e080923/main.jpg",
+      "page": 11
+    },
+    {
+      "id": "961f47d1bbe1",
+      "kaufdaId": "6d617445-d070-420f-92a2-6d51611ddd21",
+      "name": "Katzen-Nassfutter",
+      "variants": [],
+      "brand": "FELIX",
+      "description": "6,8-kg-Packung 80 x 85 g",
+      "price": 22.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 3.38",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Tierbedarf und Tierfutter",
+        "Produkte",
+        "Tierfutter",
+        "Katzenfutter"
+      ],
+      "image": "https://content-media.bonial.biz/6d617445-d070-420f-92a2-6d51611ddd21/main.jpg",
+      "page": 19
+    },
+    {
+      "id": "968e5a497c53",
+      "kaufdaId": "2c2c5848-2431-4c66-b319-88ea14b0246a",
+      "name": "High-Protein-Pudding",
+      "variants": [
+        "High-Protein-Milchreis"
+      ],
+      "brand": "DR. OETKER",
+      "description": "Versch. Sorten 400-g-Becher Versch. Sorten 400-g-Becher",
+      "price": 1.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 4.98",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Proteinprodukte",
+        "High Protein Pudding"
+      ],
+      "image": "https://content-media.bonial.biz/2c2c5848-2431-4c66-b319-88ea14b0246a/main.jpg",
+      "page": 20
+    },
+    {
+      "id": "96cf2f57c1ce",
+      "kaufdaId": "ea65cce2-c9a4-43fc-9af4-18d8f5508e1b",
+      "name": "Kaergarden",
+      "variants": [],
+      "brand": "Arla",
+      "description": "Versch. Sorten 400-g-Packung",
+      "price": 1.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 4.98",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Arla",
+        "Arla Kaergarden"
+      ],
+      "image": "https://content-media.bonial.biz/ea65cce2-c9a4-43fc-9af4-18d8f5508e1b/main.jpg",
+      "page": 19
+    },
+    {
+      "id": "97c6fb1782c3",
+      "kaufdaId": "2e3bbbe2-656b-425a-a8a3-0b51aa0fe7c8",
+      "name": "Spannbetttuch",
+      "variants": [
+        "Inkontinenzauflage"
+      ],
+      "brand": "NOVITESSE",
+      "description": "Oberseite: 100 % Baumwolle, Unterseite: Polyurethan 90 x 200 cm Stück 100 % Polyester, Wasserdicht und saugfähig 70 x 90 cm 2er-Packung",
+      "price": 12.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Möbel und Wohnen",
+        "Produkte",
+        "Möbel",
+        "Schlafzimmer",
+        "Bettzeug",
+        "Bettwäsche"
+      ],
+      "image": "https://content-media.bonial.biz/2e3bbbe2-656b-425a-a8a3-0b51aa0fe7c8/main.jpg",
+      "page": 16
+    },
+    {
+      "id": "987bec4fbd28",
+      "kaufdaId": "fb54e312-8015-40a6-a4df-b879be379c74",
+      "name": "Shorty-Pyjama",
+      "variants": [
+        "Nachthemd"
+      ],
+      "brand": "UP2FASHION",
+      "description": "74 % Baumwolle, 26 % Polyester. Größen: S (36/38) – L (44/46), Weiteres Design 74 % Baumwolle, 26 % Polyester. Größen: S (36/38) – L (44/46), Weiteres Design",
+      "price": 8.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": "Shorty-Pyjama",
+      "categoryPath": [
+        "Mode und Accessoires",
+        "Marken",
+        "Marken Mode",
+        "UP2FASHION"
+      ],
+      "image": "https://content-media.bonial.biz/fb54e312-8015-40a6-a4df-b879be379c74/main.jpg",
+      "page": 15
+    },
+    {
+      "id": "99a4278f2bc5",
+      "kaufdaId": "3594887f-dc49-435e-b608-ff820798115c",
+      "name": "Feuchtes Deluxe-Toilettenpapier",
+      "variants": [],
+      "brand": "Kokett",
+      "description": "Versch. Sorten 2 x 50 Stück",
+      "price": 1.49,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Deluxe"
+      ],
+      "image": "https://content-media.bonial.biz/3594887f-dc49-435e-b608-ff820798115c/main.jpg",
+      "page": 6
+    },
+    {
+      "id": "9af63805368a",
+      "kaufdaId": "40d8f872-6a1f-45eb-8420-65ea74da50ec",
+      "name": "Lasagneblätter",
+      "variants": [],
+      "brand": "CUCINA",
+      "description": "Aus 100 % Hartweizen 500-g-Packung",
+      "price": 1,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 2.00",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Aldi Süd",
+        "Cucina"
+      ],
+      "image": "https://content-media.bonial.biz/40d8f872-6a1f-45eb-8420-65ea74da50ec/main.jpg",
+      "page": 4
+    },
+    {
+      "id": "9c0eb491fd24",
+      "kaufdaId": "76e5427e-c93d-4ddd-b548-60cc3b024942",
+      "name": "Shorty-Pyjama",
+      "variants": [],
+      "brand": "UP2FASHION",
+      "description": "100 % Baumwolle; Größen: M–XXL; je Set",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Mode und Accessoires",
+        "Marken",
+        "Marken Mode",
+        "UP2FASHION"
+      ],
+      "image": "https://content-media.bonial.biz/76e5427e-c93d-4ddd-b548-60cc3b024942/6f2d80cc-a788-4cf7-9d08-f93a859c92b0.jpg",
+      "page": 15
+    },
+    {
+      "id": "9c86a9cae16a",
+      "kaufdaId": "201dc355-0431-4421-89cb-9fc0eba274b5",
+      "name": "Bacon",
+      "variants": [],
+      "brand": "GUT DREI EICHEN",
+      "description": "Geräuchert 150-g-Packung",
+      "price": 1.39,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 9.27",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Fleisch",
+        "Schweinefleisch",
+        "Speck",
+        "Frühstücksspeck"
+      ],
+      "image": "https://content-media.bonial.biz/201dc355-0431-4421-89cb-9fc0eba274b5/main.jpg",
+      "page": 6
+    },
+    {
+      "id": "9cb3b5b6fa60",
+      "kaufdaId": "d8c79a6c-9692-4a51-a4bf-a4ba89222a6c",
+      "name": "4-Jahreszeiten-Steppdecke",
+      "variants": [
+        "4-Jahreszeiten-Steppdecke"
+      ],
+      "brand": null,
+      "description": "2 unterschiedlich dicke Steppdecken; können mit Druckknöpfen miteinander verbunden werden; 100 % Polyester; Maße ca. 135 x 200 cm 2 unterschiedlich dicke Steppdecken; können mit Druckknöpfen miteinander verbunden werden; 100 % Polyester; Maße ca. 200 x 200 cm",
+      "price": 12.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Möbel und Wohnen",
+        "Marken Möbel und Wohnen",
+        "Novitesse"
+      ],
+      "image": "https://content-media.bonial.biz/d8c79a6c-9692-4a51-a4bf-a4ba89222a6c/main.jpg",
+      "page": 16
+    },
+    {
+      "id": "9e50e570e50b",
+      "kaufdaId": "09fd4dd6-0795-40ae-a9b0-2119265a1b2e",
+      "name": "Fleischspieße",
+      "variants": [],
+      "brand": "BBQ",
+      "description": "Vom Schwein; mariniert 450-g-Packung",
+      "price": 3.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 8.87",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Fleisch",
+        "Fleischzubereitungen",
+        "Fleischspieße"
+      ],
+      "image": "https://content-media.bonial.biz/09fd4dd6-0795-40ae-a9b0-2119265a1b2e/main.jpg",
+      "page": 3
+    },
+    {
+      "id": "9f74900eae43",
+      "kaufdaId": "5d34fe1c-55f8-45eb-9c5b-c3c63d469ddb",
+      "name": "Wraps",
+      "variants": [],
+      "brand": "GOLDÄHREN",
+      "description": "Versch. Sorten; je 8 Stück 496-g-Packung",
+      "price": 1,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 2.02",
+      "dealType": "SALES_PRICE",
+      "dealText": "Mo. 27.7.",
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Backwaren",
+        "Brot",
+        "Weißbrot",
+        "Fladenbrot",
+        "Wrap"
+      ],
+      "image": "https://content-media.bonial.biz/5d34fe1c-55f8-45eb-9c5b-c3c63d469ddb/main.jpg",
+      "page": 4
+    },
+    {
+      "id": "a35b2d721002",
+      "kaufdaId": "7abea68c-5f32-4d30-a71e-a333b5bfda4b",
+      "name": "Nackensteaks, gewürzt",
+      "variants": [],
+      "brand": "BBQ",
+      "description": "Vom Schwein; versch. Sorten 600-g-Packung",
+      "price": 4.79,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 7.98",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "BBQ Marshmallows"
+      ],
+      "image": "https://content-media.bonial.biz/7abea68c-5f32-4d30-a71e-a333b5bfda4b/main.jpg",
+      "page": 3
+    },
+    {
+      "id": "a46ac75de452",
+      "kaufdaId": "79810ba2-971c-42a3-8c5c-aba87c159e06",
+      "name": "Gläser",
+      "variants": [],
+      "brand": "CROFTON",
+      "description": "Fassungsvermögen\nje ca. 260 bzw.\n220 ml\n6er-Packung",
+      "price": 2.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Möbel und Wohnen",
+        "Produkte",
+        "Möbel",
+        "Küche",
+        "Geschirr",
+        "Glas"
+      ],
+      "image": "https://content-media.bonial.biz/79810ba2-971c-42a3-8c5c-aba87c159e06/7225d2c5-b8ae-496a-b098-03635bbe99b2.jpg",
+      "page": 12
+    },
+    {
+      "id": "a59b4090d4f2",
+      "kaufdaId": "58e03c2f-6e3a-4e5d-a838-5131cfb34fd7",
+      "name": "Kochschinken",
+      "variants": [],
+      "brand": "Gut Drei Eichen",
+      "description": "Vom Schwein 250-g-Packung",
+      "price": 1.49,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 5.96",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Wurstwaren",
+        "Schinken",
+        "Kochschinken",
+        "Hinterschinken"
+      ],
+      "image": "https://content-media.bonial.biz/58e03c2f-6e3a-4e5d-a838-5131cfb34fd7/main.jpg",
+      "page": 18
+    },
+    {
+      "id": "a6f5ab97e69e",
+      "kaufdaId": "ee7f157e-e707-4996-903c-3f12fd1cdf1e",
+      "name": "Cevapcici",
+      "variants": [],
+      "brand": "BBQ",
+      "description": "Vom Rind; gewürzt 400-g-Packung",
+      "price": 4.79,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 11.98",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Fleisch",
+        "Fleischzubereitungen",
+        "Hackfleisch",
+        "Cevapcici"
+      ],
+      "image": "https://content-media.bonial.biz/ee7f157e-e707-4996-903c-3f12fd1cdf1e/main.jpg",
+      "page": 3
+    },
+    {
+      "id": "a780493e3264",
+      "kaufdaId": "1c72fa21-b6b0-4481-9301-252a31a9bd0e",
+      "name": "Fruit Stixx",
+      "variants": [
+        "Joystixx",
+        "Bloxx"
+      ],
+      "brand": "Haribo",
+      "description": "175-g-Packung 325-g-Packung Versch. Sorten 220-g-Packung",
+      "price": 1.19,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 5.41",
+      "dealType": "SALES_PRICE",
+      "dealText": "Maoam",
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Maoam"
+      ],
+      "image": "https://content-media.bonial.biz/1c72fa21-b6b0-4481-9301-252a31a9bd0e/main.jpg",
+      "page": 20
+    },
+    {
+      "id": "a7f9a89f98b3",
+      "kaufdaId": "c09a2117-64b7-4e7b-8aa3-6652cc1d563b",
+      "name": "Europa & Nordamerika",
+      "variants": [],
+      "brand": "ALDI TALK",
+      "description": "NOCH MEHR GIGABYTES IM GEPÄCK. BLEIB IM AUSLAND VERBUNDEN - MIT UNSEREN REISE-OPTIONEN. Für mobiles Surfen innerhalb von Europa und USA/Kanada. 3 GB. +1GB zusätzlich! 4 GB",
+      "price": null,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "OTHER",
+      "dealText": "Do. 11.6. – Mo. 14.9.",
+      "categoryPath": [
+        "Dienstleistungen",
+        "Gastronomie"
+      ],
+      "image": "https://content-media.bonial.biz/c09a2117-64b7-4e7b-8aa3-6652cc1d563b/main.jpg",
+      "page": 27
+    },
+    {
+      "id": "a8dce0a601c9",
+      "kaufdaId": "11b3706b-b797-4dbe-8c2d-93e89e921b98",
+      "name": "Vorhänge",
+      "variants": [],
+      "brand": "HOME CREATION",
+      "description": "Halbtransparent; 68 % Polyester, 32 % Baumwolle; für Stange oder Schiene geeignet; inkl. Bügelband zum Kürzen ca. 140 x 245 cm 2er-Packung",
+      "price": 12.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Möbel und Wohnen",
+        "Marken Möbel und Wohnen",
+        "Home Creation"
+      ],
+      "image": "https://content-media.bonial.biz/11b3706b-b797-4dbe-8c2d-93e89e921b98/7831da4f-16bb-4ae1-803f-89986809a18b.jpg",
+      "page": 17
+    },
+    {
+      "id": "abe949e0a300",
+      "kaufdaId": "72a224fb-1627-4505-806d-28dcf9e202b3",
+      "name": "Spaghetti Eis",
+      "variants": [],
+      "brand": "Mucci",
+      "description": "Bourbon-Vanilleeis mit 16% Erdbeersauce und weißen Schokoladenraspeln 3 x 170 ml",
+      "price": 1.39,
+      "priceMax": null,
+      "grundpreisText": "1 l = 2.73",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Aldi",
+        "Mucci"
+      ],
+      "image": "https://content-media.bonial.biz/72a224fb-1627-4505-806d-28dcf9e202b3/main.jpg",
+      "page": 5
+    },
+    {
+      "id": "adf73cc280f9",
+      "kaufdaId": "a5589405-bc11-4fb3-8a76-d945f37d413a",
+      "name": "Fruchtgummi",
+      "variants": [
+        "Fruchtgummi"
+      ],
+      "brand": "HARIBO",
+      "description": "Versch. Sorten 160-g-Packung Versch. Sorten 175-g-Packung",
+      "price": 0.79,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 4.94",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Süßigkeiten",
+        "Fruchtgummi"
+      ],
+      "image": "https://content-media.bonial.biz/a5589405-bc11-4fb3-8a76-d945f37d413a/main.jpg",
+      "page": 8
+    },
+    {
+      "id": "b1308d63481e",
+      "kaufdaId": "f0b202a5-cecd-4d5f-a709-ce58bac1b8c5",
+      "name": "Bio-Apfelschorle",
+      "variants": [],
+      "brand": null,
+      "description": "1-l-Flasche 6er-Pack zzgl. 0.25 Pfand",
+      "price": 1,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "bio"
+      ],
+      "image": "https://content-media.bonial.biz/f0b202a5-cecd-4d5f-a709-ce58bac1b8c5/main.jpg",
+      "page": 5
+    },
+    {
+      "id": "b38f7765a7d9",
+      "kaufdaId": "0d159565-3865-41b0-a109-6fb19742b520",
+      "name": "Himbeeren",
+      "variants": [],
+      "brand": "All Seasons",
+      "description": "1-kg-Packung",
+      "price": 7.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Obst",
+        "Beeren",
+        "Himbeeren"
+      ],
+      "image": "https://content-media.bonial.biz/0d159565-3865-41b0-a109-6fb19742b520/main.jpg",
+      "page": 18
+    },
+    {
+      "id": "b3b86132d134",
+      "kaufdaId": "3b0904b2-c1bd-4d41-b795-bfbcea2056a5",
+      "name": "Wasserkocher oder Doppelschlitz-Toaster",
+      "variants": [],
+      "brand": "AMBIANO",
+      "description": "Fassungsvermögen, 7 Bräunungsstufen, mit Auftau-Funktion, 3 Jahre Garantie, Integrierter Brötchenwärmer, Mit Wasserstandsanzeige, Weitere Farbe für alle Artikel ca.: 1,7 l",
+      "price": 9.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": "ab Mo. 27.7.",
+      "categoryPath": [
+        "Elektronik und Technik",
+        "Marken",
+        "Ambiano"
+      ],
+      "image": "https://content-media.bonial.biz/3b0904b2-c1bd-4d41-b795-bfbcea2056a5/main.jpg",
+      "page": 10
+    },
+    {
+      "id": "b680d22f81b7",
+      "kaufdaId": "cec6c8ab-81c3-4522-865b-b54e490b3fa9",
+      "name": "Hundegeschirr",
+      "variants": [
+        "-leine"
+      ],
+      "brand": "ROMEO",
+      "description": "100 % Polyester, verstellbare Gurte, Größen: S-L, je Stück Nutzgewicht: max. 40 kg, je Stück 168 cm",
+      "price": 6.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Tierbedarf und Tierfutter",
+        "Produkte",
+        "Tierbedarf",
+        "Hundebedarf",
+        "Hundezubehör",
+        "Hundegeschirr"
+      ],
+      "image": "https://content-media.bonial.biz/cec6c8ab-81c3-4522-865b-b54e490b3fa9/main.jpg",
+      "page": 13
+    },
+    {
+      "id": "b89e81f82bb7",
+      "kaufdaId": "37dc808b-c80e-4f32-916b-cc6da89ac917",
+      "name": "Jogginghose für Herren",
+      "variants": [],
+      "brand": "UP2FASHION",
+      "description": "60 % Baumwolle, 40 % Polyester; Größen: M-XXL; je Stück",
+      "price": 9.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Mode und Accessoires",
+        "Marken",
+        "Marken Mode",
+        "UP2FASHION"
+      ],
+      "image": "https://content-media.bonial.biz/37dc808b-c80e-4f32-916b-cc6da89ac917/main.jpg",
+      "page": 9
+    },
+    {
+      "id": "ba988faedaf2",
+      "kaufdaId": "5a806290-dc7b-4d49-b31d-3c6d3242e9e6",
+      "name": "Trauben hell, kernlos",
+      "variants": [],
+      "brand": null,
+      "description": "Ursprung: siehe Etikett; Klasse: I; 500-g-Schale",
+      "price": 1.29,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 2.58",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Tierbedarf und Tierfutter",
+        "Marken für Tiere"
+      ],
+      "image": "https://content-media.bonial.biz/5a806290-dc7b-4d49-b31d-3c6d3242e9e6/main.jpg",
+      "page": 2
+    },
+    {
+      "id": "bb0e8ebda4c8",
+      "kaufdaId": "e5996883-c71e-47d8-834e-74c039ee3543",
+      "name": "Elektrische Küchenhelfer",
+      "variants": [],
+      "brand": "Ambiano",
+      "description": "Stabmixer inkl. Mini-Zerkleinerer (ca. 600 ml), Schneebesen-Aufsatz und Messbecher, Salz- und Pfeffermühle mit Beleuchtung an der Unterseite und inkl. Batterien, 3 Jahre Garantie, 4er-Set, elektrische Salz-/ Pfeffermühle 2er-Packung, inkl. Aufschäum- und Rühraufsatz, 3er-Set",
+      "price": 9.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Elektronik und Technik",
+        "Marken",
+        "Ambiano"
+      ],
+      "image": "https://content-media.bonial.biz/e5996883-c71e-47d8-834e-74c039ee3543/62617602-0a9a-477c-8373-c52ce6036fd0.jpg",
+      "page": 10
+    },
+    {
+      "id": "bb1c91f4a683",
+      "kaufdaId": "aadb1113-586a-4d14-8768-aaefaebbffe7",
+      "name": "Bio-Gewürzgurken",
+      "variants": [],
+      "brand": "NUR NUR NATUR",
+      "description": "Deutschland Abtropfgewicht 360 g, 100 % natürliche Inhaltsstoffe, Bio-Gurken aus deutschem Anbau, Mit Weißweinessig 670-g-Glas",
+      "price": 2.35,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 6.53 / Abtropfgewicht",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "bio"
+      ],
+      "image": "https://content-media.bonial.biz/aadb1113-586a-4d14-8768-aaefaebbffe7/main.jpg",
+      "page": 23
+    },
+    {
+      "id": "be972925f84a",
+      "kaufdaId": "f28ff7fa-3eeb-4c34-8664-fd22b8fdef8c",
+      "name": "10-in-1-Profi für Eiscreme und Getränke",
+      "variants": [],
+      "brand": "AMBIANO",
+      "description": "Mit Selbstreinigungsfunktion, spülmaschinengeeigneten Teilen und verstellbaren Klingen; Inkl. 3 Zubereitungsbecher",
+      "price": 99.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Elektronik und Technik",
+        "Marken",
+        "Ambiano"
+      ],
+      "image": "https://content-media.bonial.biz/f28ff7fa-3eeb-4c34-8664-fd22b8fdef8c/main.jpg",
+      "page": 12
+    },
+    {
+      "id": "bf17f75431ab",
+      "kaufdaId": "fdce62ef-9cd0-4a66-b67b-8ff72adc488f",
+      "name": "Bio-Haferflocken",
+      "variants": [],
+      "brand": "Nur Nur Natur",
+      "description": "Deutschland 500-g-Packung",
+      "price": 0.85,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 1.70",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Bio Lebensmittel",
+        "Bio Cerealien",
+        "Bio Haferflocken"
+      ],
+      "image": "https://content-media.bonial.biz/fdce62ef-9cd0-4a66-b67b-8ff72adc488f/main.jpg",
+      "page": 23
+    },
+    {
+      "id": "c0f065ca1c9a",
+      "kaufdaId": "a7c261f7-fcf8-430e-849f-f05c953cce93",
+      "name": "Laktosefreie H-Schlagsahne",
+      "variants": [],
+      "brand": "MILSANI",
+      "description": "Deutschland 30 % Fett 200-g-Packung",
+      "price": 0.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 4.95",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Milsani"
+      ],
+      "image": "https://content-media.bonial.biz/a7c261f7-fcf8-430e-849f-f05c953cce93/main.jpg",
+      "page": 25
+    },
+    {
+      "id": "c11bfc4ef517",
+      "kaufdaId": "dde236b5-8751-41a9-96a2-5b560e197793",
+      "name": "Niederlande Hanseroute",
+      "variants": [],
+      "brand": null,
+      "description": "Per Rad & Schiff durch die Hansestädte, 7 Nächte auf dem Mittelklasse-Plus-Schiff MS De Nassau mit Vollpension, Inkl. Leihfahrrad i. W. v. 91 € pro Person",
+      "price": 949,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": "in der 2er Außen Unterdeck Superior Juli - Oktober 26",
+      "categoryPath": [
+        "Dienstleistungen",
+        "weitere Dienstleistungen",
+        "Reiseangebote"
+      ],
+      "image": "https://content-media.bonial.biz/dde236b5-8751-41a9-96a2-5b560e197793/main.jpg",
+      "page": 28
+    },
+    {
+      "id": "c1f9c508b4b0",
+      "kaufdaId": "7cb1d379-5508-46be-9440-879ae7bd433a",
+      "name": "Sport-Bustier",
+      "variants": [],
+      "brand": "CRANE",
+      "description": "Hydrophil und atmungsaktiv, Extra schmale Passform, 65 % Polyamid, 35 % Elasthan; vorgeformte Cups; Größen: S-XL",
+      "price": 7.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Mode und Accessoires",
+        "Marken",
+        "Marken Mode",
+        "Crane"
+      ],
+      "image": "https://content-media.bonial.biz/7cb1d379-5508-46be-9440-879ae7bd433a/main.jpg",
+      "page": 9
+    },
+    {
+      "id": "c20529c1a22b",
+      "kaufdaId": "273b4c97-06c3-4490-8c8f-0aa06baa52b1",
+      "name": "Metall-Mülleimer",
+      "variants": [],
+      "brand": "HOME CREATION",
+      "description": "Mit Soft-Close-Deckel, Mit herausnehmbarem Kunststoff-Innenbehälter und -Öffnungspedal; matt beschichtetes Eisen; Fassungsvermögen ca.: 30 l 37,5 x 29 x 67 cm",
+      "price": 16.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Drogerie und Haushalt",
+        "Produkte",
+        "Haushalt",
+        "Haushaltsartikel",
+        "Mülleimer"
+      ],
+      "image": "https://content-media.bonial.biz/273b4c97-06c3-4490-8c8f-0aa06baa52b1/main.jpg",
+      "page": 11
+    },
+    {
+      "id": "c3618a18f0a9",
+      "kaufdaId": "c1245129-e1e7-4917-9b12-1be9b8a307bd",
+      "name": "Sommer-Pantoletten",
+      "variants": [],
+      "brand": "UP2FASHION",
+      "description": "Versch. Modelle ultraleichte Synthetik-Slipper Größen: 37–45; je Paar",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Mode und Accessoires",
+        "Marken",
+        "Marken Mode",
+        "UP2FASHION"
+      ],
+      "image": "https://content-media.bonial.biz/c1245129-e1e7-4917-9b12-1be9b8a307bd/ef275ecf-36b7-435c-9c3c-8f8301193111.jpg",
+      "page": 14
+    },
+    {
+      "id": "cad0e2a8f6c4",
+      "kaufdaId": "44646bfc-6b2a-4c4b-b104-2fa97776d193",
+      "name": "T-Shirt",
+      "variants": [],
+      "brand": "ADIDAS",
+      "description": "100 % Polyester; Größen: M-XL (Blau/Weiß), M-XXL (Schwarz); je Stück",
+      "price": 9.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": "ab Sa. 1.8.",
+      "categoryPath": [
+        "Sport und Freizeit",
+        "Marken",
+        "Marken Sport",
+        "Adidas"
+      ],
+      "image": "https://content-media.bonial.biz/44646bfc-6b2a-4c4b-b104-2fa97776d193/main.jpg",
+      "page": 24
+    },
+    {
+      "id": "cd20abe63c94",
+      "kaufdaId": "c17919a6-431c-47f6-93de-284e00c78468",
+      "name": "Steakhouse-Pommes",
+      "variants": [],
+      "brand": "Speisezeit",
+      "description": "Versch. Sorten 750-g-Packung",
+      "price": 1,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 1.33",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Fertiggerichte",
+        "Tiefkühlkost"
+      ],
+      "image": "https://content-media.bonial.biz/c17919a6-431c-47f6-93de-284e00c78468/main.jpg",
+      "page": 4
+    },
+    {
+      "id": "d23b8453d0a6",
+      "kaufdaId": "30ceab72-5aa5-4e05-8392-ad13e3fcf62e",
+      "name": "Käsescheiben",
+      "variants": [
+        "Käsescheiben"
+      ],
+      "brand": "Grünländer",
+      "description": "Würzig 156-g-Packung Mild & Nussig 156-g-Packung",
+      "price": 1.79,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 11.47",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Grünländer"
+      ],
+      "image": "https://content-media.bonial.biz/30ceab72-5aa5-4e05-8392-ad13e3fcf62e/main.jpg",
+      "page": 8
+    },
+    {
+      "id": "d30e442c2f3a",
+      "kaufdaId": "2b559041-704e-4f5e-80b2-01f089bf40ea",
+      "name": "Hähnchenmedaillon-Spieße",
+      "variants": [],
+      "brand": "BBQ",
+      "description": "Mariniert; versch. Sorten 400-g-Packung",
+      "price": 4.29,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 10.73",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "BBQ Marshmallows"
+      ],
+      "image": "https://content-media.bonial.biz/2b559041-704e-4f5e-80b2-01f089bf40ea/main.jpg",
+      "page": 3
+    },
+    {
+      "id": "d60dcb148797",
+      "kaufdaId": "1565106f-0912-4a46-8c25-45486247e9dd",
+      "name": "Bio-Obst",
+      "variants": [
+        "Bio-Obst"
+      ],
+      "brand": null,
+      "description": "Mango, geschnitten, tiefgefroren 300-g-Packung Erdbeeren, tiefgefroren 300-g-Packung",
+      "price": 3,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 10.00",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Saison und Events",
+        "Produkte",
+        "Aktionen",
+        "Vegan"
+      ],
+      "image": "https://content-media.bonial.biz/1565106f-0912-4a46-8c25-45486247e9dd/main.jpg",
+      "page": 5
+    },
+    {
+      "id": "d7942a31e059",
+      "kaufdaId": "ac79ed09-b7e2-45b5-a079-a1c8c522fde4",
+      "name": "Glas-Karaffe",
+      "variants": [
+        "Glas-Krug"
+      ],
+      "brand": "CROFTON",
+      "description": "Karaffe mit Edelstahl-Deckel und -Früchtespieß bzw. Karaffe mit Korkdeckel; Fassungsvermögen ca. 1,24 l Karaffe mit Korkdeckel bzw. Krug; Fassungsvermögen ca. 2 l",
+      "price": 6.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Möbel und Wohnen",
+        "Produkte",
+        "Möbel",
+        "Küche",
+        "Geschirr",
+        "Kannen und Karaffen",
+        "Karaffe"
+      ],
+      "image": "https://content-media.bonial.biz/ac79ed09-b7e2-45b5-a079-a1c8c522fde4/main.jpg",
+      "page": 12
+    },
+    {
+      "id": "daf750964af8",
+      "kaufdaId": "a63d17b2-217f-4acc-bda4-806cea8d2c18",
+      "name": "Frühstückspeck",
+      "variants": [
+        "Erdbeeren",
+        "Mozzarella"
+      ],
+      "brand": null,
+      "description": "milder Bacon tiefgefroren, bio Der Milde, gerieben, 40% Fett i. Tr.",
+      "price": 1.39,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 9.27",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Wurstwaren",
+        "Schinken",
+        "Bacon"
+      ],
+      "image": "https://content-media.bonial.biz/a63d17b2-217f-4acc-bda4-806cea8d2c18/main.jpg",
+      "page": 0
+    },
+    {
+      "id": "dcac4d1a9fee",
+      "kaufdaId": "4c81d490-7a9b-4ece-9d1e-65eb65e188ea",
+      "name": "Hamburger",
+      "variants": [],
+      "brand": "MEINE METZGEREI",
+      "description": "Vom Rind 400-g-Packung",
+      "price": 4.49,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 11.23",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Aldi Süd",
+        "Meine Metzgerei"
+      ],
+      "image": "https://content-media.bonial.biz/4c81d490-7a9b-4ece-9d1e-65eb65e188ea/main.jpg",
+      "page": 3
+    },
+    {
+      "id": "de53c04c4dfe",
+      "kaufdaId": "c3812aa9-37a2-4bc8-ba05-e74dc1b2f353",
+      "name": "Keramik-Pfanne oder -Topf",
+      "variants": [],
+      "brand": "CROFTON",
+      "description": "Aus Aluminium, Keramik-Antihaftbeschichtung (ILAG Xeradur 5), mit Ausguss, für alle Herdarten inkl. Induktion geeignet, Maße ca.: Pfanne 28 cm (Ø), Topf (inkl. Glasdeckel) 18 x 9 cm (Ø x H); je Stück",
+      "price": 12.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Möbel und Wohnen",
+        "Produkte",
+        "Möbel",
+        "Küche",
+        "Küchenutensilien ",
+        "Töpfe und Pfannen",
+        "Pfanne"
+      ],
+      "image": "https://content-media.bonial.biz/c3812aa9-37a2-4bc8-ba05-e74dc1b2f353/e0a78cbb-6a1a-4ea3-9b15-c04c046419f9.jpg",
+      "page": 11
+    },
+    {
+      "id": "df62c1952478",
+      "kaufdaId": "916f58ee-3be7-4e97-b8cd-38a8acd63daa",
+      "name": "Gehstock",
+      "variants": [
+        "Greifzange",
+        "Schuhlöffel",
+        "Gehstock"
+      ],
+      "brand": "CRANE",
+      "description": "max. Belastbarkeit ca.: 100 kg; 3 Jahre Garantie 3 Jahre Garantie mit Teleskopstiel; 3 Jahre Garantie mit Teleskoprohr; max. Belastbarkeit ca.: 100 kg; 3 Jahre Garantie",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Elektronik und Technik",
+        "Produkte",
+        "Technik",
+        "Elektronik",
+        "Haushaltselektronik",
+        "Staubsauger"
+      ],
+      "image": "https://content-media.bonial.biz/916f58ee-3be7-4e97-b8cd-38a8acd63daa/main.jpg",
+      "page": 17
+    },
+    {
+      "id": "e6b62e713660",
+      "kaufdaId": "83dd9366-87e5-45d5-8367-d15f7f1966e5",
+      "name": "Nektarinen",
+      "variants": [],
+      "brand": null,
+      "description": "Spanien/Italien Klasse: I 1-kg-Schale",
+      "price": 1.69,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Obst",
+        "Steinobst",
+        "Pfirsiche",
+        "Nektarinen"
+      ],
+      "image": "https://content-media.bonial.biz/83dd9366-87e5-45d5-8367-d15f7f1966e5/main.jpg",
+      "page": 2
+    },
+    {
+      "id": "e95cf816792b",
+      "kaufdaId": "08c12498-129f-497b-a7ef-41939f35a1e3",
+      "name": "Joghurt",
+      "variants": [],
+      "brand": "Milsani",
+      "description": "Mild, 3,5 % Fett 4 x 150 g",
+      "price": 0.89,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 1.48",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Milsani"
+      ],
+      "image": "https://content-media.bonial.biz/08c12498-129f-497b-a7ef-41939f35a1e3/main.jpg",
+      "page": 26
+    },
+    {
+      "id": "ef43e0a26b31",
+      "kaufdaId": "b2ae19e4-b63a-437f-95ac-3cb312ca3189",
+      "name": "Sandwich Buttermilch",
+      "variants": [],
+      "brand": "MUCCI",
+      "description": "6 x 90 ml",
+      "price": 1.39,
+      "priceMax": null,
+      "grundpreisText": "l-Preis 2.57",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Milchprodukte",
+        "Milch",
+        "Kuhmilch",
+        "Buttermilch"
+      ],
+      "image": "https://content-media.bonial.biz/b2ae19e4-b63a-437f-95ac-3cb312ca3189/main.jpg",
+      "page": 5
+    },
+    {
+      "id": "ef730f43b716",
+      "kaufdaId": "1f11de1d-fa0f-4eb5-b2a7-b0669e17498c",
+      "name": "Leinen-/Baumwoll-Shorts",
+      "variants": [],
+      "brand": null,
+      "description": "",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Mode und Accessoires",
+        "Produkte",
+        "Mode",
+        "Bekleidung",
+        "Damenbekleidung",
+        "Damenhose",
+        "kurze Damenhose",
+        "Damen Shorts"
+      ],
+      "image": "https://content-media.bonial.biz/1f11de1d-fa0f-4eb5-b2a7-b0669e17498c/main.jpg",
+      "page": 0
+    },
+    {
+      "id": "f040cd762412",
+      "kaufdaId": "f9d42190-60ce-4c8d-949a-f48a8a7db3a6",
+      "name": "4 in 1: Kompass, Notfall-Pfeife, Feuerstein, Universalband",
+      "variants": [
+        "Becher mit Klapp-Henkel",
+        "Universal-Karabiner"
+      ],
+      "brand": null,
+      "description": "Versch. Zubehör; für Outdoor-, Camping- und Wander-Touren, Stück Versch. Zubehör; für Outdoor-, Camping- und Wander-Touren, Stück Versch. Zubehör; für Outdoor-, Camping- und Wander-Touren 3er-Set",
+      "price": 1.49,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Sport und Freizeit",
+        "Produkte",
+        "Sport",
+        "Radsport"
+      ],
+      "image": "https://content-media.bonial.biz/f9d42190-60ce-4c8d-949a-f48a8a7db3a6/main.jpg",
+      "page": 9
+    },
+    {
+      "id": "f2711d469e1e",
+      "kaufdaId": "18ee7ec5-e4d5-4e22-ba26-c41cfe42180e",
+      "name": "Bio-Basmati-Reis Vollkorn",
+      "variants": [],
+      "brand": "NUR NUR NATUR",
+      "description": "100 % Vollkorn 500-g-Packung",
+      "price": 2.25,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 4.50",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Beilagen",
+        "Reis",
+        "Basmati Reis"
+      ],
+      "image": "https://content-media.bonial.biz/18ee7ec5-e4d5-4e22-ba26-c41cfe42180e/main.jpg",
+      "page": 22
+    },
+    {
+      "id": "f40a398e6f88",
+      "kaufdaId": "da7f07fd-174b-4a54-9978-2b51645cc99a",
+      "name": "Bio-Reibekäse",
+      "variants": [],
+      "brand": "Nur Nur Natur",
+      "description": "Ohne Trennmittel hergestellt, Mit Rohmilch hergestellt 150-g-Packung",
+      "price": 1.89,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 12.60",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "bio"
+      ],
+      "image": "https://content-media.bonial.biz/da7f07fd-174b-4a54-9978-2b51645cc99a/main.jpg",
+      "page": 23
+    },
+    {
+      "id": "f4fd769ecbe3",
+      "kaufdaId": "3210c714-f6a5-4e40-bcd4-0c2c99fef5e3",
+      "name": "Elektrische Küchenhelfer",
+      "variants": [],
+      "brand": "AMBIANO",
+      "description": "",
+      "price": 9.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Elektronik und Technik",
+        "Marken",
+        "Ambiano"
+      ],
+      "image": "https://content-media.bonial.biz/3210c714-f6a5-4e40-bcd4-0c2c99fef5e3/main.jpg",
+      "page": 0
+    },
+    {
+      "id": "f60141d5bbb1",
+      "kaufdaId": "6b90a6ae-abca-43ee-9a3c-3fc6922169df",
+      "name": "Boxershorts",
+      "variants": [],
+      "brand": "UP2FASHION",
+      "description": "100 % Baumwolle; Größen: M-XXL 2er-Set",
+      "price": 6.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": "2er-Set",
+      "categoryPath": [
+        "Mode und Accessoires",
+        "Marken",
+        "Marken Mode",
+        "UP2FASHION"
+      ],
+      "image": "https://content-media.bonial.biz/6b90a6ae-abca-43ee-9a3c-3fc6922169df/main.jpg",
+      "page": 15
+    },
+    {
+      "id": "f69b6dc4616a",
+      "kaufdaId": "e63f8766-9f4a-429a-97ed-1f404ad99b7c",
+      "name": "Edelstahl-Besteck-Set",
+      "variants": [],
+      "brand": "CROFTON",
+      "description": "Aus rostfreiem Edelstahl; pflegeleicht und spülmaschinengeeignet; Messer aus gehärtetem Klingenstahl; für bis zu 12 Personen 60er-Set",
+      "price": 29.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Möbel und Wohnen",
+        "Produkte",
+        "Möbel",
+        "Küche",
+        "Geschirr",
+        "Besteck",
+        "Besteck-Set"
+      ],
+      "image": "https://content-media.bonial.biz/e63f8766-9f4a-429a-97ed-1f404ad99b7c/main.jpg",
+      "page": 11
+    },
+    {
+      "id": "f708afdc1079",
+      "kaufdaId": "7c9d2cb8-2baa-44c4-8319-909f159aa9ea",
+      "name": "Kaffeesahne",
+      "variants": [],
+      "brand": "MILSANI",
+      "description": "12 % Fett; ultrahocherhitzt 200-g-Kännchen",
+      "price": 0.69,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 3.45",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Milsani"
+      ],
+      "image": "https://content-media.bonial.biz/7c9d2cb8-2baa-44c4-8319-909f159aa9ea/main.jpg",
+      "page": 25
+    },
+    {
+      "id": "f714b0399bd8",
+      "kaufdaId": "61f76eac-8897-4468-86ae-6215cd2094ff",
+      "name": "Premium-Pils",
+      "variants": [],
+      "brand": "Bitburger",
+      "description": "Gratis +13,5% 0,568-l-Dose zzgl. 0.25 Pfand",
+      "price": 0.79,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Getränke",
+        "Alkoholische Getränke",
+        "Bier",
+        "Biersorten",
+        "Pils",
+        "Premium Pils"
+      ],
+      "image": "https://content-media.bonial.biz/61f76eac-8897-4468-86ae-6215cd2094ff/main.jpg",
+      "page": 18
+    },
+    {
+      "id": "f7836516aa4f",
+      "kaufdaId": "aa288195-6eba-4f7e-8797-ea513f6c41ea",
+      "name": "Kunststoff-Aufbewahrungskörbe",
+      "variants": [],
+      "brand": "HOME CREATION",
+      "description": "Mit Griffmulden; ineinander oder übereinander stapelbar; Fassungsvermögen: 5,5 l ca. 19 x 15 x 29,5 cm 2er-Packung",
+      "price": 1.49,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Drogerie und Haushalt",
+        "Produkte",
+        "Haushalt",
+        "Aufbewahrung"
+      ],
+      "image": "https://content-media.bonial.biz/aa288195-6eba-4f7e-8797-ea513f6c41ea/main.jpg",
+      "page": 13
+    },
+    {
+      "id": "f97b2535b8c3",
+      "kaufdaId": "5d9e96b5-f563-4074-a2de-e673cebcb636",
+      "name": "Küchen-Tür-Organizer",
+      "variants": [],
+      "brand": "HOME CREATION",
+      "description": "Zum Einhängen; Edelstahl mit EVA-Kratzschutz; passend für Küchen- oder Schranktüren bzw. Schubladen (bis ca. 2 cm Falzstärke)",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Drogerie und Haushalt",
+        "Produkte",
+        "Haushalt",
+        "Aufbewahrung",
+        "Organizer"
+      ],
+      "image": "https://content-media.bonial.biz/5d9e96b5-f563-4074-a2de-e673cebcb636/da8dbcc2-f8c5-406a-9e69-c07effc9e7d0.jpg",
+      "page": 13
+    },
+    {
+      "id": "fba0d3246a10",
+      "kaufdaId": "7e80fcee-8745-40b1-8ae1-a9bd1e8d4a45",
+      "name": "Freizeit-Shorts",
+      "variants": [],
+      "brand": "UP2FASHION",
+      "description": "98 % Baumwolle, 2 % Elasthan, Größen: M-XXL",
+      "price": 7.99,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Baby und Kinder",
+        "Produkte",
+        "Kinder",
+        "Kinderkleidung",
+        "Kinderbekleidung",
+        "Shorts"
+      ],
+      "image": "https://content-media.bonial.biz/7e80fcee-8745-40b1-8ae1-a9bd1e8d4a45/main.jpg",
+      "page": 14
+    },
+    {
+      "id": "fbfae31ebe5a",
+      "kaufdaId": "2f44fe60-d49f-445c-b625-934c609be398",
+      "name": "Kondensmilch",
+      "variants": [
+        "Kondensmilch",
+        "Kondensmilch"
+      ],
+      "brand": "Milsani",
+      "description": "10% Fett 340-g-Packung 7,5% Fett 340-g-Packung 4% Fett, fettreduziert 340-g-Packung",
+      "price": 0.69,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 2.03",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Milchprodukte",
+        "Milch",
+        "Kondensmilch"
+      ],
+      "image": "https://content-media.bonial.biz/2f44fe60-d49f-445c-b625-934c609be398/main.jpg",
+      "page": 25
+    },
+    {
+      "id": "fe9eb0190631",
+      "kaufdaId": "715589b5-a938-45ed-bd9e-a3f1a49c29ce",
+      "name": "Bergbauern Käse",
+      "variants": [],
+      "brand": "Bergader",
+      "description": "Versch. Sorten 250-g-Packung",
+      "price": 2.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 11.96",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Marken",
+        "Marken Lebensmittel",
+        "Bergader"
+      ],
+      "image": "https://content-media.bonial.biz/715589b5-a938-45ed-bd9e-a3f1a49c29ce/main.jpg",
+      "page": 18
+    },
+    {
+      "id": "fea6e3207275",
+      "kaufdaId": "6b03f946-5de3-4e68-914c-802abf9dc812",
+      "name": "Nürnberger Rostbratwürste",
+      "variants": [],
+      "brand": "Gut Drei Eichen",
+      "description": "Vom Schwein 600-g-Packung",
+      "price": 4.99,
+      "priceMax": null,
+      "grundpreisText": "kg-Preis 8.32",
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Saison und Events",
+        "Produkte",
+        "Saison",
+        "Grillsaison",
+        "Grillen",
+        "Grillgut",
+        "Grillwurst",
+        "Rostbratwurst",
+        "Nürnberger Rostbratwurst"
+      ],
+      "image": "https://content-media.bonial.biz/6b03f946-5de3-4e68-914c-802abf9dc812/main.jpg",
+      "page": 19
+    }
+  ]
+}
