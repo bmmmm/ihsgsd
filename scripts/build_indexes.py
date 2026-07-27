@@ -78,6 +78,18 @@ def norm(s):
     return (s or "").replace("\xa0", " ").strip()
 
 
+def round2(x):
+    """Round half UP to 2 decimals, matching JavaScript's Math.round.
+
+    Python's built-in round() is round-half-to-EVEN: round(0.495, 2) is 0.49
+    while Math.round(49.5)/100 is 0.5. A "2 Stück Packung" at €0.99 hit exactly
+    that, so the index stored 0.49 per piece and the page computed 0.50 — a cent
+    of disagreement between the stored history and the live card. Prices are
+    always positive here, so floor(x*100 + 0.5) is the whole story.
+    """
+    return math.floor(x * 100 + 0.5) / 100
+
+
 def parse_number(s):
     """Parse a price/size number tolerant of German grouping.
 
@@ -141,7 +153,7 @@ def derive_gp(offer):
         base = val * VOL_WEIGHT_FACTOR[unit.lower()]
         if base <= 0:
             return None, None
-        return round(face / base, 2), ("l" if unit.lower() in ("ml", "l") else "kg")
+        return round2(face / base), ("l" if unit.lower() in ("ml", "l") else "kg")
 
     # Count-priced goods (4 Stück Packung) only when no weight/volume is given
     # at all — "20 Stück = 1000 g Beutel" must use the weight, not the count.
@@ -156,7 +168,7 @@ def derive_gp(offer):
             if val <= 0:
                 return None, None
             key = COUNT_UNIT.get(unit.lower().rstrip("s"), unit.lower())
-            return round(face / val, 2), UNIT_DISPLAY.get(key, key)
+            return round2(face / val), UNIT_DISPLAY.get(key, key)
     return None, None
 
 

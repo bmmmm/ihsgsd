@@ -134,12 +134,26 @@ def muted_topics(prefs):
     return out
 
 
+def looks_vegan(offer):
+    """The vegan/vegetarian exemption, over title AND description.
+
+    Deliberately wider than the meat/fish detectors, which read the title only:
+    this one can only ever RESCUE a product from a veto, so a false positive
+    costs a visible offer while a false negative silently hides a vegan one.
+    "alpro Mandel- oder Kokosnuss-Drink" says vegan in its description alone —
+    prospekt.js has always read both, and Python reading only the title made the
+    generator drop products the page happily showed.
+    """
+    return bool(VEGAN_RE.search(
+        f"{offer.get('title') or ''} {offer.get('description') or ''}"))
+
+
 def diet_excluded(offer, muted):
     """True when a muted diet topic matches — never for vegan/vegetarian items,
     or muting 'Fleisch' would drop the vegan sausages the reader wants most."""
     title = offer.get("title") or ""
     cat = (offer.get("category") or {}).get("name") or ""
-    if VEGAN_RE.search(title):
+    if looks_vegan(offer):
         return False
     for key, (rx, category) in DIET_TOPICS.items():
         if key in muted and (rx.search(title) or (category and cat == category)):
