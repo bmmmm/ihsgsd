@@ -1856,8 +1856,19 @@ function paintBasketJump(total) {
     const btn = document.getElementById('pk-basket-jump');
     if (!btn) return;
     btn.hidden = !total;
-    btn.textContent = total ? `🧺 ${total} auf dem Zettel` : '';
+    // "auf dem Zettel" is a separate span so CSS can drop it on narrow screens
+    // without touching the accessible name — at 390px the full label left only
+    // one and a half jump links visible beside it.
+    btn.textContent = '';
+    if (total) {
+        btn.append(`🧺 ${total}`);
+        const suffix = document.createElement('span');
+        suffix.className = 'pk-basket-jump-suffix';
+        suffix.textContent = ' auf dem Zettel';
+        btn.appendChild(suffix);
+    }
     btn.title = 'Zum Einkaufszettel springen';
+    btn.setAttribute('aria-label', total ? `${total} auf dem Zettel — zum Einkaufszettel springen` : '');
 }
 
 function bumpBasketJump() {

@@ -462,10 +462,19 @@
            (week plan, shopping list) sat far below the offer grids. */
         .pk-jump {
             position: sticky; top: 0; z-index: 30;
-            display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+            display: flex; align-items: center; gap: 6px;
             margin: 0 0 18px; padding: 8px 4px;
             background: rgba(13,13,13,0.94); backdrop-filter: blur(8px);
             border-bottom: 1px solid #222;
+        }
+        /* The links live in their own track so the basket counter can sit
+           beside them as a sibling. Making the counter position:sticky inside
+           the scrolling track instead let it overlap the links it scrolled past
+           — its translucent background rendered both texts on top of each
+           other. A separate flex child cannot overlap anything. */
+        .pk-jump-links {
+            display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+            flex: 1 1 auto; min-width: 0;
         }
         .pk-jump a {
             color: #bbb; text-decoration: none; font-size: 0.86rem;
@@ -474,7 +483,7 @@
         }
         .pk-jump a:hover { background: #1c1c1c; color: #eee; border-color: #444; }
         .pk-basket-jump {
-            margin-left: auto; cursor: pointer; white-space: nowrap;
+            flex: 0 0 auto; margin-left: auto; cursor: pointer; white-space: nowrap;
             font-family: inherit; font-size: 0.86rem; font-weight: 600;
             padding: 5px 13px; border-radius: 999px;
             border: 1px solid #4caf50; color: #9be29e; background: rgba(76,175,80,0.14);
@@ -535,11 +544,18 @@
             .nav-links .back-link { flex: 1; text-align: center; }
             .pk-hero h2 { font-size: 1.15rem; }
             #pk-lead { font-size: 0.96rem; }
-            /* One scrollable row instead of three wrapped ones: the sticky bar
-               was eating ~15% of a 390px-tall viewport. */
-            .pk-jump { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; gap: 6px; }
-            .pk-jump::-webkit-scrollbar { display: none; }
-            .pk-basket-jump { margin-left: 0; position: sticky; right: 0; }
+            /* One scrollable row of links instead of three wrapped ones: the
+               sticky bar was eating ~15% of a 390px-tall viewport. Only the
+               link track scrolls; the counter stays put beside it. */
+            .pk-jump { gap: 8px; }
+            .pk-jump-links {
+                flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+                -webkit-overflow-scrolling: touch;
+            }
+            .pk-jump-links::-webkit-scrollbar { display: none; }
+            .pk-basket-jump { margin-left: 0; font-size: 0.8rem; padding: 5px 10px; }
+            /* "🧺 29" is enough here; the full wording stays in aria-label. */
+            .pk-basket-jump-suffix { display: none; }
             .pk-cluster, .pk-section { scroll-margin-top: 52px; }
             /* Cards stay two-up rather than collapsing to one huge column. */
             .pk-grid { grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); }
@@ -566,11 +582,13 @@
         <p id="pk-stale" class="pk-stale" hidden></p>
 
         <nav class="pk-jump" id="pk-jump" aria-label="Schnellnavigation">
-            <a href="#pk-mealplan">&#129367;&nbsp; Wochenplan</a>
-            <a href="#pk-shopping">&#129506;&nbsp; Einkaufszettel</a>
-            <a href="#pk-foryou">&#11088;&nbsp; Top-Picks</a>
-            <a href="#cluster-themen">&#128278;&nbsp; Themen</a>
-            <a href="#cluster-controls">&#9881;&nbsp; Vorlieben</a>
+            <div class="pk-jump-links">
+                <a href="#pk-mealplan">&#129367;&nbsp; Wochenplan</a>
+                <a href="#pk-shopping">&#129506;&nbsp; Einkaufszettel</a>
+                <a href="#pk-foryou">&#11088;&nbsp; Top-Picks</a>
+                <a href="#cluster-themen">&#128278;&nbsp; Themen</a>
+                <a href="#cluster-controls">&#9881;&nbsp; Vorlieben</a>
+            </div>
             <button type="button" id="pk-basket-jump" class="pk-basket-jump" hidden></button>
         </nav>
 

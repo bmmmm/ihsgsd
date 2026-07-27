@@ -76,6 +76,58 @@
     return { hard, soft };
   }
 
+  // Visible area of an element: its rect clipped by every scrolling/hidden
+  // ancestor. Without the clipping step an element that merely sits outside its
+  // scroll container's viewport reads as overlapping whatever is next to it —
+  // which produced a run of false positives on the jump bar.
+  function visibleRect(el, doc, win) {
+    let r = el.getBoundingClientRect();
+    let box = { left: r.left, right: r.right, top: r.top, bottom: r.bottom };
+    let p = el.parentElement;
+    while (p && p !== doc.body) {
+      const st = win.getComputedStyle(p);
+      if (/auto|scroll|hidden/.test(st.overflowX + st.overflowY)) {
+        const pr = p.getBoundingClientRect();
+        box = {
+          left: Math.max(box.left, pr.left), right: Math.min(box.right, pr.right),
+          top: Math.max(box.top, pr.top), bottom: Math.min(box.bottom, pr.bottom),
+        };
+      }
+      p = p.parentElement;
+    }
+    return box;
+  }
+
+  // Controls that visually cover each other. This is the class of defect that
+  // slipped through review: a position:sticky counter inside a horizontally
+  // scrolling bar rendered on top of the links it had scrolled past, and its
+  // translucent background showed both labels at once.
+  function scanOverlaps(doc, win) {
+    const groups = ['.pk-jump', '.header', '.header-controls', '.steer-bar', '.pk-sl-item'];
+    const hits = [];
+    for (const g of groups) {
+      for (const container of doc.querySelectorAll(g)) {
+        const kids = [...container.querySelectorAll('a, button, select, input, label')]
+          .filter(e => e.offsetParent)
+          .map(e => ({ el: e, r: visibleRect(e, doc, win) }))
+          .filter(x => x.r.right - x.r.left > 1 && x.r.bottom - x.r.top > 1);
+        for (let i = 0; i < kids.length; i++) {
+          for (let j = i + 1; j < kids.length; j++) {
+            if (kids[i].el.contains(kids[j].el) || kids[j].el.contains(kids[i].el)) continue;
+            const a = kids[i].r, b = kids[j].r;
+            const ox = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+            const oy = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+            if (ox > 1 && oy > 1) {
+              hits.push(`${g}: "${kids[i].el.textContent.trim().slice(0, 18)}" over `
+                + `"${kids[j].el.textContent.trim().slice(0, 18)}" (${Math.round(ox)}x${Math.round(oy)}px)`);
+            }
+          }
+        }
+      }
+    }
+    return hits;
+  }
+
   function scanTargets(doc) {
     const small = {};
     const sel = 'button, a, input, select, textarea, [role="button"], label';
@@ -102,11 +154,14 @@
     try {
       const doc = f.contentDocument;
       const { hard, soft } = scanBreaks(doc);
+      const overlaps = scanOverlaps(doc, f.contentWindow);
       out = {
         page, width,
         hardBreaks: hard.length,
         details: hard.slice(0, 6).map(h => `${h.word} @ ${h.sel} (box ${h.boxW}px < ${h.neededPx}px)`),
         softBreaks: soft.length,
+        overlaps: overlaps.length,
+        overlapDetails: overlaps.slice(0, 6),
         overflowPx: Math.max(0, doc.documentElement.scrollWidth - doc.documentElement.clientWidth),
         smallTargets: scanTargets(doc),
       };
@@ -119,18 +174,19 @@
   window.layoutProbe = async function (pages = PAGES, widths = WIDTHS) {
     const rows = [];
     for (const p of pages) for (const w of widths) rows.push(await probe(p, w));
-    const broken = rows.filter(r => r.hardBreaks || r.overflowPx);
+    const broken = rows.filter(r => r.hardBreaks || r.overflowPx || r.overlaps);
     console.table(rows.map(r => ({
-      page: r.page, width: r.width, hardBreaks: r.hardBreaks,
+      page: r.page, width: r.width, hardBreaks: r.hardBreaks, overlaps: r.overlaps,
       overflowPx: r.overflowPx, softBreaks: r.softBreaks,
       smallTargetKinds: Object.keys(r.smallTargets).length,
     })));
     for (const r of rows) {
       if (r.details.length) console.warn(`${r.page} @${r.width}px torn words:`, r.details);
+      if (r.overlapDetails.length) console.warn(`${r.page} @${r.width}px overlapping controls:`, r.overlapDetails);
     }
     console.log(broken.length
-      ? `FAIL: ${broken.length} page/width combination(s) with torn words or overflow.`
-      : 'PASS: no torn words, no horizontal overflow.');
+      ? `FAIL: ${broken.length} page/width combination(s) with torn words, overlap or overflow.`
+      : 'PASS: no torn words, no overlapping controls, no horizontal overflow.');
     return rows;
   };
   console.log('layoutProbe() ready — run: await layoutProbe()');
