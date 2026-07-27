@@ -74,6 +74,10 @@ jobs:
 
       - name: Determine folder and file structure
         id: structure
+        env:
+          # Strips the two parts EDEKA varies per request, so two fetches of the
+          # same week can be compared for actual content changes.
+          NORMALISE: '.offers |= map(del(.images) | .criteria = ((.criteria // []) | sort_by(.id)))'
         run: |
           # File the snapshot by the API's own validFrom (the Monday the offers
           # start), NOT by the run date. That makes the destination a property of
@@ -100,15 +104,29 @@ jobs:
           FILE="$FOLDER/$REF_DATE.json"
           mkdir -p "$FOLDER"
 
-          # Never let a re-run shrink an existing snapshot. A fetch that catches
-          # EDEKA mid-switch can return a partial list; overwriting a complete
-          # archived week with it would lose offers permanently. Equal or larger
-          # counts may overwrite (that is a genuine correction).
+          # Two guards against pointless rewrites, now that three runs a week hit
+          # the same week's file.
           if [ -f "$FILE" ]; then
             OLD=$(jq '.offers | length' "$FILE")
             NEW=$(jq '.offers | length' data.json)
+            # 1. Never shrink an archived week. A fetch catching EDEKA mid-switch
+            #    returns a partial list; overwriting a complete snapshot with it
+            #    would lose those offers for good.
             if [ "$NEW" -lt "$OLD" ]; then
               echo "Existing $FILE has $OLD offers, fetched only $NEW — keeping the existing snapshot."
+              rm -f data.json
+              echo "folder=$FOLDER" >> $GITHUB_OUTPUT
+              echo "file=$FILE" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+            # 2. Ignore EDEKA's per-request churn. Every response mints fresh
+            #    UUIDs for all four image URLs and returns `criteria` in
+            #    arbitrary order, so re-fetching an unchanged week still differs
+            #    in ~800 lines. Left alone that is three noise commits a week.
+            #    Dropping the image URLs is safe: thumbnails are archived under
+            #    img/ and the page prefers those, falling back to the live URL.
+            if [ "$(jq -S "$NORMALISE" "$FILE")" = "$(jq -S "$NORMALISE" data.json)" ]; then
+              echo "$FILE is unchanged apart from image URLs and criteria order — keeping it."
               rm -f data.json
               echo "folder=$FOLDER" >> $GITHUB_OUTPUT
               echo "file=$FILE" >> $GITHUB_OUTPUT
