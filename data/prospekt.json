@@ -1,102 +1,108 @@
 {
-  "generatedAt": "2026-07-20",
-  "weekLabel": "KW30",
-  "lead": "Diese Woche warten echte Preis-Highlights auf dich: Astra Urtyp zum Allzeit-Tief für € 12,99 (GP € 1,46/l) und der Schöfferhofer Weizen-Mix ebenfalls zum historischen Bestpreis für € 3,99. Dein Lieblingspils, das Veltins Steinie-Paket, ist auch dabei. Bei Obst & Gemüse gibt's deine geliebten Auberginen für nur € 0,99 und Kirschen zum Naschpreis von € 0,39. Für die pflanzliche Küche lohnt sich der Like Meat Fleischersatz für € 2,79, und die Spraga Kombucha gibt's zum besten Preis aller Zeiten für € 1,99. Viel Spaß beim Stöbern!",
+  "generatedAt": "2026-07-27",
+  "weekLabel": "KW31",
+  "lead": "Diese Woche ist wie gemacht für dich: Die GUT & GÜNSTIG Tafeläpfel gibt's zum Allzeit-Tief für nur €1,49 (Grundpreis € 0,75/kg), und auch Mönchshof-Bier ist so günstig wie nie zuvor. Dein Wicküler Pils gibt's zum Sonderpreis für €9,49 – dazu König und Warsteiner Pilsener für alle Biertage. Bei Obst & Gemüse warten Bio-Zitronen, Bio-Tafeltrauben und Bio-Ingwer für nur €0,49 auf dich. Und wer's herzhaft-vegan mag, greift zu Rügenwalders Veganen Alternativen oder Wiesenhofs Bruzzzler-Würstchen vom Grill. Kurz: viel Bio, viel Gemüse, viel Bier – ganz nach deinem Geschmack.",
   "sections": {
-    "vegan": "Pflanzliche Highlights für deine Küche: Fleischersatz und Haferdrink für Frühstück & Co.",
-    "obstgemuese": "Frisches Obst & Gemüse der Saison – von knackigen Auberginen bis süßen Kirschen, alles für deinen Wocheneinkauf.",
-    "bierspezi": "Bier- und Spezi-Fans aufgepasst: gleich mehrere Sorten zum Allzeit-Tief, dazu dein Lieblingspils.",
-    "knueller": "Die Superknüller der Woche mit satten Rabatten – von Fleisch über Spirituosen bis Drogerie, auch wenn nicht jedes Angebot dein Ding ist."
+    "vegan": "Vegane Highlights für dich: herzhafte Alternativen zum Grillen und für die Pfanne, ganz ohne Fleisch.",
+    "obstgemuese": "Frisches Obst & Gemüse, dein Lieblingsbereich – von Bio-Zitronen bis zum Allzeit-Tief bei Äpfeln.",
+    "bierspezi": "Zwei Pils-Kästen für Bierfans – Wicküler zum Sonderpreis, dazu König und Warsteiner.",
+    "knueller": "Superknüller mit echtem Preisvorteil: Bier und Äpfel zum Allzeit-Tief, alles geprüft auf Bestpreis."
   },
   "foryou": [
     {
-      "title": "Deutschland - Auberginen",
+      "title": "Deutschland - GUT & GÜNSTIG - Tafeläpfel",
       "rank": 1,
-      "reason": "Deine geliebten Auberginen für nur 0,99 € – Obst & Gemüse pur.",
-      "evidenceTag": "mag ich"
+      "reason": "Allzeit-Tief bei Grundpreis € 0,75/kg – so günstig waren sie noch nie.",
+      "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Veltins Pilsener Steinie",
+      "title": "Deutschland - Bio-Zucchini",
       "rank": 2,
-      "reason": "Dein Lieblingspils im Steinie-Kasten – GP ab € 1,37 je Liter.",
+      "reason": "Bio-Zucchini gehört zu deinen Favoriten – diesmal aus Deutschland, nur €1,49.",
       "evidenceTag": "mag ich"
     },
     {
-      "title": "Astra Urtyp",
+      "title": "Wicküler Pils",
       "rank": 3,
-      "reason": "Astra so günstig wie nie: € 12,99, GP € 1,46/l – Allzeit-Tief.",
-      "evidenceTag": "Allzeit-Tief"
+      "reason": "Dein Pils-Favorit, günstig wie selten: nur €9,49 pro Kasten.",
+      "evidenceTag": "mag ich"
     },
     {
-      "title": "Schöfferhofer Weizen-Mix oder Hefeweizen",
+      "title": "Mönchshof",
       "rank": 4,
-      "reason": "Weizen zum Allzeit-Tief: € 3,99, GP € 2,02/l.",
+      "reason": "Bier zum Allzeit-Tiefstpreis – Grundpreis € 1,40/l, so günstig wie nie.",
       "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Spraga Kombucha",
+      "title": "Rügenwalder Mühle - Vegane Alternativen",
       "rank": 5,
-      "reason": "Kombucha zum historischen Bestpreis: € 1,99, GP € 6,03/l.",
-      "evidenceTag": "Allzeit-Tief"
+      "reason": "Vegane Alternative, dein Favorit, für nur €2,49.",
+      "evidenceTag": "Favorit"
     },
     {
-      "title": "Like Meat - Rein pflanzlich aus Soja",
+      "title": "Wiesenhof - Bruzzzler veggie Würstchen",
       "rank": 6,
-      "reason": "Pflanzlicher Fleischersatz für dein Vegan-Regal, € 2,79.",
+      "reason": "Vegane Würstchen für den Grill – genau dein Geschmack.",
       "evidenceTag": "Favorit"
     },
     {
-      "title": "Oatly Haferdrink",
+      "title": "China - Bio-Ingwer",
       "rank": 7,
-      "reason": "Haferdrink für deine pflanzliche Küche, nur € 1,79.",
+      "reason": "Bio und Obst & Gemüse – deine Favoriten, für nur €0,49.",
       "evidenceTag": "Favorit"
     },
     {
-      "title": "deit Limonade oder Spezi",
+      "title": "Südafrika - Bio Zitronen",
       "rank": 8,
-      "reason": "Spezi-Liebling für nur € 1,19, GP € 0,95/l.",
+      "reason": "Bio-Zitronen aus deinem Lieblingsbereich Obst & Gemüse.",
       "evidenceTag": "Favorit"
     },
     {
-      "title": "Deutschland - Frühkartoffeln „Back&Grill“",
+      "title": "Italien - Bio Tafeltrauben",
       "rank": 9,
-      "reason": "Frühkartoffeln zum Grillen, GP nur € 1,50/kg – starker Preis.",
+      "reason": "Bio-Trauben aus Italien – Obst & Gemüse, dein Favorit-Bereich.",
       "evidenceTag": "Favorit"
     },
     {
-      "title": "Türkei - Kirschen",
+      "title": "König Pilsener",
       "rank": 10,
-      "reason": "Kirschen zum Naschen für nur € 0,39 – Obst-Saison pur.",
+      "reason": "Bier ist dein Ding – ganzer Kasten für €11,99.",
       "evidenceTag": "Favorit"
     },
     {
-      "title": "Faber Sekt oder Light live Alkoholfrei",
+      "title": "Warsteiner Pilsener",
       "rank": 11,
-      "reason": "Alkoholfreier Sekt zum Allzeit-Tief: € 2,79, GP € 3,72/l.",
-      "evidenceTag": "Allzeit-Tief"
+      "reason": "Noch ein Pils-Kasten für Bierfans wie dich, €10,99.",
+      "evidenceTag": "Favorit"
     },
     {
-      "title": "Niederlande - Stangenbrokkoli",
+      "title": "Niederlande - Rispentomaten",
       "rank": 12,
-      "reason": "Stangenbrokkoli für dein Gemüsefach, € 1,99.",
+      "reason": "Frisches Gemüse für nur €1,00 – dein Lieblingsbereich.",
       "evidenceTag": "Favorit"
     },
     {
-      "title": "Deutschland - Eisbergsalat",
+      "title": "Peru - Avocados",
       "rank": 13,
-      "reason": "Knackiger Eisbergsalat für nur € 0,99.",
+      "reason": "Avocados für nur €0,99 – Obst & Gemüse, ganz nach deinem Geschmack.",
       "evidenceTag": "Favorit"
     },
     {
-      "title": "Ecuador - Bananen",
+      "title": "Deutschland - GUT & GÜNSTIG - Frühkartoffeln",
       "rank": 14,
-      "reason": "Bananen als Obst-Basic für € 1,49.",
+      "reason": "Frühkartoffeln mit gutem Grundpreis € 1,00/kg – dein Bereich.",
       "evidenceTag": "Favorit"
     },
     {
-      "title": "Deutschland - Zwiebeln",
+      "title": "Deutschland - Spitzkohl",
       "rank": 15,
-      "reason": "Zwiebeln als Küchen-Basic für € 1,49.",
+      "reason": "Spitzkohl für nur €1,11 – frisches Gemüse für dich.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Deutschland - EDEKA Regional - Mini-Romanasalat",
+      "rank": 16,
+      "reason": "EDEKA Regional Romanasalat für nur €0,99 – frisch und regional.",
       "evidenceTag": "Favorit"
     }
   ],

@@ -1,179 +1,179 @@
 {
-  "generatedAt": "2026-07-20",
-  "weekLabel": "2026-KW30",
-  "summary": "Diese Woche zeigen Smoothies und Kartoffeln extreme Preissteigerungen (bis 150% über dem Jahresminimum), während Getränke wie Astra Urtyp und Energydrinks zum Allzeittief zu haben sind. Guter Zeitpunkt für Bier und Kaffee.",
+  "generatedAt": "2026-07-27",
+  "weekLabel": "2026-KW31",
+  "summary": "KW31 zeigt massive Preissteigerungen bei Zwiebeln (+92%) und Pringles (+79%), während Hähnchen und Vodka All-Time-Tiefs erreichen. Beste Deals: Pfanner-Getränk und Hähnchen jeweils 23% günstiger als je zuvor.",
   "pricier": [
     {
-      "title": "true fruits Smoothie",
-      "cat": "Grundnahrung",
-      "current_gp": 9.96,
-      "unit": "l",
-      "hist_min_gp": 3.99,
-      "pct_above_min": 149.6,
-      "note": "150% teurer als Tiefstpreis im Dezember"
-    },
-    {
-      "title": "Deutschland - Speisekartoffeln",
+      "title": "Deutschland - GUT & GÜNSTIG - Zwiebeln",
       "cat": "Obst & Gemüse",
-      "current_gp": 1.85,
+      "current_gp": 1.25,
       "unit": "kg",
-      "hist_min_gp": 0.75,
-      "pct_above_min": 146.7,
-      "note": "147% über Jahrestiefstpreis"
+      "hist_min_gp": 0.65,
+      "pct_above_min": 92.3,
+      "note": "92% teurer als Mindestpreis (0,65 €/kg)"
     },
     {
-      "title": "Paulaner Spezi oder Limo",
-      "cat": "Getränke",
-      "current_gp": 2.09,
-      "unit": "l",
-      "hist_min_gp": 1.1,
-      "pct_above_min": 90.0,
-      "note": "90% über Tiefstpreis"
+      "title": "Pringles",
+      "cat": "Knabbern & Naschen",
+      "current_gp": 13.46,
+      "unit": "kg",
+      "hist_min_gp": 7.52,
+      "pct_above_min": 79.0,
+      "note": "79% teurer als Tiefstand (7,52 €/kg)"
     },
     {
-      "title": "Coca-Cola, Fanta, Sprite",
-      "cat": "Getränke",
-      "current_gp": 0.97,
-      "unit": "l",
-      "hist_min_gp": 0.66,
-      "pct_above_min": 47.0,
-      "note": "47% über historischem Minimum"
-    },
-    {
-      "title": "Landliebe Butter oder Die Streichzarte",
+      "title": "Activia",
       "cat": "Molkerei & Käse",
-      "current_gp": 5.16,
+      "current_gp": 3.24,
       "unit": "kg",
-      "hist_min_gp": 3.96,
+      "hist_min_gp": 2.41,
+      "pct_above_min": 34.4,
+      "note": "34% über Mindestpreis (2,41 €/kg)"
+    },
+    {
+      "title": "Milkana Schmelzkäse",
+      "cat": "Molkerei & Käse",
+      "current_gp": 10.47,
+      "unit": "kg",
+      "hist_min_gp": 7.84,
+      "pct_above_min": 33.5,
+      "note": "33% teurer als Tiefstand (7,84 €/kg)"
+    },
+    {
+      "title": "Deutschland - Möhren",
+      "cat": "Obst & Gemüse",
+      "current_gp": 1.29,
+      "unit": "kg",
+      "hist_min_gp": 0.99,
       "pct_above_min": 30.3,
-      "note": "30% über Tiefstpreis"
+      "note": "30% über Mindestpreis (0,99 €/kg)"
     },
     {
-      "title": "Flensburger Pilsener",
+      "title": "Heineken",
       "cat": "Getränke",
-      "current_gp": 2.52,
+      "current_gp": 2.36,
       "unit": "l",
-      "hist_min_gp": 1.97,
-      "pct_above_min": 27.9,
-      "note": "28% teurer als günstigstes Angebot"
+      "hist_min_gp": 1.87,
+      "pct_above_min": 26.2,
+      "note": "26% teurer als Tiefstand (1,87 €/l)"
     },
     {
-      "title": "Vernel Weichspüler",
-      "cat": "Drogerie",
-      "current_gp": 0.05,
-      "unit": "WA",
-      "hist_min_gp": 0.04,
-      "pct_above_min": 25.0,
-      "note": "25% über Tiefstpreis"
-    },
-    {
-      "title": "Air Wick Freshmatic Max",
-      "cat": "Drogerie",
-      "current_gp": 19.16,
-      "unit": "l",
-      "hist_min_gp": 15.96,
-      "pct_above_min": 20.1,
-      "note": "20% über niedrigstem Preis"
-    },
-    {
-      "title": "EDEKA Regional - Frische Bratwurst",
+      "title": "Hackfleisch",
       "cat": "Fleisch & Wurst",
-      "current_gp": 8.97,
+      "current_gp": 8.8,
       "unit": "kg",
-      "hist_min_gp": 7.49,
-      "pct_above_min": 19.8,
-      "note": "20% teurer als Tiefstpreis"
+      "hist_min_gp": 6.98,
+      "pct_above_min": 26.1,
+      "note": "26% über Mindestpreis (6,98 €/kg)"
     },
     {
-      "title": "De Cecco Pasta",
-      "cat": "Grundnahrung",
-      "current_gp": 2.58,
+      "title": "Zott Sahnejoghurt",
+      "cat": "Molkerei & Käse",
+      "current_gp": 3.5,
       "unit": "kg",
-      "hist_min_gp": 2.22,
-      "pct_above_min": 16.2,
-      "note": "16% über Jahresminimum"
+      "hist_min_gp": 2.79,
+      "pct_above_min": 25.4,
+      "note": "25% über Tiefstand (2,79 €/kg)"
+    },
+    {
+      "title": "Sülze Royal",
+      "cat": "Fleisch & Wurst",
+      "current_gp": 17.9,
+      "unit": "kg",
+      "hist_min_gp": 14.9,
+      "pct_above_min": 20.1,
+      "note": "20% teurer als Tiefstand (14,9 €/kg)"
+    },
+    {
+      "title": "Schweinefilet",
+      "cat": "Fleisch & Wurst",
+      "current_gp": 17.9,
+      "unit": "kg",
+      "hist_min_gp": 14.99,
+      "pct_above_min": 19.4,
+      "note": "19% über Mindestpreis (14,99 €/kg)"
     }
   ],
   "deals": [
     {
-      "title": "Astra Urtyp",
+      "title": "Pfanner Teegetränke",
       "cat": "Getränke",
-      "current_gp": 1.46,
+      "current_gp": 0.65,
       "unit": "l",
-      "hist_max_gp": 2.24,
-      "note": "35% günstiger als Höchstpreis"
+      "hist_max_gp": 0.85,
+      "note": "23% guenstiger als Hoechstpreis (0,85 €/l)"
     },
     {
-      "title": "Sensodyne Zahncreme",
-      "cat": "Drogerie",
-      "current_gp": 30.53,
-      "unit": "l",
-      "hist_max_gp": 46.53,
-      "note": "34% günstiger als je zuvor"
-    },
-    {
-      "title": "Booster Energy Drink",
-      "cat": "Getränke",
-      "current_gp": 1.48,
-      "unit": "l",
-      "hist_max_gp": 2.09,
-      "note": "29% unter Jahreshöchstpreis"
-    },
-    {
-      "title": "Dallmayr Classic oder Classic mild",
-      "cat": "Grundnahrung",
-      "current_gp": 12.98,
+      "title": "Frisches Hähncheninnenfilet",
+      "cat": "Fleisch & Wurst",
+      "current_gp": 9.9,
       "unit": "kg",
-      "hist_max_gp": 16.98,
-      "note": "24% günstiger als teuerste Woche"
+      "hist_max_gp": 12.9,
+      "note": "23% guenstiger als je zuvor (12,9 €/kg)"
     },
     {
-      "title": "Mazola Keimöl oder Rapsöl",
-      "cat": "Grundnahrung",
-      "current_gp": 4.65,
+      "title": "Three Sixty Vodka",
+      "cat": "Getränke",
+      "current_gp": 14.27,
       "unit": "l",
-      "hist_max_gp": 5.72,
-      "note": "19% unter Höchstpreis"
+      "hist_max_gp": 18.56,
+      "note": "23% guenstiger als je zuvor (18,56 €/l)"
     },
     {
-      "title": "Milram Buttermilch Drink",
+      "title": "Beemster Royaal",
       "cat": "Molkerei & Käse",
-      "current_gp": 1.72,
+      "current_gp": 15.7,
       "unit": "kg",
-      "hist_max_gp": 1.99,
-      "note": "14% günstiger als teuerste Woche"
+      "hist_max_gp": 19.9,
+      "note": "21% guenstiger als Hoechstpreis (19,9 €/kg)"
     },
     {
-      "title": "EDEKA Regional - Hackfleisch XXL",
+      "title": "Zwiebelmettwurst oder Schinkenzwiebelmettwurst",
       "cat": "Fleisch & Wurst",
-      "current_gp": 8.74,
+      "current_gp": 9.95,
       "unit": "kg",
-      "hist_max_gp": 9.99,
-      "note": "13% unter Höchstpreis"
+      "hist_max_gp": 12.45,
+      "note": "20% guenstiger als je zuvor (12,45 €/kg)"
     },
     {
-      "title": "Tiger Weiß- oder Braunbrot",
-      "cat": "Grundnahrung",
-      "current_gp": 2.39,
+      "title": "Deutschland - GUT & GÜNSTIG - Tafeläpfel",
+      "cat": "Obst & Gemüse",
+      "current_gp": 0.75,
       "unit": "kg",
-      "hist_max_gp": 2.67,
-      "note": "11% günstiger als Jahreshöchstpreis"
+      "hist_max_gp": 0.9,
+      "note": "17% guenstiger als Hoechstpreis (0,9 €/kg)"
     },
     {
-      "title": "GUT & GÜNSTIG - Hähnchen-Ministeaks",
+      "title": "Frischer Schweinebraten oder Schweinerollbraten",
       "cat": "Fleisch & Wurst",
-      "current_gp": 11.23,
+      "current_gp": 5.99,
       "unit": "kg",
-      "hist_max_gp": 12.48,
-      "note": "10% unter Höchstpreis"
+      "hist_max_gp": 6.99,
+      "note": "14% guenstiger als je zuvor (6,99 €/kg)"
     },
     {
-      "title": "Lillet L'Apéritif",
+      "title": "Deutschland - Spitzkohl",
+      "cat": "Obst & Gemüse",
+      "current_gp": 1.11,
+      "unit": "kg",
+      "hist_max_gp": 1.29,
+      "note": "14% guenstiger als Hoechstpreis (1,29 €/kg)"
+    },
+    {
+      "title": "China - Bio-Ingwer",
+      "cat": "Obst & Gemüse",
+      "current_gp": 4.9,
+      "unit": "kg",
+      "hist_max_gp": 5.5,
+      "note": "11% guenstiger als je zuvor (5,5 €/kg)"
+    },
+    {
+      "title": "Valensina",
       "cat": "Getränke",
-      "current_gp": 14.65,
+      "current_gp": 1.79,
       "unit": "l",
-      "hist_max_gp": 15.99,
-      "note": "8% günstiger als teuerste Woche"
+      "hist_max_gp": 1.99,
+      "note": "10% guenstiger als Hoechstpreis (1,99 €/l)"
     }
   ],
   "model": "haiku"
