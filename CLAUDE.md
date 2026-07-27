@@ -90,8 +90,29 @@ A second, fully separate offer source mirroring the EDEKA pattern:
 - **`.github/workflows/fetch-aldi-offers.yml`** — Mon 05:00/10:00 UTC + Tue
   06:00 UTC safety net + `workflow_dispatch`; ALDI's publish time is unknown,
   tune the schedule after observing the switch a few times.
-- No UI yet — table/dashboard/prospekt stay EDEKA-only. Grundpreis parity for
-  ALDI fields (`price.comparison` / `perUnitDisplay`) is unvalidated.
+- **Data model facts (KW31 baseline — recheck against week 2):** `categories`
+  is a parent→child path (1–2 entries, parent first; ~12 parents ≈ EDEKA's
+  `category.name`, except parent "Wochenangebote" is semantically empty — its
+  child "Frischeprodukte im Angebot" is the produce section). `badges` carries
+  explicit "Vegan"/"Vegetarisch"/"Kühlung"/"Tiefkühlung" labels (curated:
+  produce is implicitly vegan but unbadged). `weightType` "2" +
+  `quantityUnit` "kg" = loose goods sold per kg, whose `price.amount` IS the
+  per-kg price; `quantityUnit` "ea"/"pac"/"bt" = piece/pack/bottle ("bt" rows
+  carry `bottleDeposit`). `sellingSize` ("1 kg", "156 g") exists exactly where
+  `price.comparison*` does (75/86; correct on spot checks, unvalidated at
+  scale) — the 11 lacking both are loose/per-piece produce. `abstractSku`
+  groups flavour variants (Grünländer ×5, Coca-Cola family ×3).
+  `price.savingsDisplay` ("34 %") is ALDI's own discount figure. Dead fields:
+  `notForSale` (always true), `onSaleDateDisplay`, `alcohol`, `energyClass`,
+  `ageRestriction`, `discontinued*`, `isAbstract`, `price.additionalInfo`,
+  `price.perUnit*` (4/86).
+- **Open observations before building on the data:** whether `sku` /
+  `abstractSku` are stable across weeks (if yes, price history needs no
+  title-normalization heuristic à la EDEKA); whether the category set and
+  parent-first order hold; whether ALDI purges asset URLs the way EDEKA purged
+  images (EDEKA lost 75 weeks before archiving started); whether the
+  loose-goods per-kg reading matches the printed flyer.
+- No UI yet — table/dashboard/prospekt stay EDEKA-only.
 
 ## Key Patterns
 
