@@ -1,0 +1,55 @@
+name: Fetch kaufda Offers
+
+on:
+  schedule:
+    # kaufda flyers switch Sunday ~22:00 UTC (validFrom of the new week), and
+    # snapshots are filed under the brochure's OWN validFrom week — so early
+    # or repeated runs write nothing wrong, same reasoning as the EDEKA
+    # workflow. Times are UTC; GitHub's scheduler is routinely late.
+    - cron: "0 5 * * 1"   # Mon 07:00 CEST
+    - cron: "0 10 * * 1"  # Mon 12:00 CEST
+    - cron: "0 6 * * 2"   # Tue 08:00 CEST — safety net
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fetch-kaufda-offers
+  cancel-in-progress: false
+
+jobs:
+  fetch-and-store:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "24591225+bmmmm@users.noreply.github.com"
+
+      - name: Fetch kaufda offers (REWE, Lidl, ALDI SUED)
+        # All discovery/retry/guard logic lives in the script; a clean exit
+        # with nothing written is the normal case after the week's first
+        # successful run. One failing retailer only warns — the next cron
+        # run retries it, and audit_data.py flags a week that never arrived.
+        run: python3 scripts/fetch_kaufda.py
+
+      - name: Commit and push data
+        run: |
+          git add data-kaufda/
+          git diff --staged --quiet && echo "Nothing to commit, skipping" && exit 0
+          FILES=$(git diff --staged --name-only | tr '\n' ' ')
+          git commit -m "Add kaufda data: $FILES"
+          # Retry against a concurrent push to main (same pattern as the other
+          # fetch workflows): rebase onto the latest remote and try again.
+          for attempt in 1 2 3; do
+            if git push; then exit 0; fi
+            echo "push rejected (attempt $attempt) — rebasing onto origin/main and retrying"
+            git pull --rebase origin main
+          done
+          echo "push failed after 3 attempts" >&2
+          exit 1

@@ -115,11 +115,53 @@ A second, fully separate offer source mirroring the EDEKA pattern:
   title-normalization heuristic à la EDEKA); whether the category set and
   parent-first order hold; whether the loose-goods per-kg reading matches the
   printed flyer.
-- **`audit_data.py` has a compact ALDI section**: misfiled weeks, cadence
-  gaps (a NEW gap = broken cron = exit 1; investigated ones move to
-  `ALDI_KNOWN_MISSING` and become a note), partial snapshots, duplicate skus,
-  image coverage.
+- **`audit_data.py` audits every sibling archive** via `check_archive()`:
+  misfiled weeks, cadence gaps (a NEW gap = broken cron = exit 1;
+  investigated ones move to the known-missing sets and become a note),
+  partial snapshots, duplicate keys, image coverage (data-aldi only).
 - No UI yet — table/dashboard/prospekt stay EDEKA-only.
+
+## kaufda data source — REWE, Lidl, ALDI SÜD (phase 1 — collection only, no UI)
+
+A third source: flyer offers from kaufda's (Bonial's) content-viewer API,
+fetched by **`scripts/fetch_kaufda.py`** into
+`data-kaufda/{retailer}/{YEAR}/KW{XX}/{monday}.json` (retailers: `rewe`,
+`lidl`, `aldi-sued`). kaufda-ALDI complements the direct ALDI API — the flyer
+holds ~164 offers incl. non-food vs. 86 food offers in `data-aldi/`.
+
+- **API**: `https://content-viewer-be.kaufda.de/v1` — no auth, but needs a
+  browser User-Agent plus three underscore headers exactly as the
+  FST_ERR_VALIDATION error names them (`delivery_channel: web`,
+  `user_platform_category: desktop`, `user_platform_os: macos`).
+  `GET /brochures/<uuid>?lat&lng` (metadata incl. validFrom/validUntil),
+  `GET /brochures/<uuid>/pages?lat&lng` (offers per page). The direct
+  retailer sites stay blocked (Lidl wants UA+Origin tricks, REWE 403s) —
+  kaufda is the deliberate detour.
+- **Discovery is SSR scraping, no seed needed**: the shelf page (regional,
+  Bonn lat/lng) and the `/Geschaefte/<retailer>` pages embed `__NEXT_DATA__`
+  JSON listing every current brochure with publisher + validFrom. ALDI SÜD
+  appears only on its Geschaefte page, not in the Bonn shelf.
+- **Offers are normalized, not raw** (unlike data/ and data-aldi/): Bonial's
+  nested flyer extracts carry no SKUs and lots of tracking noise. Each offer
+  becomes a flat record with our own stable `id` = sha1(retailer|brand|
+  names|description)[:12] — it deduplicates regional flyer editions, keeps
+  refetches churn-free and matches products across weeks. `kaufdaId` keeps
+  the source UUID. Multi-product offers ("versch. Sorten") keep extra names
+  in `variants`; `grundpreisText` holds Bonial's "1 kg = 4.51" string
+  unparsed (REWE ~72 %, Lidl ~36 % coverage).
+- **Snapshots are filed under the brochure's own validFrom week** (Monday of
+  that ISO week; validFrom is Sun 22:00/23:00 UTC = Mon 00:00 local, shifted
+  +6h before snapping). Like EDEKA, this makes early runs safe — Lidl's
+  next-week preview brochure lands as next week's snapshot. Guards: retry,
+  ≥30 offers per retailer, never-shrink, churn filter (drops `kaufdaId`/
+  `image`/`page`, which flip when regional editions merge in another order).
+  One failing retailer only warns; the audit catches a week that never came.
+- **Images are deliberately NOT archived** for kaufda: Bonial serves ~290 KB
+  originals with no working server-side resize (`impolicy` returns garbage) —
+  ~1150 offers/week would be ~330 MB/week. Offer records keep the URL; if a
+  UI ever needs them, add a local resize step as a conscious decision.
+- **`.github/workflows/fetch-kaufda-offers.yml`** — Mon 05:00/10:00 UTC +
+  Tue 06:00 UTC + `workflow_dispatch`, same commit/push retry as the others.
 
 ## Key Patterns
 
