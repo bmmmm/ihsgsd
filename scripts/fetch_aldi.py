@@ -43,6 +43,7 @@ CATEGORY_KEY = "1588161426582123"
 PAGE_LIMIT = 60  # the API only accepts limits in {12,16,24,30,32,48,60}
 MIN_OFFERS = 20  # fewer = mid-switch partial list, refuse to write
 RETRY_SLEEPS = (30, 120, 300)
+IMG_WIDTH = 320  # ~16 KB JPEG via the asset URL's {width} placeholder
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = REPO_ROOT / "data-aldi"
@@ -129,6 +130,46 @@ def load_offers(path):
         return None
 
 
+def archive_images(offers, img_dir):
+    """Archive one IMG_WIDTH thumbnail per offer, keyed by sku.
+
+    Mirrors the EDEKA workflow's image step: skip already-present files,
+    failures are non-fatal. Whether ALDI purges old asset URLs the way EDEKA
+    purged images is unknown — archiving from week 1 is the lesson from the
+    75 EDEKA weeks that are gone for good.
+    """
+    img_dir.mkdir(parents=True, exist_ok=True)
+    ok = fail = 0
+    for offer in offers:
+        sku = offer.get("sku")
+        assets = offer.get("assets") or []
+        url = assets[0].get("url") if assets else None
+        if not sku or not url:
+            continue
+        out = img_dir / f"{sku}.jpg"
+        if out.exists():
+            continue
+        url = url.replace("{width}", str(IMG_WIDTH)).replace(
+            "{slug}", offer.get("urlSlugText") or "product"
+        )
+        try:
+            req = urllib.request.Request(url, headers={"Accept": "image/*"})
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                data = resp.read()
+            out.write_bytes(data)
+            ok += 1
+        except (OSError, http.client.HTTPException) as err:
+            out.unlink(missing_ok=True)
+            fail += 1
+            print(f"WARN: could not fetch image for {sku} ({err})")
+        time.sleep(0.1)  # gentle throttle for the image host
+    if ok or fail:
+        print(
+            f"archived {ok} image(s), {fail} failure(s) into "
+            f"{img_dir.relative_to(REPO_ROOT)}"
+        )
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Fetch this week's ALDI Sued food offers into data-aldi/."
@@ -179,41 +220,46 @@ def main():
         return 0
 
     existing = load_offers(target)
-    if existing is not None:
-        if len(offers) < len(existing):
-            print(
-                f"existing {target.relative_to(REPO_ROOT)} has "
-                f"{len(existing)} offers, fetched only {len(offers)} — "
-                f"keeping the existing snapshot"
-            )
-            return 0
-        if normalized(existing) == fetched_norm:
-            print(
-                f"{target.relative_to(REPO_ROOT)} is unchanged apart from "
-                f"volatile fields — keeping it"
-            )
-            return 0
-
-    snapshot = {
-        "source": "aldi-sued",
-        "fetchedAt": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "weekStart": monday.isoformat(),
-        "totalCount": total,
-        "offers": offers,
-    }
-    if args.dry_run:
+    if existing is not None and len(offers) < len(existing):
+        print(
+            f"existing {target.relative_to(REPO_ROOT)} has "
+            f"{len(existing)} offers, fetched only {len(offers)} — "
+            f"keeping the existing snapshot"
+        )
+    elif existing is not None and normalized(existing) == fetched_norm:
+        print(
+            f"{target.relative_to(REPO_ROOT)} is unchanged apart from "
+            f"volatile fields — keeping it"
+        )
+    elif args.dry_run:
         print(
             f"dry run: would write {len(offers)} offers (totalCount {total}) "
             f"to {target.relative_to(REPO_ROOT)}"
         )
         return 0
+    else:
+        snapshot = {
+            "source": "aldi-sued",
+            "fetchedAt": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "weekStart": monday.isoformat(),
+            "totalCount": total,
+            "offers": offers,
+        }
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(
+            json.dumps(snapshot, indent=2, ensure_ascii=False) + "\n"
+        )
+        print(
+            f"wrote {len(offers)} offers (totalCount {total}) to "
+            f"{target.relative_to(REPO_ROOT)}"
+        )
 
-    target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(json.dumps(snapshot, indent=2, ensure_ascii=False) + "\n")
-    print(
-        f"wrote {len(offers)} offers (totalCount {total}) to "
-        f"{target.relative_to(REPO_ROOT)}"
-    )
+    if args.dry_run:
+        return 0
+    # Also runs when the snapshot was kept, so images that failed on an
+    # earlier run get retried. The freshly fetched URLs are used (not the
+    # stored ones) in case ALDI mints them per request.
+    archive_images(offers, target.parent / "img")
     return 0
 
 
