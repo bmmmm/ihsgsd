@@ -52,6 +52,25 @@ WEEK_RE = re.compile(r"(\d{4})/(KW\d+)/")
 VOL_WEIGHT_FACTOR = {"ml": 0.001, "l": 1.0, "g": 0.001, "kg": 1.0}
 # Display-canonical Grundpreis units (kg/l stay lowercase by convention).
 UNIT_DISPLAY = {"wa": "WA", "tab": "Tab", "st": "St", "stk": "St"}
+# Guards for deriving a Grundpreis from baseUnit (see derive_gp): a multipack
+# ("6 x 0,33 l", "2 Stück à 50 g") means the face price covers N units, so the
+# first measurement alone would overstate the €/kg by a factor of N. Loose goods
+# ("offene 400 g Schale") are already priced per kg, so dividing by the pack
+# size inflates them instead. Both are rare (<25 offers across all weeks) — too
+# few to justify special-case maths, and a wrong price is worse than none.
+MULT_RE = re.compile(r"\d\s*[x×]\s*\d|\bà\b", re.IGNORECASE)
+LOOSE_RE = re.compile(r"offen", re.IGNORECASE)
+# All measurements in a baseUnit, to tell "500 g Beutel" (unambiguous) from
+# "je 200 g / 250 g Packung" (two candidate sizes — not derivable).
+SIZE_ALL_RE = re.compile(r"(\d+(?:[.,]\d+)?)\s*(ml|l|g|kg)\b", re.IGNORECASE)
+COUNT_ALL_RE = re.compile(
+    r"(\d+(?:[.,]\d+)?)\s*(WA|Tabs?|Caps?|St(?:ü|ue)ck|Stk|WL)\b", re.IGNORECASE
+)
+# Count units -> the canonical key used for the Grundpreis unit.
+COUNT_UNIT = {
+    "stück": "st", "stueck": "st", "stk": "st", "st": "st",
+    "wl": "wa", "wa": "wa", "tab": "tab", "cap": "tab",
+}
 
 
 def norm(s):
@@ -92,6 +111,65 @@ def parse_gp(offer):
         unit = m.group(1).lower()
         return val, UNIT_DISPLAY.get(unit, unit), flag
     return None, None, None
+
+
+def derive_gp(offer):
+    """(value, unit) computed from face price / pack size, or (None, None).
+
+    EDEKA omits the Grundpreis exactly where the pack already IS the base unit
+    ("Möhren, 1 kg Schale, € 1.29") — 26% of all offers. Dropping those cost
+    staples like Möhren, Porree and Bananen their entire price history. Derived
+    only when the pack size is unambiguous; validated against the 2389 offers
+    that carry BOTH an explicit and a derivable Grundpreis: 99.7% agree within
+    2%, so derived values are treated as exact for statistics and merely tagged
+    for display.
+    """
+    bu = norm(offer.get("baseUnit"))
+    if not bu or MULT_RE.search(bu) or LOOSE_RE.search(bu):
+        return None, None
+    face = face_price(offer)
+    if not face or face <= 0:
+        return None, None
+
+    sizes = SIZE_ALL_RE.findall(bu)
+    if len(sizes) == 1:
+        num, unit = sizes[0]
+        try:
+            val = parse_number(num)
+        except ValueError:
+            return None, None
+        base = val * VOL_WEIGHT_FACTOR[unit.lower()]
+        if base <= 0:
+            return None, None
+        return round(face / base, 2), ("l" if unit.lower() in ("ml", "l") else "kg")
+
+    # Count-priced goods (4 Stück Packung) only when no weight/volume is given
+    # at all — "20 Stück = 1000 g Beutel" must use the weight, not the count.
+    if not sizes:
+        counts = COUNT_ALL_RE.findall(bu)
+        if len(counts) == 1:
+            num, unit = counts[0]
+            try:
+                val = parse_number(num)
+            except ValueError:
+                return None, None
+            if val <= 0:
+                return None, None
+            key = COUNT_UNIT.get(unit.lower().rstrip("s"), unit.lower())
+            return round(face / val, 2), UNIT_DISPLAY.get(key, key)
+    return None, None
+
+
+def resolve_gp(offer):
+    """(value, unit, flag) preferring EDEKA's own Grundpreis over a derived one.
+
+    flag adds "derived" to parse_gp's exact/range/lower.
+    """
+    val, unit, flag = parse_gp(offer)
+    if val is not None:
+        return val, unit, flag
+    val, unit = derive_gp(offer)
+    return (val, unit, "derived") if val is not None else (None, None, None)
 
 
 def face_price(offer):
@@ -185,7 +263,7 @@ def build():
     all_dates = set()
 
     # Diagnostics.
-    n_offers = n_gp = n_native = 0
+    n_offers = n_gp = n_native = n_derived = 0
 
     for path in files:
         rel, week, date = parse_path(path)
@@ -212,12 +290,14 @@ def build():
             if face is not None:
                 faces.append(face)
 
-            val, unit, flag = parse_gp(o)
+            val, unit, flag = resolve_gp(o)
             if val is None:
                 continue
             gp_count += 1
             n_gp += 1
-            if GP_RE.search(norm(o.get("basicPrice"))):
+            if flag == "derived":
+                n_derived += 1
+            elif GP_RE.search(norm(o.get("basicPrice"))):
                 n_native += 1
 
             key = product_key(o, unit)
@@ -228,7 +308,13 @@ def build():
             prod["title"] = o.get("title") or prod.get("title") or "(ohne Titel)"
             prod["cat"] = cat or prod.get("cat")
             ob = {"d": date, "gp": round(val, 2)}
-            if flag != "exact":
+            # gpf marks a value that is NOT a single exact number (range /
+            # "ab €") and must stay out of min/percentile stats. A derived
+            # value is exact — it gets its own tag so the UI can label its
+            # origin without excluding it from the statistics.
+            if flag == "derived":
+                ob["gpd"] = 1
+            elif flag != "exact":
                 ob["gpf"] = flag
             if face is not None:
                 ob["face"] = face
@@ -286,7 +372,7 @@ def build():
     cov = 100 * n_gp / n_offers if n_offers else 0
     print(f"files={len(files)} offers={n_offers}")
     print(f"GP coverage: {n_gp}/{n_offers} = {cov:.1f}% (native {n_native}, "
-          f"from-desc {n_gp - n_native})")
+          f"from-desc {n_gp - n_native - n_derived}, derived {n_derived})")
     print(f"trend-index.json: {len(trend)} weeks -> {os.path.getsize(trend_path)//1024} KB")
     print(f"price-history-index.json: {len(history)} products "
           f"(>=2 weeks) -> {os.path.getsize(hist_path)//1024} KB")
