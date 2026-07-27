@@ -1855,18 +1855,23 @@ function ensureBasketForPlan() {
 // and a sentence saying so is weaker than a row you can delete. Seeded on the
 // first visit only: an example that reappears every week after you deleted it
 // reads as a bug, and the empty-state line carries the invitation from then on.
-const DEMO_ITEM = 'Ein Pils für den Koch';
+const DEMO_ITEM = 'Ein Pils für die Köchin';
 
 function seedDemoItem() {
-    if (!prefs || prefs.demoSeeded) return;
-    const b = prefs.basket;
+    const b = prefs && prefs.basket;
     // Wait for a real week — seeding against the empty startup key would put the
     // item in a basket that the first render then throws away.
     if (!b || !selectedWeekMeta().date) return;
-    prefs.demoSeeded = true;
-    if (!b.custom.some(c => normTitle(c.name) === normTitle(DEMO_ITEM))) {
-        b.custom.push({ id: 'demo', name: DEMO_ITEM });
+    // A row already placed keeps the current wording. Deleting it takes it out
+    // of `custom` altogether, so this cannot resurrect one that was thrown away.
+    const placed = b.custom.find(c => String(c.id) === 'demo');
+    if (placed) {
+        if (placed.name !== DEMO_ITEM) { placed.name = DEMO_ITEM; persistPrefsQuiet(); }
+        return;
     }
+    if (prefs.demoSeeded) return;
+    prefs.demoSeeded = true;
+    b.custom.push({ id: 'demo', name: DEMO_ITEM });
     persistPrefsQuiet();
 }
 
