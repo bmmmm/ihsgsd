@@ -125,25 +125,14 @@ def parse_gp(offer):
     return None, None, None
 
 
-def derive_gp(offer):
-    """(value, unit) computed from face price / pack size, or (None, None).
-
-    EDEKA omits the Grundpreis exactly where the pack already IS the base unit
-    ("Möhren, 1 kg Schale, € 1.29") — 26% of all offers. Dropping those cost
-    staples like Möhren, Porree and Bananen their entire price history. Derived
-    only when the pack size is unambiguous; validated against the 2389 offers
-    that carry BOTH an explicit and a derivable Grundpreis: 99.7% agree within
-    2%, so derived values are treated as exact for statistics and merely tagged
-    for display.
-    """
-    bu = norm(offer.get("baseUnit"))
-    if not bu or MULT_RE.search(bu) or LOOSE_RE.search(bu):
-        return None, None
-    face = face_price(offer)
-    if not face or face <= 0:
+def derive_from_text(text, face):
+    """(value, unit) from face price ÷ the single pack size stated in `text`,
+    or (None, None) when it is missing, guarded, or ambiguous."""
+    t = norm(text)
+    if not t or MULT_RE.search(t) or LOOSE_RE.search(t):
         return None, None
 
-    sizes = SIZE_ALL_RE.findall(bu)
+    sizes = SIZE_ALL_RE.findall(t)
     if len(sizes) == 1:
         num, unit = sizes[0]
         try:
@@ -158,7 +147,7 @@ def derive_gp(offer):
     # Count-priced goods (4 Stück Packung) only when no weight/volume is given
     # at all — "20 Stück = 1000 g Beutel" must use the weight, not the count.
     if not sizes:
-        counts = COUNT_ALL_RE.findall(bu)
+        counts = COUNT_ALL_RE.findall(t)
         if len(counts) == 1:
             num, unit = counts[0]
             try:
@@ -170,6 +159,34 @@ def derive_gp(offer):
             key = COUNT_UNIT.get(unit.lower().rstrip("s"), unit.lower())
             return round2(face / val), UNIT_DISPLAY.get(key, key)
     return None, None
+
+
+def derive_gp(offer):
+    """(value, unit) computed from face price / pack size, or (None, None).
+
+    EDEKA omits the Grundpreis exactly where the pack already IS the base unit
+    ("Möhren, 1 kg Schale, € 1.29") — 26% of all offers. Dropping those cost
+    staples like Möhren, Porree and Bananen their entire price history. Derived
+    only when the pack size is unambiguous; validated against the 2389 offers
+    that carry BOTH an explicit and a derivable Grundpreis: 99.7% agree within
+    2%, so derived values are treated as exact for statistics and merely tagged
+    for display.
+
+    baseUnit first, then description: ~2500 offers carry no baseUnit at all and
+    state the pack size only in prose ("Klasse I, 1 kg", "je 1 l Packung"), and
+    those were dropped entirely. The fallback is safe — checked against the 1083
+    offers where BOTH texts yield a size, the two agree 100%. It also cannot
+    fire when a Grundpreis is quoted: that quote ("1 kg = € X") is itself a
+    measurement, so the description then holds two and the ambiguity guard
+    declines.
+    """
+    face = face_price(offer)
+    if not face or face <= 0:
+        return None, None
+    val, unit = derive_from_text(offer.get("baseUnit"), face)
+    if val is not None:
+        return val, unit
+    return derive_from_text(offer.get("description"), face)
 
 
 def resolve_gp(offer):

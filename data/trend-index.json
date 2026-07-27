@@ -17,7 +17,7 @@
   },
   "knuller": 42,
   "payback": 0,
-  "gpCoverage": 0.665,
+  "gpCoverage": 0.963,
   "avgFace": 3.77,
   "medFace": 2.1
  },
@@ -39,7 +39,7 @@
   },
   "knuller": 58,
   "payback": 0,
-  "gpCoverage": 0.696,
+  "gpCoverage": 0.928,
   "avgFace": 4.25,
   "medFace": 2.22
  },
@@ -61,7 +61,7 @@
   },
   "knuller": 58,
   "payback": 0,
-  "gpCoverage": 0.696,
+  "gpCoverage": 0.928,
   "avgFace": 4.25,
   "medFace": 2.22
  },
@@ -83,7 +83,7 @@
   },
   "knuller": 56,
   "payback": 0,
-  "gpCoverage": 0.724,
+  "gpCoverage": 0.954,
   "avgFace": 2.98,
   "medFace": 1.99
  },
@@ -104,7 +104,7 @@
   },
   "knuller": 23,
   "payback": 0,
-  "gpCoverage": 0.741,
+  "gpCoverage": 0.958,
   "avgFace": 2.57,
   "medFace": 1.79
  },
@@ -125,7 +125,7 @@
   },
   "knuller": 23,
   "payback": 0,
-  "gpCoverage": 0.741,
+  "gpCoverage": 0.958,
   "avgFace": 2.57,
   "medFace": 1.79
  },
@@ -147,7 +147,7 @@
   },
   "knuller": 39,
   "payback": 0,
-  "gpCoverage": 0.683,
+  "gpCoverage": 0.95,
   "avgFace": 3.14,
   "medFace": 1.79
  },
@@ -169,7 +169,7 @@
   },
   "knuller": 35,
   "payback": 0,
-  "gpCoverage": 0.729,
+  "gpCoverage": 0.929,
   "avgFace": 2.9,
   "medFace": 1.89
  },
@@ -191,7 +191,7 @@
   },
   "knuller": 36,
   "payback": 0,
-  "gpCoverage": 0.765,
+  "gpCoverage": 0.957,
   "avgFace": 2.95,
   "medFace": 1.99
  },
@@ -213,7 +213,7 @@
   },
   "knuller": 33,
   "payback": 0,
-  "gpCoverage": 0.732,
+  "gpCoverage": 0.953,
   "avgFace": 3.19,
   "medFace": 1.99
  },
@@ -236,7 +236,7 @@
   },
   "knuller": 38,
   "payback": 0,
-  "gpCoverage": 0.739,
+  "gpCoverage": 0.963,
   "avgFace": 3.01,
   "medFace": 1.99
  },
@@ -258,7 +258,7 @@
   },
   "knuller": 37,
   "payback": 0,
-  "gpCoverage": 0.662,
+  "gpCoverage": 0.935,
   "avgFace": 3.61,
   "medFace": 1.99
  },
@@ -281,7 +281,7 @@
   },
   "knuller": 34,
   "payback": 0,
-  "gpCoverage": 0.696,
+  "gpCoverage": 0.923,
   "avgFace": 3.0,
   "medFace": 1.99
  },
@@ -303,7 +303,7 @@
   },
   "knuller": 35,
   "payback": 0,
-  "gpCoverage": 0.699,
+  "gpCoverage": 0.955,
   "avgFace": 3.26,
   "medFace": 1.99
  },
@@ -325,7 +325,7 @@
   },
   "knuller": 43,
   "payback": 0,
-  "gpCoverage": 0.701,
+  "gpCoverage": 0.961,
   "avgFace": 3.19,
   "medFace": 1.99
  },
@@ -347,7 +347,7 @@
   },
   "knuller": 34,
   "payback": 0,
-  "gpCoverage": 0.713,
+  "gpCoverage": 0.967,
   "avgFace": 3.17,
   "medFace": 1.99
  },
@@ -369,7 +369,7 @@
   },
   "knuller": 26,
   "payback": 0,
-  "gpCoverage": 0.786,
+  "gpCoverage": 0.954,
   "avgFace": 3.2,
   "medFace": 1.99
  },
@@ -391,7 +391,7 @@
   },
   "knuller": 33,
   "payback": 0,
-  "gpCoverage": 0.703,
+  "gpCoverage": 0.93,
   "avgFace": 3.16,
   "medFace": 1.99
  },
@@ -413,7 +413,7 @@
   },
   "knuller": 34,
   "payback": 0,
-  "gpCoverage": 0.744,
+  "gpCoverage": 0.959,
   "avgFace": 3.75,
   "medFace": 1.99
  },
@@ -435,7 +435,7 @@
   },
   "knuller": 47,
   "payback": 5,
-  "gpCoverage": 0.726,
+  "gpCoverage": 0.989,
   "avgFace": 4.33,
   "medFace": 2.49
  },
@@ -457,7 +457,7 @@
   },
   "knuller": 32,
   "payback": 12,
-  "gpCoverage": 0.756,
+  "gpCoverage": 0.977,
   "avgFace": 3.02,
   "medFace": 1.99
  },
@@ -479,7 +479,7 @@
   },
   "knuller": 40,
   "payback": 8,
-  "gpCoverage": 0.757,
+  "gpCoverage": 0.945,
   "avgFace": 2.86,
   "medFace": 1.99
  },
@@ -501,7 +501,7 @@
   },
   "knuller": 28,
   "payback": 9,
-  "gpCoverage": 0.744,
+  "gpCoverage": 0.958,
   "avgFace": 3.3,
   "medFace": 2.21
  },
@@ -523,7 +523,7 @@
   },
   "knuller": 26,
   "payback": 8,
-  "gpCoverage": 0.703,
+  "gpCoverage": 0.942,
   "avgFace": 3.07,
   "medFace": 1.99
  },
@@ -545,7 +545,7 @@
   },
   "knuller": 27,
   "payback": 9,
-  "gpCoverage": 0.763,
+  "gpCoverage": 0.962,
   "avgFace": 3.69,
   "medFace": 2.29
  },
@@ -567,7 +567,7 @@
   },
   "knuller": 32,
   "payback": 9,
-  "gpCoverage": 0.747,
+  "gpCoverage": 0.928,
   "avgFace": 3.2,
   "medFace": 1.99
  },
@@ -590,7 +590,7 @@
   },
   "knuller": 33,
   "payback": 30,
-  "gpCoverage": 0.719,
+  "gpCoverage": 0.947,
   "avgFace": 3.69,
   "medFace": 1.99
  },
@@ -613,7 +613,7 @@
   },
   "knuller": 30,
   "payback": 25,
-  "gpCoverage": 0.723,
+  "gpCoverage": 0.944,
   "avgFace": 2.9,
   "medFace": 1.99
  },
@@ -635,7 +635,7 @@
   },
   "knuller": 31,
   "payback": 6,
-  "gpCoverage": 0.669,
+  "gpCoverage": 0.936,
   "avgFace": 3.22,
   "medFace": 1.99
  },
@@ -657,7 +657,7 @@
   },
   "knuller": 21,
   "payback": 5,
-  "gpCoverage": 0.766,
+  "gpCoverage": 0.942,
   "avgFace": 3.21,
   "medFace": 1.79
  },
@@ -679,7 +679,7 @@
   },
   "knuller": 31,
   "payback": 10,
-  "gpCoverage": 0.739,
+  "gpCoverage": 0.961,
   "avgFace": 3.42,
   "medFace": 1.99
  },
@@ -701,7 +701,7 @@
   },
   "knuller": 34,
   "payback": 4,
-  "gpCoverage": 0.761,
+  "gpCoverage": 0.942,
   "avgFace": 3.29,
   "medFace": 1.99
  },
@@ -723,7 +723,7 @@
   },
   "knuller": 31,
   "payback": 6,
-  "gpCoverage": 0.73,
+  "gpCoverage": 0.959,
   "avgFace": 3.56,
   "medFace": 1.99
  },
@@ -744,7 +744,7 @@
   },
   "knuller": 23,
   "payback": 4,
-  "gpCoverage": 0.686,
+  "gpCoverage": 0.959,
   "avgFace": 3.27,
   "medFace": 1.99
  },
@@ -766,7 +766,7 @@
   },
   "knuller": 24,
   "payback": 4,
-  "gpCoverage": 0.73,
+  "gpCoverage": 0.943,
   "avgFace": 3.18,
   "medFace": 1.99
  },
@@ -788,7 +788,7 @@
   },
   "knuller": 23,
   "payback": 11,
-  "gpCoverage": 0.747,
+  "gpCoverage": 0.972,
   "avgFace": 3.3,
   "medFace": 1.99
  },
@@ -810,7 +810,7 @@
   },
   "knuller": 22,
   "payback": 11,
-  "gpCoverage": 0.732,
+  "gpCoverage": 0.955,
   "avgFace": 3.06,
   "medFace": 1.99
  },
@@ -832,7 +832,7 @@
   },
   "knuller": 25,
   "payback": 13,
-  "gpCoverage": 0.751,
+  "gpCoverage": 0.971,
   "avgFace": 3.27,
   "medFace": 1.99
  },
@@ -854,7 +854,7 @@
   },
   "knuller": 31,
   "payback": 11,
-  "gpCoverage": 0.731,
+  "gpCoverage": 0.93,
   "avgFace": 3.09,
   "medFace": 1.99
  },
@@ -876,7 +876,7 @@
   },
   "knuller": 20,
   "payback": 21,
-  "gpCoverage": 0.713,
+  "gpCoverage": 0.947,
   "avgFace": 3.91,
   "medFace": 2.29
  },
@@ -899,7 +899,7 @@
   },
   "knuller": 24,
   "payback": 21,
-  "gpCoverage": 0.742,
+  "gpCoverage": 0.944,
   "avgFace": 3.37,
   "medFace": 1.99
  },
@@ -920,7 +920,7 @@
   },
   "knuller": 34,
   "payback": 12,
-  "gpCoverage": 0.726,
+  "gpCoverage": 0.937,
   "avgFace": 3.29,
   "medFace": 1.99
  },
@@ -942,7 +942,7 @@
   },
   "knuller": 14,
   "payback": 8,
-  "gpCoverage": 0.75,
+  "gpCoverage": 0.962,
   "avgFace": 3.09,
   "medFace": 1.99
  },
@@ -964,7 +964,7 @@
   },
   "knuller": 20,
   "payback": 14,
-  "gpCoverage": 0.755,
+  "gpCoverage": 0.954,
   "avgFace": 3.3,
   "medFace": 1.99
  },
@@ -986,7 +986,7 @@
   },
   "knuller": 23,
   "payback": 15,
-  "gpCoverage": 0.713,
+  "gpCoverage": 0.938,
   "avgFace": 3.99,
   "medFace": 2.49
  },
@@ -1008,7 +1008,7 @@
   },
   "knuller": 13,
   "payback": 9,
-  "gpCoverage": 0.729,
+  "gpCoverage": 0.932,
   "avgFace": 3.33,
   "medFace": 1.99
  },
@@ -1030,7 +1030,7 @@
   },
   "knuller": 11,
   "payback": 10,
-  "gpCoverage": 0.738,
+  "gpCoverage": 0.957,
   "avgFace": 3.66,
   "medFace": 1.99
  },
@@ -1052,7 +1052,7 @@
   },
   "knuller": 3,
   "payback": 16,
-  "gpCoverage": 0.767,
+  "gpCoverage": 0.969,
   "avgFace": 3.36,
   "medFace": 2.22
  },
@@ -1074,7 +1074,7 @@
   },
   "knuller": 11,
   "payback": 17,
-  "gpCoverage": 0.769,
+  "gpCoverage": 0.957,
   "avgFace": 4.41,
   "medFace": 2.39
  },
@@ -1096,7 +1096,7 @@
   },
   "knuller": 25,
   "payback": 16,
-  "gpCoverage": 0.726,
+  "gpCoverage": 0.937,
   "avgFace": 3.44,
   "medFace": 1.99
  },
@@ -1118,7 +1118,7 @@
   },
   "knuller": 40,
   "payback": 27,
-  "gpCoverage": 0.725,
+  "gpCoverage": 0.972,
   "avgFace": 3.58,
   "medFace": 2.21
  },
@@ -1140,7 +1140,7 @@
   },
   "knuller": 55,
   "payback": 19,
-  "gpCoverage": 0.757,
+  "gpCoverage": 0.979,
   "avgFace": 3.62,
   "medFace": 2.19
  },
@@ -1162,7 +1162,7 @@
   },
   "knuller": 102,
   "payback": 18,
-  "gpCoverage": 0.714,
+  "gpCoverage": 0.953,
   "avgFace": 3.65,
   "medFace": 2.29
  },
@@ -1184,7 +1184,7 @@
   },
   "knuller": 125,
   "payback": 6,
-  "gpCoverage": 0.745,
+  "gpCoverage": 0.959,
   "avgFace": 5.35,
   "medFace": 2.69
  },
@@ -1205,7 +1205,7 @@
   },
   "knuller": 129,
   "payback": 8,
-  "gpCoverage": 0.75,
+  "gpCoverage": 0.959,
   "avgFace": 4.32,
   "medFace": 2.49
  },

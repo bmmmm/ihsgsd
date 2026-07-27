@@ -81,17 +81,13 @@ const COUNT_UNIT = {
     'wl': 'wa', 'wa': 'wa', 'tab': 'tab', 'cap': 'tab',
 };
 
-// { val, unit } computed from face price / pack size, or all-null. EDEKA omits
-// the Grundpreis where the pack already IS the base unit ("1 kg Schale"), which
-// is 26% of offers — deriving it is what gives Möhren, Porree and Bananen a
-// price history at all. Port of build_indexes.derive_gp; keep the two in sync.
-function deriveGp(offer) {
-    const bu = gpNormStr(offer && offer.baseUnit);
-    if (!bu || MULT_RE.test(bu) || LOOSE_RE.test(bu)) return { val: null, unit: null };
-    const face = offerPrice(offer);
-    if (!Number.isFinite(face) || face <= 0) return { val: null, unit: null };
+// { val, unit } from face price ÷ the single pack size stated in `text`, or
+// all-null when `text` is missing, guarded, or ambiguous.
+function deriveFromText(text, face) {
+    const t = gpNormStr(text);
+    if (!t || MULT_RE.test(t) || LOOSE_RE.test(t)) return { val: null, unit: null };
 
-    const sizes = [...bu.matchAll(SIZE_ALL_RE)];
+    const sizes = [...t.matchAll(SIZE_ALL_RE)];
     if (sizes.length === 1) {
         const val = parseNumberDe(sizes[0][1]);
         const unit = sizes[0][2].toLowerCase();
@@ -105,7 +101,7 @@ function deriveGp(offer) {
     // Count-priced goods only when no weight/volume is present at all —
     // "20 Stück = 1000 g Beutel" must use the weight, not the count.
     if (!sizes.length) {
-        const counts = [...bu.matchAll(COUNT_ALL_RE)];
+        const counts = [...t.matchAll(COUNT_ALL_RE)];
         if (counts.length === 1) {
             const val = parseNumberDe(counts[0][1]);
             if (!Number.isFinite(val) || val <= 0) return { val: null, unit: null };
@@ -115,6 +111,26 @@ function deriveGp(offer) {
         }
     }
     return { val: null, unit: null };
+}
+
+// { val, unit } computed from face price / pack size, or all-null. EDEKA omits
+// the Grundpreis where the pack already IS the base unit ("1 kg Schale"), which
+// is 26% of offers — deriving it is what gives Möhren, Porree and Bananen a
+// price history at all. Port of build_indexes.derive_gp; keep the two in sync.
+//
+// baseUnit first, then description: ~2500 offers carry no baseUnit at all and
+// state the pack size only in prose ("Klasse I, 1 kg", "je 1 l Packung"). Those
+// were dropped entirely. Falling back to the description is safe — checked
+// against the 1083 offers where BOTH texts yield a size, the two agree 100%.
+// Note this cannot fire when a Grundpreis is quoted: that quote ("1 kg = € X")
+// itself contains a measurement, so the description then holds two and the
+// ambiguity guard declines.
+function deriveGp(offer) {
+    const face = offerPrice(offer);
+    if (!Number.isFinite(face) || face <= 0) return { val: null, unit: null };
+    const fromBase = deriveFromText(offer && offer.baseUnit, face);
+    if (fromBase.val !== null) return fromBase;
+    return deriveFromText(offer && offer.description, face);
 }
 
 // EDEKA's own Grundpreis when present, else one derived from the pack size.
