@@ -88,27 +88,6 @@
   "medFace": 1.99
  },
  {
-  "file": "2025/KW01/2025-01-05.json",
-  "week": "2025-KW01",
-  "date": "2025-01-05",
-  "total": 143,
-  "counts": {
-   "Drogerie": 8,
-   "Fleisch & Wurst": 30,
-   "Getränke": 19,
-   "Grundnahrung": 34,
-   "Knabbern & Naschen": 6,
-   "Molkerei & Käse": 25,
-   "Obst & Gemüse": 15,
-   "Tiefkühl": 6
-  },
-  "knuller": 23,
-  "payback": 0,
-  "gpCoverage": 0.958,
-  "avgFace": 2.57,
-  "medFace": 1.79
- },
- {
   "file": "2025/KW02/2025-01-08.json",
   "week": "2025-KW02",
   "date": "2025-01-08",
