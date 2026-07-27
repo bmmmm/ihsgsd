@@ -67,7 +67,84 @@ TOPIC_LABELS = {
     "drogerie": "Drogerie",
     "tiernahrung": "Tiernahrung",
     "fisch": "Fisch & Meeresfrüchte",
+    "spirituosen": "Wein & Spirituosen",
+    "getraenke": "Getränke",
 }
+
+# Interest level assumed for a topic the exported preferences never decided on
+# (e.g. a chip added after the last export). Mirrors DEFAULT_INTERESTS in
+# prospekt.js — without it, a brand-new "Wein & Spirituosen: aus" chip would
+# read as neutral here and the model would keep recommending Jägermeister.
+DEFAULT_INTERESTS = {
+    "vegan": 2, "obstgemuese": 2, "bier": 2, "spezi": 2, "bio": 1,
+    "fleisch": -1, "kaese": -1, "suess": -1, "drogerie": -1,
+    "tiernahrung": -1, "fisch": -1, "spirituosen": -1,
+}
+
+# Diet detectors, mirroring prospekt.js — keep the two in sync. Python's \b is
+# Unicode-aware, so plain \b is correct here; the JS side needs explicit
+# [\p{L}\p{N}] boundaries because its \b is ASCII-only.
+#
+# These exist because meat and fish do not stay in their own category: fish
+# sticks and chicken nuggets are filed under Tiefkühl, Bockwurst and tuna under
+# Grundnahrung. Without them the Superknüller section handed the model
+# Grillrippen and Fischstäbchen as candidates for a reader who eats neither.
+VEGAN_RE = re.compile(
+    r"vegan|vegetar|pflanzlich|veggie|like\s*meat|beyond\s*meat|rügenwalder|"
+    r"wheaty|taifun|tofu|seitan|tempeh|jackfruit", re.I)
+MEAT_RE = re.compile(
+    r"\b(?:h[äa]hnchen\w*|h[üu]hner\w*|huhn|pute|puten\w*|truthahn\w*|rind|rinder\w*|"
+    r"rinds\w*|schwein\w*|kalb|kalbs\w*|lamm\w*|gans|g[äa]nse\w*|wurst|w[üu]rstchen|"
+    r"w[üu]rste|salami|schinken\w*|speck|bacon|hackfleisch|hack|frikadelle\w*|"
+    r"bratwurst\w*|bockwurst\w*|leberk[äa]se|nuggets?|schnitzel|gyros\w*|d[öo]ner\w*|"
+    r"kasseler|mettwurst|mett|s[üu]lze|geflügel\w*|steaks?|gulasch|braten|cabanossi|"
+    r"mortadella|chorizo|prosciutto|salame|landj[äa]ger|rippchen|haxe|keule|"
+    r"kotelett\w*|leberwurst|teewurst|fleisch\w*|frankfurter|bratw[üu]rste|"
+    r"grillfackel\w*|chicken|beef|pork)\b|\bwiener\b(?!\s*boden)", re.I)
+FISH_RE = re.compile(
+    r"\b(?:fisch\w*|\w*fisch|lachs\w*|\w*lachs|thunfisch\w*|garnelen?|shrimps?|scampi|"
+    r"forelle\w*|hering\w*|matjes|makrele\w*|sardine\w*|sardelle\w*|kabeljau\w*|"
+    r"seelachs\w*|scholle|dorsch|zander|pangasius|tintenfisch\w*|muschel\w*|"
+    r"krabben\w*|surimi|schlemmerfilet\w*|filegro|meeresfr[üu]chte|calamari|austern?)\b",
+    re.I)
+SPIRITS_RE = re.compile(
+    r"\b(?:likör|liqueur|whisk\w+|vodka|wodka|gin|rum|tequila|brandy|cognac|weinbrand|"
+    r"schnaps|korn|aperitif|aperol|campari|jägermeister|fernet|branca|ouzo|grappa|"
+    r"sambuca|absinth|bacardi|jack\s*daniel\w*|sekt|prosecco|champagner|crémant|cava|"
+    r"winzersekt|wein|weine|weins|rotwein\w*|weißwein\w*|ros[eé]wein\w*|riesling|merlot|"
+    r"cabernet|syrah|chardonnay|sauvignon|primitivo|tempranillo|sangria|glühwein|"
+    r"portwein|sherry|vermouth|martini|baileys|amaretto)\b", re.I)
+
+# topic key -> (title detector, category). Either match makes the offer a member.
+DIET_TOPICS = {
+    "fleisch": (MEAT_RE, "Fleisch & Wurst"),
+    "fisch": (FISH_RE, "Fisch & Meeresfrüchte"),
+    "spirituosen": (SPIRITS_RE, None),
+}
+
+
+def muted_topics(prefs):
+    """Topic keys the reader has set (or defaults) to 'aus'."""
+    interests = prefs.get("interests") if isinstance(prefs.get("interests"), dict) else {}
+    out = set()
+    for key in set(DEFAULT_INTERESTS) | set(interests):
+        lvl = interests.get(key, DEFAULT_INTERESTS.get(key, 0))
+        if lvl == -1:
+            out.add(key)
+    return out
+
+
+def diet_excluded(offer, muted):
+    """True when a muted diet topic matches — never for vegan/vegetarian items,
+    or muting 'Fleisch' would drop the vegan sausages the reader wants most."""
+    title = offer.get("title") or ""
+    cat = (offer.get("category") or {}).get("name") or ""
+    if VEGAN_RE.search(title):
+        return False
+    for key, (rx, category) in DIET_TOPICS.items():
+        if key in muted and (rx.search(title) or (category and cat == category)):
+            return True
+    return False
 
 PROMPT_TEMPLATE = """You are the personal shopping recommender for a German supermarket (EDEKA) offers tracker. Return ONLY valid JSON — no prose, no markdown, no text outside the JSON.
 
@@ -262,7 +339,13 @@ def is_knuller(offer):
     )
 
 
-def build_digest(offers, price_map=None, latest_date="", receipts=None):
+def build_digest(offers, price_map=None, latest_date="", receipts=None, muted=frozenset()):
+    # Drop the reader's diet vetoes before anything else. The page hides these
+    # anyway, so leaving them in only wasted candidate slots and invited the
+    # model to write lead copy about offers the reader will never see.
+    if muted:
+        offers = [o for o in offers if not diet_excluded(o, muted)]
+
     def title_of(o):
         return o.get("title") or ""
 
@@ -314,6 +397,19 @@ def build_digest(offers, price_map=None, latest_date="", receipts=None):
         "bierspezi": section(bier),
         "knueller": section(knueller),
     }
+
+
+def load_prefs(prefs_path):
+    """Exported preferences as a dict, or {} when missing or unreadable. An
+    empty dict is fine: muted_topics() then falls back to DEFAULT_INTERESTS,
+    which already encodes the reader's standing diet."""
+    if not prefs_path.exists():
+        return {}
+    try:
+        data = json.loads(prefs_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+    return data if isinstance(data, dict) else {}
 
 
 def prefs_summary(prefs_path):
@@ -454,7 +550,9 @@ def main():
 
     price_map = load_price_map()
     receipts = load_receipts()
-    digest = build_digest(offers, price_map, latest_date, receipts)
+    muted = muted_topics(load_prefs(prefs_path))
+    n_before = len(offers)
+    digest = build_digest(offers, price_map, latest_date, receipts, muted)
     counts = {k: len(v) for k, v in digest.items()}
     n_ev = sum(1 for sec in digest.values() for e in sec if e.get("ph"))
     n_bought = sum(1 for sec in digest.values() for e in sec if e.get("bought"))
@@ -463,6 +561,10 @@ def main():
     if receipts:
         print(f"Receipts: {len(receipts)} bought product(s) known, "
               f"{n_bought} match this week's candidates.")
+    if muted:
+        kept = sum(1 for o in offers if not diet_excluded(o, muted))
+        print(f"Diet filter ({', '.join(sorted(muted))}): "
+              f"{n_before - kept} of {n_before} offer(s) excluded before ranking.")
     print(f"Latest week {week_label} ({latest_date}): "
           f"vegan={counts['vegan']}, obst&gemuese={counts['obstgemuese']}, "
           f"bier&spezi={counts['bierspezi']}, knueller={counts['knueller']}.")
