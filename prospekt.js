@@ -307,11 +307,27 @@ const SPIRITS_RE = dietRe(
     `baileys|amaretto`
 );
 
+// Positive topic detectors. These need boundaries just as badly as the diet
+// ones: a bare /spezi/ matched "GebäckSPEZIalitäten", "FischSPEZIalitäten" and
+// "Aspik-SPEZIalitäten", scoring biscuits, fish and aspic as a Spezi favourite
+// — which then outranked the very "aus" chips meant to hide them.
+const SPEZI_RE = dietRe('spezi');
+const BIO_RE = dietRe('bio');
+// Beer is the one case where a suffix match is wanted: Landbier, Weißbier and
+// Kellerbier are beers, and Pilsener/Pilsner are pils.
+const BIER_RE = dietRe(`${W}bier|pils${W}`);
+
 function looksVegan(o) {
     return VEGAN_RE.test(`${(o && o.title) || ''} ${(o && o.description) || ''}`);
 }
 // A vegan sausage is not meat — the exemption must win, or turning "Fleisch"
 // off would hide exactly the products the reader wants most.
+//
+// Title only, deliberately. Scanning `description` too would add ~75 real hits
+// (Rotkohl "mit Gänseschmalz", Knusperfilet "aus Seelachsfilet") but also veto
+// vegan products over a serving suggestion — "Frisches Sauerkraut, die ideale
+// Beilage zum Kasseler" is sauerkraut, not meat. A mention is not an
+// ingredient, and a hard veto must not fire on one.
 function looksMeat(o) {
     const t = (o && o.title) || '';
     return (MEAT_RE.test(t) || WIENER_RE.test(t)) && !looksVegan(o);
@@ -325,9 +341,9 @@ function looksSpirits(o) { return SPIRITS_RE.test((o && o.title) || ''); }
 const TOPICS = [
     { key: 'vegan',       label: 'Vegan',           emoji: '🌱', test: o => /vegan|vegetar/i.test(o.title || '') },
     { key: 'obstgemuese', label: 'Obst & Gemüse',   emoji: '🥦', test: o => catName(o) === 'Obst & Gemüse' },
-    { key: 'bier',        label: 'Bier',            emoji: '🍺', test: o => catName(o) === 'Getränke' && /\bbier\b|pils/i.test(o.title || '') },
-    { key: 'spezi',       label: 'Spezi',           emoji: '🥤', test: o => /spezi/i.test(o.title || '') },
-    { key: 'bio',         label: 'Bio',             emoji: '🌿', test: o => /\bbio\b/i.test(o.title || '') },
+    { key: 'bier',        label: 'Bier',            emoji: '🍺', test: o => catName(o) === 'Getränke' && BIER_RE.test(o.title || '') },
+    { key: 'spezi',       label: 'Spezi',           emoji: '🥤', test: o => SPEZI_RE.test(o.title || '') },
+    { key: 'bio',         label: 'Bio',             emoji: '🌿', test: o => BIO_RE.test(o.title || '') },
     { key: 'knueller',    label: 'Knüller',         emoji: '🔥', test: isKnuller },
     { key: 'kaese',       label: 'Käse',            emoji: '🧀', test: o => catName(o) === 'Molkerei & Käse' },
     { key: 'suess',       label: 'Süßes',           emoji: '🍫', test: o => catName(o) === 'Knabbern & Naschen' },
@@ -375,6 +391,14 @@ const CATEGORY_FOR_TOPIC = {
     drogerie: 'Drogerie',
     tiernahrung: 'Tiernahrung',
 };
+
+// The detector of a topic by key, as a safe predicate (unknown key -> never
+// matches, a throwing test -> false). The single source of truth for "is this
+// offer vegan / beer / meat", shared by the chips, the score and the sections.
+function topicTest(key) {
+    const t = TOPICS.find(x => x.key === key);
+    return o => { try { return !!(t && t.test(o)); } catch (e) { return false; } };
+}
 
 // Interest levels and how each one weighs into an offer's score.
 const LEVELS = {
@@ -466,10 +490,26 @@ let exportedAt = null;       // its updatedAt stamp, or null if unknown
 let exportedHasMeals = false; // does the export carry any meal ratings?
 
 async function checkExportStatus() {
+    let text = null;
+    // The connected repo folder first: data/preferences.json is gitignored, so
+    // over HTTP it is a 404 on GitHub Pages regardless of whether the file
+    // exists locally — reading it through the folder handle tells the truth.
     try {
-        const res = await fetch('data/preferences.json', { cache: 'no-store' });
-        if (!res.ok) throw new Error(`status ${res.status}`);
-        const data = await res.json();
+        text = await readFromRepo('data/preferences.json', false);
+    } catch (e) {
+        text = null;
+    }
+    if (text === null) {
+        try {
+            const res = await fetch('data/preferences.json', { cache: 'no-store' });
+            if (res.ok) text = await res.text();
+        } catch (e) {
+            text = null;
+        }
+    }
+    try {
+        if (text === null) throw new Error('not found');
+        const data = JSON.parse(text);
         exportPresent = true;
         exportedAt = (data && typeof data.updatedAt === 'string') ? data.updatedAt : null;
         exportedHasMeals = !!(data && data.meals && Object.keys(data.meals).length);
@@ -480,6 +520,38 @@ async function checkExportStatus() {
     }
     exportChecked = true;
     paintExportStatus();
+    paintRepoTarget();
+}
+
+// The save target as a line in the DOM, plus the connect/change control. Shows
+// where an export actually lands instead of leaving it to guesswork.
+function paintRepoTarget() {
+    const el = document.getElementById('repo-target');
+    const btn = document.getElementById('repo-pick');
+    if (!el) return;
+    if (!fsaSupported()) {
+        el.textContent = 'Ziel: Download-Ordner — dieser Browser kann nicht direkt ins Repo schreiben (Chrome/Edge können es).';
+        if (btn) btn.hidden = true;
+        return;
+    }
+    if (btn) {
+        btn.hidden = false;
+        btn.textContent = repoDirHandle ? 'Ordner ändern' : 'Repo-Ordner wählen';
+    }
+    if (!repoDirHandle) {
+        el.textContent = 'Ziel: Download-Ordner — wähle den Repo-Ordner, dann wird direkt in data/preferences.json gespeichert.';
+        return;
+    }
+    el.textContent = `Ziel: ${repoDirName}/data/preferences.json`;
+}
+
+async function connectRepoDir() {
+    const dir = await pickRepoDir();
+    const hint = document.getElementById('steer-hint');
+    if (!dir) { paintRepoTarget(); return; }
+    if (hint) hint.textContent = `Repo-Ordner „${repoDirName}" verbunden — Export und Einkaufsliste landen jetzt direkt darin.`;
+    await checkExportStatus();
+    paintRepoTarget();
 }
 
 function paintExportStatus() {
@@ -733,11 +805,15 @@ async function loadMealplan() {
 // Build the mutable working copy the page renders & swaps against. Keeps the
 // raw mealplanData intact (re-derived on every (re)load / regenerate).
 function buildMealplanView() {
-    if (!mealplanData || !Array.isArray(mealplanData.days)) { mealplanView = null; return; }
-    const days = mealplanData.days
+    // activeMealplan(), not mealplanData: a plan built from last week's offers
+    // lists ingredients at prices that no longer exist and would seed the
+    // shopping list with them.
+    const mp = activeMealplan();
+    if (!mp || !Array.isArray(mp.days)) { mealplanView = null; return; }
+    const days = mp.days
         .filter(d => d && d.meal && d.meal.slug)
         .map(d => ({ day: d.day, meal: d.meal }));
-    const bench = Array.isArray(mealplanData.bench) ? mealplanData.bench.filter(m => m && m.slug) : [];
+    const bench = Array.isArray(mp.bench) ? mp.bench.filter(m => m && m.slug) : [];
     mealplanView = days.length ? { days, bench } : null;
 }
 
@@ -777,6 +853,8 @@ function buildSteering() {
     if (exportBtn) exportBtn.addEventListener('click', exportPrefs);
     const resetBtn = document.getElementById('steer-reset');
     if (resetBtn) resetBtn.addEventListener('click', resetPrefs);
+    const repoBtn = document.getElementById('repo-pick');
+    if (repoBtn) repoBtn.addEventListener('click', connectRepoDir);
     const regenBtn = document.getElementById('pk-mealplan-regen');
     if (regenBtn) regenBtn.addEventListener('click', regenerateMealplan);
 
@@ -1004,13 +1082,127 @@ function setVote(o, value) {
     renderAll();
 }
 
+// ── direct repo access (File System Access API) ──
+// The page is normally read from GitHub Pages, where no dev server exists, so
+// "export" meant downloading preferences.json and moving it into data/ by hand
+// every time. Picking the repo folder once and keeping the handle lets the
+// browser write straight into it from any origin. Chrome/Edge only; the dev
+// server and the plain download stay as fallbacks.
+const REPO_IDB = { name: 'edeka-prospekt', store: 'handles', key: 'repoDir' };
+let repoDirHandle = null;       // cached FileSystemDirectoryHandle
+let repoDirName = '';           // its display name, for the DOM label
+
+function fsaSupported() {
+    return typeof window !== 'undefined' && typeof window.showDirectoryPicker === 'function';
+}
+
+function idbOpen() {
+    return new Promise((resolve, reject) => {
+        const req = indexedDB.open(REPO_IDB.name, 1);
+        req.onupgradeneeded = () => req.result.createObjectStore(REPO_IDB.store);
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+    });
+}
+
+// Directory handles survive a reload only via IndexedDB — localStorage cannot
+// hold them (they are not JSON-serialisable).
+async function idbHandle(value) {
+    try {
+        const db = await idbOpen();
+        return await new Promise((resolve, reject) => {
+            const mode = value === undefined ? 'readonly' : 'readwrite';
+            const tx = db.transaction(REPO_IDB.store, mode);
+            const store = tx.objectStore(REPO_IDB.store);
+            const req = value === undefined ? store.get(REPO_IDB.key)
+                : (value === null ? store.delete(REPO_IDB.key) : store.put(value, REPO_IDB.key));
+            req.onsuccess = () => resolve(req.result);
+            req.onerror = () => reject(req.error);
+        });
+    } catch (e) {
+        return undefined;
+    }
+}
+
+// `interactive` may prompt for permission — only true when called from a click,
+// since Chrome rejects a permission request without a user gesture.
+async function repoDir(interactive) {
+    if (!fsaSupported()) return null;
+    if (!repoDirHandle) {
+        const stored = await idbHandle();
+        if (stored) repoDirHandle = stored;
+    }
+    if (!repoDirHandle) return null;
+    const opts = { mode: 'readwrite' };
+    let perm = await repoDirHandle.queryPermission(opts);
+    if (perm !== 'granted' && interactive) perm = await repoDirHandle.requestPermission(opts);
+    if (perm !== 'granted') return null;
+    repoDirName = repoDirHandle.name || '';
+    return repoDirHandle;
+}
+
+async function pickRepoDir() {
+    if (!fsaSupported()) return null;
+    try {
+        const dir = await window.showDirectoryPicker({ id: 'edeka-repo', mode: 'readwrite' });
+        repoDirHandle = dir;
+        repoDirName = dir.name || '';
+        await idbHandle(dir);
+        return dir;
+    } catch (e) {
+        return null;   // user cancelled the picker
+    }
+}
+
+// Read a repo-relative file through the picked folder, or null. Lets the export
+// status read the REAL file in the repo — over HTTP, data/preferences.json is
+// gitignored and therefore always a 404 on GitHub Pages, which is why the page
+// permanently claimed "Noch nicht exportiert" no matter how often you exported.
+async function readFromRepo(relPath, interactive) {
+    try {
+        const dir = await repoDir(interactive);
+        if (!dir) return null;
+        const parts = relPath.split('/').filter(Boolean);
+        const file = parts.pop();
+        let cur = dir;
+        for (const part of parts) cur = await cur.getDirectoryHandle(part);
+        const fh = await cur.getFileHandle(file);
+        return await (await fh.getFile()).text();
+    } catch (e) {
+        return null;   // not connected, no permission yet, or file absent
+    }
+}
+
+// Write `text` to a repo-relative path, creating intermediate folders.
+async function writeInRepo(relPath, text, interactive) {
+    const dir = await repoDir(interactive);
+    if (!dir) return false;
+    const parts = relPath.split('/').filter(Boolean);
+    const file = parts.pop();
+    let cur = dir;
+    for (const part of parts) cur = await cur.getDirectoryHandle(part, { create: true });
+    const fh = await cur.getFileHandle(file, { create: true });
+    const w = await fh.createWritable();
+    await w.write(text);
+    await w.close();
+    return true;
+}
+
 async function exportPrefs() {
     const payload = JSON.stringify(prefs, null, 2) + '\n';
     const hint = document.getElementById('steer-hint');
-    // Prefer the local dev server (scripts/serve.py): it writes straight into
-    // data/preferences.json, so there's nothing to move by hand. If that server
-    // isn't running (plain http.server, file://, or a fetch error), fall back to
-    // a normal download.
+    // 1) the picked repo folder — works from GitHub Pages, no server needed.
+    try {
+        if (await writeInRepo('data/preferences.json', payload, true)) {
+            if (hint) hint.textContent = `In ${repoDirName}/data/preferences.json gespeichert.`;
+            await checkExportStatus();
+            paintRepoTarget();
+            return;
+        }
+    } catch (e) {
+        if (hint) hint.textContent = `Schreiben in den Repo-Ordner fehlgeschlagen: ${e.message}`;
+    }
+    // 2) the local dev server (scripts/serve.py).
     try {
         const res = await fetch('/api/preferences', {
             method: 'POST',
@@ -1025,6 +1217,7 @@ async function exportPrefs() {
     } catch (e) {
         // No local save server reachable — fall through to download.
     }
+    // 3) plain download.
     downloadPrefs(payload, hint);
 }
 
@@ -1060,6 +1253,40 @@ function selectedWeekDate() {
     const sel = document.getElementById('week-select');
     const d = sel ? fileDate(sel.value) : '';
     return d || (priceHistory && priceHistory.latestDate) || '';
+}
+
+// "KW31" for the week currently on screen (from the selected data file).
+function selectedWeekLabel() {
+    const sel = document.getElementById('week-select');
+    const m = /(KW\d+)/.exec(sel ? sel.value : '');
+    return m ? m[1] : '';
+}
+
+// The editorial (lead, section intros, ranked picks, meal plan) is generated
+// per week and pinned to its own weekLabel. Rendering KW30's copy above KW31's
+// offers is worse than rendering none: it praises Auberginen and Kirschen that
+// are not on offer any more, and the reader has no way to tell. This happened
+// for real — the Monday generator did not run and the page showed stale copy
+// for a week without a single warning.
+function editorialFresh(data) {
+    if (!data) return false;
+    const cur = selectedWeekLabel();
+    const gen = typeof data.weekLabel === 'string' ? data.weekLabel : '';
+    return !cur || !gen || cur === gen;
+}
+
+// Editorial data, but only when it belongs to the week on screen. Every reader
+// of the AI copy goes through these, so a stale file can never leak into one
+// surface that was forgotten.
+function activeProspekt() { return editorialFresh(prospektData) ? prospektData : null; }
+function activeMealplan() { return editorialFresh(mealplanData) ? mealplanData : null; }
+
+// Which editorial files are stale, for the banner. Empty when all is current.
+function staleEditorials() {
+    const out = [];
+    if (prospektData && !editorialFresh(prospektData)) out.push({ what: 'Prospekt-Texte', week: prospektData.weekLabel });
+    if (mealplanData && !editorialFresh(mealplanData)) out.push({ what: 'Wochenplan', week: mealplanData.weekLabel });
+    return out;
 }
 
 function priceCheck(o) {
@@ -1135,6 +1362,7 @@ function buildPriceCheckMini(o) {
 
 // ── rendering ──
 function pickReason(title) {
+    const prospektData = activeProspekt();
     if (!prospektData) return '';
     // Prefer the new ranked foryou[]; fall back to the legacy picks[] alias.
     for (const list of [prospektData.foryou, prospektData.picks]) {
@@ -1148,8 +1376,9 @@ function pickReason(title) {
 // Short evidence label ("Bestpreis", "unter Üblich", …) the generator attaches
 // to a foryou pick — shown as the card tag so the ranked picks say WHY.
 function pickEvidenceTag(title) {
-    if (!prospektData || !Array.isArray(prospektData.foryou)) return undefined;
-    const hit = prospektData.foryou.find(p => p && p.title === title);
+    const pd = activeProspekt();
+    if (!pd || !Array.isArray(pd.foryou)) return undefined;
+    const hit = pd.foryou.find(p => p && p.title === title);
     return (hit && typeof hit.evidenceTag === 'string' && hit.evidenceTag) ? hit.evidenceTag : undefined;
 }
 
@@ -1341,7 +1570,8 @@ function fillSection(gridId, introId, offers, sectionKey, opts) {
 
     const intro = introId ? document.getElementById(introId) : null;
     if (intro) {
-        const txt = prospektData && prospektData.sections ? prospektData.sections[sectionKey] : '';
+        const pd = activeProspekt();
+        const txt = pd && pd.sections ? pd.sections[sectionKey] : '';
         intro.textContent = typeof txt === 'string' ? txt : '';
         intro.style.display = txt ? '' : 'none';
     }
@@ -1353,13 +1583,29 @@ function renderHero() {
     const lead = document.getElementById('pk-lead');
     const sub = document.getElementById('pk-week');
     if (sub) {
-        const wl = prospektData && prospektData.weekLabel;
+        const wl = selectedWeekLabel() || (activeProspekt() && activeProspekt().weekLabel);
         sub.textContent = wl ? `Unsere Highlights für ${wl}` : 'Unsere Highlights der Woche';
     }
     if (lead) {
-        const txt = prospektData && typeof prospektData.lead === 'string' ? prospektData.lead : '';
+        const pd = activeProspekt();
+        const txt = pd && typeof pd.lead === 'string' ? pd.lead : '';
         lead.textContent = txt || 'Handverlesene Angebote der Woche — vegan, frisch, mit kühlem Bier und Spezi. Sag uns mit 👍 / 🚫 und den Vorlieben weiter unten, was dich interessiert.';
     }
+    renderStaleNotice();
+}
+
+// Say plainly when the AI copy belongs to another week. Without this the page
+// looks perfectly normal while describing last week's offers.
+function renderStaleNotice() {
+    const host = document.getElementById('pk-stale');
+    if (!host) return;
+    const stale = staleEditorials();
+    if (!stale.length) { host.hidden = true; host.textContent = ''; return; }
+    const cur = selectedWeekLabel();
+    const what = stale.map(s => `${s.what} (${s.week || 'unbekannte Woche'})`).join(' und ');
+    host.hidden = false;
+    host.textContent = `⚠ ${what} stammen nicht aus ${cur} und werden deshalb ausgeblendet. `
+        + 'Die Angebote unten sind aktuell. Lokal neu erzeugen: scripts/weekly_sync.sh';
 }
 
 // Filter helper for the topic sections; a throwing test (bad data) drops the
@@ -1378,7 +1624,8 @@ function offersWhere(test) {
 function buildForYou() {
     const inForYou = new Set();
     const list = [];
-    const llm = prospektData && Array.isArray(prospektData.foryou) ? prospektData.foryou : null;
+    const pd = activeProspekt();
+    const llm = pd && Array.isArray(pd.foryou) ? pd.foryou : null;
     if (llm) {
         const ordered = llm.slice().sort((a, b) => ((a && a.rank) || 99) - ((b && b.rank) || 99));
         for (const entry of ordered) {
@@ -1641,8 +1888,9 @@ function renderMealplan() {
     section.style.display = '';
 
     if (intro) {
-        const txt = hasPlan && mealplanData && typeof mealplanData.intro === 'string'
-            ? mealplanData.intro
+        const mp = activeMealplan();
+        const txt = hasPlan && mp && typeof mp.intro === 'string'
+            ? mp.intro
             : (hasPlan ? '' : 'Noch kein Wochenplan — „↻ Neu generieren" baut einen aus den aktuellen Angeboten und deinen Vorlieben.');
         intro.textContent = txt;
         intro.style.display = txt ? '' : 'none';
@@ -1908,7 +2156,9 @@ function renderShopping() {
     const show = list.total > 0 || hasPlan;   // keep visible with a plan so you can add/re-add
 
     const saveBtn = document.getElementById('pk-shopping-save');
-    if (saveBtn) saveBtn.hidden = !localApi;          // disk save only on the dev server
+    // Saving needs somewhere to write: the connected repo folder or the dev
+    // server. Either is enough.
+    if (saveBtn) saveBtn.hidden = !localApi && !repoDirHandle;
     const copyBtn = document.getElementById('pk-shopping-copy');
     if (copyBtn) copyBtn.disabled = list.total === 0;
     const addForm = document.getElementById('pk-shopping-add');
@@ -2002,14 +2252,21 @@ async function saveShoppingList() {
             custom,
             text: shoppingListText(list),
         }, null, 2) + '\n';
-        const res = await fetch('/api/shopping', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: payload,
-        });
-        if (!res.ok) throw new Error(`Fehler ${res.status}`);
-        const j = await res.json().catch(() => ({}));
-        setShoppingMeta(`✓ Abgelegt in ${j.path || 'data/shopping/'} (${list.total} Position${list.total === 1 ? '' : 'en'}).`, 'ok');
+        // Same order as the preferences export: connected repo folder first (it
+        // works without a server), dev server second.
+        const rel = `data/shopping/${list.date}.json`;
+        if (await writeInRepo(rel, payload, true)) {
+            setShoppingMeta(`✓ Abgelegt in ${repoDirName}/${rel} (${list.total} Position${list.total === 1 ? '' : 'en'}).`, 'ok');
+        } else {
+            const res = await fetch('/api/shopping', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: payload,
+            });
+            if (!res.ok) throw new Error(`Fehler ${res.status}`);
+            const j = await res.json().catch(() => ({}));
+            setShoppingMeta(`✓ Abgelegt in ${j.path || 'data/shopping/'} (${list.total} Position${list.total === 1 ? '' : 'en'}).`, 'ok');
+        }
     } catch (err) {
         setShoppingMeta('Ablegen fehlgeschlagen: ' + (err && err.message ? err.message : err), 'warn');
     } finally {
@@ -2048,12 +2305,13 @@ function renderAll() {
 
     renderMealplan();
 
-    fillSection('pk-vegan-grid', 'pk-vegan-intro',
-        offersWhere(o => /vegan|vegetar/i.test(o.title || '')), 'vegan', { limit: 12 });
-    fillSection('pk-obst-grid', 'pk-obst-intro',
-        offersWhere(o => catName(o) === 'Obst & Gemüse'), 'obstgemuese', { limit: 12 });
+    // Sections reuse the TOPICS detectors instead of restating them — the
+    // duplicated copies had already drifted (the section used the unbounded
+    // /spezi/ long after the chip logic mattered).
+    fillSection('pk-vegan-grid', 'pk-vegan-intro', offersWhere(topicTest('vegan')), 'vegan', { limit: 12 });
+    fillSection('pk-obst-grid', 'pk-obst-intro', offersWhere(topicTest('obstgemuese')), 'obstgemuese', { limit: 12 });
     fillSection('pk-bier-grid', 'pk-bier-intro',
-        offersWhere(o => /spezi/i.test(o.title || '') || (catName(o) === 'Getränke' && /\bbier\b|pils/i.test(o.title || ''))),
+        offersWhere(o => topicTest('bier')(o) || topicTest('spezi')(o)),
         'bierspezi', { limit: 12 });
     fillSection('pk-knueller-grid', 'pk-knueller-intro',
         offersWhere(isKnuller), 'knueller', { limit: 12 });

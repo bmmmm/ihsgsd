@@ -48,6 +48,11 @@
         }
         .back-link:hover { color: #fff; border-color: #555; background: #1a1a1a; }
         #info-bar { color: #888; font-size: 0.9rem; margin: 0 0 18px; }
+        .pk-stale {
+            margin: 0 0 18px; padding: 10px 14px; border-radius: 10px;
+            background: #3a2a12; border: 1px solid #7a5a1e; color: #f0d9a8;
+            font-size: 0.92rem; line-height: 1.5;
+        }
 
         /* ── hero ── */
         .pk-hero {
@@ -108,6 +113,9 @@
         }
         .steer-btn:hover { border-color: #555; background: #222; }
         .steer-btn.primary { border-color: #4caf50; color: #9be29e; background: rgba(76,175,80,0.12); }
+        .steer-btn.small { padding: 4px 10px; font-size: 0.85rem; }
+        .repo-target-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 10px 0 4px; }
+        .repo-target { color: #9aa; font-size: 0.88rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
         .show-hidden { display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; color: #aaa; cursor: pointer; }
         #steer-status { margin: 12px 0 0; font-size: 0.82rem; min-height: 1em; }
         #steer-status.warn { color: #e0a04d; }
@@ -440,6 +448,8 @@
         </div>
         <p id="info-bar"></p>
 
+        <p id="pk-stale" class="pk-stale" hidden></p>
+
         <section class="pk-hero">
             <h2 id="pk-week">Unsere Highlights der Woche</h2>
             <p id="pk-lead"></p>
@@ -534,6 +544,10 @@
                     <label class="show-hidden"><input type="checkbox" id="show-hidden"> Ausgeblendete zeigen</label>
                     <span id="hidden-count" class="hidden-count"></span>
                 </div>
+                <p class="repo-target-row">
+                    <span id="repo-target" class="repo-target"></span>
+                    <button type="button" id="repo-pick" class="steer-btn small" hidden>Repo-Ordner wählen</button>
+                </p>
                 <p id="steer-status" aria-live="polite"></p>
                 <p id="steer-hint"></p>
                 <p class="steer-legend">Mit &#128077; / &#128683; auf den Karten verfeinerst du einzelne Produkte. Der Export (preferences.json) personalisiert montags die KI-Texte.</p>
