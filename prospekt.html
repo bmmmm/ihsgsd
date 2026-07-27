@@ -388,6 +388,7 @@
         .mp-btn:hover { opacity: 1; border-color: #444; }
         .mp-btn.up.on { opacity: 1; border-color: #66bb6a; background: rgba(102,187,106,0.18); }
         .mp-btn.down.on { opacity: 1; border-color: #ef5350; background: rgba(239,83,80,0.18); }
+        .mp-btn.basket.on { opacity: 1; border-color: #4caf50; background: rgba(76,175,80,0.18); color: #9be29e; }
 
         /* ── gluten-free toggle + swapped ingredient chips ── */
         .pk-mp-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -659,6 +660,7 @@
                 <div class="pk-sl-head">
                     <h2><span class="pk-emoji">&#128722;</span>Einkaufszettel</h2>
                     <div class="pk-sl-actions">
+                        <button type="button" id="pk-shopping-week" class="pk-sl-btn" hidden>&#129530; Ganze Woche</button>
                         <button type="button" id="pk-shopping-copy" class="pk-sl-btn">&#128203; Kopieren</button>
                         <button type="button" id="pk-shopping-save" class="pk-sl-btn primary" hidden>&#128190; Ablegen</button>
                     </div>

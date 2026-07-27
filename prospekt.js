@@ -274,7 +274,7 @@ const BOUGHT_WEIGHT = 1;             // a mild loyalty nudge for items you actua
 // gesture and the meal plan feed it. Overlay state (removed/checked/custom) is
 // bound to a plan key so a new week or regeneration starts a fresh list.
 function emptyBasket() {
-    return { planKey: '', offers: {}, custom: [], removed: {}, checked: {} };
+    return { planKey: '', offers: {}, meals: {}, custom: [], removed: {}, checked: {} };
 }
 
 function normalizeBasket(b) {
@@ -282,6 +282,9 @@ function normalizeBasket(b) {
     return {
         planKey: typeof b.planKey === 'string' ? b.planKey : '',
         offers: (b.offers && typeof b.offers === 'object') ? b.offers : {},
+        // Which dinners were put on the list, by slug. Used to be "all of them,
+        // always" — see buildShoppingList.
+        meals: (b.meals && typeof b.meals === 'object') ? b.meals : {},
         custom: Array.isArray(b.custom) ? b.custom.filter(c => c && typeof c.name === 'string') : [],
         removed: (b.removed && typeof b.removed === 'object') ? b.removed : {},
         checked: (b.checked && typeof b.checked === 'object') ? b.checked : {},
@@ -289,7 +292,7 @@ function normalizeBasket(b) {
 }
 
 function defaultPrefs() {
-    return { version: 1, interests: { ...DEFAULT_INTERESTS }, votes: {}, bought: {}, meals: {}, glutenFree: false, basket: emptyBasket() };
+    return { version: 1, interests: { ...DEFAULT_INTERESTS }, votes: {}, bought: {}, meals: {}, glutenFree: false, demoSeeded: false, basket: emptyBasket() };
 }
 
 function loadPrefs() {
@@ -308,6 +311,8 @@ function loadPrefs() {
             // alternatives in the meal plan. Display-only preference, persisted
             // quietly (no re-export nag) — see persistPrefsQuiet.
             glutenFree: (p && typeof p.glutenFree === 'boolean') ? p.glutenFree : false,
+            // Whether the one-off example row has been placed (see seedDemoItem).
+            demoSeeded: (p && typeof p.demoSeeded === 'boolean') ? p.demoSeeded : false,
             // Shopping list (🧺-added offers + meal plan + own items). View
             // state, persisted quietly; reset per plan via ensureBasketForPlan.
             basket: normalizeBasket(p && p.basket),
@@ -739,6 +744,8 @@ function buildSteering() {
     if (slCopy) slCopy.addEventListener('click', copyShoppingList);
     const slSave = document.getElementById('pk-shopping-save');
     if (slSave) slSave.addEventListener('click', saveShoppingList);
+    const slWeek = document.getElementById('pk-shopping-week');
+    if (slWeek) slWeek.addEventListener('click', allMealsOnList);
     const slUndo = document.getElementById('pk-sl-undo-btn');
     if (slUndo) slUndo.addEventListener('click', undoRemove);
     const slAdd = document.getElementById('pk-shopping-add');
@@ -1718,6 +1725,16 @@ function buildMealCard(day, meal, dayIndex) {
     down.textContent = '🚫';
     down.setAttribute('aria-label', 'Gericht mag ich nicht');
     down.addEventListener('click', () => setMealVote(meal, -1));
+    const onList = mealOnList(meal);
+    const toList = document.createElement('button');
+    toList.type = 'button';
+    toList.className = 'mp-btn basket' + (onList ? ' on' : '');
+    toList.textContent = onList ? '🧺 Drauf' : '🧺 Zutaten';
+    toList.title = onList
+        ? 'Zutaten wieder vom Einkaufszettel nehmen'
+        : 'Zutaten dieses Gerichts auf den Einkaufszettel';
+    toList.setAttribute('aria-label', toList.title);
+    toList.addEventListener('click', () => toggleMealOnList(meal));
     const swap = document.createElement('button');
     swap.type = 'button';
     swap.className = 'mp-btn swap';
@@ -1727,6 +1744,7 @@ function buildMealCard(day, meal, dayIndex) {
     swap.addEventListener('click', () => swapMeal(dayIndex));
     actions.appendChild(up);
     actions.appendChild(down);
+    actions.appendChild(toList);
     actions.appendChild(swap);
     card.appendChild(actions);
 
@@ -1830,6 +1848,76 @@ function ensureBasketForPlan() {
         prefs.basket.planKey = key;
         persistPrefsQuiet();
     }
+    seedDemoItem();
+}
+
+// One joke item, once ever. An empty list has to show that things go *into* it,
+// and a sentence saying so is weaker than a row you can delete. Seeded on the
+// first visit only: an example that reappears every week after you deleted it
+// reads as a bug, and the empty-state line carries the invitation from then on.
+const DEMO_ITEM = 'Ein Pils für den Koch';
+
+function seedDemoItem() {
+    if (!prefs || prefs.demoSeeded) return;
+    const b = prefs.basket;
+    // Wait for a real week — seeding against the empty startup key would put the
+    // item in a basket that the first render then throws away.
+    if (!b || !selectedWeekMeta().date) return;
+    prefs.demoSeeded = true;
+    if (!b.custom.some(c => normTitle(c.name) === normTitle(DEMO_ITEM))) {
+        b.custom.push({ id: 'demo', name: DEMO_ITEM });
+    }
+    persistPrefsQuiet();
+}
+
+// ── 🧺 membership: dinners ──
+// Same gesture as on an offer card, one level up: it puts the dish's whole
+// ingredient list on the shopping list.
+function mealOnList(meal) {
+    return !!(prefs && prefs.basket && meal && meal.slug && prefs.basket.meals[meal.slug]);
+}
+
+function mealIngredientNames(meal) {
+    const gf = !!(prefs && prefs.glutenFree);
+    const names = [];
+    (Array.isArray(meal && meal.ingredients) ? meal.ingredients : []).forEach(ing => {
+        if (!ing || !ing.name) return;
+        names.push(ing.name);
+        if (gf) names.push(glutenFreeText(ing.name));   // the GF swap is its own row
+    });
+    return names;
+}
+
+function toggleMealOnList(meal) {
+    if (!meal || !meal.slug || !prefs) return;
+    if (!prefs.basket) prefs.basket = emptyBasket();
+    const b = prefs.basket;
+    if (b.meals[meal.slug]) {
+        delete b.meals[meal.slug];
+    } else {
+        b.meals[meal.slug] = true;
+        // Putting a dish back on must clear ingredients that were ×'d earlier,
+        // or it would land half-empty with no way to see why.
+        mealIngredientNames(meal).forEach(n => { delete b.removed[normTitle(n)]; });
+    }
+    persistPrefsQuiet();
+    renderAll();
+    bumpBasketJump();
+}
+
+function allMealsOnList() {
+    if (!prefs || !mealplanView || !Array.isArray(mealplanView.days)) return;
+    if (!prefs.basket) prefs.basket = emptyBasket();
+    const b = prefs.basket;
+    mealplanView.days.forEach(d => {
+        const meal = d && d.meal;
+        if (!meal || !meal.slug) return;
+        b.meals[meal.slug] = true;
+        mealIngredientNames(meal).forEach(n => { delete b.removed[normTitle(n)]; });
+    });
+    persistPrefsQuiet();
+    renderAll();
+    bumpBasketJump();
 }
 
 // ── 🧺 membership (card gesture; separate from votes/bought) ──
@@ -1932,11 +2020,17 @@ function buildShoppingList() {
         return r;
     };
 
-    // 1) meal-plan ingredients — mirror buildMealCard's offer/pantry/GF split.
+    // 1) ingredients of the dinners actually put on the list — mirror
+    // buildMealCard's offer/pantry/GF split. Every dinner used to land here
+    // automatically, which opened the week with 29 rows: a finished list nobody
+    // asked for. It reads as the page's output rather than as your list, and
+    // burying the two or three things you actually needed. Now a dish goes on
+    // via 🧺 on its card (or all seven at once from the list header).
     if (mealplanView && Array.isArray(mealplanView.days)) {
         mealplanView.days.forEach(d => {
             const meal = d && d.meal;
-            (meal && Array.isArray(meal.ingredients) ? meal.ingredients : []).forEach(ing => {
+            if (!meal || !meal.slug || !b.meals[meal.slug]) return;
+            (Array.isArray(meal.ingredients) ? meal.ingredients : []).forEach(ing => {
                 if (!ing || !ing.name) return;
                 const swapped = gf ? glutenFreeText(ing.name) : ing.name;
                 let group = 'pantry', price = '', offer = null;
@@ -2138,6 +2232,13 @@ function renderShopping() {
     if (saveBtn) saveBtn.hidden = !localApi && !repoDirHandle;
     const copyBtn = document.getElementById('pk-shopping-copy');
     if (copyBtn) copyBtn.disabled = list.total === 0;
+    // The old bulk behaviour, kept as a choice: only worth offering while at
+    // least one dinner is still off the list.
+    const weekBtn = document.getElementById('pk-shopping-week');
+    if (weekBtn) {
+        const off = hasPlan && mealplanView.days.some(d => d.meal && d.meal.slug && !prefs.basket.meals[d.meal.slug]);
+        weekBtn.hidden = !off;
+    }
     const addForm = document.getElementById('pk-shopping-add');
     if (addForm) addForm.style.display = show ? '' : 'none';
 
@@ -2160,7 +2261,9 @@ function renderShopping() {
     if (list.total === 0) {
         const empty = document.createElement('p');
         empty.className = 'pk-sl-empty';
-        empty.textContent = 'Zettel leer — füge unten etwas hinzu oder 🧺 ein Angebot.';
+        empty.textContent = hasPlan
+            ? 'Noch nichts drauf. Nimm 🧺 Zutaten an einem Gericht, leg ein Angebot mit 🧺 dazu — oder tipp unten was Eigenes ein.'
+            : 'Noch nichts drauf. Leg ein Angebot mit 🧺 dazu — oder tipp unten was Eigenes ein.';
         body.appendChild(empty);
     }
 
