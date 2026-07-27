@@ -855,6 +855,11 @@ function buildSteering() {
     if (resetBtn) resetBtn.addEventListener('click', resetPrefs);
     const repoBtn = document.getElementById('repo-pick');
     if (repoBtn) repoBtn.addEventListener('click', connectRepoDir);
+    const basketJump = document.getElementById('pk-basket-jump');
+    if (basketJump) basketJump.addEventListener('click', () => {
+        const el = document.getElementById('pk-shopping');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
     const regenBtn = document.getElementById('pk-mealplan-regen');
     if (regenBtn) regenBtn.addEventListener('click', regenerateMealplan);
 
@@ -1985,6 +1990,25 @@ function toggleBasket(o) {
     }
     persistPrefsQuiet();
     renderAll();   // refresh the card button state and the list together
+    bumpBasketJump();
+}
+
+// Sticky counter for the shopping list — one click jumps to it. Cards can sit
+// far above the list, so without this a 🧺 click had no visible effect at all.
+function paintBasketJump(total) {
+    const btn = document.getElementById('pk-basket-jump');
+    if (!btn) return;
+    btn.hidden = !total;
+    btn.textContent = total ? `🧺 ${total} auf dem Zettel` : '';
+    btn.title = 'Zum Einkaufszettel springen';
+}
+
+function bumpBasketJump() {
+    const btn = document.getElementById('pk-basket-jump');
+    if (!btn || btn.hidden) return;
+    btn.classList.remove('bump');
+    void btn.offsetWidth;   // restart the animation on a repeated click
+    btn.classList.add('bump');
 }
 
 // Build the list rows by merging the plan, the 🧺 offers, and own items,
@@ -2154,6 +2178,7 @@ function renderShopping() {
     const list = buildShoppingList();
     const hasPlan = !!(mealplanView && mealplanView.days.length);
     const show = list.total > 0 || hasPlan;   // keep visible with a plan so you can add/re-add
+    paintBasketJump(list.total);
 
     const saveBtn = document.getElementById('pk-shopping-save');
     // Saving needs somewhere to write: the connected repo folder or the dev
@@ -2274,6 +2299,67 @@ async function saveShoppingList() {
     }
 }
 
+// ── collapsible sections ──
+// Which sections are collapsed, by grid id. Kept out of `prefs` on purpose:
+// this is view state, not a preference the Monday generator should ever read.
+const COLLAPSE_STORE = 'pk-collapsed-v1';
+
+function loadCollapsed() {
+    try {
+        const raw = localStorage.getItem(COLLAPSE_STORE);
+        const arr = raw ? JSON.parse(raw) : [];
+        return new Set(Array.isArray(arr) ? arr.filter(x => typeof x === 'string') : []);
+    } catch (e) {
+        return new Set();
+    }
+}
+
+function saveCollapsed(set) {
+    try { localStorage.setItem(COLLAPSE_STORE, JSON.stringify([...set])); } catch (e) { /* quota/private mode */ }
+}
+
+let collapsedSections = null;
+
+// Make a section's heading toggle it, and show how many cards it holds so a
+// collapsed section still says what it contains. Idempotent — renderAll() runs
+// repeatedly, and re-registering the handler each time would stack listeners.
+function wireCollapsible(gridId, count) {
+    const grid = document.getElementById(gridId);
+    const section = grid ? grid.closest('.pk-section') : null;
+    const h = section ? section.querySelector(':scope > h2') : null;
+    if (!h) return;
+    if (collapsedSections === null) collapsedSections = loadCollapsed();
+
+    let badge = h.querySelector('.pk-count');
+    if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'pk-count';
+        h.appendChild(badge);
+    }
+    badge.textContent = count ? `${count}` : '';
+
+    if (collapsedSections.has(gridId)) section.classList.add('collapsed');
+    else section.classList.remove('collapsed');
+
+    if (h.dataset.collapsibleWired) return;
+    h.dataset.collapsibleWired = '1';
+    h.classList.add('pk-collapsible');
+    h.setAttribute('role', 'button');
+    h.setAttribute('tabindex', '0');
+    const toggle = () => {
+        const nowCollapsed = !section.classList.contains('collapsed');
+        section.classList.toggle('collapsed', nowCollapsed);
+        if (nowCollapsed) collapsedSections.add(gridId); else collapsedSections.delete(gridId);
+        h.setAttribute('aria-expanded', String(!nowCollapsed));
+        saveCollapsed(collapsedSections);
+    };
+    h.addEventListener('click', toggle);
+    h.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+    h.setAttribute('aria-expanded', String(!section.classList.contains('collapsed')));
+}
+
 // Hide a content cluster's heading when every section inside it is empty (the
 // sections hide themselves via display:none). The controls cluster is always
 // shown, so it's deliberately not listed here.
@@ -2302,19 +2388,31 @@ function renderAll() {
     }
     const forYouSection = document.getElementById('pk-foryou');
     if (forYouSection) forYouSection.style.display = (fy.list.length + discoveries.length) ? '' : 'none';
+    wireCollapsible('pk-foryou-grid', fy.list.length + discoveries.length);
 
     renderMealplan();
+
+    // Everything already shown under "Für dich" is skipped in the topic
+    // sections below: the top picks are drawn from the same offers, so the
+    // first five cards of "Für dich" and of "Obst & Gemüse" used to be
+    // identical. The sections are meant to add to the picks, not repeat them.
+    const placed = new Set([...fy.inForYou, ...discoveries]);
+    const except = test => o => !placed.has(o) && test(o);
 
     // Sections reuse the TOPICS detectors instead of restating them — the
     // duplicated copies had already drifted (the section used the unbounded
     // /spezi/ long after the chip logic mattered).
-    fillSection('pk-vegan-grid', 'pk-vegan-intro', offersWhere(topicTest('vegan')), 'vegan', { limit: 12 });
-    fillSection('pk-obst-grid', 'pk-obst-intro', offersWhere(topicTest('obstgemuese')), 'obstgemuese', { limit: 12 });
-    fillSection('pk-bier-grid', 'pk-bier-intro',
-        offersWhere(o => topicTest('bier')(o) || topicTest('spezi')(o)),
-        'bierspezi', { limit: 12 });
-    fillSection('pk-knueller-grid', 'pk-knueller-intro',
-        offersWhere(isKnuller), 'knueller', { limit: 12 });
+    wireCollapsible('pk-vegan-grid',
+        fillSection('pk-vegan-grid', 'pk-vegan-intro', offersWhere(except(topicTest('vegan'))), 'vegan', { limit: 12 }));
+    wireCollapsible('pk-obst-grid',
+        fillSection('pk-obst-grid', 'pk-obst-intro', offersWhere(except(topicTest('obstgemuese'))), 'obstgemuese', { limit: 12 }));
+    wireCollapsible('pk-bier-grid',
+        fillSection('pk-bier-grid', 'pk-bier-intro',
+            offersWhere(except(o => topicTest('bier')(o) || topicTest('spezi')(o))),
+            'bierspezi', { limit: 12 }));
+    wireCollapsible('pk-knueller-grid',
+        fillSection('pk-knueller-grid', 'pk-knueller-intro',
+            offersWhere(except(isKnuller)), 'knueller', { limit: 12 }));
 
     updateClusters();
     updateHiddenCount();

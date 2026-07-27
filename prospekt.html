@@ -190,11 +190,26 @@
         .pk-section { margin-bottom: 8px; }
         .pk-section > h2 { margin: 0 0 4px; font-size: 1.2rem; color: #fff; }
         .pk-section > h2 .pk-emoji { margin-right: 8px; }
+        /* Collapsible sections: the heading doubles as the toggle. Cursor and
+           caret only appear once JS has wired it up, so a no-JS page never
+           advertises a control that does nothing. */
+        .pk-section > h2.pk-collapsible { cursor: pointer; user-select: none; display: flex; align-items: center; gap: 8px; }
+        .pk-section > h2.pk-collapsible::after {
+            content: '▾'; font-size: 0.8rem; color: #777; margin-left: auto;
+            transition: transform 0.15s;
+        }
+        .pk-section.collapsed > h2.pk-collapsible::after { transform: rotate(-90deg); }
+        .pk-section.collapsed > .pk-grid,
+        .pk-section.collapsed > .pk-intro { display: none; }
+        .pk-count { font-size: 0.82rem; color: #777; font-weight: 400; }
         .pk-intro { margin: 0 0 14px; color: #aaa; font-size: 0.92rem; line-height: 1.5; max-width: 75ch; }
+        /* Denser than before (185px/140px-tall thumbs): roughly twice as many
+           offers per screen, which is the difference between scanning the week
+           and scrolling through it. */
         .pk-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
-            gap: 14px;
+            grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+            gap: 10px;
         }
 
         /* ── cards ── */
@@ -213,7 +228,7 @@
         .pk-card.downvoted { opacity: 0.45; }
         .pk-thumb {
             position: relative;
-            height: 140px;
+            height: 104px;
             background: #0f0f0f;
             display: flex;
             align-items: center;
@@ -430,6 +445,40 @@
         .pk-sl-add input { flex: 1; min-width: 0; background: #1a1a1a; color: #e0e0e0; border: 1px solid #333; padding: 8px 12px; border-radius: 8px; font-size: 0.9rem; font-family: inherit; }
         .pk-sl-add input:focus { outline: none; border-color: #4caf50; }
 
+        /* Sticky quick-nav: the page is long, and the two parts actually used
+           (week plan, shopping list) sat far below the offer grids. */
+        .pk-jump {
+            position: sticky; top: 0; z-index: 30;
+            display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+            margin: 0 0 18px; padding: 8px 4px;
+            background: rgba(13,13,13,0.94); backdrop-filter: blur(8px);
+            border-bottom: 1px solid #222;
+        }
+        .pk-jump a {
+            color: #bbb; text-decoration: none; font-size: 0.86rem;
+            padding: 5px 11px; border-radius: 999px; border: 1px solid #2c2c2c;
+            white-space: nowrap; transition: background 0.12s, color 0.12s, border-color 0.12s;
+        }
+        .pk-jump a:hover { background: #1c1c1c; color: #eee; border-color: #444; }
+        .pk-basket-jump {
+            margin-left: auto; cursor: pointer; white-space: nowrap;
+            font-family: inherit; font-size: 0.86rem; font-weight: 600;
+            padding: 5px 13px; border-radius: 999px;
+            border: 1px solid #4caf50; color: #9be29e; background: rgba(76,175,80,0.14);
+        }
+        .pk-basket-jump:hover { background: rgba(76,175,80,0.26); }
+        /* Briefly pulses when something is added, so a click on a card that is
+           scrolled far from the list still gives visible feedback. */
+        .pk-basket-jump.bump { animation: basket-bump 0.45s ease; }
+        @keyframes basket-bump {
+            0% { transform: scale(1); }
+            35% { transform: scale(1.18); background: rgba(76,175,80,0.45); }
+            100% { transform: scale(1); }
+        }
+        @media (prefers-reduced-motion: reduce) { .pk-basket-jump.bump { animation: none; } }
+        /* Anchor targets must clear the sticky bar. */
+        .pk-cluster, .pk-section { scroll-margin-top: 64px; }
+
         .footer { margin-top: 28px; padding-top: 16px; border-top: 1px solid #222; color: #666; font-size: 0.82rem; }
     </style>
 </head>
@@ -450,6 +499,15 @@
 
         <p id="pk-stale" class="pk-stale" hidden></p>
 
+        <nav class="pk-jump" id="pk-jump" aria-label="Schnellnavigation">
+            <a href="#pk-mealplan">&#129367;&nbsp; Wochenplan</a>
+            <a href="#pk-shopping">&#129506;&nbsp; Einkaufszettel</a>
+            <a href="#pk-foryou">&#11088;&nbsp; Top-Picks</a>
+            <a href="#cluster-themen">&#128278;&nbsp; Themen</a>
+            <a href="#cluster-controls">&#9881;&nbsp; Vorlieben</a>
+            <button type="button" id="pk-basket-jump" class="pk-basket-jump" hidden></button>
+        </nav>
+
         <section class="pk-hero">
             <h2 id="pk-week">Unsere Highlights der Woche</h2>
             <p id="pk-lead"></p>
@@ -458,17 +516,12 @@
         <div class="pk-cluster" id="cluster-foryou">
             <div class="pk-cluster-head">
                 <h2>Für dich</h2>
-                <p class="pk-cluster-sub">Deine Top-Picks und der vegane Wochenplan &mdash; aus den Angeboten dieser Woche und deinen Vorlieben.</p>
+                <p class="pk-cluster-sub">Wochenplan, Einkaufszettel und deine Top-Picks &mdash; aus den Angeboten dieser Woche und deinen Vorlieben.</p>
             </div>
-
-            <section class="pk-section" id="pk-foryou">
-                <h2><span class="pk-emoji">&#11088;</span>Top-Picks der Woche</h2>
-                <div id="pk-foryou-grid" class="pk-grid"></div>
-            </section>
 
             <section class="pk-section" id="pk-mealplan">
                 <div class="pk-mp-head">
-                    <h2><span class="pk-emoji">&#127869;</span>Veganer Wochenplan</h2>
+                    <h2><span class="pk-emoji">&#129367;</span>Veganer Wochenplan</h2>
                     <div class="pk-mp-controls">
                         <label class="mp-gf-toggle" id="pk-mealplan-gf-label" title="Nudeln, Mehl &amp; Co. durch glutenfreie Alternativen ersetzen">
                             <input type="checkbox" id="pk-mealplan-gf"> &#127806; glutenfrei
@@ -495,6 +548,11 @@
                     <button type="submit" class="pk-sl-btn">Hinzuf&uuml;gen</button>
                 </form>
             </section>
+            <section class="pk-section" id="pk-foryou">
+                <h2><span class="pk-emoji">&#11088;</span>Top-Picks der Woche</h2>
+                <div id="pk-foryou-grid" class="pk-grid"></div>
+            </section>
+
         </div>
 
         <div class="pk-cluster" id="cluster-themen">
