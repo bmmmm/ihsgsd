@@ -66,6 +66,33 @@ Run by hand after a fetch — these call `claude -p` and are never part of CI:
 4. Frontend loads `folder-structure.json` to populate dropdown, then fetches the selected week's JSON
 5. Offers are rendered as table rows with category, price, description, and lazy-loaded images
 
+## ALDI Süd data source (phase 1 — collection only, no UI)
+
+A second, fully separate offer source mirroring the EDEKA pattern:
+
+- **`scripts/fetch_aldi.py`** — stdlib-only fetcher, also runs locally
+  (`python3 scripts/fetch_aldi.py [--dry-run]`). Endpoint
+  `https://api.aldi-sued.de/v3/product-search` with
+  `categoryKey=1588161426582123` (food "Wochenangebote", Mo–Sa); plain JSON, no
+  auth, no `servicePoint` needed. `limit` must be one of {12,16,24,30,32,48,60};
+  pages are merged via `offset` until `meta.pagination.totalCount`. Non-food
+  promotions (`?promotionKey=YYYY-MM-DD`) are a possible later addition.
+- **`data-aldi/{YEAR}/KW{XX}/{monday}.json`** — snapshots of raw API product
+  objects, sorted by `sku`. Deliberately a **sibling** of `data/`, not a
+  subdirectory: the EDEKA workflow's `find -path "data/*/KW*/*.json"` (where `*`
+  matches `/`) would otherwise leak ALDI files into `folder-structure.json` and
+  the week dropdown, and `build_indexes.py` / `audit_data.py` walk `data/`.
+- **Week identity is the Monday of the run's ISO week** — the response has no
+  `validFrom` equivalent. A stale-week guard compares against the previous
+  week's snapshot, so an early Monday run cannot file last week's offers under
+  the new Monday; never-shrink and churn-filter guards mirror the EDEKA
+  workflow's.
+- **`.github/workflows/fetch-aldi-offers.yml`** — Mon 05:00/10:00 UTC + Tue
+  06:00 UTC safety net + `workflow_dispatch`; ALDI's publish time is unknown,
+  tune the schedule after observing the switch a few times.
+- No UI yet — table/dashboard/prospekt stay EDEKA-only. Grundpreis parity for
+  ALDI fields (`price.comparison` / `perUnitDisplay`) is unvalidated.
+
 ## Key Patterns
 
 - **German compounds get `hyphens: auto`, never `overflow-wrap: anywhere`.**

@@ -1,0 +1,57 @@
+name: Fetch ALDI Offers
+
+on:
+  schedule:
+    # ALDI Sued's weekly offers run Mo-Sa, but the publish time for the new
+    # week is unknown — this schedule is a first guess and may need tuning
+    # once the switch has been observed a few times. Extra runs are free: the
+    # script's guards (stale-week, never-shrink, churn filter) make a too-early
+    # or repeated run write nothing. Times are UTC (CEST = UTC+2); GitHub's
+    # scheduler is routinely 30 min to 3 h late, hence the redundancy.
+    - cron: "0 5 * * 1"   # Mon 07:00 CEST
+    - cron: "0 10 * * 1"  # Mon 12:00 CEST
+    - cron: "0 6 * * 2"   # Tue 08:00 CEST — safety net
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fetch-aldi-offers
+  cancel-in-progress: false
+
+jobs:
+  fetch-and-store:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "24591225+bmmmm@users.noreply.github.com"
+
+      - name: Fetch ALDI offers
+        # All fetch/retry/guard logic lives in the script so it can also run
+        # locally; a clean exit with nothing written is the normal case for
+        # every run after the week's first successful one.
+        run: python3 scripts/fetch_aldi.py
+
+      - name: Commit and push data
+        run: |
+          git add data-aldi/
+          git diff --staged --quiet && echo "Nothing to commit, skipping" && exit 0
+          FILE=$(git diff --staged --name-only | head -n 1)
+          git commit -m "Add ALDI data for $FILE"
+          # Retry against a concurrent push to main (same pattern as the EDEKA
+          # workflow): a commit landing between checkout and push makes this a
+          # non-fast-forward. Rebase onto the latest remote and try again.
+          for attempt in 1 2 3; do
+            if git push; then exit 0; fi
+            echo "push rejected (attempt $attempt) — rebasing onto origin/main and retrying"
+            git pull --rebase origin main
+          done
+          echo "push failed after 3 attempts" >&2
+          exit 1
