@@ -1,6 +1,6 @@
 {
   "source": "aldi-sued",
-  "fetchedAt": "2026-07-27T18:44:44Z",
+  "fetchedAt": "2026-07-28T08:30:08Z",
   "weekStart": "2026-07-27",
   "totalCount": 86,
   "offers": [
@@ -430,13 +430,13 @@
       "isAbstract": false,
       "abstractSku": "000000000000229457A",
       "price": {
-        "amount": 169,
-        "amountRelevant": 169,
-        "amountRelevantDisplay": "1,69 €",
+        "amount": 149,
+        "amountRelevant": 149,
+        "amountRelevantDisplay": "1,49 €",
         "bottleDeposit": 0,
         "bottleDepositDisplay": "0,00 €",
-        "comparison": 169,
-        "comparisonDisplay": "1,69 €/1 kg",
+        "comparison": 149,
+        "comparisonDisplay": "1,49 €/1 kg",
         "currencyCode": "EUR",
         "currencySymbol": "€",
         "perUnit": null,
