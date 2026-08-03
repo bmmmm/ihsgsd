@@ -20,8 +20,8 @@ run therefore never breaks the site.
 Flags:
     --dry-run     Build the digest and print the prompt, but do NOT call claude
                   and do NOT write data/prospekt.json.
-    --model M     Override the model (default: sonnet — the ranking task needs
-                  the rubric followed; it is one local call per week).
+    --model M     Override the model (default: opus — this is a voice task and
+                  the gap shows; it is one local call per week).
     --prefs PATH  Preferences file to personalise with (default:
                   data/preferences.json; silently skipped if absent).
 """
