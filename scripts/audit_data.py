@@ -326,6 +326,7 @@ def check_archive(rep, base_dir, label, key_field, known_missing,
         m = re.search(r"(\d{4})/(KW\d+)/(\d{4}-\d{2}-\d{2})\.json$", path)
         snaps.append({"path": path, "year": m.group(1), "kw": m.group(2),
                       "date": m.group(3), "week_start": data.get("weekStart"),
+                      "total": data.get("totalCount"),
                       "offers": data.get("offers") or []})
 
     misfiled = []
@@ -365,6 +366,24 @@ def check_archive(rep, base_dir, label, key_field, known_missing,
     else:
         rep.ok("offer counts plausible (min "
                f"{min(len(s['offers']) for s in snaps)})")
+
+    # Only ALDI snapshots carry the source's own count. It overshoots by a few
+    # percent by design (the API filters after counting — see fetch_aldi.py),
+    # so this fires on a lost page, not on that noise. It matters because an
+    # empty page ends pagination silently: a half-fetched week is otherwise
+    # indistinguishable from a genuinely small one.
+    counted = [s for s in snaps if isinstance(s["total"], int) and s["total"]]
+    if counted:
+        short = [f"{s['date']}: {len(s['offers'])} of {s['total']}"
+                 for s in counted if len(s["offers"]) < 0.9 * s["total"]]
+        if short:
+            rep.fail(f"{len(short)} {label} snapshot(s) hold far fewer offers "
+                     f"than the source counted — refetch while the week is live",
+                     short)
+        else:
+            worst = min(len(s["offers"]) / s["total"] for s in counted)
+            rep.ok(f"offer counts match the source's totalCount "
+                   f"(worst {worst:.0%})")
 
     dupes = []
     for s in snaps:
