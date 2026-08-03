@@ -164,6 +164,22 @@ def norm_desc(s):
     return " ".join(sorted(set(t for t in s.split() if t not in DESC_FILLER)))
 
 
+def outranks(new, old):
+    """Should `new` replace `old` when both normalize to the same id?
+
+    Two regional editions of one offer can disagree twice over: a footnote row
+    yields price=None where the other carries the price, and the same article
+    is occasionally priced differently per region (REWE KW31 2026 printed one
+    Lugana at 9.99 and 7.99). Picking whichever arrived first would make the
+    snapshot depend on brochure order and churn between runs, so prefer a
+    price over none and the lower of two prices — on an offers site the
+    cheaper printed price is the useful one.
+    """
+    if old["price"] is None:
+        return new["price"] is not None
+    return new["price"] is not None and new["price"] < old["price"]
+
+
 def normalize_offer(retailer, raw):
     """Flatten one Bonial offer into our record, minting the stable own id."""
     content = raw.get("content") or {}
@@ -248,13 +264,8 @@ def fetch_retailer(retailer, publisher, brochures, current_monday):
         for pg in contents:
             for raw in pg.get("offers") or []:
                 offer = normalize_offer(retailer, raw)
-                # Two editions of one offer can differ in whether the price
-                # made it into the extract at all (a footnote row yields
-                # price=None). Keeping the first would throw the price away,
-                # so the priced record always wins.
                 prev = week["offers"].get(offer["id"])
-                if prev is None or (prev["price"] is None
-                                    and offer["price"] is not None):
+                if prev is None or outranks(offer, prev):
                     week["offers"][offer["id"]] = offer
     return by_week
 
