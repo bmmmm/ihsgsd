@@ -45,6 +45,36 @@ MIN_OFFERS = 20  # fewer = mid-switch partial list, refuse to write
 RETRY_SLEEPS = (30, 120, 300)
 IMG_WIDTH = 320  # ~16 KB JPEG via the asset URL's {width} placeholder
 
+# What the product objects mean (read off the KW31 baseline, 86 offers, and not
+# re-validated since — treat as a starting point, not a contract):
+#
+#   categories        parent->child path, 1-2 entries, parent first. The ~12
+#                     parents line up with EDEKA's category.name, except parent
+#                     "Wochenangebote" is semantically empty — its child
+#                     "Frischeprodukte im Angebot" is the produce section.
+#   badges            explicit "Vegan"/"Vegetarisch"/"Kuehlung"/"Tiefkuehlung".
+#                     Curated, not derived: produce is vegan but goes unbadged,
+#                     so absence of a badge proves nothing.
+#   weightType "2" +  loose goods sold per kg — price.amount IS the per-kg
+#   quantityUnit kg   price, not a pack price. Reading it as a pack price is the
+#                     easy mistake here.
+#   quantityUnit      "ea"/"pac"/"bt" = piece/pack/bottle; "bt" rows carry
+#                     bottleDeposit.
+#   sellingSize       ("1 kg", "156 g") present exactly where price.comparison*
+#                     is (75 of 86). The 11 with neither are loose/per-piece
+#                     produce. Correct on spot checks, unverified at scale.
+#   abstractSku       groups flavour variants (Gruenlaender x5, Coca-Cola x3).
+#   price.savingsDisplay  ALDI's own discount figure ("34 %").
+#
+# Dead on arrival, do not build on them: notForSale (always true),
+# onSaleDateDisplay, alcohol, energyClass, ageRestriction, discontinued*,
+# isAbstract, price.additionalInfo, price.perUnit* (populated on 4 of 86).
+#
+# Open questions before anything downstream depends on this: are sku and
+# abstractSku stable across weeks (if yes, price history needs no
+# title-normalisation heuristic like EDEKA's)? Does the category set and its
+# parent-first order hold? Does the per-kg reading match the printed flyer?
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = REPO_ROOT / "data-aldi"
 
