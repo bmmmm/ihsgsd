@@ -42,6 +42,9 @@ API_BASE = "https://api.aldi-sued.de/v3/product-search"
 CATEGORY_KEY = "1588161426582123"
 PAGE_LIMIT = 60  # the API only accepts limits in {12,16,24,30,32,48,60}
 MIN_OFFERS = 20  # fewer = mid-switch partial list, refuse to write
+# Share of the API's own totalCount that must actually arrive. Measured
+# shortfalls are 0-4% (see fetch_all_offers); one lost page would be >15%.
+MIN_TOTAL_RATIO = 0.9
 RETRY_SLEEPS = (30, 120, 300)
 IMG_WIDTH = 320  # ~16 KB JPEG via the asset URL's {width} placeholder
 
@@ -115,8 +118,16 @@ def fetch_all_offers():
             break  # defensive: never loop forever on an empty page
         offers.extend(data)
         offset += PAGE_LIMIT
-    # The relevance sort can shift items between pages mid-pagination, so the
-    # merge may contain duplicates; keep the first occurrence per sku.
+    # totalCount counts more than the API hands out: measured 2026-08-03 it
+    # reported 72 while returning 57 (not 60) on page one and 12 on page two,
+    # with zero sku overlap between the pages. So a small shortfall is the
+    # source filtering its own result set after counting, not a paging bug —
+    # offset stays an index into the unfiltered list, which is why advancing
+    # by PAGE_LIMIT over a short page skips nothing. Only a LARGE shortfall
+    # means we lost data; main() guards on that.
+    #
+    # The dedupe below has never actually fired on a measured week. It stays as
+    # cheap insurance in case the sort ever does shift items between pages.
     seen = set()
     unique = []
     for offer in offers:
@@ -219,6 +230,16 @@ def main():
             if len(offers) < MIN_OFFERS:
                 raise ValueError(
                     f"only {len(offers)} offers (mid-switch partial list?)"
+                )
+            # An empty page ends pagination silently, so a dropped page looks
+            # like a complete small week — MIN_OFFERS only catches a total
+            # outage. totalCount is the source's own count and normally
+            # overshoots by a few percent (see fetch_all_offers); losing a
+            # whole page cannot hide under this bound.
+            if total and len(offers) < MIN_TOTAL_RATIO * total:
+                raise ValueError(
+                    f"got {len(offers)} of {total} offers "
+                    f"(<{MIN_TOTAL_RATIO:.0%}) — a page went missing"
                 )
             break
         except (OSError, ValueError, http.client.HTTPException) as err:
