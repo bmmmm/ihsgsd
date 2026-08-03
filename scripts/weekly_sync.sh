@@ -11,7 +11,12 @@
 # folder-structure.json against prospekt.json's own weekLabel rather than
 # reusing Phase A's git-ahead check.
 set -uo pipefail
-export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+# `$HOME/.local/bin` is where the `claude` CLI lives (every other tool this
+# script needs is a Homebrew binary). launchd hands the job a bare
+# /usr/bin:/bin:/usr/sbin:/sbin, so without this entry Phases B and C fail on
+# "`claude` CLI not found in PATH" — silently for a whole week, because Phase A
+# still succeeds and the only signal is a Forgejo issue.
+export PATH="/opt/homebrew/bin:/usr/local/bin:$HOME/.local/bin:$PATH"
 # Hardcoded, not relative to BASH_SOURCE: the launchagent-icons wrapper copies
 # this script verbatim into an .app bundle elsewhere, so a
 # dirname-of-own-location cd would resolve inside that bundle instead of the

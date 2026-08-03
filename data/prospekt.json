@@ -1,109 +1,109 @@
 {
-  "generatedAt": "2026-07-27",
-  "weekLabel": "KW31",
-  "lead": "Die [[Deutschland - GUT & GÜNSTIG - Tafeläpfel|Tafeläpfel]] liegen bei 75 Cent das Kilo und damit auf ihrem Allzeit-Tief aus fünf Wochen Historie. Daneben [[Niederlande - Rispentomaten|Rispentomaten für einen Euro]], [[China - Bio-Ingwer|Bio-Ingwer für 49 Cent]] und die [[Deutschland - Bio-Zucchini|Bio-Zucchini]] zu 1,49 — das Gemüsefach ist damit im Wesentlichen abgehandelt. Das [[Wicküler Pils|Wicküler Pils]] kostet 9,49 den Kasten, 95 Cent der Liter, was Montag zu einem vertretbaren Wochentag macht. Die [[Rügenwalder Mühle - Vegane Alternativen|veganen Alternativen von Rügenwalder]] gibt es für 2,49, und beim [[Rheinfels Quelle Mineralwasser|Rheinfels Mineralwasser]] steht der Liter bei 44 Cent.",
+  "generatedAt": "2026-08-03",
+  "weekLabel": "KW32",
+  "lead": "[[Paulaner Spezi oder Limo|Der Paulaner Spezi]] liegt bei 1,10 € pro Liter und damit auf dem tiefsten Stand seit neun Wochen — der Kasten kostet 10,99 €. Die [[Spanien - EDEKA Bio - Bio-Kulturheidelbeeren|Bio-Heidelbeeren]] sind ebenfalls auf einem Allzeit-Tief, 3,49 € die Schale, was für Bio-Beeren im August fast unauffällig ist. [[Deutschland - Johannisbeeren|Johannisbeeren]] gehen für 3,98 € das Kilo raus, [[Deutschland - Himbeeren oder Brombeeren|Himbeeren oder Brombeeren]] für 1,49 €. Dazu [[Deutschland - Zucchini|Zucchini]] und [[Neuseeland - Zespri - Kiwis Gold|Kiwis Gold]] für je einen Euro und die [[Vegane Frikadellen oder Gemüsebällchen|veganen Frikadellen]] für 3,29 €. [[Veltins Pilsener|Veltins]] und [[Jever Pilsener|Jever]] stehen beide bei 11,99 € im Kasten, was die Entscheidung nicht leichter macht.",
   "sections": {
-    "vegan": "Zwei pflanzliche Positionen: die [[Rügenwalder Mühle - Vegane Alternativen|veganen Alternativen]] zu 2,49 und die [[Wiesenhof - Bruzzzler veggie Würstchen|veggie Bruzzzler]] zu 2,79.",
-    "obstgemuese": "Achtzehn Posten, davon die [[Deutschland - GUT & GÜNSTIG - Tafeläpfel|Tafeläpfel]] auf dem Allzeit-Tief. Die [[Deutschland - GUT & GÜNSTIG - Zwiebeln|Zwiebeln]] dagegen so teuer wie nie.",
-    "bierspezi": "Drei Pils zur Auswahl, am günstigsten das [[Wicküler Pils|Wicküler]] mit 95 Cent je Liter. Spezi ist diese Woche nicht dabei.",
-    "knueller": "Viel Drogerie und Molkerei unter den Knüllern, wenig Verwertbares. Brauchbar: [[Rheinfels Quelle Mineralwasser|Rheinfels]] zu 44 Cent den Liter."
+    "vegan": "Drei Angebote, alle fleischfrei: [[Vegane Frikadellen oder Gemüsebällchen|vegane Frikadellen]] für 3,29 €, [[Valess Vegetarische Gerichte|Valess vegetarische Gerichte]] für 2,49 €. Die Auswahl bleibt überschaubar.",
+    "obstgemuese": "[[Deutschland - Kohlrabi|Kohlrabi]] für 55 Cent, [[Deutschland - Zucchini|Zucchini]] für einen Euro, und die [[Spanien - EDEKA Bio - Bio-Kulturheidelbeeren|Bio-Heidelbeeren]] auf ihrem Allzeit-Tief bei 3,49 € die Schale.",
+    "bierspezi": "[[Paulaner Spezi oder Limo|Der Spezi]] war seit neun Wochen nicht günstiger, [[Veltins Pilsener|Veltins]] und [[Jever Pilsener|Jever]] liegen bei 11,99 €. Der [[Bitburger Pils Stubbi|Bitburger Stubbi]] steht mit 9,99 € am oberen Ende seiner kurzen Historie.",
+    "knueller": "Der [[Paulaner Spezi oder Limo|Spezi]] und das [[Paulaner Hefe-Weißbier|Hefe-Weißbier]] stehen beide auf ihrem Tiefstand, die [[Gaffels Fassbrause|Fassbrause]] bei 2,02 € je Liter. Der Rest ist Drogerie und Likör."
   },
   "foryou": [
     {
-      "title": "Deutschland - GUT & GÜNSTIG - Tafeläpfel",
+      "title": "Paulaner Spezi oder Limo",
       "rank": 1,
-      "reason": "75 Cent das Kilo — günstigster Stand in fünf Wochen Historie.",
+      "reason": "Allzeit-Tief bei 1,10 € je Liter, gestützt auf neun Angebotswochen",
       "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Wicküler Pils",
+      "title": "Veltins Pilsener",
       "rank": 2,
-      "reason": "Dein Pils, 95 Cent der Liter — der günstigste Kasten dieser Woche.",
+      "reason": "Dein Pils-Favorit, 11,99 € der Kasten",
       "evidenceTag": "Favorit"
     },
     {
-      "title": "Deutschland - Bio-Zucchini",
+      "title": "Spanien - EDEKA Bio - Bio-Kulturheidelbeeren",
       "rank": 3,
-      "reason": "Schon mal mit Daumen hoch markiert, jetzt bio zu 2,98 das Kilo.",
-      "evidenceTag": "mag ich"
-    },
-    {
-      "title": "China - Bio-Ingwer",
-      "rank": 4,
-      "reason": "49 Cent für Bio-Ingwer, der günstigste Posten im ganzen Prospekt.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Niederlande - Rispentomaten",
-      "rank": 5,
-      "reason": "Ein Euro glatt, ohne Aktionsrahmen drumherum.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Rügenwalder Mühle - Vegane Alternativen",
-      "rank": 6,
-      "reason": "Vegan zu 2,49, die pflanzliche Standardposition der Woche.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Deutschland - Spitzkohl",
-      "rank": 7,
-      "reason": "1,11 der Kopf, hält sich zwei Wochen im Fach.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Deutschland - Möhren",
-      "rank": 8,
-      "reason": "1,29, das Basisgemüse für so ziemlich alles Vegane.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Deutschland - EDEKA Regional - Mini-Romanasalat",
-      "rank": 9,
-      "reason": "99 Cent, regional, und klein genug für einen Haushalt.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Peru - Avocados",
-      "rank": 10,
-      "reason": "99 Cent das Stück, für Avocados eher am unteren Ende.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Südafrika - Bio Zitronen",
-      "rank": 11,
-      "reason": "Bio zu 1,79, deckt die Säure für die ganze Woche.",
-      "evidenceTag": "mag ich"
-    },
-    {
-      "title": "Deutschland - GUT & GÜNSTIG - Frühkartoffeln",
-      "rank": 12,
-      "reason": "Ein Euro das Kilo Frühkartoffeln, glatter geht der Preis nicht.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Wiesenhof - Bruzzzler veggie Würstchen",
-      "rank": 13,
-      "reason": "Die pflanzlichen Bruzzzler zu 2,79, zweite vegane Option der Woche.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Rumänien - Kulturheidelbeeren",
-      "rank": 14,
-      "reason": "1,79 die Schale, die günstigere der beiden Heidelbeer-Herkünfte.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Italien - Bio Tafeltrauben",
-      "rank": 15,
-      "reason": "Bio-Trauben zu 2,99, 7,48 das Kilo.",
-      "evidenceTag": "mag ich"
-    },
-    {
-      "title": "Rheinfels Quelle Mineralwasser",
-      "rank": 16,
-      "reason": "44 Cent der Liter und laut Historie noch nie günstiger.",
+      "reason": "Bio-Beeren auf dem tiefsten Stand aus vier Wochen Historie, 3,49 €",
       "evidenceTag": "Allzeit-Tief"
+    },
+    {
+      "title": "Deutschland - Johannisbeeren",
+      "rank": 4,
+      "reason": "Allzeit-Tief: 3,98 € das Kilo, günstiger gab es sie bisher nicht",
+      "evidenceTag": "Allzeit-Tief"
+    },
+    {
+      "title": "Vegane Frikadellen oder Gemüsebällchen",
+      "rank": 5,
+      "reason": "Vegan und im Angebot für 3,29 €, genau deine Kategorie",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Deutschland - Zucchini",
+      "rank": 6,
+      "reason": "Zucchini stehen bei dir hoch im Kurs, hier für einen Euro",
+      "evidenceTag": "mag ich"
+    },
+    {
+      "title": "Deutschland - Himbeeren oder Brombeeren",
+      "rank": 7,
+      "reason": "1,49 € die Schale, Beeren gehören zu deinen Favoriten",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Jever Pilsener",
+      "rank": 8,
+      "reason": "Pils aus deiner Lieblingskategorie, 11,99 € der Kasten",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Paulaner Hefe-Weißbier",
+      "rank": 9,
+      "reason": "Tiefster Preis seiner bisherigen Historie, 1,50 € je Liter",
+      "evidenceTag": "Allzeit-Tief"
+    },
+    {
+      "title": "Deutschland - Bio-Rispentomaten",
+      "rank": 10,
+      "reason": "Bio und Gemüse in einem, 4,98 € das Kilo",
+      "evidenceTag": "mag ich"
+    },
+    {
+      "title": "Italien - Bio-Nektarinen oder Pfirsiche",
+      "rank": 11,
+      "reason": "Bio-Steinobst für 4,98 € das Kilo",
+      "evidenceTag": "mag ich"
+    },
+    {
+      "title": "Valess Vegetarische Gerichte",
+      "rank": 12,
+      "reason": "Vegetarisch und mit 2,49 € das günstigste der drei Veggie-Angebote",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Deutschland - Kohlrabi",
+      "rank": 13,
+      "reason": "55 Cent, das billigste Gemüse dieser Woche",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Neuseeland - Zespri - Kiwis Gold",
+      "rank": 14,
+      "reason": "Ein Euro für Kiwis Gold, Obst ist deine Kategorie",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Gaffels Fassbrause",
+      "rank": 15,
+      "reason": "Alkoholfrei, Allzeit-Tief bei 2,02 € je Liter",
+      "evidenceTag": "Allzeit-Tief"
+    },
+    {
+      "title": "Sinalco Limonade",
+      "rank": 16,
+      "reason": "0,63 € je Liter, in sechs Wochen war sie selten günstiger",
+      "evidenceTag": "guter Preis"
     }
   ],
   "model": "opus",
