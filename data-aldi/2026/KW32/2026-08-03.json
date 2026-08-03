@@ -1,9 +1,89 @@
 {
   "source": "aldi-sued",
-  "fetchedAt": "2026-08-03T08:17:51Z",
+  "fetchedAt": "2026-08-03T12:52:43Z",
   "weekStart": "2026-08-03",
-  "totalCount": 72,
+  "totalCount": 73,
   "offers": [
+    {
+      "sku": "000000000000202667",
+      "name": "Emmentaler am Stück 400 g",
+      "brandName": "MILSANI",
+      "urlSlugText": "milsani-emmentaler-am-stueck-400-g",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,4 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000202667A",
+      "price": {
+        "amount": 279,
+        "amountRelevant": 279,
+        "amountRelevantDisplay": "2,79 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 698,
+        "comparisonDisplay": "6,98 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "3,49 €",
+        "additionalInfo": null,
+        "savingsDisplay": "20 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467083",
+          "name": "Käse",
+          "urlSlugText": "kaese"
+        },
+        {
+          "id": "1588161425467088",
+          "name": "Hartkäse & Stückkäse",
+          "urlSlugText": "kaese/hartkaese-stueckkaese"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/44d39e78-8e2b-489b-bf4c-3851d3ea7b4e/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Kühlung",
+              "color": "cyan",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
     {
       "sku": "000000000000203094",
       "name": "Bratwurstschnecke 300 g",
@@ -1825,68 +1905,6 @@
       "badges": []
     },
     {
-      "sku": "000000000000651434",
-      "name": "Sauerteig-Vollkorn-Krusti Stück",
-      "brandName": "NUR NUR NATUR",
-      "urlSlugText": "nur-nur-natur-sauerteig-vollkorn-krusti-stueck",
-      "urlSlugTextAlternatives": [],
-      "ageRestriction": null,
-      "alcohol": null,
-      "discontinued": false,
-      "discontinuedNote": null,
-      "notForSale": true,
-      "notForSaleReason": null,
-      "quantityMin": 1,
-      "quantityMax": 99,
-      "quantityInterval": 1,
-      "quantityDefault": 1,
-      "quantityUnit": "ea",
-      "weightType": "0",
-      "sellingSize": null,
-      "energyClass": null,
-      "onSaleDateDisplay": null,
-      "isAbstract": false,
-      "abstractSku": "000000000000651434A",
-      "price": {
-        "amount": 49,
-        "amountRelevant": 49,
-        "amountRelevantDisplay": "0,49 €",
-        "bottleDeposit": 0,
-        "bottleDepositDisplay": "0,00 €",
-        "comparison": null,
-        "comparisonDisplay": null,
-        "currencyCode": "EUR",
-        "currencySymbol": "€",
-        "perUnit": null,
-        "perUnitDisplay": null,
-        "wasPriceDisplay": null,
-        "additionalInfo": null,
-        "savingsDisplay": null,
-        "bottleDepositType": null,
-        "feeText": null
-      },
-      "countryExtensions": null,
-      "categories": [
-        {
-          "id": "1588161425467101",
-          "name": "Backwaren, Aufstriche & Cerealien",
-          "urlSlugText": "backwaren-aufstriche-cerealien"
-        }
-      ],
-      "assets": [
-        {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/13d78616-0010-4a0a-af2a-d609b8167399/{slug}",
-          "maxWidth": 1500,
-          "maxHeight": 1500,
-          "mimeType": "image/*",
-          "assetType": "FR01",
-          "alt": null,
-          "displayName": null
-        }
-      ],
-      "badges": []
-    },
-    {
       "sku": "000000000000655648",
       "name": "Honigmelone, lose",
       "brandName": null,
@@ -1942,7 +1960,7 @@
       ],
       "assets": [
         {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/d1e4b5b7-47f9-4f31-947b-03e0cfaf6ea1/{slug}",
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/cbe8243b-9a1b-4f90-9cf7-0e465b485f59/{slug}",
           "maxWidth": 1500,
           "maxHeight": 1500,
           "mimeType": "image/*",
@@ -2094,6 +2112,73 @@
           ]
         }
       ]
+    },
+    {
+      "sku": "000000000000742420",
+      "name": "Kinder Bueno Eisbecher 285 g",
+      "brandName": "KINDER",
+      "urlSlugText": "kinder-kinder-bueno-eisbecher-285-g",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,46 l",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000742420A",
+      "price": {
+        "amount": 399,
+        "amountRelevant": 399,
+        "amountRelevantDisplay": "3,99 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": null,
+        "comparisonDisplay": null,
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "5,49 €",
+        "additionalInfo": null,
+        "savingsDisplay": "27 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467141",
+          "name": "Tiefkühlung",
+          "urlSlugText": "tiefkuehlung"
+        },
+        {
+          "id": "1588161425467153",
+          "name": "Eis",
+          "urlSlugText": "tiefkuehlung/eis"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/c652f2ff-238f-4672-b9c5-8c529642e754/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": []
     },
     {
       "sku": "000000000156741001",
