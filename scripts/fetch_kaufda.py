@@ -158,6 +158,12 @@ def norm_desc(s):
     Dropping punctuation and filler and comparing the word SET instead of the
     word sequence collapses 89 such pairs across the KW31-KW33 snapshots
     without merging any two offers that disagree on more than a missing price.
+
+    Sharpening this further is fair game — ~39 REWE offers per week still
+    duplicate with genuinely different descriptions. But run
+    scripts/rekey_kaufda.py --apply afterwards: archived weeks cannot pick the
+    change up from a refetch, because a better key collapses duplicates and
+    write_week()'s never-shrink guard reads that as a partial fetch.
     """
     s = unicodedata.normalize("NFKC", (s or "")).lower()
     s = re.sub(r"[^\w\s]", " ", s)

@@ -76,6 +76,10 @@ believing a schedule was missed; redundant cron slots only help against
 - **Moving code into a shared file means deleting the local copy** — a second
   `const` at global scope is a redeclaration SyntaxError that takes the page
   down.
+- **Changing how `fetch_kaufda.py` mints an offer id means running
+  `scripts/rekey_kaufda.py --apply`** — archived weeks cannot pick such a fix
+  up from a refetch, because a better key collapses duplicates and the
+  never-shrink guard reads a smaller result as a partial fetch.
 - **The repo is public.** `data/preferences.json`, `data/receipts.json` and
   `data/shopping/` are gitignored and must stay that way.
 - **`tmp/` is gitignored** — a finding you want to see again goes into a tracked
