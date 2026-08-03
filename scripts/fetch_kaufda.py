@@ -9,10 +9,15 @@ Stdlib only, also runs locally:
 Unlike the EDEKA/ALDI direct APIs, kaufda's offers are flyer extracts with a
 noisy nested shape and no SKUs — so this fetcher NORMALIZES each offer into a
 flat record and mints its own stable id: sha1 over (retailer, brand, product
-names, description), truncated to 12 hex chars. That id is what deduplicates
-regional flyer editions of the same week, keeps refetches churn-free and lets
-the same product match across weeks. The raw Bonial offer UUID is kept as
-`kaufdaId` for tracing back to the source.
+names, description), truncated to 12 hex chars. That id deduplicates regional
+flyer editions of the same week and keeps refetches churn-free. The raw Bonial
+offer UUID is kept as `kaufdaId` for tracing back to the source.
+
+It does NOT give a price history. Measured across KW31-KW33 2026, consecutive
+weeks share 0-1 products out of 400-570 — and matching on brand+name alone,
+ignoring the description entirely, only lifts that to 2-10. The flyers simply
+reprint different articles each week, so an EDEKA-style per-product history has
+nothing to accumulate here. Compare weeks by category or price band instead.
 
 Discovery needs no API seed: the kaufda shelf page (regional, lat/lng) and
 the per-retailer store pages are server-side rendered — their __NEXT_DATA__
@@ -35,6 +40,7 @@ import json
 import re
 import sys
 import time
+import unicodedata
 import urllib.error
 import urllib.request
 from datetime import datetime, timedelta, timezone
@@ -73,6 +79,10 @@ DATA_DIR = REPO_ROOT / "data-kaufda"
 
 
 def get(url, headers, timeout=60):
+    # Running this locally from a sandboxed shell yields spurious
+    # IncompleteRead aborts on the larger chunked pages (measured 1 of 3
+    # succeeding, versus 6 of 6 unsandboxed and every time via curl). That is
+    # the sandbox truncating, not the source — do not "fix" it here.
     req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         return resp.read()
@@ -131,6 +141,29 @@ def norm(s):
     return re.sub(r"\s+", " ", (s or "").strip().lower())
 
 
+# Quantity/variety filler that carries no product identity. Kept deliberately
+# short: "und"/"oder" were measured to collapse exactly one more offer, not
+# worth the risk of merging two genuinely different ones.
+DESC_FILLER = {"je", "ca", "versch", "sorten"}
+
+
+def norm_desc(s):
+    """Identity form of an offer description, for the id hash only.
+
+    The same article printed in two regional editions gets its description
+    paragraphs in a different order, with stray punctuation and a stray "je"
+    ("je 8 x 25-g-Pckg." vs "8 x 25-g-Pckg.", "Hähnchen Art." vs "Hähnchen
+    Art"). Hashing the raw text therefore mints two ids for one offer and the
+    week's count comes out inflated — 74 of 467 REWE offers in KW32 2026.
+    Dropping punctuation and filler and comparing the word SET instead of the
+    word sequence collapses 89 such pairs across the KW31-KW33 snapshots
+    without merging any two offers that disagree on more than a missing price.
+    """
+    s = unicodedata.normalize("NFKC", (s or "")).lower()
+    s = re.sub(r"[^\w\s]", " ", s)
+    return " ".join(sorted(set(t for t in s.split() if t not in DESC_FILLER)))
+
+
 def normalize_offer(retailer, raw):
     """Flatten one Bonial offer into our record, minting the stable own id."""
     content = raw.get("content") or {}
@@ -158,7 +191,7 @@ def normalize_offer(retailer, raw):
 
     own_id = hashlib.sha1(
         "|".join([retailer, norm(first.get("brandName")),
-                  norm(" / ".join(names)), norm(desc)]).encode()
+                  norm(" / ".join(names)), norm_desc(desc)]).encode()
     ).hexdigest()[:12]
 
     page = ((content.get("parentContent") or {}).get("page") or {})
@@ -209,7 +242,14 @@ def fetch_retailer(retailer, publisher, brochures, current_monday):
         for pg in contents:
             for raw in pg.get("offers") or []:
                 offer = normalize_offer(retailer, raw)
-                week["offers"].setdefault(offer["id"], offer)
+                # Two editions of one offer can differ in whether the price
+                # made it into the extract at all (a footnote row yields
+                # price=None). Keeping the first would throw the price away,
+                # so the priced record always wins.
+                prev = week["offers"].get(offer["id"])
+                if prev is None or (prev["price"] is None
+                                    and offer["price"] is not None):
+                    week["offers"][offer["id"]] = offer
     return by_week
 
 
