@@ -10,8 +10,13 @@ It reads the newest week's offer file, filters the products we curate on the
 Prospekt page (vegan/vegetarian, Obst & Gemüse, beer & Spezi, Superknüller),
 optionally folds in the reader's interests from data/preferences.json (exported
 from the Prospekt page's "Für Montag exportieren" button), asks `claude -p`
-(sonnet) for a warm German lead, per-section intros and a handful of pick
+(opus) for a warm German lead, per-section intros and a handful of pick
 reasons, and writes data/prospekt.json.
+
+If the `claude` CLI is missing or fails, run_model() falls back to a local
+OpenAI-compatible engine (oMLX by default) rather than to a hosted one — the
+prompt is diet-filtered before it is built, so it is not anonymous. The engine
+that actually answered is named in the output line.
 
 The Prospekt page loads that file OPTIONALLY: if it is missing or malformed the
 page still renders all product cards, just without the editorial copy. A failed
@@ -27,9 +32,13 @@ Flags:
 """
 
 import json
+import os
 import re
 import subprocess
 import sys
+import time
+import urllib.error
+import urllib.request
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -295,8 +304,18 @@ def resolve_links(text, titles_by_norm):
 
 
 def fail(msg):
-    """Print an actionable error and exit non-zero without touching outputs."""
-    sys.exit(f"generate_prospekt: {msg}")
+    """Print an actionable error and exit non-zero without touching outputs.
+
+    Named after the script that is actually running, not this module: the meal
+    plan and insights generators call gp.fail() too, and a hardcoded prefix had
+    them reporting their own failures as `generate_prospekt:`.
+    """
+    # argv[0] is "-" under `python3 -` and "" when embedded, which would print a
+    # prefix of "-:" — fall back to this module's name unless it looks like one.
+    who = Path(sys.argv[0]).stem
+    if not who.replace("_", "").replace("-", "").isalnum():
+        who = "generate_prospekt"
+    sys.exit(f"{who}: {msg}")
 
 
 def load_json(path, hint):
@@ -618,6 +637,139 @@ def extract_json(text):
     raise json.JSONDecodeError("no JSON object found in output", text, 0)
 
 
+# --- model invocation -------------------------------------------------------
+#
+# All three generators (prospekt, mealplan, insights) call run_model() rather
+# than shelling out to `claude` themselves — they used to carry three copies of
+# the same subprocess block, which is how the KW32 outage read as three separate
+# failures instead of one missing PATH entry.
+#
+# `claude -p` stays the primary engine. The local fallback exists because the
+# whole point of generating here is that the prompt never leaves the machine:
+# the digest is diet-filtered before it is built, so the selection itself
+# discloses the reader's diet (see the CLAUDE.md note on the :free tier). A
+# hosted stand-in would defeat that; a local OpenAI-compatible engine does not.
+
+LOCAL_BASE_URL = (os.environ.get("OPENAI_BASE_URL") or "http://127.0.0.1:8000/v1").rstrip("/")
+LOCAL_MODEL = os.environ.get("LOCAL_MODEL", "")
+LOCAL_TIMEOUT = int(os.environ.get("LOCAL_MODEL_TIMEOUT", "900"))
+OMLX_BIN = Path.home() / ".omlx" / "bin" / "omlx"
+
+
+def _local_models():
+    """Model ids the local engine currently serves, or [] if it is not up."""
+    req = urllib.request.Request(
+        f"{LOCAL_BASE_URL}/models",
+        headers={"Authorization": f"Bearer {os.environ.get('OPENAI_API_KEY', 'local')}"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            body = json.loads(resp.read().decode("utf-8"))
+    except (urllib.error.URLError, OSError, json.JSONDecodeError, TimeoutError):
+        return []
+    return [m["id"] for m in body.get("data", []) if isinstance(m, dict) and m.get("id")]
+
+
+def _wake_local_engine():
+    """Bring the managed oMLX server up if it is installed but not serving.
+
+    Returns the model ids on offer. `omlx start` is a no-op when the server is
+    already running, so this is safe to call on every fallback.
+    """
+    models = _local_models()
+    if models or not OMLX_BIN.exists():
+        return models
+    try:
+        subprocess.run([str(OMLX_BIN), "start"], capture_output=True, text=True, timeout=180)
+    except (OSError, subprocess.TimeoutExpired):
+        return []
+    # `omlx start` returns once the app reports healthy, but model listing can
+    # trail it by a moment — poll briefly rather than failing on a race.
+    for _ in range(10):
+        models = _local_models()
+        if models:
+            return models
+        time.sleep(2)
+    return []
+
+
+def _run_local(prompt, max_tokens):
+    """Ask the local engine for a completion. Returns (text, model_id).
+
+    Raises RuntimeError with an actionable message if the engine cannot serve.
+    """
+    models = _wake_local_engine()
+    if not models:
+        raise RuntimeError(
+            f"no local engine at {LOCAL_BASE_URL} — start one "
+            f"(`omlx start`, or any OpenAI-compatible server) or set OPENAI_BASE_URL"
+        )
+    # Never hardcode a model: take what the engine actually serves, and let
+    # LOCAL_MODEL override when the machine hosts several.
+    model_id = LOCAL_MODEL or models[0]
+    if LOCAL_MODEL and LOCAL_MODEL not in models:
+        raise RuntimeError(
+            f"LOCAL_MODEL={LOCAL_MODEL!r} is not served at {LOCAL_BASE_URL}; "
+            f"available: {', '.join(models)}"
+        )
+    payload = json.dumps({
+        "model": model_id,
+        "messages": [{"role": "user", "content": prompt}],
+        "max_tokens": max_tokens,
+        "temperature": 0.4,
+    }).encode("utf-8")
+    req = urllib.request.Request(
+        f"{LOCAL_BASE_URL}/chat/completions",
+        data=payload,
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {os.environ.get('OPENAI_API_KEY', 'local')}",
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=LOCAL_TIMEOUT) as resp:
+            body = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        raise RuntimeError(f"{model_id} returned HTTP {exc.code}: {exc.read()[:200]!r}") from exc
+    except (urllib.error.URLError, OSError, TimeoutError) as exc:
+        raise RuntimeError(f"{model_id} unreachable after {LOCAL_TIMEOUT}s: {exc}") from exc
+    try:
+        text = body["choices"][0]["message"]["content"]
+    except (KeyError, IndexError, TypeError) as exc:
+        raise RuntimeError(f"{model_id} returned an off-spec reply: {str(body)[:200]}") from exc
+    return text, model_id
+
+
+def run_model(prompt, model, timeout=300, max_tokens=8000):
+    """Ask `claude -p`; fall back to a local OpenAI-compatible engine.
+
+    Returns (output_text, engine_label). The label names the engine that
+    actually answered — callers print it, because silently swapping Opus for a
+    local 4-bit model would otherwise look like a normal run.
+    """
+    claude_err = None
+    try:
+        proc = subprocess.run(
+            ["claude", "-p", prompt, "--model", model],
+            capture_output=True, text=True, timeout=timeout,
+        )
+        if proc.returncode == 0:
+            return proc.stdout, f"claude -p --model {model}"
+        claude_err = f"`claude -p` exited {proc.returncode}: {proc.stderr.strip()[:200]}"
+    except FileNotFoundError:
+        claude_err = "`claude` CLI not found in PATH"
+    except subprocess.TimeoutExpired:
+        claude_err = f"`claude -p` timed out after {timeout}s"
+
+    print(f"  {claude_err} — trying the local engine at {LOCAL_BASE_URL}.", file=sys.stderr)
+    try:
+        text, model_id = _run_local(prompt, max_tokens)
+    except RuntimeError as exc:
+        fail(f"{claude_err}, and no local fallback: {exc}. "
+             f"Install/repair Claude Code, or start a local engine.")
+    return text, f"local {model_id}"
+
+
 def main():
     args = sys.argv[1:]
     dry_run = "--dry-run" in args
@@ -690,44 +842,32 @@ def main():
         print(prompt)
         return
 
-    try:
-        proc = subprocess.run(
-            ["claude", "-p", prompt, "--model", model],
-            capture_output=True, text=True, timeout=300,
-        )
-    except FileNotFoundError:
-        fail("`claude` CLI not found in PATH — install Claude Code or run from a "
-             "shell where `claude` is available.")
-    except subprocess.TimeoutExpired:
-        fail("`claude -p` timed out after 300s — try again or use a smaller model.")
-
-    if proc.returncode != 0:
-        fail(f"`claude -p` exited {proc.returncode}: {proc.stderr.strip()[:400]}")
+    raw, engine = run_model(prompt, model, timeout=300)
 
     try:
-        data = extract_json(proc.stdout)
+        data = extract_json(raw)
     except json.JSONDecodeError as exc:
-        fail(f"could not parse JSON from claude output ({exc}). "
-             f"Raw output starts with: {proc.stdout.strip()[:200]!r}")
+        fail(f"could not parse JSON from {engine} ({exc}). "
+             f"Raw output starts with: {raw.strip()[:200]!r}")
 
     if not isinstance(data, dict):
         # extract_json returns whatever top-level JSON parsed (a list/scalar is
         # valid JSON); guard before .get() so an off-spec reply fails cleanly
         # via fail() instead of an uncaught AttributeError traceback.
-        fail(f"claude output was not a JSON object (got {type(data).__name__}). "
-             f"Raw output starts with: {proc.stdout.strip()[:200]!r}")
+        fail(f"{engine} output was not a JSON object (got {type(data).__name__}). "
+             f"Raw output starts with: {raw.strip()[:200]!r}")
 
     if not isinstance(data.get("lead"), str) or not data["lead"]:
-        fail("claude output is missing a non-empty 'lead'")
+        fail(f"{engine} output is missing a non-empty 'lead'")
     if not isinstance(data.get("sections"), dict):
-        fail("claude output is missing the 'sections' object")
+        fail(f"{engine} output is missing the 'sections' object")
     # Accept either the new 'foryou' (ranked) or, for resilience, a legacy
     # 'picks' array — normalise both to the foryou shape.
     ranked = data.get("foryou")
     if not isinstance(ranked, list):
         ranked = data.get("picks")
     if not isinstance(ranked, list):
-        fail("claude output is missing the 'foryou' array")
+        fail(f"{engine} output is missing the 'foryou' array")
     for item in ranked:
         if not isinstance(item, dict) or not item.get("title"):
             fail(f"'foryou' has a malformed entry (expected objects with a title): {item!r}")
@@ -795,7 +935,7 @@ def main():
     OUT_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {OUT_PATH.relative_to(REPO_ROOT)}: "
           f"lead + {len(data.get('sections', {}))} section intros, "
-          f"{len(foryou)} ranked recommendations.")
+          f"{len(foryou)} ranked recommendations, via {engine}.")
 
 
 if __name__ == "__main__":

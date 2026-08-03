@@ -10,7 +10,9 @@ It reads the precomputed indexes (data/price-history-index.json,
 data/trend-index.json), builds a small Grundpreis digest of the latest week
 (products that got pricier vs. their own history, and products at an all-time
 low), asks `claude -p` (Haiku) to turn it into a short German summary plus two
-ranked lists, and writes the result to data/insights.json. The dashboard loads
+ranked lists, and writes the result to data/insights.json. If the CLI is
+missing or fails it falls back to a local engine via generate_prospekt.run_model
+(see there). The dashboard loads
 that file optionally — if it is missing or malformed the dashboard just hides
 the panel, so a failed run never breaks the site.
 
@@ -24,11 +26,14 @@ Flags:
 import json
 import math
 import re
-import subprocess
 import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+# Only for run_model: the claude-with-local-fallback invocation lives in one
+# place so all three generators fail (and recover) the same way.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import generate_prospekt as gp  # noqa: E402
 PH_PATH = REPO_ROOT / "data" / "price-history-index.json"
 TREND_PATH = REPO_ROOT / "data" / "trend-index.json"
 OUT_PATH = REPO_ROOT / "data" / "insights.json"
@@ -247,33 +252,21 @@ def main():
         print(prompt)
         return
 
-    try:
-        proc = subprocess.run(
-            ["claude", "-p", prompt, "--model", model],
-            capture_output=True, text=True, timeout=300,
-        )
-    except FileNotFoundError:
-        fail("`claude` CLI not found in PATH — install Claude Code or run from a "
-             "shell where `claude` is available.")
-    except subprocess.TimeoutExpired:
-        fail("`claude -p` timed out after 300s — try again or use a smaller model.")
-
-    if proc.returncode != 0:
-        fail(f"`claude -p` exited {proc.returncode}: {proc.stderr.strip()[:400]}")
+    raw, engine = gp.run_model(prompt, model, timeout=300)
 
     try:
-        data = extract_json(proc.stdout)
+        data = extract_json(raw)
     except json.JSONDecodeError as exc:
-        fail(f"could not parse JSON from claude output ({exc}). "
-             f"Raw output starts with: {proc.stdout.strip()[:200]!r}")
+        fail(f"could not parse JSON from {engine} ({exc}). "
+             f"Raw output starts with: {raw.strip()[:200]!r}")
 
     if not isinstance(data, dict):
-        fail(f"claude output was not a JSON object (got {type(data).__name__}). "
-             f"Raw output starts with: {proc.stdout.strip()[:200]!r}")
+        fail(f"{engine} output was not a JSON object (got {type(data).__name__}). "
+             f"Raw output starts with: {raw.strip()[:200]!r}")
 
     for key in ("summary", "pricier", "deals"):
         if key not in data:
-            fail(f"claude output is missing required key '{key}'")
+            fail(f"{engine} output is missing required key '{key}'")
     if not isinstance(data.get("pricier"), list) or not isinstance(data.get("deals"), list):
         fail("'pricier' and 'deals' must be JSON arrays")
     for key in ("pricier", "deals"):
@@ -304,7 +297,7 @@ def main():
 
     OUT_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {OUT_PATH.relative_to(REPO_ROOT)}: "
-          f"{len(data['pricier'])} pricier, {len(data['deals'])} deals.")
+          f"{len(data['pricier'])} pricier, {len(data['deals'])} deals, via {engine}.")
 
 
 if __name__ == "__main__":

@@ -28,7 +28,6 @@ Flags:
 
 import json
 import re
-import subprocess
 import sys
 from pathlib import Path
 
@@ -308,32 +307,20 @@ def main():
         print(prompt)
         return
 
-    try:
-        proc = subprocess.run(
-            ["claude", "-p", prompt, "--model", model],
-            capture_output=True, text=True, timeout=600,
-        )
-    except FileNotFoundError:
-        gp.fail("`claude` CLI not found in PATH — install Claude Code or run from a "
-                "shell where `claude` is available.")
-    except subprocess.TimeoutExpired:
-        gp.fail("`claude -p` timed out after 600s — try again or use a smaller model.")
-
-    if proc.returncode != 0:
-        gp.fail(f"`claude -p` exited {proc.returncode}: {proc.stderr.strip()[:400]}")
+    raw, engine = gp.run_model(prompt, model, timeout=600)
 
     try:
-        data = gp.extract_json(proc.stdout)
+        data = gp.extract_json(raw)
     except json.JSONDecodeError as exc:
-        gp.fail(f"could not parse JSON from claude output ({exc}). "
-                f"Raw output starts with: {proc.stdout.strip()[:200]!r}")
+        gp.fail(f"could not parse JSON from {engine} ({exc}). "
+                f"Raw output starts with: {raw.strip()[:200]!r}")
 
     if not isinstance(data, dict):
-        gp.fail(f"claude output was not a JSON object (got {type(data).__name__}).")
+        gp.fail(f"{engine} output was not a JSON object (got {type(data).__name__}).")
 
     raw_meals = data.get("meals")
     if not isinstance(raw_meals, list) or not raw_meals:
-        gp.fail("claude output is missing the 'meals' array")
+        gp.fail(f"{engine} output is missing the 'meals' array")
 
     demoted = []
     seen_slugs = set()
@@ -367,7 +354,7 @@ def main():
     OUT_PATH.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {OUT_PATH.relative_to(REPO_ROOT)}: "
           f"7-day plan + {len(out['bench'])} bench meal(s) "
-          f"(from {len(meals)} generated).")
+          f"(from {len(meals)} generated), via {engine}.")
 
 
 if __name__ == "__main__":

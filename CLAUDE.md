@@ -66,6 +66,17 @@ Run by hand after a fetch — these call `claude -p` and are never part of CI:
   generic, which is the whole point of it. If the motive is a fallback for a
   missing `claude` CLI rather than cost, the local `omlx` engine is the route
   that keeps the data on the machine.
+- **All three generators call `generate_prospekt.run_model()`, which falls back
+  to a local engine.** They used to carry three copies of the same
+  `subprocess.run(["claude", …])` block, which is why one missing PATH entry in
+  KW32 read as three unrelated failures. `claude -p` stays primary; if it is
+  absent, exits non-zero or times out, run_model wakes the managed oMLX server
+  (`omlx start`, no-op when already up), discovers what it serves via
+  `/v1/models` and uses that — no model is hardcoded, `LOCAL_MODEL` overrides,
+  `OPENAI_BASE_URL` points elsewhere. The fallback is deliberately *local* and
+  not another hosted API, for the reason in the paragraph above. Both the
+  success line and every validation error name the engine that answered, so a
+  week written by a 4-bit local model never looks like a normal Opus run.
 - **Editorial product links: the model declares them, the page never guesses.** Copy in `lead` and `sections` carries `[[exact offer title|words the reader sees]]`; the title is the join key (same contract as `foryou[]`), the label is free prose. `renderEditorial()` resolves each marker against the week's offers and builds a link that opens the shared detail card; an unmatched or now-hidden product silently loses its link and keeps its prose, so the text can never break. Matching prose back to products afterwards is not a viable alternative — the copy inflects, abbreviates and merges names. Two things fall out of it: hallucinated products become detectable (`resolve_links` reports them), and a label that drops the diet-defining word of its own product is caught rather than shipped — KW31's "Bruzzzler-Würstchen vom Grill" for *"Bruzzzler **veggie** Würstchen"* turned a vegan sausage into a meat one, and the check now replaces such a label with the full title.
 - **`scripts/generate_mealplan.py`** — 12-14 vegan dinners (first 7 = Mo–So plan, rest = swap "bench") from this week's vegan offers + a `VEGAN_STAPLES` pantry + the reader's prefs → `data/mealplan.json`. Imports shared helpers from `generate_prospekt`.
 - **`scripts/test_parity.py`** — the repo's only test. Proves the JS and Python copies of the shared logic still agree, over every offer in `data/`. Needs `node`; no framework, no dependencies. Run it after changing `grundpreis.js`, `build_indexes.py` or any diet detector.
