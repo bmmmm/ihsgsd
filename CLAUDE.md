@@ -52,6 +52,20 @@ on GitHub Pages — only route 1 can tell whether an export actually exists ther
 Run by hand after a fetch — these call `claude -p` and are never part of CI:
 
 - **`scripts/generate_prospekt.py`** — flyer lead + section intros + ranked "Für dich" picks → `data/prospekt.json`. Applies the reader's diet vetoes *before* ranking, so the model never sees Grillrippen or Fischstäbchen as candidates (the page would hide them anyway — this just stops it writing lead copy about offers nobody will see). A topic the export never decided on falls back to `DEFAULT_INTERESTS`, mirroring `prospekt.js`. Defaults to **Opus**: this is a voice task and the gap shows — Sonnet keeps the facts right but writes them as a list, while the dry asides the prompt asks for only appear on Opus. It runs once a week, locally.
+- **The weekly prompt cannot go to an OpenRouter `:free` model, and the reason is
+  not price or quality.** `scripts/bench-prospekt-free.py` measures it: on
+  2026-08-03 all four candidates returned HTTP 404 "No endpoints available
+  matching your guardrail restrictions and data policy" within 0.2 s — rejected
+  before reaching a model, because `:free` endpoints are paid for with training
+  rights on the prompt and the account withholds those. Flipping that opt-in
+  would be the wrong fix twice over: it is account-wide, and the prompt is not
+  anonymous. The diet vetoes are applied *before* the digest is built (50 of 199
+  offers dropped in KW32), so even stripped of its reader-preference block the
+  surviving selection still spells out the diet — the selection IS the profile.
+  Moving the vetoes behind the ranking would fix that and make the flyer
+  generic, which is the whole point of it. If the motive is a fallback for a
+  missing `claude` CLI rather than cost, the local `omlx` engine is the route
+  that keeps the data on the machine.
 - **Editorial product links: the model declares them, the page never guesses.** Copy in `lead` and `sections` carries `[[exact offer title|words the reader sees]]`; the title is the join key (same contract as `foryou[]`), the label is free prose. `renderEditorial()` resolves each marker against the week's offers and builds a link that opens the shared detail card; an unmatched or now-hidden product silently loses its link and keeps its prose, so the text can never break. Matching prose back to products afterwards is not a viable alternative — the copy inflects, abbreviates and merges names. Two things fall out of it: hallucinated products become detectable (`resolve_links` reports them), and a label that drops the diet-defining word of its own product is caught rather than shipped — KW31's "Bruzzzler-Würstchen vom Grill" for *"Bruzzzler **veggie** Würstchen"* turned a vegan sausage into a meat one, and the check now replaces such a label with the full title.
 - **`scripts/generate_mealplan.py`** — 12-14 vegan dinners (first 7 = Mo–So plan, rest = swap "bench") from this week's vegan offers + a `VEGAN_STAPLES` pantry + the reader's prefs → `data/mealplan.json`. Imports shared helpers from `generate_prospekt`.
 - **`scripts/test_parity.py`** — the repo's only test. Proves the JS and Python copies of the shared logic still agree, over every offer in `data/`. Needs `node`; no framework, no dependencies. Run it after changing `grundpreis.js`, `build_indexes.py` or any diet detector.
