@@ -191,6 +191,26 @@ holds ~164 offers incl. non-food vs. 86 food offers in `data-aldi/`.
 
 ## Key Patterns
 
+- **`weekly_sync.sh` hardcodes its PATH, so a tool that moves breaks it
+  silently.** launchd starts the job with a bare `/usr/bin:/bin:/usr/sbin:/sbin`.
+  Every tool it needs is a Homebrew binary except `claude`, which lives in
+  `~/.local/bin` — when it moved there on 2026-07-25 the line covering the other
+  six stopped covering that one, and KW32 got no editorial. Whenever a tool this
+  job calls is reinstalled or relocated, check its `export PATH=` line in the
+  same breath.
+- **Redundant schedule slots only buy resilience against *transient* failure.**
+  The job runs eleven times between Sunday noon and Monday evening. All eleven
+  fired on time in KW32 and all eleven failed identically, because the cause was
+  a missing PATH entry, not bad luck — a deterministic fault gets logged eleven
+  times, not retried away. It stayed invisible on top of that: phases A, B and C
+  are independent, A kept committing data, so the site showed current offers
+  under last week's copy and looked healthy. When something here "did not run",
+  read `~/ops/logs/ihsgsd-sync.log` before assuming the schedule missed.
+- **`tmp/` is gitignored, so nothing you want to find again may live there.** The
+  free-tier bench and its result sat there from 2026-07-20 to 2026-08-03; the
+  measurement was invisible, and the question it answered came up again from
+  scratch. A finding you are not acting on right now goes into a tracked file,
+  a `# FIXME` at the code site, or an issue — `tmp/` loses like a memory does.
 - **German compounds get `hyphens: auto`, never `overflow-wrap: anywhere`.**
   Product names and category labels are long single words in narrow columns
   ("Grundnahrung" needed 103 px in a 99 px table cell). `anywhere` permits a
