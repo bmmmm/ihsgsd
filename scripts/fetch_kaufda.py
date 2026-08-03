@@ -207,6 +207,12 @@ def normalize_offer(retailer, raw):
         "grundpreisText": gp_text,
         "dealType": (sales or other).get("type"),
         "dealText": (sales or other).get("description") or None,
+        # FIXME: categoryPath is not a reliable taxonomy — the leaf is often a
+        # brand ("Fischer", "Sun Garden") or plain wrong (an e-bike under
+        # "Elektrowerkzeug", a hotel night under "Frühstück"), and 0-10 offers
+        # per week have no path at all. Fine for tracing, not for grouping;
+        # anything category-driven needs its own detector like build_indexes.py
+        # has for EDEKA.
         "categoryPath": [c.get("name") for c in first.get("categoryPaths") or []],
         "image": image,
         "page": page.get("number"),
