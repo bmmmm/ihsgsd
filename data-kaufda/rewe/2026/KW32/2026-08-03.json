@@ -1,7 +1,7 @@
 {
   "source": "kaufda",
   "retailer": "rewe",
-  "fetchedAt": "2026-08-03T12:57:29Z",
+  "fetchedAt": "2026-08-04T08:32:41Z",
   "weekStart": "2026-08-03",
   "brochures": [
     {
@@ -241,11 +241,11 @@
     },
     {
       "id": "07c566bf1f79",
-      "kaufdaId": "b5bac8e6-d741-4cd8-b9db-a7cfa4d56866",
+      "kaufdaId": "d40bce6c-571c-48b1-bfa5-27081efd1bfd",
       "name": "Kleine Mahlzeiten",
       "variants": [],
       "brand": "Frosta",
-      "description": "versch. Sorten, tiefgefroren, je 375-g-Btl.",
+      "description": "versch. Sorten, tiefgefroren je 375-g-Btl.",
       "price": 1.99,
       "priceMax": null,
       "grundpreisText": "1 kg = 5.31",
@@ -253,12 +253,14 @@
       "dealText": null,
       "categoryPath": [
         "Lebensmittel und Getränke",
-        "Marken",
-        "Marken Lebensmittel",
-        "Frosta"
+        "Produkte",
+        "Lebensmittel",
+        "Fleisch",
+        "Fleischzubereitungen",
+        "Geschnetzeltes"
       ],
-      "image": "https://content-media.bonial.biz/b5bac8e6-d741-4cd8-b9db-a7cfa4d56866/510fa0c0-39c1-4870-bb01-a5a31d8595c5.jpg",
-      "page": 11
+      "image": "https://content-media.bonial.biz/d40bce6c-571c-48b1-bfa5-27081efd1bfd/ad3f5012-b90c-4b99-bd38-af59a2656674.jpg",
+      "page": 17
     },
     {
       "id": "0884415ae50b",
@@ -486,13 +488,13 @@
     },
     {
       "id": "0e12426f55b4",
-      "kaufdaId": "b6bd5001-4e16-4d0f-b2d8-5081c01fbf8e",
+      "kaufdaId": "9dbc6bf0-f41a-4e39-b08b-6cd46de12ea6",
       "name": "Die Backfrische Mozzarella",
       "variants": [
         "Big City Salami"
       ],
       "brand": "Wagner",
-      "description": "tiefgefroren 350-g-Pckg. tiefgefroren 415-g-Pckg.",
+      "description": "tiefgefroren je 350-g-Pckg. tiefgefroren je 415-g-Pckg.",
       "price": 1.99,
       "priceMax": null,
       "grundpreisText": "(1 kg = 5.69)",
@@ -505,8 +507,8 @@
         "Wagner",
         "Die Backfrische"
       ],
-      "image": "https://content-media.bonial.biz/b6bd5001-4e16-4d0f-b2d8-5081c01fbf8e/c4704e68-9a7d-4078-9e5c-b8b8ae9d2c66.jpg",
-      "page": 11
+      "image": "https://content-media.bonial.biz/9dbc6bf0-f41a-4e39-b08b-6cd46de12ea6/a09b9164-acb2-45d0-bde4-2415bb8adf6b.jpg",
+      "page": 17
     },
     {
       "id": "0e5a5dbc1e12",
@@ -922,11 +924,11 @@
     },
     {
       "id": "186fb821ce0b",
-      "kaufdaId": "955bee17-b6a4-4b14-bd35-e1c40e71b629",
+      "kaufdaId": "901d5ab7-8150-4d00-8626-1f3a8a10ae13",
       "name": "Limonade",
       "variants": [],
       "brand": "Sinalco",
-      "description": "versch. Sorten, teilw. koffeinhaltig 12 x 1-l-Fl.-Kasten zzgl. 3.30 Pfand",
+      "description": "versch. Sorten, teilw. koffeinhaltig 12 x 1 l-Fl.-Kasten zzgl. 3.30 Pfand",
       "price": 7.99,
       "priceMax": null,
       "grundpreisText": "(1 l = 0.67)",
@@ -940,8 +942,8 @@
         "Softdrinkmarken",
         "Sinalco"
       ],
-      "image": "https://content-media.bonial.biz/955bee17-b6a4-4b14-bd35-e1c40e71b629/c7fe4dd4-6a79-49bb-b415-8bd67937154c.jpg",
-      "page": 13
+      "image": "https://content-media.bonial.biz/901d5ab7-8150-4d00-8626-1f3a8a10ae13/f80a54ff-beeb-448f-93c0-572357e39b56.jpg",
+      "page": 19
     },
     {
       "id": "18f2cc8b36f8",
@@ -1038,13 +1040,13 @@
     },
     {
       "id": "1a5413bc0216",
-      "kaufdaId": "2059982d-f66a-4f85-adc1-b8d81d3f05e6",
+      "kaufdaId": "e06233bd-bb58-4fd8-912c-d211ed5a1aab",
       "name": "Matjesfilets",
       "variants": [
         "Backfisch"
       ],
       "brand": "Nordsee",
-      "description": "mit milder Rauchnote 200-g-Pckg. mit Remoulade 210-g-Pckg.",
+      "description": "mit milder Rauchnote je 200-g-Pckg. mit Remoulade je 210-g-Pckg.",
       "price": 2.49,
       "priceMax": null,
       "grundpreisText": "(1 kg = 12.45)",
@@ -1056,8 +1058,8 @@
         "Marken Lebensmittel",
         "Nordsee"
       ],
-      "image": "https://content-media.bonial.biz/2059982d-f66a-4f85-adc1-b8d81d3f05e6/9a8d00bf-caae-4365-8671-28f792e3fc49.jpg",
-      "page": 10
+      "image": "https://content-media.bonial.biz/e06233bd-bb58-4fd8-912c-d211ed5a1aab/c5ac365a-4638-4f69-8c6c-d9df49b51682.jpg",
+      "page": 15
     },
     {
       "id": "1b0bda37fbdd",
@@ -1977,13 +1979,13 @@
     },
     {
       "id": "38443deb5556",
-      "kaufdaId": "d51cf43e-a9b9-4784-8700-1c68ab9ac931",
+      "kaufdaId": "e3b268be-d0a0-4333-8716-dd456c3c12e2",
       "name": "Rotwein Mousse",
       "variants": [
         "Götterspeise"
       ],
       "brand": "Dr. Oetker",
-      "description": "je 100-g-Becher Waldmeister mit Bourbon-Vanillesoße je 160-g-Becher",
+      "description": "100-g-Becher Waldmeister mit Bourbon-Vanillesoße 160-g-Becher",
       "price": 0.69,
       "priceMax": null,
       "grundpreisText": "(1 kg = 6.90)",
@@ -1995,8 +1997,8 @@
         "Marken Lebensmittel",
         "Dr. Oetker"
       ],
-      "image": "https://content-media.bonial.biz/d51cf43e-a9b9-4784-8700-1c68ab9ac931/177bd1c8-591d-4571-8813-308da2caac4e.jpg",
-      "page": 10
+      "image": "https://content-media.bonial.biz/e3b268be-d0a0-4333-8716-dd456c3c12e2/019e82cc-9ddd-4202-be43-5c36a8324c6a.jpg",
+      "page": 17
     },
     {
       "id": "389d04886ac1",
@@ -4738,13 +4740,13 @@
     },
     {
       "id": "838fd7d5b846",
-      "kaufdaId": "3aeafc90-57ef-4e38-90d9-bc7797729685",
+      "kaufdaId": "1fe7845b-4efe-442d-904a-42ad1f33bf4b",
       "name": "Crema e Gusto",
       "variants": [
         "Espresso Italiano"
       ],
       "brand": "Lavazza",
-      "description": "gemahlener Espresso je 250-g-Pckg. gemahlener Espresso je 250-g-Pckg.",
+      "description": "gemahlener Espresso 250-g-Pckg. gemahlener Espresso 250-g-Pckg.",
       "price": 4.44,
       "priceMax": null,
       "grundpreisText": "(1 kg = 17.76)",
@@ -4759,8 +4761,8 @@
         "Kaffeepulver",
         "Espresso"
       ],
-      "image": "https://content-media.bonial.biz/3aeafc90-57ef-4e38-90d9-bc7797729685/865aef75-5f89-4050-98ea-73a8d8328a67.jpg",
-      "page": 16
+      "image": "https://content-media.bonial.biz/1fe7845b-4efe-442d-904a-42ad1f33bf4b/bdd454ec-b98e-445b-bc74-5d1bbbb39514.jpg",
+      "page": 22
     },
     {
       "id": "83958e068181",
@@ -5403,11 +5405,11 @@
     },
     {
       "id": "94aa3c9946f5",
-      "kaufdaId": "61a44e16-4b95-4c16-b1b0-fce8978304ab",
+      "kaufdaId": "6f30aac9-8398-49c1-8a72-290b97a35a95",
       "name": "Sport +",
       "variants": [],
       "brand": "Valensina",
-      "description": "versch. Sorten 0,5-l-Fl. zzgl. 0.25 Pfand",
+      "description": "versch. Sorten je 0,5-l-Fl. zzgl. 0.25 Pfand",
       "price": 0.99,
       "priceMax": null,
       "grundpreisText": "(1 l = 1.98)",
@@ -5419,8 +5421,8 @@
         "Marken Lebensmittel",
         "Valensina"
       ],
-      "image": "https://content-media.bonial.biz/61a44e16-4b95-4c16-b1b0-fce8978304ab/9426b613-e871-488c-8eee-e920f591e34b.jpg",
-      "page": 13
+      "image": "https://content-media.bonial.biz/6f30aac9-8398-49c1-8a72-290b97a35a95/180dc97e-4c53-4652-8408-56844c1aa592.jpg",
+      "page": 19
     },
     {
       "id": "9712971132a0",
@@ -5872,26 +5874,29 @@
     },
     {
       "id": "a2554c5f6591",
-      "kaufdaId": "69933977-f590-4ccd-b7b2-6cf8cab784b3",
+      "kaufdaId": "a10204bd-10df-4c79-af90-d4fa8b294a72",
       "name": "Lungo Kaffeekapseln Intenso",
       "variants": [
         "Morning Café XL Kaffeekapseln"
       ],
       "brand": "Jacobs",
-      "description": "je 104-g-Pckg. 163,8-g-Pckg.",
+      "description": "je 104-g-Pckg. je 163,8-g-Pckg.",
       "price": 4.44,
       "priceMax": null,
-      "grundpreisText": "(1 kg = 42.69)",
+      "grundpreisText": "1 kg = 42.69",
       "dealType": "SALES_PRICE",
-      "dealText": "Jacobs",
+      "dealText": "Lungo Kaffeekapseln Intenso",
       "categoryPath": [
         "Lebensmittel und Getränke",
-        "Marken",
-        "Marken Lebensmittel",
-        "Tassimo"
+        "Produkte",
+        "Getränke",
+        "Heißgetränk",
+        "Kaffee",
+        "Kaffeezubehör",
+        "Kaffeekapseln"
       ],
-      "image": "https://content-media.bonial.biz/69933977-f590-4ccd-b7b2-6cf8cab784b3/b31cff77-819b-4cd6-ba61-c9cfdbca4908.jpg",
-      "page": 16
+      "image": "https://content-media.bonial.biz/a10204bd-10df-4c79-af90-d4fa8b294a72/505ae4d9-516c-44e3-a019-13ba7eb07e2d.jpg",
+      "page": 22
     },
     {
       "id": "a28f2a84da2f",
@@ -6155,11 +6160,11 @@
     },
     {
       "id": "a7912511fb86",
-      "kaufdaId": "6457dae0-e1c6-4790-a45e-ef9126e42980",
+      "kaufdaId": "f12ab542-ecf3-4112-bab8-4d1610dfc795",
       "name": "Sahne Joghurt",
       "variants": [],
       "brand": "Zott",
-      "description": "versch. Sorten 140-g-Becher",
+      "description": "versch. Sorten, je 140-g-Becher",
       "price": 0.49,
       "priceMax": null,
       "grundpreisText": "(1 kg = 3.50)",
@@ -6171,8 +6176,8 @@
         "Marken Lebensmittel",
         "Zott"
       ],
-      "image": "https://content-media.bonial.biz/6457dae0-e1c6-4790-a45e-ef9126e42980/2bb91976-6e64-4eb6-8199-08e0edbb8bbd.jpg",
-      "page": 9
+      "image": "https://content-media.bonial.biz/f12ab542-ecf3-4112-bab8-4d1610dfc795/2c8d1bf5-7006-49a5-b239-97aa37d1cb56.jpg",
+      "page": 17
     },
     {
       "id": "a7a3db082df2",
@@ -6410,13 +6415,13 @@
     },
     {
       "id": "ab1ccc3a09e6",
-      "kaufdaId": "1e48ebc4-1f65-4019-9179-c11777e7e12c",
+      "kaufdaId": "a094cec8-a2bb-4136-955f-ea2f7f8ce2ae",
       "name": "Sommergenuss",
       "variants": [
         "Kopfsalat"
       ],
       "brand": "Florette",
-      "description": "250-g-Btl. mit feinen Kräutern 150-g-Btl.",
+      "description": "je 250-g-Btl. mit feinen Kräutern je 150-g-Btl.",
       "price": 1.79,
       "priceMax": null,
       "grundpreisText": "(1 kg = 7.16)",
@@ -6428,7 +6433,7 @@
         "Marken Lebensmittel",
         "Florette"
       ],
-      "image": "https://content-media.bonial.biz/1e48ebc4-1f65-4019-9179-c11777e7e12c/c68a05b5-7a42-4a6b-a290-77cb714fd9fe.jpg",
+      "image": "https://content-media.bonial.biz/a094cec8-a2bb-4136-955f-ea2f7f8ce2ae/1b58430f-decd-465b-8a50-79e78a1fe954.jpg",
       "page": 5
     },
     {
@@ -6479,25 +6484,25 @@
     },
     {
       "id": "abff8f244a2e",
-      "kaufdaId": "605d607d-266e-41ab-9f5d-4dfe0b1aaeeb",
+      "kaufdaId": "4f8cb410-6578-40c2-ba7a-7770fde88c2e",
       "name": "Knoppers",
       "variants": [
         "Knoppers Nussriegel"
       ],
       "brand": "Storck",
-      "description": "je 8 x 25-g-Pckg. je 5 x 40-g-Pckg.",
+      "description": "8 x 25-g-Pckg. 5 x 40-g-Pckg.",
       "price": 1.69,
       "priceMax": null,
-      "grundpreisText": "1 kg = 8.45",
+      "grundpreisText": "(1 kg = 8.45)",
       "dealType": "SALES_PRICE",
-      "dealText": "Knoppers",
+      "dealText": "Knoppers\n0,10 € Bonus",
       "categoryPath": [
         "Lebensmittel und Getränke",
         "Marken",
         "Marken Lebensmittel",
         "Storck"
       ],
-      "image": "https://content-media.bonial.biz/605d607d-266e-41ab-9f5d-4dfe0b1aaeeb/f9736cdb-66ef-4aa5-8e32-a4c29d344cb4.jpg",
+      "image": "https://content-media.bonial.biz/4f8cb410-6578-40c2-ba7a-7770fde88c2e/f75b25c5-435b-43d0-b800-0c95576d04ee.jpg",
       "page": 0
     },
     {
@@ -6767,11 +6772,11 @@
     },
     {
       "id": "b1cd9009f61d",
-      "kaufdaId": "f66cd340-3ff8-45a0-b2db-6d0a6f7dd2a1",
+      "kaufdaId": "da2f37c5-0952-443f-921c-2ed800de2c99",
       "name": "Geflügel Aufschnitt",
       "variants": [],
       "brand": "Wiesenhof",
-      "description": "versch. Sorten 80-g-Pckg.",
+      "description": "versch. Sorten, je 80-g-Pckg.",
       "price": 1.49,
       "priceMax": null,
       "grundpreisText": "(1 kg = 18.63)",
@@ -6783,8 +6788,8 @@
         "Marken Lebensmittel",
         "Wiesenhof"
       ],
-      "image": "https://content-media.bonial.biz/f66cd340-3ff8-45a0-b2db-6d0a6f7dd2a1/9a6632f9-451e-4d5d-9a7c-ac56703b6696.jpg",
-      "page": 8
+      "image": "https://content-media.bonial.biz/da2f37c5-0952-443f-921c-2ed800de2c99/a9aa4320-0dd4-4d18-ac27-c2ee9a22561b.jpg",
+      "page": 16
     },
     {
       "id": "b1d5c727acba",
@@ -7421,11 +7426,11 @@
     },
     {
       "id": "c0cb3a9cb9ba",
-      "kaufdaId": "83b6fcba-dfb4-4ad7-90da-fc2d266c1119",
+      "kaufdaId": "5af2c27a-5d2e-4f73-b909-5db9bc323dc2",
       "name": "Kernarme Wassermelone",
       "variants": [],
       "brand": "REWE Beste Wahl",
-      "description": "Italien Exklusiv bei REWE, Perla nera, Kl. I 1 kg",
+      "description": "Italien Perla nera, Exklusiv bei REWE, Kl. I 1 kg",
       "price": null,
       "priceMax": null,
       "grundpreisText": null,
@@ -7437,18 +7442,18 @@
         "REWE",
         "REWE Beste Wahl"
       ],
-      "image": "https://content-media.bonial.biz/83b6fcba-dfb4-4ad7-90da-fc2d266c1119/617b830b-eb49-4b71-921f-d6d926e02e98.jpg",
+      "image": "https://content-media.bonial.biz/5af2c27a-5d2e-4f73-b909-5db9bc323dc2/b296a96b-264b-4bbe-ba10-575aa3d823a5.jpg",
       "page": 0
     },
     {
       "id": "c10709872dfd",
-      "kaufdaId": "bbfd1447-4b83-4e7b-b845-413acfefb2ba",
+      "kaufdaId": "bb406856-6d04-427d-93cd-9c39b98dafa5",
       "name": "Sanfte Säfte",
       "variants": [
         "Plus Säfte"
       ],
       "brand": "Amecke",
-      "description": "versch. Sorten, aus Konzentrat 1-l.-Pckg. versch. Sorten, aus Konzentrat 1-l.-Pckg.",
+      "description": "versch. Sorten, aus Konzentrat 1-l-Pckg. versch. Sorten, aus Konzentrat 1-l-Pckg.",
       "price": 1.99,
       "priceMax": null,
       "grundpreisText": null,
@@ -7461,8 +7466,8 @@
         "Saft",
         "Saftmarken"
       ],
-      "image": "https://content-media.bonial.biz/bbfd1447-4b83-4e7b-b845-413acfefb2ba/a02ac199-70ed-4552-ab57-e1145f290206.jpg",
-      "page": 13
+      "image": "https://content-media.bonial.biz/bb406856-6d04-427d-93cd-9c39b98dafa5/2861bdab-b597-4b3f-8181-fe37ab7ff65e.jpg",
+      "page": 19
     },
     {
       "id": "c16ed3b650bd",
@@ -7994,11 +7999,11 @@
     },
     {
       "id": "cbdcfedb6c75",
-      "kaufdaId": "e52418c0-9401-4172-a53a-ec2ff5e6e087",
+      "kaufdaId": "1dd53346-3975-40e6-aeea-91ea22e81e02",
       "name": "Butter oder Die Streichzarte",
       "variants": [],
       "brand": "Weihenstephan",
-      "description": "versch. Sorten je 250-g-Becher",
+      "description": "versch. Sorten, je 250-g-Becher",
       "price": 1.29,
       "priceMax": null,
       "grundpreisText": "1 kg = 5.16",
@@ -8011,8 +8016,8 @@
         "Milchprodukte",
         "Butter"
       ],
-      "image": "https://content-media.bonial.biz/e52418c0-9401-4172-a53a-ec2ff5e6e087/caa0ab09-0886-41a7-b9c4-a7fce41e8b50.jpg",
-      "page": 17
+      "image": "https://content-media.bonial.biz/1dd53346-3975-40e6-aeea-91ea22e81e02/d57183ba-1384-4bae-9603-a1692506bc5a.jpg",
+      "page": 1
     },
     {
       "id": "cd6c27f4da73",
@@ -8193,13 +8198,13 @@
     },
     {
       "id": "d4091d6dc42d",
-      "kaufdaId": "eb3c600d-4b09-4ec1-a495-55cfd0105366",
+      "kaufdaId": "2bb2bc84-77a2-40bb-bf33-75742c8c49d2",
       "name": "Remix Cookie",
       "variants": [
         "Cornetto Classico"
       ],
       "brand": "Langnese",
-      "description": "260-ml-Pckg. 540-ml-Pckg.",
+      "description": "je 260-ml-Pckg. je 540-ml-Pckg.",
       "price": 2.99,
       "priceMax": null,
       "grundpreisText": "(1 l = 11.50)",
@@ -8212,8 +8217,8 @@
         "Dessert",
         "Eis"
       ],
-      "image": "https://content-media.bonial.biz/eb3c600d-4b09-4ec1-a495-55cfd0105366/35676188-fc35-4398-9d57-0e7bebcb574f.jpg",
-      "page": 11
+      "image": "https://content-media.bonial.biz/2bb2bc84-77a2-40bb-bf33-75742c8c49d2/54028359-ecb7-4d45-b4ff-37522793c88c.jpg",
+      "page": 17
     },
     {
       "id": "d424d3a4ac02",
@@ -8284,26 +8289,26 @@
     },
     {
       "id": "d89a67de12a6",
-      "kaufdaId": "ad3a6042-6ccc-4b25-8a30-71b720fe3b66",
+      "kaufdaId": "0352b889-f796-44d8-8fa1-cd640608d0f2",
       "name": "All in 1 Pods",
       "variants": [
         "Waschmittel flüssig"
       ],
       "brand": "Lenor",
-      "description": "Amethyst & Blütentraum 15-WL-Pckg. Aprilfrisch 20-WL-Fl.",
+      "description": "Amethyst & Blütentraum, je 15-WL-Pckg. Aprilfrisch, je 20-Wl.-Fl.",
       "price": 4.99,
       "priceMax": null,
-      "grundpreisText": "(1 WL = 0.33)",
+      "grundpreisText": "1 WL = 0.33",
       "dealType": "SALES_PRICE",
-      "dealText": null,
+      "dealText": "All in 1 Pods",
       "categoryPath": [
         "Drogerie und Haushalt",
         "Marken",
         "Marken Haushalt",
         "Lenor"
       ],
-      "image": "https://content-media.bonial.biz/ad3a6042-6ccc-4b25-8a30-71b720fe3b66/aa610382-096a-4195-8867-c4d2f986bb97.jpg",
-      "page": 18
+      "image": "https://content-media.bonial.biz/0352b889-f796-44d8-8fa1-cd640608d0f2/21bbb5ac-0412-48de-a712-336c3604db73.jpg",
+      "page": 24
     },
     {
       "id": "d8eb0b23a2f8",
@@ -9656,16 +9661,16 @@
     },
     {
       "id": "f8c712e5a925",
-      "kaufdaId": "746a03f8-e2a7-49c9-a92c-680210cd22ff",
+      "kaufdaId": "d6ce8571-eaf4-4a81-9723-98ddfe6ba8ab",
       "name": "Cracker",
       "variants": [],
       "brand": "Tuc",
-      "description": "versch. Sorten 100-g-Pckg.",
+      "description": "versch. Sorten, je 100-g-Pckg.",
       "price": 0.99,
       "priceMax": null,
-      "grundpreisText": "(1 kg = 9.90)",
+      "grundpreisText": "1 kg = 9.90",
       "dealType": "SALES_PRICE",
-      "dealText": "0,10 € Bonus",
+      "dealText": null,
       "categoryPath": [
         "Lebensmittel und Getränke",
         "Marken",
@@ -9673,8 +9678,8 @@
         "de Beukelaer",
         "TUC"
       ],
-      "image": "https://content-media.bonial.biz/746a03f8-e2a7-49c9-a92c-680210cd22ff/347527c3-43a6-45dc-a0a9-760e9630e119.jpg",
-      "page": 16
+      "image": "https://content-media.bonial.biz/d6ce8571-eaf4-4a81-9723-98ddfe6ba8ab/30b0c2b3-c5e1-41e3-98f0-23715b457e48.jpg",
+      "page": 22
     },
     {
       "id": "f957598f3ead",
@@ -9746,13 +9751,13 @@
     },
     {
       "id": "fabbc70d13c1",
-      "kaufdaId": "15b7877a-4fd5-49d8-b67b-8cb2d98c617f",
+      "kaufdaId": "004a6778-cb43-45fb-b353-034f05dfe6a2",
       "name": "Hähnchen-Fleischwurst",
       "variants": [
         "Geflügel-Fleischwurst"
       ],
       "brand": "Gutfried",
-      "description": "würzig-frisch je 350-g-Pckg. fein-würzig je 400-g-Pckg.",
+      "description": "würzig-frisch 350-g-Pckg. fein-würzig 400-g-Pckg.",
       "price": 2.79,
       "priceMax": null,
       "grundpreisText": "(1 kg = 7.97)",
@@ -9767,8 +9772,8 @@
         "Brühwurst",
         "Fleischwurst"
       ],
-      "image": "https://content-media.bonial.biz/15b7877a-4fd5-49d8-b67b-8cb2d98c617f/33733a2d-2b6b-40e3-9142-e76361a04510.jpg",
-      "page": 8
+      "image": "https://content-media.bonial.biz/004a6778-cb43-45fb-b353-034f05dfe6a2/e6ce8bb3-f406-41bc-acad-e71b352dac92.jpg",
+      "page": 16
     },
     {
       "id": "fbd60651c817",

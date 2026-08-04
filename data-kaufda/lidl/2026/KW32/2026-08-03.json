@@ -1,7 +1,7 @@
 {
   "source": "kaufda",
   "retailer": "lidl",
-  "fetchedAt": "2026-08-03T08:19:36Z",
+  "fetchedAt": "2026-08-04T08:32:41Z",
   "weekStart": "2026-08-03",
   "brochures": [
     {
@@ -5036,11 +5036,11 @@
     },
     {
       "id": "88a728fa1462",
-      "kaufdaId": "391d4171-96a5-42d4-a296-4b5e7565b005",
+      "kaufdaId": "318edf4c-40d9-4c7c-b5b0-de229298d2e8",
       "name": "Handsägen-Set",
       "variants": [],
       "brand": "PARKSIDE",
-      "description": "3 in 1: Bügel-, Zug-, Fuchsschwanzsäge; Sägeblatt um 90° drehbar. 4 Sägeblätter. Für Holz, Metall und Kunststoff. 6-teilig, Je Set",
+      "description": "3 in 1: Bügel-, Zug-, Fuchsschwanzsäge. Sägeblatt um 90° drehbar. 4 Sägeblätter. Für Holz, Metall und Kunststoff. 6-teilig, je Set",
       "price": 7.99,
       "priceMax": null,
       "grundpreisText": null,
@@ -5054,7 +5054,7 @@
         "Säge",
         "Handsäge"
       ],
-      "image": "https://content-media.bonial.biz/391d4171-96a5-42d4-a296-4b5e7565b005/3e8561ec-c3a7-4488-8f43-f39865aa3a4e.jpg",
+      "image": "https://content-media.bonial.biz/318edf4c-40d9-4c7c-b5b0-de229298d2e8/3c59259f-7c24-42ba-9f72-cdef2b550f12.jpg",
       "page": 38
     },
     {
@@ -6405,26 +6405,26 @@
     },
     {
       "id": "a5d53ae6eaab",
-      "kaufdaId": "6cf63683-fdb9-4f9c-b07a-0c1a980a8fb4",
+      "kaufdaId": "d0edb864-b4f1-4ff5-80f2-cfc4372e626d",
       "name": "Absperrkette",
       "variants": [
         "Metallkette",
         "Stahldrahtseil"
       ],
-      "brand": "PARKSIDE",
-      "description": "inkl. 2 Kunststoff-Karabiner ca. L 5 m inkl. 2 Metall-Karabiner ca. L 4 m Belastung: max. 40 kg; inkl. 4 Drahtseilklemmen ca. L 15 m, Ø 2 mm",
+      "brand": "Parkside",
+      "description": "inkl. 2 Kunststoff-Karabiner, ca. L 5 m inkl. 2 Metall-Karabiner, ca. L 4 m Belastung: max. 40 kg, inkl. 4 Drahtseilklemmen, ca. L 15 m, Ø 2 mm",
       "price": 2.99,
       "priceMax": null,
       "grundpreisText": null,
       "dealType": "SALES_PRICE",
-      "dealText": null,
+      "dealText": "Absperrkette",
       "categoryPath": [
         "Heimwerken und Garten",
         "Marken",
         "Marken Heimwerken",
         "Parkside"
       ],
-      "image": "https://content-media.bonial.biz/6cf63683-fdb9-4f9c-b07a-0c1a980a8fb4/31d4e838-ef55-4d75-a546-3e9963f620b2.jpg",
+      "image": "https://content-media.bonial.biz/d0edb864-b4f1-4ff5-80f2-cfc4372e626d/7c94f154-c1bb-43f2-93a2-157d5c686877.jpg",
       "page": 40
     },
     {
