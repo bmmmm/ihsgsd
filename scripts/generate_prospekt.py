@@ -657,7 +657,12 @@ OMLX_BIN = Path.home() / ".omlx" / "bin" / "omlx"
 
 
 def _local_models():
-    """Model ids the local engine currently serves, or [] if it is not up."""
+    """Model ids the local engine currently serves, or [] if it is not up.
+
+    A 401/403 means an engine IS listening but rejects our key — a config
+    problem no amount of waking or polling can heal, so it raises with the
+    real cause instead of masquerading as "no local engine".
+    """
     req = urllib.request.Request(
         f"{LOCAL_BASE_URL}/models",
         headers={"Authorization": f"Bearer {os.environ.get('OPENAI_API_KEY', 'local')}"},
@@ -665,6 +670,13 @@ def _local_models():
     try:
         with urllib.request.urlopen(req, timeout=5) as resp:
             body = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        if exc.code in (401, 403):
+            raise RuntimeError(
+                f"local engine at {LOCAL_BASE_URL} rejected the API key "
+                f"(HTTP {exc.code}) — set OPENAI_API_KEY to the engine's key"
+            ) from exc
+        return []
     except (urllib.error.URLError, OSError, json.JSONDecodeError, TimeoutError):
         return []
     return [m["id"] for m in body.get("data", []) if isinstance(m, dict) and m.get("id")]
