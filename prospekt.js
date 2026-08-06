@@ -177,6 +177,16 @@ const BIO_RE = dietRe('bio');
 // Beer is the one case where a suffix match is wanted: Landbier, Weißbier and
 // Kellerbier are beers, and Pilsener/Pilsner are pils.
 const BIER_RE = dietRe(`${W}bier|pils${W}`);
+// Coffee hides across title AND description: "Lavazza Espresso" and "Melitta
+// BellaCrema" never say "Kaffee", "Dallmayr prodomo" says it only in the
+// description ("gemahlener Bohnenkaffee"). Reading both is safe here — an
+// interest chip only ranks, it never vetoes, so a stray mention ("Kaffee-
+// Milch") costs at most a harmless extra match. "crema" verified against the
+// whole archive: every occurrence is coffee, none is a dessert.
+const KAFFEE_RE = dietRe(
+    `${W}kaffee${W}|${W}coffee${W}|espresso${W}|caff[eè]${W}|caf[eé]|cappucc${W}|` +
+    `${W}crema${W}|barista|latte\\s+macchiato`
+);
 
 function looksVegan(o) {
     return VEGAN_RE.test(`${(o && o.title) || ''} ${(o && o.description) || ''}`);
@@ -204,6 +214,7 @@ const TOPICS = [
     { key: 'obstgemuese', label: 'Obst & Gemüse',   emoji: '🥦', test: o => catName(o) === 'Obst & Gemüse' },
     { key: 'bier',        label: 'Bier',            emoji: '🍺', test: o => catName(o) === 'Getränke' && BIER_RE.test(o.title || '') },
     { key: 'spezi',       label: 'Spezi',           emoji: '🥤', test: o => SPEZI_RE.test(o.title || '') },
+    { key: 'kaffee',      label: 'Kaffee',          emoji: '☕', test: o => KAFFEE_RE.test(`${o.title || ''} ${o.description || ''}`) },
     { key: 'bio',         label: 'Bio',             emoji: '🌿', test: o => BIO_RE.test(o.title || '') },
     { key: 'knueller',    label: 'Knüller',         emoji: '🔥', test: isKnuller },
     { key: 'kaese',       label: 'Käse',            emoji: '🧀', test: o => catName(o) === 'Molkerei & Käse' },
@@ -232,7 +243,7 @@ const TOPICS = [
 // OFF so a "Zurücksetzen" restores the durable taste profile instead of
 // re-enabling them; only affects fresh/reset prefs, existing prefs are kept.
 const DEFAULT_INTERESTS = {
-    vegan: 2, obstgemuese: 2, bier: 2, spezi: 2, bio: 1,
+    vegan: 2, obstgemuese: 2, bier: 2, spezi: 2, kaffee: 2, bio: 1,
     fleisch: -1, kaese: -1, suess: -1, drogerie: -1, tiernahrung: -1, fisch: -1,
     spirituosen: -1,
 };
@@ -792,6 +803,33 @@ function buildSteering() {
 // straight back into the curated lists. Prevents the filter bubble from drifting.
 let browseFilter = '';
 
+// Shared opener for the price-history detail card — pk-cards, editorial links
+// and browse rows all funnel through here.
+function openOfferDetail(o) {
+    if (typeof DetailCard === 'undefined') return;
+    DetailCard.open({
+        title: o.title || '',
+        category: catName(o),
+        color: CATEGORY_COLORS[catName(o)] || '#888',
+        date: selectedWeekDate(),
+        offer: {
+            price: offerPrice(o),
+            basicPrice: typeof o.basicPrice === 'string' ? o.basicPrice : '',
+            description: o.description || '',
+            imageUrl: (o.images && safeImageUrl(o.images.app || '')) || '',
+            localImageUrl: localImageUrl(o) || '',
+        },
+    });
+}
+
+// Case- and accent-insensitive fold for the browse search: "caffe" finds
+// "Caffè", "kase" and "käse" both find "Käse", "suss" finds "Süß". NFKD splits
+// letters from their accents, \p{M} drops the accent marks.
+function searchFold(s) {
+    return String(s || '').toLowerCase().normalize('NFKD')
+        .replace(/\p{M}/gu, '').replace(/ß/g, 'ss');
+}
+
 function buildBrowseRow(o) {
     const li = document.createElement('li');
     li.className = 'browse-row';
@@ -850,6 +888,16 @@ function buildBrowseRow(o) {
     down.addEventListener('click', () => setVote(o, -1));
     li.appendChild(up);
     li.appendChild(down);
+
+    // Row click → the same price-history detail card the pk-cards open; the
+    // vote buttons keep their own behavior via the closest() guard.
+    if (typeof DetailCard !== 'undefined') {
+        li.classList.add('pk-clickable');
+        li.addEventListener('click', e => {
+            if (e.target.closest('button, a, input, textarea, select')) return;
+            openOfferDetail(o);
+        });
+    }
     return li;
 }
 
@@ -859,11 +907,22 @@ function renderBrowse() {
     if (!list) return;
     if (body && body.hidden) { list.innerHTML = ''; return; }   // skip work while collapsed
 
-    const q = browseFilter.trim().toLowerCase();
+    const q = searchFold(browseFilter.trim());
     let items = currentOffers.slice();
     if (q) {
-        items = items.filter(o =>
-            (o.title || '').toLowerCase().includes(q) || catName(o).toLowerCase().includes(q));
+        // Every whitespace-separated token must match somewhere: in the title,
+        // category or description — or via a topic detector whose chip label
+        // contains the token. The detector route is what lets "kaffee" find
+        // "Lavazza Espresso": no substring links them, but KAFFEE_RE does.
+        // Tokens under 3 chars skip it so a lone "k" doesn't pull in whole
+        // topics while the reader is still typing.
+        const tokens = q.split(/\s+/);
+        items = items.filter(o => {
+            const hay = searchFold(`${o.title || ''} ${catName(o)} ${o.description || ''}`);
+            return tokens.every(tok => hay.includes(tok)
+                || (tok.length >= 3 && TOPICS.some(t =>
+                    searchFold(t.label).includes(tok) && topicTest(t.key)(o))));
+        });
     }
     // Still-shown items first, the ausgeblendeten (score < 0) sink to the bottom;
     // alphabetical within each group.
@@ -1410,19 +1469,7 @@ function buildCard(o, opts) {
         card.classList.add('pk-clickable');
         card.addEventListener('click', e => {
             if (e.target.closest('button, a, input, textarea, select')) return;
-            DetailCard.open({
-                title: o.title || '',
-                category: catName(o),
-                color: CATEGORY_COLORS[catName(o)] || '#888',
-                date: selectedWeekDate(),
-                offer: {
-                    price: offerPrice(o),
-                    basicPrice: typeof o.basicPrice === 'string' ? o.basicPrice : '',
-                    description: o.description || '',
-                    imageUrl: (o.images && safeImageUrl(o.images.app || '')) || '',
-                    localImageUrl: localImageUrl(o) || '',
-                },
-            });
+            openOfferDetail(o);
         });
     }
     return card;
@@ -1516,20 +1563,7 @@ function buildEditorialLink(offer, label) {
     a.tabIndex = 0;
     const price = offerPrice(offer);
     a.title = `${offer.title || ''}${price !== null ? ` — €${price.toFixed(2).replace('.', ',')}` : ''}`;
-    const open = () => {
-        if (typeof DetailCard === 'undefined') return;
-        DetailCard.open({
-            title: offer.title || '',
-            category: catName(offer),
-            color: CATEGORY_COLORS[catName(offer)] || '#888',
-            date: selectedWeekDate(),
-            offer: {
-                price: offerPrice(offer),
-                basicPrice: typeof offer.basicPrice === 'string' ? offer.basicPrice : '',
-                description: offer.description || '',
-            },
-        });
-    };
+    const open = () => openOfferDetail(offer);
     a.addEventListener('click', open);
     a.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }

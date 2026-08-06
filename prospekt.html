@@ -230,8 +230,10 @@
             transition: border-color 0.15s, opacity 0.15s;
         }
         .pk-card:hover { border-color: #3a3a3a; }
-        /* Cards open the product detail card on click (buttons excluded) */
-        .pk-card.pk-clickable { cursor: pointer; }
+        /* Cards and browse rows open the product detail card on click
+           (buttons excluded) */
+        .pk-clickable { cursor: pointer; }
+        .browse-row.pk-clickable:hover { background: #1b1b1b; }
         .pk-card.downvoted { opacity: 0.45; }
         .pk-thumb {
             position: relative;
@@ -759,7 +761,7 @@
                 </button>
                 <div class="browse-body" id="browse-body" hidden>
                     <input type="text" id="browse-search" placeholder="In allen Angeboten suchen&hellip;" aria-label="Alle Angebote durchsuchen" />
-                    <p class="browse-hint">Hier siehst du auch <strong>ausgeblendete</strong> &amp; herabgestufte Produkte. &#128077; holt eins zur&uuml;ck in deine Listen, &#128683; blendet es aus.</p>
+                    <p class="browse-hint">Hier siehst du auch <strong>ausgeblendete</strong> &amp; herabgestufte Produkte. &#128077; holt eins zur&uuml;ck in deine Listen, &#128683; blendet es aus. Klick auf eine Zeile &ouml;ffnet Details &amp; Preisverlauf.</p>
                     <ul id="browse-list" class="browse-list"></ul>
                 </div>
             </section>

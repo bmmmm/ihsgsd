@@ -66,6 +66,7 @@ TOPIC_LABELS = {
     "obstgemuese": "Obst & Gemüse",
     "bier": "Bier",
     "spezi": "Spezi",
+    "kaffee": "Kaffee",
     "bio": "Bio",
     "knueller": "Superknüller",
     "kaese": "Käse",
@@ -85,7 +86,7 @@ TOPIC_LABELS = {
 # prospekt.js — without it, a brand-new "Wein & Spirituosen: aus" chip would
 # read as neutral here and the model would keep recommending Jägermeister.
 DEFAULT_INTERESTS = {
-    "vegan": 2, "obstgemuese": 2, "bier": 2, "spezi": 2, "bio": 1,
+    "vegan": 2, "obstgemuese": 2, "bier": 2, "spezi": 2, "kaffee": 2, "bio": 1,
     "fleisch": -1, "kaese": -1, "suess": -1, "drogerie": -1,
     "tiernahrung": -1, "fisch": -1, "spirituosen": -1,
 }
@@ -176,7 +177,7 @@ def diet_excluded(offer, muted):
 
 PROMPT_TEMPLATE = """You are the personal shopping recommender for a German supermarket (EDEKA) offers tracker. Return ONLY valid JSON — no prose, no markdown, no text outside the JSON.
 
-The reader especially likes VEGAN/vegetarian products, OBST & GEMÜSE (fruit & veg), and BIER & SPEZI (beer + the Spezi cola-orange drink). The input lists this week's curated candidates per section, each with face price, Grundpreis (GP = EUR/unit, the honest comparator), and — when known — a "ph" price-history object:
+The reader especially likes VEGAN/vegetarian products, OBST & GEMÜSE (fruit & veg), BIER & SPEZI (beer + the Spezi cola-orange drink), and KAFFEE (coffee in any form — beans, ground, pads, capsules). The input lists this week's curated candidates per section, each with face price, Grundpreis (GP = EUR/unit, the honest comparator), and — when known — a "ph" price-history object:
 - ph.best (bool): the GP is at or below its all-time low across prior offer weeks.
 - ph.overPct (int): how many percent the GP is above its own historical low.
 - ph.pctile (int): where this GP sits in the product's own history (0 = cheapest it has ever been offered, 100 = most expensive).
@@ -193,7 +194,7 @@ Return exactly this JSON structure (no extra keys, no trailing text):
 {
   "generatedAt": "LATEST_DATE_PLACEHOLDER",
   "weekLabel": "WEEK_LABEL_PLACEHOLDER",
-  "lead": "<4-6 sentence German intro to this week's flyer. Name 4-6 concrete highlights with their price or price fact (e.g. 'Allzeit-Tief', 'nur €1,00'), spread across the reader's interests: fruit & veg, vegan/plant-based, and beer/Spezi. Max 700 chars of VISIBLE text (link markup does not count).>",
+  "lead": "<4-6 sentence German intro to this week's flyer. Name 4-6 concrete highlights with their price or price fact (e.g. 'Allzeit-Tief', 'nur €1,00'), spread across the reader's interests: fruit & veg, vegan/plant-based, beer/Spezi, and coffee. Max 700 chars of VISIBLE text (link markup does not count).>",
   "sections": {
     "vegan": "<1-2 sentence German intro for the vegan/vegetarian picks. Max 200 chars of visible text.>",
     "obstgemuese": "<1-2 sentence German intro for fruit & veg. Max 200 chars of visible text.>",
@@ -532,7 +533,7 @@ def prefs_summary(prefs_path):
     """Turn an exported preferences.json into a short German hint block for the
     prompt, or a neutral note if there is nothing to personalise with."""
     if not prefs_path.exists():
-        return "Reader preferences: none provided — use the default focus (vegan, Obst & Gemüse, Bier & Spezi)."
+        return "Reader preferences: none provided — use the default focus (vegan, Obst & Gemüse, Bier & Spezi, Kaffee)."
     try:
         prefs = json.loads(prefs_path.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
