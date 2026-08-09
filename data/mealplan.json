@@ -1,176 +1,88 @@
 {
-  "weekLabel": "KW32",
-  "generatedAt": "2026-08-03",
+  "weekLabel": "KW33",
+  "generatedAt": "2026-08-10",
   "generatedFor": "2026-06-30T10:27:37.023Z",
   "model": "sonnet",
-  "intro": "Diese Woche gibt's günstige Bio-Rispentomaten, Zucchini und vegane Frikadellen im Angebot – ideal für sieben bunte, pflanzliche Abendessen ohne großen Aufwand.",
+  "intro": "Bio-Zucchini und Champignons zum Vorzugspreis treffen auf Chicorée im Rekordtief – aus den frischen Angeboten dieser Woche werden 13 bunte vegane Abendessen, ganz nach deinem Geschmack.",
   "days": [
     {
       "day": "Mo",
       "meal": {
-        "slug": "vegane-frikadellen-mit-warmem-kartoffelsalat",
-        "title": "Vegane Frikadellen mit warmem Kartoffelsalat",
-        "blurb": "Schnelles Feierabendessen mit knusprigen Frikadellen und cremigem Kartoffelsalat.",
+        "slug": "frikadellen-pfanne-mit-champignons-und-kartoffel-drillingen",
+        "title": "Frikadellen-Pfanne mit Champignons und Kartoffel-Drillingen",
+        "blurb": "Schnelle Pfanne mit knusprigen veganen Frikadellen und cremigen Kartoffeln – fertig in 20 Minuten.",
         "tags": [
+          "pfanne",
           "schnell",
-          "kartoffeln",
-          "frikadellen"
+          "herzhaft",
+          "kartoffeln"
         ],
         "ingredients": [
           {
             "name": "Vegane Frikadellen",
-            "offerTitle": "Vegane Frikadellen oder Gemüsebällchen",
-            "price": "€3,29"
+            "offerTitle": "EDEKA - My Veggie Vegane Frikadellen",
+            "price": "€1,79"
+          },
+          {
+            "name": "Champignons",
+            "offerTitle": "Deutschland - EDEKA Bio - Champignons",
+            "price": "€1,79"
           },
           {
             "name": "Kartoffeln",
-            "offerTitle": "Deutschland - Speisekartoffeln",
-            "price": "€1,99"
+            "offerTitle": "Ägypten - Kartoffeln Drillinge",
+            "price": "€2,22"
           },
           {
-            "name": "Zwiebeln",
-            "offerTitle": "EDEKA Herzstücke - Zwiebel-Mix",
+            "name": "Lauchzwiebeln",
+            "offerTitle": "Deutschland - Lauchzwiebeln",
             "price": "€1,49"
+          },
+          {
+            "name": "Rapsöl",
+            "pantry": true
           },
           {
             "name": "Senf",
             "pantry": true
-          },
-          {
-            "name": "Sojajoghurt",
-            "pantry": true
-          },
-          {
-            "name": "Salz & Pfeffer",
-            "pantry": true
           }
         ],
         "steps": [
-          "Kartoffeln waschen, kochen, pellen und in Scheiben schneiden.",
-          "Zwiebeln fein schneiden und mit Senf, Sojajoghurt, Salz und Pfeffer zu einem Dressing verrühren.",
-          "Kartoffeln mit dem Dressing vermengen und kurz ziehen lassen.",
-          "Frikadellen nach Packungsanweisung in der Pfanne braten.",
-          "Zusammen servieren."
+          "Kartoffel-Drillinge waschen, halbieren und in Salzwasser 15 Minuten garen.",
+          "Champignons vierteln, Lauchzwiebeln in Ringe schneiden.",
+          "Frikadellen nach Packungsanweisung in Rapsöl knusprig braten.",
+          "Champignons und Lauchzwiebeln dazugeben und 5 Minuten mitbraten.",
+          "Mit Senf würzen und zusammen mit den Kartoffeln servieren."
         ]
       }
     },
     {
       "day": "Di",
       "meal": {
-        "slug": "sommer-ofenzucchini-mit-kichererbsen-tomaten-fuellung",
-        "title": "Sommer-Ofenzucchini mit Kichererbsen-Tomaten-Füllung",
-        "blurb": "Gefüllte Zucchini aus dem Ofen – herzhaft, bunt und mit würziger Tomatennote.",
+        "slug": "zucchini-champignon-wok-mit-tofu",
+        "title": "Zucchini-Champignon-Wok mit Tofu",
+        "blurb": "Knackige Bio-Zucchini und Champignons im Wok – schnell, würzig und richtig sättigend.",
         "tags": [
-          "ofen",
-          "gefuellt",
-          "huelsenfruechte"
+          "wok",
+          "asiatisch",
+          "schnell",
+          "gemuese"
         ],
         "ingredients": [
           {
             "name": "Zucchini",
-            "offerTitle": "Deutschland - Zucchini",
-            "price": "€1,00"
+            "offerTitle": "Deutschland - Bio-Zucchini",
+            "price": "€1,77"
           },
           {
-            "name": "Kichererbsen",
-            "pantry": true
+            "name": "Champignons",
+            "offerTitle": "Deutschland - EDEKA Bio - Champignons",
+            "price": "€1,79"
           },
           {
-            "name": "Tomatenmark",
-            "pantry": true
-          },
-          {
-            "name": "Zwiebeln",
-            "pantry": true
-          },
-          {
-            "name": "Knoblauch",
-            "pantry": true
-          },
-          {
-            "name": "Paprikapulver",
-            "pantry": true
-          }
-        ],
-        "steps": [
-          "Zucchini längs halbieren und das Fruchtfleisch aushöhlen.",
-          "Zwiebeln und Knoblauch anschwitzen, Kichererbsen und Tomatenmark dazugeben, mit Paprikapulver würzen.",
-          "Zucchinihälften mit der Füllung befüllen.",
-          "Im Ofen bei 200°C ca. 20 Minuten backen, bis die Zucchini weich sind."
-        ]
-      }
-    },
-    {
-      "day": "Mi",
-      "meal": {
-        "slug": "cremiges-kokos-kichererbsen-curry-mit-reis",
-        "title": "Cremiges Kokos-Kichererbsen-Curry mit Reis",
-        "blurb": "Wärmendes Curry mit Bio-Rispentomaten, Kokosmilch und Kichererbsen – schön scharf.",
-        "tags": [
-          "curry",
-          "huelsenfruechte",
-          "scharf"
-        ],
-        "ingredients": [
-          {
-            "name": "Rispentomaten",
-            "offerTitle": "Deutschland - Bio-Rispentomaten",
-            "price": "€2,49"
-          },
-          {
-            "name": "Kokosmilch",
-            "pantry": true
-          },
-          {
-            "name": "Kichererbsen",
-            "pantry": true
-          },
-          {
-            "name": "Reis",
-            "pantry": true
-          },
-          {
-            "name": "Ingwer",
-            "pantry": true
-          },
-          {
-            "name": "Currypulver",
-            "pantry": true
-          },
-          {
-            "name": "Zwiebeln",
-            "pantry": true
-          }
-        ],
-        "steps": [
-          "Zwiebeln und Ingwer anbraten.",
-          "Rispentomaten würfeln und mit Currypulver kurz mitbraten.",
-          "Kokosmilch und Kichererbsen dazugeben, 15 Minuten köcheln lassen.",
-          "Mit Reis servieren."
-        ]
-      }
-    },
-    {
-      "day": "Do",
-      "meal": {
-        "slug": "bunte-tofu-bowl-mit-spitzpaprika-und-multicolorsalat",
-        "title": "Bunte Tofu-Bowl mit Spitzpaprika und Multicolorsalat",
-        "blurb": "Frische Bowl mit knackigem Gemüse und knusprig gebratenem Tofu.",
-        "tags": [
-          "bowl",
-          "asiatisch",
-          "schnell"
-        ],
-        "ingredients": [
-          {
-            "name": "Spitzpaprika",
-            "offerTitle": "Ungarn - Spitzpaprika",
-            "price": "€1,99"
-          },
-          {
-            "name": "Multicolorsalat",
-            "offerTitle": "Niederlande - EDEKA Herzstücke - Multicolorsalat",
-            "price": "€1,11"
+            "name": "Lauchzwiebeln",
+            "offerTitle": "Deutschland - Lauchzwiebeln",
+            "price": "€1,49"
           },
           {
             "name": "Tofu",
@@ -181,139 +93,6 @@
             "pantry": true
           },
           {
-            "name": "Reis",
-            "pantry": true
-          },
-          {
-            "name": "Sriracha",
-            "pantry": true
-          }
-        ],
-        "steps": [
-          "Reis nach Packungsanweisung kochen.",
-          "Tofu würfeln, in Sojasauce marinieren und knusprig braten.",
-          "Spitzpaprika in Streifen schneiden.",
-          "Alles mit dem Multicolorsalat in einer Bowl anrichten und mit Sriracha abschmecken."
-        ]
-      }
-    },
-    {
-      "day": "Fr",
-      "meal": {
-        "slug": "spaghetti-mit-geroesteten-pflaumentomaten-und-bio-basilikum",
-        "title": "Spaghetti mit gerösteten Pflaumentomaten und Bio-Basilikum",
-        "blurb": "Simple Pasta mit süßen Ofentomaten und frischem Basilikum.",
-        "tags": [
-          "pasta",
-          "italienisch",
-          "schnell"
-        ],
-        "ingredients": [
-          {
-            "name": "Mini-Pflaumentomaten",
-            "offerTitle": "Niederlande - EDEKA Herzstücke - Mini-Pflaumentomaten",
-            "price": "€1,29"
-          },
-          {
-            "name": "Bio-Basilikum",
-            "offerTitle": "Deutschland - Bio-Basilikum",
-            "price": "€1,29"
-          },
-          {
-            "name": "Nudeln",
-            "pantry": true
-          },
-          {
-            "name": "Knoblauch",
-            "pantry": true
-          },
-          {
-            "name": "Olivenöl",
-            "pantry": true
-          }
-        ],
-        "steps": [
-          "Pflaumentomaten mit Knoblauch und Olivenöl im Ofen bei 200°C 15 Minuten rösten.",
-          "Nudeln kochen.",
-          "Tomaten zerdrücken und unter die Nudeln heben.",
-          "Mit frischem Basilikum bestreuen."
-        ]
-      }
-    },
-    {
-      "day": "Sa",
-      "meal": {
-        "slug": "kohlrabi-kartoffel-cremesuppe",
-        "title": "Kohlrabi-Kartoffel-Cremesuppe",
-        "blurb": "Sämige Suppe für laue Sommerabende, fein abgeschmeckt.",
-        "tags": [
-          "suppe",
-          "cremig",
-          "kartoffeln"
-        ],
-        "ingredients": [
-          {
-            "name": "Kohlrabi",
-            "offerTitle": "Deutschland - Kohlrabi",
-            "price": "€0,55"
-          },
-          {
-            "name": "Kartoffeln",
-            "offerTitle": "Deutschland - Speisekartoffeln",
-            "price": "€1,99"
-          },
-          {
-            "name": "Gemüsebrühe",
-            "pantry": true
-          },
-          {
-            "name": "Haferdrink",
-            "pantry": true
-          },
-          {
-            "name": "Zwiebeln",
-            "pantry": true
-          }
-        ],
-        "steps": [
-          "Zwiebeln anschwitzen, Kohlrabi und Kartoffeln würfeln und dazugeben.",
-          "Mit Gemüsebrühe ablöschen und weich kochen.",
-          "Pürieren und mit Haferdrink verfeinern.",
-          "Abschmecken und servieren."
-        ]
-      }
-    },
-    {
-      "day": "So",
-      "meal": {
-        "slug": "asia-wok-mit-raeuchertofu-und-zwiebel-mix",
-        "title": "Asia-Wok mit Räuchertofu und Zwiebel-Mix",
-        "blurb": "Würziger Wok mit knusprigem Räuchertofu – in 20 Minuten fertig.",
-        "tags": [
-          "wok",
-          "asiatisch",
-          "schnell"
-        ],
-        "ingredients": [
-          {
-            "name": "Zwiebeln",
-            "offerTitle": "EDEKA Herzstücke - Zwiebel-Mix",
-            "price": "€1,49"
-          },
-          {
-            "name": "Spitzpaprika",
-            "offerTitle": "Ungarn - Spitzpaprika",
-            "price": "€1,99"
-          },
-          {
-            "name": "Räuchertofu",
-            "pantry": true
-          },
-          {
-            "name": "Sojasauce",
-            "pantry": true
-          },
-          {
             "name": "Ingwer",
             "pantry": true
           },
@@ -323,122 +102,274 @@
           }
         ],
         "steps": [
-          "Räuchertofu in Streifen schneiden.",
-          "Zwiebel-Mix und Spitzpaprika klein schneiden.",
-          "Alles scharf im Wok anbraten, mit Ingwer und Sojasauce würzen.",
+          "Reis nach Packungsanweisung kochen.",
+          "Tofu würfeln und in Rapsöl knusprig anbraten, herausnehmen.",
+          "Zucchini und Champignons in Streifen schneiden und scharf anbraten.",
+          "Ingwer und Lauchzwiebeln kurz mitbraten, Tofu zurück in die Pfanne geben.",
+          "Mit Sojasauce ablöschen und mit Reis servieren."
+        ]
+      }
+    },
+    {
+      "day": "Mi",
+      "meal": {
+        "slug": "ofen-chicor-e-mit-belugalinsen-und-senf-vinaigrette",
+        "title": "Ofen-Chicorée mit Belugalinsen und Senf-Vinaigrette",
+        "blurb": "Der Chicorée ist diese Woche im Bestpreis-Tief und wird im Ofen herrlich mild-süß.",
+        "tags": [
+          "ofen",
+          "huelsenfruechte",
+          "salat",
+          "bio"
+        ],
+        "ingredients": [
+          {
+            "name": "Chicorée",
+            "offerTitle": "Deutschland - Chicorée",
+            "price": "€1,79"
+          },
+          {
+            "name": "Belugalinsen",
+            "pantry": true
+          },
+          {
+            "name": "Senf",
+            "pantry": true
+          },
+          {
+            "name": "Agaven-Dicksaft",
+            "pantry": true
+          },
+          {
+            "name": "Olivenöl",
+            "pantry": true
+          }
+        ],
+        "steps": [
+          "Ofen auf 200°C vorheizen.",
+          "Chicorée längs halbieren, mit Olivenöl beträufeln und 20 Minuten rösten.",
+          "Belugalinsen nach Packungsanweisung kochen.",
+          "Aus Senf, Agaven-Dicksaft, Olivenöl und etwas Essig eine Vinaigrette rühren.",
+          "Chicorée auf den Linsen anrichten und mit Vinaigrette beträufeln."
+        ]
+      }
+    },
+    {
+      "day": "Do",
+      "meal": {
+        "slug": "cremige-champignon-porree-pasta",
+        "title": "Cremige Champignon-Porree-Pasta",
+        "blurb": "Eine schnelle Feierabend-Pasta mit Champignons, Porree und einer sahnigen Sojadrink-Sauce.",
+        "tags": [
+          "pasta",
+          "schnell",
+          "cremig",
+          "pilze"
+        ],
+        "ingredients": [
+          {
+            "name": "Champignons",
+            "offerTitle": "Deutschland - EDEKA Bio - Champignons",
+            "price": "€1,79"
+          },
+          {
+            "name": "Porree",
+            "offerTitle": "Deutschland - Porree",
+            "price": "€0,66"
+          },
+          {
+            "name": "Nudeln",
+            "pantry": true
+          },
+          {
+            "name": "Sojadrink",
+            "pantry": true
+          },
+          {
+            "name": "Knoblauch",
+            "pantry": true
+          },
+          {
+            "name": "Hefeflocken",
+            "pantry": true
+          }
+        ],
+        "steps": [
+          "Nudeln nach Packungsanweisung kochen.",
+          "Porree in Ringe schneiden, Champignons vierteln.",
+          "Knoblauch andünsten, Porree und Champignons zugeben und anbraten.",
+          "Mit Sojadrink ablöschen und mit Hefeflocken cremig einkochen lassen.",
+          "Sauce mit den Nudeln vermengen und servieren."
+        ]
+      }
+    },
+    {
+      "day": "Fr",
+      "meal": {
+        "slug": "spitzkohl-kartoffel-eintopf-mit-weissen-bohnen",
+        "title": "Spitzkohl-Kartoffel-Eintopf mit weißen Bohnen",
+        "blurb": "Ein wärmender Eintopf mit Spitzkohl, Kartoffeln und weißen Bohnen für kühle Abende.",
+        "tags": [
+          "eintopf",
+          "suppe",
+          "huelsenfruechte",
+          "herzhaft"
+        ],
+        "ingredients": [
+          {
+            "name": "Spitzkohl",
+            "offerTitle": "Deutschland - Spitzkohl",
+            "price": "€1,11"
+          },
+          {
+            "name": "Kartoffeln",
+            "offerTitle": "Ägypten - Kartoffeln Drillinge",
+            "price": "€2,22"
+          },
+          {
+            "name": "weiße Bohnen",
+            "pantry": true
+          },
+          {
+            "name": "Gemüsebrühe",
+            "pantry": true
+          },
+          {
+            "name": "Zwiebeln",
+            "pantry": true
+          },
+          {
+            "name": "Paprikapulver",
+            "pantry": true
+          }
+        ],
+        "steps": [
+          "Zwiebeln anschwitzen, Kartoffeln in Stücken zugeben und kurz mitbraten.",
+          "Mit Gemüsebrühe aufgießen und 10 Minuten köcheln.",
+          "Spitzkohl grob schneiden und dazugeben.",
+          "Weiße Bohnen einrühren und weitere 10 Minuten köcheln.",
+          "Mit Paprikapulver und Pfeffer abschmecken."
+        ]
+      }
+    },
+    {
+      "day": "Sa",
+      "meal": {
+        "slug": "mango-kichererbsen-curry-mit-reis",
+        "title": "Mango-Kichererbsen-Curry mit Reis",
+        "blurb": "Fruchtig-scharfes Curry mit Mango, Kichererbsen und Kokosmilch – ein Hauch Urlaub im Alltag.",
+        "tags": [
+          "curry",
+          "bowl",
+          "asiatisch",
+          "fruchtig"
+        ],
+        "ingredients": [
+          {
+            "name": "Mango",
+            "offerTitle": "Israel - Mangos",
+            "price": "€1,49"
+          },
+          {
+            "name": "Kichererbsen",
+            "pantry": true
+          },
+          {
+            "name": "Kokosmilch",
+            "pantry": true
+          },
+          {
+            "name": "Currypulver",
+            "pantry": true
+          },
+          {
+            "name": "Reis",
+            "pantry": true
+          },
+          {
+            "name": "Zwiebeln",
+            "pantry": true
+          }
+        ],
+        "steps": [
+          "Reis nach Packungsanweisung kochen.",
+          "Zwiebeln anbraten, Currypulver kurz mitrösten.",
+          "Kichererbsen und Kokosmilch zugeben, 10 Minuten köcheln.",
+          "Mango würfeln und kurz vor Ende unterheben.",
           "Mit Reis servieren."
+        ]
+      }
+    },
+    {
+      "day": "So",
+      "meal": {
+        "slug": "wassermelonen-avocado-salat-mit-kichererbsen",
+        "title": "Wassermelonen-Avocado-Salat mit Kichererbsen",
+        "blurb": "Erfrischender Sommersalat mit Wassermelone, Avocado und knusprigen Kichererbsen.",
+        "tags": [
+          "salat",
+          "sommer",
+          "schnell",
+          "frisch"
+        ],
+        "ingredients": [
+          {
+            "name": "Wassermelone",
+            "offerTitle": "Spanien - Wassermelonen",
+            "price": "€1,11"
+          },
+          {
+            "name": "Avocado",
+            "offerTitle": "Peru - Avocados",
+            "price": "€1,49"
+          },
+          {
+            "name": "Kichererbsen",
+            "pantry": true
+          },
+          {
+            "name": "Olivenöl",
+            "pantry": true
+          },
+          {
+            "name": "Salz",
+            "pantry": true
+          }
+        ],
+        "steps": [
+          "Kichererbsen abtropfen lassen und in Olivenöl knusprig anbraten.",
+          "Wassermelone und Avocado in Würfel schneiden.",
+          "Alles vorsichtig vermengen.",
+          "Mit Olivenöl, Salz und Pfeffer abschmecken."
         ]
       }
     }
   ],
   "bench": [
     {
-      "slug": "bulgur-sommersalat-mit-wassermelone-und-kraeutern",
-      "title": "Bulgur-Sommersalat mit Wassermelone und Kräutern",
-      "blurb": "Erfrischender Salat mit süßer Wassermelone und würzigem Bulgur.",
+      "slug": "ofenkartoffeln-mit-raeuchertofu-und-spitzpaprika",
+      "title": "Ofenkartoffeln mit Räuchertofu und Spitzpaprika",
+      "blurb": "Knusprige Ofenkartoffeln mit buntem Spitzpaprika und würzigem Räuchertofu.",
       "tags": [
-        "salat",
-        "sommer",
-        "erfrischend"
-      ],
-      "ingredients": [
-        {
-          "name": "Wassermelone",
-          "offerTitle": "Wassermelonen",
-          "price": "€2,49"
-        },
-        {
-          "name": "Bio-Basilikum",
-          "offerTitle": "Deutschland - Bio-Basilikum",
-          "price": "€1,29"
-        },
-        {
-          "name": "Bulgur",
-          "pantry": true
-        },
-        {
-          "name": "Zwiebeln",
-          "pantry": true
-        },
-        {
-          "name": "Olivenöl",
-          "pantry": true
-        }
-      ],
-      "steps": [
-        "Bulgur nach Packungsanweisung zubereiten und abkühlen lassen.",
-        "Wassermelone entkernen und würfeln.",
-        "Mit fein geschnittenen Zwiebeln, Basilikum und Olivenöl vermengen.",
-        "Kalt servieren."
-      ]
-    },
-    {
-      "slug": "rote-linsen-dal-mit-spitzpaprika",
-      "title": "Rote-Linsen-Dal mit Spitzpaprika",
-      "blurb": "Schnelles Dal mit sanfter Schärfe und viel Gemüse.",
-      "tags": [
-        "curry",
-        "huelsenfruechte",
+        "ofen",
+        "herzhaft",
+        "kartoffeln",
         "schnell"
       ],
       "ingredients": [
         {
-          "name": "Spitzpaprika",
-          "offerTitle": "Ungarn - Spitzpaprika",
-          "price": "€1,99"
-        },
-        {
-          "name": "Rote Linsen",
-          "pantry": true
-        },
-        {
-          "name": "Kokosmilch",
-          "pantry": true
-        },
-        {
-          "name": "Currypulver",
-          "pantry": true
-        },
-        {
-          "name": "Kreuzkümmel",
-          "pantry": true
-        },
-        {
-          "name": "Zwiebeln",
-          "pantry": true
-        }
-      ],
-      "steps": [
-        "Zwiebeln anschwitzen, Spitzpaprika würfeln und mitbraten.",
-        "Rote Linsen und Gewürze dazugeben und kurz anrösten.",
-        "Mit Kokosmilch aufgießen und 15 Minuten köcheln lassen.",
-        "Mit Reis oder Fladenbrot servieren."
-      ]
-    },
-    {
-      "slug": "ofengemuese-mit-kartoffeln-zwiebeln-und-kraeutern",
-      "title": "Ofengemüse mit Kartoffeln, Zwiebeln und Kräutern",
-      "blurb": "Unkompliziertes Blech-Gericht, das fast von allein fertig wird.",
-      "tags": [
-        "ofen",
-        "kartoffeln",
-        "einfach"
-      ],
-      "ingredients": [
-        {
           "name": "Kartoffeln",
-          "offerTitle": "Deutschland - Speisekartoffeln",
+          "offerTitle": "Ägypten - Kartoffeln Drillinge",
+          "price": "€2,22"
+        },
+        {
+          "name": "Spitzpaprika",
+          "offerTitle": "Deutschland - Spitzpaprika-Mix",
           "price": "€1,99"
         },
         {
-          "name": "Zwiebeln",
-          "offerTitle": "EDEKA Herzstücke - Zwiebel-Mix",
-          "price": "€1,49"
-        },
-        {
-          "name": "Bio-Basilikum",
-          "offerTitle": "Deutschland - Bio-Basilikum",
-          "price": "€1,29"
+          "name": "Räuchertofu",
+          "pantry": true
         },
         {
           "name": "Olivenöl",
@@ -450,73 +381,36 @@
         }
       ],
       "steps": [
-        "Kartoffeln und Zwiebeln in Stücke schneiden.",
-        "Mit Olivenöl und Paprikapulver vermengen.",
-        "Auf einem Blech verteilen und bei 200°C 30 Minuten backen.",
-        "Mit frischem Basilikum bestreuen und servieren."
+        "Ofen auf 200°C vorheizen.",
+        "Kartoffeln halbieren, Paprika in Streifen schneiden.",
+        "Mit Olivenöl und Paprikapulver vermengen und 25 Minuten rösten.",
+        "Räuchertofu würfeln und in den letzten 10 Minuten dazugeben.",
+        "Heiß servieren."
       ]
     },
     {
-      "slug": "pad-thai-style-nudeln-mit-buntem-gemuese",
-      "title": "Pad-Thai-Style Nudeln mit buntem Gemüse",
-      "blurb": "Fruchtig-würzige Pfannennudeln nach thailändischer Art.",
+      "slug": "pfifferling-risotto-mit-lauchzwiebeln",
+      "title": "Pfifferling-Risotto mit Lauchzwiebeln",
+      "blurb": "Cremiges Risotto mit Pfifferlingen und frischen Lauchzwiebeln – kleiner Luxus zum Feierabend.",
       "tags": [
-        "wok",
-        "asiatisch",
-        "nudeln"
+        "reis",
+        "cremig",
+        "pilze",
+        "herzhaft"
       ],
       "ingredients": [
         {
-          "name": "Multicolorsalat",
-          "offerTitle": "Niederlande - EDEKA Herzstücke - Multicolorsalat",
-          "price": "€1,11"
+          "name": "Pfifferlinge",
+          "offerTitle": "Litauen - Pfifferlinge",
+          "price": "€1,29"
         },
         {
-          "name": "Spitzpaprika",
-          "offerTitle": "Ungarn - Spitzpaprika",
-          "price": "€1,99"
+          "name": "Lauchzwiebeln",
+          "offerTitle": "Deutschland - Lauchzwiebeln",
+          "price": "€1,49"
         },
         {
-          "name": "Tofu",
-          "pantry": true
-        },
-        {
-          "name": "Nudeln",
-          "pantry": true
-        },
-        {
-          "name": "Sojasauce",
-          "pantry": true
-        },
-        {
-          "name": "Sriracha",
-          "pantry": true
-        }
-      ],
-      "steps": [
-        "Nudeln kochen und abgießen.",
-        "Tofu würfeln und anbraten.",
-        "Multicolorsalat und Spitzpaprika dazugeben und kurz mitbraten.",
-        "Mit Sojasauce und Sriracha abschmecken und mit den Nudeln vermengen."
-      ]
-    },
-    {
-      "slug": "herzhafter-linsen-eintopf-mit-kohlrabi",
-      "title": "Herzhafter Linsen-Eintopf mit Kohlrabi",
-      "blurb": "Deftiger Eintopf, der auch am nächsten Tag noch besser schmeckt.",
-      "tags": [
-        "eintopf",
-        "huelsenfruechte",
-        "kohlrabi"
-      ],
-      "ingredients": [
-        {
-          "name": "Kohlrabi",
-          "offerTitle": "Deutschland - Kohlrabi",
-          "price": "€0,55"
-        },
-        {
-          "name": "Belugalinsen",
+          "name": "Reis",
           "pantry": true
         },
         {
@@ -524,23 +418,152 @@
           "pantry": true
         },
         {
+          "name": "Hefeflocken",
+          "pantry": true
+        },
+        {
           "name": "Zwiebeln",
-          "pantry": true
-        },
-        {
-          "name": "Knoblauch",
-          "pantry": true
-        },
-        {
-          "name": "Kreuzkümmel",
           "pantry": true
         }
       ],
       "steps": [
-        "Zwiebeln und Knoblauch anschwitzen.",
-        "Kohlrabi würfeln und kurz mitdünsten.",
-        "Belugalinsen und Gemüsebrühe dazugeben und 20 Minuten köcheln lassen.",
-        "Mit Kreuzkümmel abschmecken."
+        "Zwiebeln andünsten, Reis glasig mitrösten.",
+        "Nach und nach heiße Gemüsebrühe angießen und einkochen lassen, bis der Reis cremig ist.",
+        "Pfifferlinge putzen und in etwas Öl separat anbraten.",
+        "Pilze und Lauchzwiebeln unter das Risotto heben.",
+        "Mit Hefeflocken verfeinern und servieren."
+      ]
+    },
+    {
+      "slug": "asia-pfanne-mit-spitzkohl-porree-und-tofu",
+      "title": "Asia-Pfanne mit Spitzkohl, Porree und Tofu",
+      "blurb": "Knackige Asia-Pfanne mit Spitzkohl, Porree und knusprigem Tofu in würziger Sojasauce.",
+      "tags": [
+        "pfanne",
+        "asiatisch",
+        "schnell",
+        "gemuese"
+      ],
+      "ingredients": [
+        {
+          "name": "Spitzkohl",
+          "offerTitle": "Deutschland - Spitzkohl",
+          "price": "€1,11"
+        },
+        {
+          "name": "Porree",
+          "offerTitle": "Deutschland - Porree",
+          "price": "€0,66"
+        },
+        {
+          "name": "Tofu",
+          "pantry": true
+        },
+        {
+          "name": "Sojasauce",
+          "pantry": true
+        },
+        {
+          "name": "Ingwer",
+          "pantry": true
+        },
+        {
+          "name": "Reis",
+          "pantry": true
+        }
+      ],
+      "steps": [
+        "Reis kochen.",
+        "Tofu würfeln und knusprig anbraten, herausnehmen.",
+        "Spitzkohl und Porree in Streifen schneiden und scharf anbraten.",
+        "Ingwer zugeben, Tofu zurück in die Pfanne geben.",
+        "Mit Sojasauce abschmecken und mit Reis servieren."
+      ]
+    },
+    {
+      "slug": "kartoffel-kichererbsen-curry-mit-spitzpaprika",
+      "title": "Kartoffel-Kichererbsen-Curry mit Spitzpaprika",
+      "blurb": "Herzhaftes Curry mit Kartoffeln, Kichererbsen und buntem Spitzpaprika.",
+      "tags": [
+        "curry",
+        "huelsenfruechte",
+        "herzhaft",
+        "kartoffeln"
+      ],
+      "ingredients": [
+        {
+          "name": "Kartoffeln",
+          "offerTitle": "Ägypten - Kartoffeln Drillinge",
+          "price": "€2,22"
+        },
+        {
+          "name": "Spitzpaprika",
+          "offerTitle": "Deutschland - Spitzpaprika-Mix",
+          "price": "€1,99"
+        },
+        {
+          "name": "Kichererbsen",
+          "pantry": true
+        },
+        {
+          "name": "Kokosmilch",
+          "pantry": true
+        },
+        {
+          "name": "Currypulver",
+          "pantry": true
+        },
+        {
+          "name": "Mutti Tomatenmark",
+          "pantry": true
+        }
+      ],
+      "steps": [
+        "Kartoffeln würfeln und in Öl anbraten.",
+        "Currypulver und Tomatenmark kurz mitrösten.",
+        "Mit Kokosmilch aufgießen und 15 Minuten köcheln, bis die Kartoffeln gar sind.",
+        "Spitzpaprika und Kichererbsen zugeben und 5 Minuten mitköcheln.",
+        "Abschmecken und servieren."
+      ]
+    },
+    {
+      "slug": "aprikosen-couscous-salat-mit-kichererbsen",
+      "title": "Aprikosen-Couscous-Salat mit Kichererbsen",
+      "blurb": "Sommerlicher Couscous-Salat mit süßen Zuckeraprikosen und Kichererbsen.",
+      "tags": [
+        "salat",
+        "sommer",
+        "fruchtig",
+        "schnell"
+      ],
+      "ingredients": [
+        {
+          "name": "Aprikosen",
+          "offerTitle": "Türkei - Zuckeraprikosen",
+          "price": "€1,99"
+        },
+        {
+          "name": "Couscous",
+          "pantry": true
+        },
+        {
+          "name": "Kichererbsen",
+          "pantry": true
+        },
+        {
+          "name": "Olivenöl",
+          "pantry": true
+        },
+        {
+          "name": "Zwiebeln",
+          "pantry": true
+        }
+      ],
+      "steps": [
+        "Couscous nach Packungsanweisung zubereiten und auflockern.",
+        "Aprikosen entsteinen und würfeln.",
+        "Kichererbsen und fein gewürfelte Zwiebeln untermischen.",
+        "Mit Olivenöl, Salz und Pfeffer abschmecken."
       ]
     }
   ]

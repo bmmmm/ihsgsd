@@ -1,109 +1,109 @@
 {
-  "generatedAt": "2026-08-03",
-  "weekLabel": "KW32",
-  "lead": "[[Paulaner Spezi oder Limo|Der Paulaner Spezi]] liegt bei 1,10 € pro Liter und damit auf dem tiefsten Stand seit neun Wochen — der Kasten kostet 10,99 €. Die [[Spanien - EDEKA Bio - Bio-Kulturheidelbeeren|Bio-Heidelbeeren]] sind ebenfalls auf einem Allzeit-Tief, 3,49 € die Schale, was für Bio-Beeren im August fast unauffällig ist. [[Deutschland - Johannisbeeren|Johannisbeeren]] gehen für 3,98 € das Kilo raus, [[Deutschland - Himbeeren oder Brombeeren|Himbeeren oder Brombeeren]] für 1,49 €. Dazu [[Deutschland - Zucchini|Zucchini]] und [[Neuseeland - Zespri - Kiwis Gold|Kiwis Gold]] für je einen Euro und die [[Vegane Frikadellen oder Gemüsebällchen|veganen Frikadellen]] für 3,29 €. [[Veltins Pilsener|Veltins]] und [[Jever Pilsener|Jever]] stehen beide bei 11,99 € im Kasten, was die Entscheidung nicht leichter macht.",
+  "generatedAt": "2026-08-10",
+  "weekLabel": "KW33",
+  "lead": "Der [[Deutschland - Chicorée|Chicorée]] liegt bei 3,58 € das Kilo und damit auf seinem Allzeit-Tief, was die Frage aufwirft, wer ihn sonst zu vollem Preis mitnimmt. Die [[Ägypten - Kartoffeln Drillinge|Drillinge]] sind mit 2,20 € pro Kilo ebenfalls so günstig wie nie, die [[Portugal - Himbeeren|Himbeeren]] für 2,99 € auch. Beim Bier steht das [[Flensburger Pilsener|Flensburger Pilsener]] für 12,99 € auf dem historischen Tiefstand, daneben die [[Bionade Limonade|Bionade]] für 10,49 €. Vegan wird es mit den [[EDEKA - My Veggie Vegane Frikadellen|veganen Frikadellen]] für 1,79 €. Kaffee gibt es diese Woche nur als [[Starbucks Kaffeespezialitäten|Starbucks-Kaffeespezialitäten]] für 1,49 € — Bohnen sucht man vergebens.",
   "sections": {
-    "vegan": "Drei Angebote, alle fleischfrei: [[Vegane Frikadellen oder Gemüsebällchen|vegane Frikadellen]] für 3,29 €, [[Valess Vegetarische Gerichte|Valess vegetarische Gerichte]] für 2,49 €. Die Auswahl bleibt überschaubar.",
-    "obstgemuese": "[[Deutschland - Kohlrabi|Kohlrabi]] für 55 Cent, [[Deutschland - Zucchini|Zucchini]] für einen Euro, und die [[Spanien - EDEKA Bio - Bio-Kulturheidelbeeren|Bio-Heidelbeeren]] auf ihrem Allzeit-Tief bei 3,49 € die Schale.",
-    "bierspezi": "[[Paulaner Spezi oder Limo|Der Spezi]] war seit neun Wochen nicht günstiger, [[Veltins Pilsener|Veltins]] und [[Jever Pilsener|Jever]] liegen bei 11,99 €. Der [[Bitburger Pils Stubbi|Bitburger Stubbi]] steht mit 9,99 € am oberen Ende seiner kurzen Historie.",
-    "knueller": "Der [[Paulaner Spezi oder Limo|Spezi]] und das [[Paulaner Hefe-Weißbier|Hefe-Weißbier]] stehen beide auf ihrem Tiefstand, die [[Gaffels Fassbrause|Fassbrause]] bei 2,02 € je Liter. Der Rest ist Drogerie und Likör."
+    "vegan": "Genau ein pflanzlicher Kandidat: die [[EDEKA - My Veggie Vegane Frikadellen|veganen Frikadellen]] für 1,79 €, umgerechnet 10,85 € das Kilo.",
+    "obstgemuese": "Drei Allzeit-Tiefs auf einmal — [[Deutschland - Chicorée|Chicorée]], [[Ägypten - Kartoffeln Drillinge|Drillinge]] und [[Portugal - Himbeeren|Himbeeren]]. Dazu [[Deutschland - Bio-Zucchini|Bio-Zucchini]] für 1,77 €.",
+    "bierspezi": "[[Flensburger Pilsener|Flensburger]] für 12,99 € und [[Bionade Limonade|Bionade]] für 10,49 €, beide auf ihrem historischen Tiefstand. Spezi fehlt komplett.",
+    "knueller": "Unter den Knüllern halten vor allem [[Flensburger Pilsener|Flensburger]] und [[Bionade Limonade|Bionade]] stand; [[Heinz Beanz|Heinz Beanz]] für 1,99 € ist auch am Tief."
   },
   "foryou": [
     {
-      "title": "Paulaner Spezi oder Limo",
+      "title": "Flensburger Pilsener",
       "rank": 1,
-      "reason": "Allzeit-Tief bei 1,10 € je Liter, gestützt auf neun Angebotswochen",
+      "reason": "Pils auf Allzeit-Tief, 1,97 € pro Liter, belegt über 4 Angebotswochen.",
       "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Veltins Pilsener",
+      "title": "Bionade Limonade",
       "rank": 2,
-      "reason": "Dein Pils-Favorit, 11,99 € der Kasten",
-      "evidenceTag": "Favorit"
+      "reason": "Bionade ist ein Daumen-hoch-Produkt und liegt auf ihrem tiefsten Preis bisher.",
+      "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Spanien - EDEKA Bio - Bio-Kulturheidelbeeren",
+      "title": "Deutschland - Bio-Zucchini",
       "rank": 3,
-      "reason": "Bio-Beeren auf dem tiefsten Stand aus vier Wochen Historie, 3,49 €",
-      "evidenceTag": "Allzeit-Tief"
+      "reason": "Bio-Zucchini stehen auf der Daumen-hoch-Liste, 3,54 € das Kilo.",
+      "evidenceTag": "mag ich"
     },
     {
-      "title": "Deutschland - Johannisbeeren",
+      "title": "Deutschland - Chicorée",
       "rank": 4,
-      "reason": "Allzeit-Tief: 3,98 € das Kilo, günstiger gab es sie bisher nicht",
+      "reason": "Günstigster Chicorée-Preis der bisherigen Wochen: 3,58 € pro Kilo.",
       "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Vegane Frikadellen oder Gemüsebällchen",
+      "title": "EDEKA - My Veggie Vegane Frikadellen",
       "rank": 5,
-      "reason": "Vegan und im Angebot für 3,29 €, genau deine Kategorie",
+      "reason": "Einziges vegan ausgewiesenes Produkt der Woche, 1,79 €.",
       "evidenceTag": "Favorit"
     },
     {
-      "title": "Deutschland - Zucchini",
+      "title": "Ägypten - Kartoffeln Drillinge",
       "rank": 6,
-      "reason": "Zucchini stehen bei dir hoch im Kurs, hier für einen Euro",
-      "evidenceTag": "mag ich"
+      "reason": "2,20 € das Kilo, laut Historie noch nie günstiger angeboten.",
+      "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Deutschland - Himbeeren oder Brombeeren",
+      "title": "Deutschland - EDEKA Bio - Champignons",
       "rank": 7,
-      "reason": "1,49 € die Schale, Beeren gehören zu deinen Favoriten",
-      "evidenceTag": "Favorit"
+      "reason": "Champignons stehen auf der Daumen-hoch-Liste, hier in Bio für 1,79 €.",
+      "evidenceTag": "mag ich"
     },
     {
-      "title": "Jever Pilsener",
+      "title": "Portugal - Himbeeren",
       "rank": 8,
-      "reason": "Pils aus deiner Lieblingskategorie, 11,99 € der Kasten",
-      "evidenceTag": "Favorit"
+      "reason": "Himbeeren auf Allzeit-Tief, 2,99 € die Schale.",
+      "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Paulaner Hefe-Weißbier",
+      "title": "Beck's Pils oder Blue Lemon 0,0% Alkoholfrei",
       "rank": 9,
-      "reason": "Tiefster Preis seiner bisherigen Historie, 1,50 € je Liter",
-      "evidenceTag": "Allzeit-Tief"
+      "reason": "Alkoholfreies Pils, 4,49 € — passt zur Vorliebe für Pils 0,0%.",
+      "evidenceTag": "Favorit"
     },
     {
-      "title": "Deutschland - Bio-Rispentomaten",
+      "title": "Deutschland - Porree",
       "rank": 10,
-      "reason": "Bio und Gemüse in einem, 4,98 € das Kilo",
-      "evidenceTag": "mag ich"
+      "reason": "Porree für 66 Cent, günstigster Posten in Obst & Gemüse.",
+      "evidenceTag": ""
     },
     {
-      "title": "Italien - Bio-Nektarinen oder Pfirsiche",
+      "title": "Deutschland - Spitzkohl",
       "rank": 11,
-      "reason": "Bio-Steinobst für 4,98 € das Kilo",
+      "reason": "Spitzkohl für 1,11 € — Gemüse zum Preis einer Packung Kaugummi.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Deutschland - Lauchzwiebeln",
+      "rank": 12,
+      "reason": "Lauchzwiebeln für 1,49 €, Standardware für die Gemüsepfanne.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Neuseeland - Bio-Kiwis Gold",
+      "rank": 13,
+      "reason": "Bio-Kiwis für 1,19 € — Bio steht auf der Mag-ich-Liste.",
       "evidenceTag": "mag ich"
     },
     {
-      "title": "Valess Vegetarische Gerichte",
-      "rank": 12,
-      "reason": "Vegetarisch und mit 2,49 € das günstigste der drei Veggie-Angebote",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Deutschland - Kohlrabi",
-      "rank": 13,
-      "reason": "55 Cent, das billigste Gemüse dieser Woche",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Neuseeland - Zespri - Kiwis Gold",
+      "title": "Litauen - Pfifferlinge",
       "rank": 14,
-      "reason": "Ein Euro für Kiwis Gold, Obst ist deine Kategorie",
+      "reason": "Pfifferlinge für 1,29 €, saisonal und selten so niedrig ausgezeichnet.",
       "evidenceTag": "Favorit"
     },
     {
-      "title": "Gaffels Fassbrause",
+      "title": "EDEKA Bio - Apfelmark",
       "rank": 15,
-      "reason": "Alkoholfrei, Allzeit-Tief bei 2,02 € je Liter",
-      "evidenceTag": "Allzeit-Tief"
+      "reason": "Bio-Apfelmark bei 1,70 € pro Kilo, im unteren Drittel seiner Preishistorie.",
+      "evidenceTag": "guter Preis"
     },
     {
-      "title": "Sinalco Limonade",
+      "title": "Deutschland - Spitzpaprika-Mix",
       "rank": 16,
-      "reason": "0,63 € je Liter, in sechs Wochen war sie selten günstiger",
-      "evidenceTag": "guter Preis"
+      "reason": "Spitzpaprika-Mix für 1,99 €, ohne Preishistorie aber im Interessenbereich.",
+      "evidenceTag": "Favorit"
     }
   ],
   "model": "opus",
