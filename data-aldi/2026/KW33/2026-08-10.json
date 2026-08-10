@@ -1,8 +1,8 @@
 {
   "source": "aldi-sued",
-  "fetchedAt": "2026-08-10T06:05:10Z",
+  "fetchedAt": "2026-08-10T11:03:23Z",
   "weekStart": "2026-08-10",
-  "totalCount": 56,
+  "totalCount": 73,
   "offers": [
     {
       "sku": "000000000000183258",
@@ -72,10 +72,10 @@
       "badges": []
     },
     {
-      "sku": "000000000000202667",
-      "name": "Emmentaler am Stück 400 g",
-      "brandName": "MILSANI",
-      "urlSlugText": "milsani-emmentaler-am-stueck-400-g",
+      "sku": "000000000000202720",
+      "name": "Schwarzwälder Schinken 200 g",
+      "brandName": "GUT DREI EICHEN",
+      "urlSlugText": "gut-drei-eichen-schwarzwaelder-schinken-200-g",
       "urlSlugTextAlternatives": [],
       "ageRestriction": null,
       "alcohol": null,
@@ -87,51 +87,60 @@
       "quantityMax": 99,
       "quantityInterval": 1,
       "quantityDefault": 1,
-      "quantityUnit": "ea",
+      "quantityUnit": "pac",
       "weightType": "0",
-      "sellingSize": "0,4 kg",
+      "sellingSize": "0,2 kg",
       "energyClass": null,
       "onSaleDateDisplay": null,
       "isAbstract": false,
-      "abstractSku": "000000000000202667A",
+      "abstractSku": "000000000000202720A",
       "price": {
-        "amount": 349,
-        "amountRelevant": 349,
-        "amountRelevantDisplay": "3,49 €",
+        "amount": 199,
+        "amountRelevant": 199,
+        "amountRelevantDisplay": "1,99 €",
         "bottleDeposit": 0,
         "bottleDepositDisplay": "0,00 €",
-        "comparison": 873,
-        "comparisonDisplay": "8,73 €/1 kg",
+        "comparison": 995,
+        "comparisonDisplay": "9,95 €/1 kg",
         "currencyCode": "EUR",
         "currencySymbol": "€",
         "perUnit": null,
         "perUnitDisplay": null,
-        "wasPriceDisplay": null,
+        "wasPriceDisplay": "2,49 €",
         "additionalInfo": null,
-        "savingsDisplay": null,
+        "savingsDisplay": "20 %",
         "bottleDepositType": null,
         "feeText": null
       },
       "countryExtensions": null,
       "categories": [
         {
-          "id": "1588161425467083",
-          "name": "Käse",
-          "urlSlugText": "kaese"
+          "id": "1588161425467075",
+          "name": "Wurst & Aufschnitt",
+          "urlSlugText": "wurst-aufschnitt"
         },
         {
-          "id": "1588161425467088",
-          "name": "Hartkäse & Stückkäse",
-          "urlSlugText": "kaese/hartkaese-stueckkaese"
+          "id": "1588161425467081",
+          "name": "Schinken",
+          "urlSlugText": "wurst-aufschnitt/schinken"
         }
       ],
       "assets": [
         {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/44d39e78-8e2b-489b-bf4c-3851d3ea7b4e/{slug}",
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/1ab3b10a-c3c3-4d7e-ae1c-fe4298c76d51/{slug}",
           "maxWidth": 1500,
           "maxHeight": 1500,
           "mimeType": "image/*",
           "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        },
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/png/scaleWidth/{width}/90220533-6a4f-4eb9-ae5d-c33edfd56cfa/{slug}",
+          "maxWidth": 1000,
+          "maxHeight": 1000,
+          "mimeType": "image/*",
+          "assetType": "FR02",
           "alt": null,
           "displayName": null
         }
@@ -148,84 +157,16 @@
               "mimeType": "text/plain"
             }
           ]
-        }
-      ]
-    },
-    {
-      "sku": "000000000000203094",
-      "name": "Bratwurstschnecke 300 g",
-      "brandName": "BBQ",
-      "urlSlugText": "bbq-bratwurstschnecke-300-g",
-      "urlSlugTextAlternatives": [],
-      "ageRestriction": null,
-      "alcohol": null,
-      "discontinued": false,
-      "discontinuedNote": null,
-      "notForSale": true,
-      "notForSaleReason": null,
-      "quantityMin": 1,
-      "quantityMax": 99,
-      "quantityInterval": 1,
-      "quantityDefault": 1,
-      "quantityUnit": "pac",
-      "weightType": "0",
-      "sellingSize": "0,3 kg",
-      "energyClass": null,
-      "onSaleDateDisplay": null,
-      "isAbstract": false,
-      "abstractSku": "000000000000203094A",
-      "price": {
-        "amount": 389,
-        "amountRelevant": 389,
-        "amountRelevantDisplay": "3,89 €",
-        "bottleDeposit": 0,
-        "bottleDepositDisplay": "0,00 €",
-        "comparison": 1297,
-        "comparisonDisplay": "12,97 €/1 kg",
-        "currencyCode": "EUR",
-        "currencySymbol": "€",
-        "perUnit": null,
-        "perUnitDisplay": null,
-        "wasPriceDisplay": null,
-        "additionalInfo": null,
-        "savingsDisplay": null,
-        "bottleDepositType": null,
-        "feeText": null
-      },
-      "countryExtensions": null,
-      "categories": [
-        {
-          "id": "1588161425467052",
-          "name": "Fleisch & Fisch",
-          "urlSlugText": "fleisch-fisch"
         },
         {
-          "id": "1588161425467053",
-          "name": "Bratwurst & Würstchen",
-          "urlSlugText": "fleisch-fisch/bratwurst-wuerstchen"
-        }
-      ],
-      "assets": [
-        {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/494d064f-725e-46bc-8e07-66935c9eeb58/{slug}",
-          "maxWidth": 1500,
-          "maxHeight": 1500,
-          "mimeType": "image/*",
-          "assetType": "FR01",
-          "alt": null,
-          "displayName": null
-        }
-      ],
-      "badges": [
-        {
-          "position": "4",
+          "position": "8",
           "items": [
             {
-              "url": null,
-              "alt": null,
-              "displayText": "Kühlung",
-              "color": "cyan",
-              "mimeType": "text/plain"
+              "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/Static_DE_geschuetzte_geografische_Angabe",
+              "alt": "Geschützte geografische Angabe",
+              "displayText": null,
+              "color": null,
+              "mimeType": "image/*"
             }
           ]
         }
@@ -835,7 +776,18 @@
         "feeText": null
       },
       "countryExtensions": null,
-      "categories": [],
+      "categories": [
+        {
+          "id": "1588161426582123",
+          "name": "Wochenangebote",
+          "urlSlugText": "wochenangebote"
+        },
+        {
+          "id": "1588161427299187",
+          "name": "Frischeprodukte im Angebot",
+          "urlSlugText": "wochenangebote/frischeprodukte-im-angebot"
+        }
+      ],
       "assets": [
         {
           "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/45661ffa-1674-4293-ae1d-ef218fb5ccfb/{slug}",
@@ -850,90 +802,10 @@
       "badges": []
     },
     {
-      "sku": "000000000000262160",
-      "name": "Bianco Toscana IGT 0,75 l",
-      "brandName": null,
-      "urlSlugText": "no-brand-bianco-toscana-igt-0-75-l",
-      "urlSlugTextAlternatives": [],
-      "ageRestriction": 16,
-      "alcohol": "12 %",
-      "discontinued": false,
-      "discontinuedNote": null,
-      "notForSale": true,
-      "notForSaleReason": null,
-      "quantityMin": 1,
-      "quantityMax": 99,
-      "quantityInterval": 1,
-      "quantityDefault": 1,
-      "quantityUnit": "ea",
-      "weightType": "0",
-      "sellingSize": "0,75 l",
-      "energyClass": null,
-      "onSaleDateDisplay": null,
-      "isAbstract": false,
-      "abstractSku": "000000000000262160A",
-      "price": {
-        "amount": 349,
-        "amountRelevant": 349,
-        "amountRelevantDisplay": "3,49 €",
-        "bottleDeposit": 0,
-        "bottleDepositDisplay": "0,00 €",
-        "comparison": 465,
-        "comparisonDisplay": "4,65 €/1 l",
-        "currencyCode": "EUR",
-        "currencySymbol": "€",
-        "perUnit": null,
-        "perUnitDisplay": null,
-        "wasPriceDisplay": "3,99 €",
-        "additionalInfo": null,
-        "savingsDisplay": null,
-        "bottleDepositType": null,
-        "feeText": null
-      },
-      "countryExtensions": null,
-      "categories": [
-        {
-          "id": "1588161425467197",
-          "name": "Alkoholische Getränke",
-          "urlSlugText": "alkoholische-getraenke"
-        },
-        {
-          "id": "1588161425467200",
-          "name": "Wein",
-          "urlSlugText": "alkoholische-getraenke/wein"
-        }
-      ],
-      "assets": [
-        {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/1ad24d1a-5d32-4dbe-81cb-f0a73cfce707/{slug}",
-          "maxWidth": 1500,
-          "maxHeight": 1500,
-          "mimeType": "image/*",
-          "assetType": "FR01",
-          "alt": null,
-          "displayName": null
-        }
-      ],
-      "badges": [
-        {
-          "position": "1",
-          "items": [
-            {
-              "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/STATIC_DE_FALSTAFF_2026_88plus:1-1?fmt=png-alpha",
-              "alt": "Falstaff 2026 88+ Punkte",
-              "displayText": null,
-              "color": null,
-              "mimeType": "image/*"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "sku": "000000000000277154",
-      "name": "Das Rustikale Saaten 500 g",
-      "brandName": "GOLDÄHREN",
-      "urlSlugText": "goldaehren-das-rustikale-saaten-500-g",
+      "sku": "000000000000317290",
+      "name": "XL Basilikum Topf",
+      "brandName": "NATUR LIEBLINGE",
+      "urlSlugText": "natur-lieblinge-xl-basilikum-topf",
       "urlSlugTextAlternatives": [],
       "ageRestriction": null,
       "alcohol": null,
@@ -947,19 +819,19 @@
       "quantityDefault": 1,
       "quantityUnit": "ea",
       "weightType": "0",
-      "sellingSize": "0,5 kg",
+      "sellingSize": null,
       "energyClass": null,
       "onSaleDateDisplay": null,
       "isAbstract": false,
-      "abstractSku": "000000000000277154A",
+      "abstractSku": "000000000000317290A",
       "price": {
-        "amount": 169,
-        "amountRelevant": 169,
-        "amountRelevantDisplay": "1,69 €",
+        "amount": 179,
+        "amountRelevant": 179,
+        "amountRelevantDisplay": "1,79 €",
         "bottleDeposit": 0,
         "bottleDepositDisplay": "0,00 €",
-        "comparison": 338,
-        "comparisonDisplay": "3,38 €/1 kg",
+        "comparison": null,
+        "comparisonDisplay": null,
         "currencyCode": "EUR",
         "currencySymbol": "€",
         "perUnit": null,
@@ -973,19 +845,19 @@
       "countryExtensions": null,
       "categories": [
         {
-          "id": "1588161425467101",
-          "name": "Backwaren, Aufstriche & Cerealien",
-          "urlSlugText": "backwaren-aufstriche-cerealien"
+          "id": "1588161425467121",
+          "name": "Saucen, Öle & Gewürze",
+          "urlSlugText": "saucen-oele-gewuerze"
         },
         {
-          "id": "1588161425467102",
-          "name": "Brot",
-          "urlSlugText": "backwaren-aufstriche-cerealien/brot"
+          "id": "1588161425467132",
+          "name": "Gewürze & frische Kräuter",
+          "urlSlugText": "saucen-oele-gewuerze/gewuerze-frische-kraeuter"
         }
       ],
       "assets": [
         {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/f18ac81b-06af-4dbc-b6e5-66eaedc0f7ff/{slug}",
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/baa05a24-228c-4f8d-aa60-5a7fad654ad0/{slug}",
           "maxWidth": 1500,
           "maxHeight": 1500,
           "mimeType": "image/*",
@@ -994,20 +866,74 @@
           "displayName": null
         }
       ],
-      "badges": [
+      "badges": []
+    },
+    {
+      "sku": "000000000000331161",
+      "name": "Apfelecke",
+      "brandName": "MEINE BACKWELT",
+      "urlSlugText": "meine-backwelt-apfelecke",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": null,
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000331161A",
+      "price": {
+        "amount": 45,
+        "amountRelevant": 45,
+        "amountRelevantDisplay": "0,45 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": null,
+        "comparisonDisplay": null,
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "0,69 €",
+        "additionalInfo": null,
+        "savingsDisplay": "34 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
         {
-          "position": "4",
-          "items": [
-            {
-              "url": null,
-              "alt": null,
-              "displayText": "Vegan",
-              "color": "yellow",
-              "mimeType": "text/plain"
-            }
-          ]
+          "id": "1588161425467101",
+          "name": "Backwaren, Aufstriche & Cerealien",
+          "urlSlugText": "backwaren-aufstriche-cerealien"
+        },
+        {
+          "id": "1588161425467108",
+          "name": "Fertigkuchen & Süßgebäck",
+          "urlSlugText": "backwaren-aufstriche-cerealien/fertigkuchen-suessgebaeck"
         }
-      ]
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/519e8c70-26d0-4fd0-be77-f7ab3570c8b2/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": []
     },
     {
       "sku": "000000000000444184",
@@ -1041,7 +967,7 @@
         "comparison": 396,
         "comparisonDisplay": "3,96 €/1 l",
         "currencyCode": "EUR",
-        "currencySymbol": "€",
+        "currencySymbol": "EUR",
         "perUnit": null,
         "perUnitDisplay": null,
         "wasPriceDisplay": null,
@@ -1144,6 +1070,86 @@
       "badges": []
     },
     {
+      "sku": "000000000000489025",
+      "name": "Dinkelsandwich 750 g",
+      "brandName": "GOLDÄHREN",
+      "urlSlugText": "goldaehren-dinkelsandwich-750-g",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,75 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000489025A",
+      "price": {
+        "amount": 129,
+        "amountRelevant": 129,
+        "amountRelevantDisplay": "1,29 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 172,
+        "comparisonDisplay": "1,72 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "1,69 €",
+        "additionalInfo": null,
+        "savingsDisplay": "23 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467101",
+          "name": "Backwaren, Aufstriche & Cerealien",
+          "urlSlugText": "backwaren-aufstriche-cerealien"
+        },
+        {
+          "id": "1588161425467103",
+          "name": "Toastbrot",
+          "urlSlugText": "backwaren-aufstriche-cerealien/toastbrot"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/27ca30a6-ed90-4a67-a06b-fdbec8cce168/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Vegan",
+              "color": "yellow",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "sku": "000000000000495578",
       "name": "Bio-Karotten 1 kg",
       "brandName": "BIO NATURLAND",
@@ -1209,6 +1215,160 @@
         }
       ],
       "badges": []
+    },
+    {
+      "sku": "000000000000523858",
+      "name": "Bio Naturland Hokkaido, lose",
+      "brandName": "BIO NATURLAND",
+      "urlSlugText": "bio-naturland-bio-naturland-hokkaido-lose",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 0.5,
+      "quantityMax": 99,
+      "quantityInterval": 0.5,
+      "quantityDefault": 0.5,
+      "quantityUnit": "kg",
+      "weightType": "2",
+      "sellingSize": null,
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000523858A",
+      "price": {
+        "amount": 159,
+        "amountRelevant": 159,
+        "amountRelevantDisplay": "1,59 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 159,
+        "comparisonDisplay": null,
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": 1,
+        "perUnitDisplay": "1 kg",
+        "wasPriceDisplay": null,
+        "additionalInfo": null,
+        "savingsDisplay": null,
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161426582123",
+          "name": "Wochenangebote",
+          "urlSlugText": "wochenangebote"
+        },
+        {
+          "id": "1588161427299187",
+          "name": "Frischeprodukte im Angebot",
+          "urlSlugText": "wochenangebote/frischeprodukte-im-angebot"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/e0db6bc4-accd-48fb-a9bd-a9c124c44432/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": []
+    },
+    {
+      "sku": "000000000000524391",
+      "name": "Österreichischer Bergkäse 350 g",
+      "brandName": "MEINE KÄSETHEKE",
+      "urlSlugText": "meine-kaesetheke-oesterreichischer-bergkaese-350-g",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,35 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000524391A",
+      "price": {
+        "amount": 299,
+        "amountRelevant": 299,
+        "amountRelevantDisplay": "2,99 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 854,
+        "comparisonDisplay": "8,54 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "3,99 €",
+        "additionalInfo": null,
+        "savingsDisplay": "25 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467083",
+          "name": "Käse",
+          "urlSlugText": "kaese"
+        },
+        {
+          "id": "1588161425467088",
+          "name": "Hartkäse & Stückkäse",
+          "urlSlugText": "kaese/hartkaese-stueckkaese"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/9187bac6-beb1-4aa2-8764-b93c7fae1fb1/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Kühlung",
+              "color": "cyan",
+              "mimeType": "text/plain"
+            },
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Vegetarisch",
+              "color": "green",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
     },
     {
       "sku": "000000000000535492",
@@ -1358,10 +1518,10 @@
       "badges": []
     },
     {
-      "sku": "000000000000694604",
-      "name": "Bio-Olivenöl nativ extra 500 ml",
-      "brandName": "NUR NUR NATUR",
-      "urlSlugText": "nur-nur-natur-bio-olivenoel-nativ-extra-500-ml",
+      "sku": "000000000000549356",
+      "name": "Schoko Rosinen 200 g",
+      "brandName": "CHOCEUR",
+      "urlSlugText": "choceur-schoko-rosinen-200-g",
       "urlSlugTextAlternatives": [],
       "ageRestriction": null,
       "alcohol": null,
@@ -1375,40 +1535,40 @@
       "quantityDefault": 1,
       "quantityUnit": "ea",
       "weightType": "0",
-      "sellingSize": "0,5 l",
+      "sellingSize": "0,2 kg",
       "energyClass": null,
       "onSaleDateDisplay": null,
       "isAbstract": false,
-      "abstractSku": "000000000000694604A",
+      "abstractSku": "000000000000549356A",
       "price": {
-        "amount": 699,
-        "amountRelevant": 699,
-        "amountRelevantDisplay": "6,99 €",
+        "amount": 129,
+        "amountRelevant": 129,
+        "amountRelevantDisplay": "1,29 €",
         "bottleDeposit": 0,
         "bottleDepositDisplay": "0,00 €",
-        "comparison": 1398,
-        "comparisonDisplay": "13,98 €/1 l",
+        "comparison": 645,
+        "comparisonDisplay": "6,45 €/1 kg",
         "currencyCode": "EUR",
         "currencySymbol": "€",
         "perUnit": null,
         "perUnitDisplay": null,
-        "wasPriceDisplay": null,
+        "wasPriceDisplay": "1,69 €",
         "additionalInfo": null,
-        "savingsDisplay": null,
+        "savingsDisplay": "23 %",
         "bottleDepositType": null,
         "feeText": null
       },
       "countryExtensions": null,
       "categories": [
         {
-          "id": "1588161425467036",
-          "name": "Bio-Produkte",
-          "urlSlugText": "bio-produkte"
+          "id": "1588161425467162",
+          "name": "Süßigkeiten & salzige Snacks",
+          "urlSlugText": "suessigkeiten-salzige-snacks"
         }
       ],
       "assets": [
         {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/b948d145-2467-4d1e-9617-f34f72d39a0e/{slug}",
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/67d8acf5-2743-4cb9-b736-deb3e66559af/{slug}",
           "maxWidth": 1500,
           "maxHeight": 1500,
           "mimeType": "image/*",
@@ -1417,20 +1577,7 @@
           "displayName": null
         }
       ],
-      "badges": [
-        {
-          "position": "4",
-          "items": [
-            {
-              "url": null,
-              "alt": null,
-              "displayText": "Vegan",
-              "color": "yellow",
-              "mimeType": "text/plain"
-            }
-          ]
-        }
-      ]
+      "badges": []
     },
     {
       "sku": "000000000000725047",
@@ -1660,10 +1807,10 @@
       ]
     },
     {
-      "sku": "000000000202397001",
-      "name": "Berner Würstchen, Mini 250 g",
-      "brandName": "BBQ",
-      "urlSlugText": "bbq-berner-wuerstchen-mini-250-g",
+      "sku": "000000000102354001",
+      "name": "Funky American 500 ml, Cookie Dough",
+      "brandName": "MUCCI",
+      "urlSlugText": "mucci-funky-american-500-ml-cookie-dough",
       "urlSlugTextAlternatives": [],
       "ageRestriction": null,
       "alcohol": null,
@@ -1675,21 +1822,955 @@
       "quantityMax": 99,
       "quantityInterval": 1,
       "quantityDefault": 1,
-      "quantityUnit": "pac",
+      "quantityUnit": "ea",
       "weightType": "0",
-      "sellingSize": "0,25 kg",
+      "sellingSize": "0,5 l",
       "energyClass": null,
       "onSaleDateDisplay": null,
       "isAbstract": false,
-      "abstractSku": "000000000000202397",
+      "abstractSku": "000000000000102354",
       "price": {
-        "amount": 229,
-        "amountRelevant": 229,
-        "amountRelevantDisplay": "2,29 €",
+        "amount": 199,
+        "amountRelevant": 199,
+        "amountRelevantDisplay": "1,99 €",
         "bottleDeposit": 0,
         "bottleDepositDisplay": "0,00 €",
-        "comparison": 916,
-        "comparisonDisplay": "9,16 €/1 kg",
+        "comparison": 398,
+        "comparisonDisplay": "3,98 €/1 l",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "2,79 €",
+        "additionalInfo": null,
+        "savingsDisplay": "28 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467141",
+          "name": "Tiefkühlung",
+          "urlSlugText": "tiefkuehlung"
+        },
+        {
+          "id": "1588161425467153",
+          "name": "Eis",
+          "urlSlugText": "tiefkuehlung/eis"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/97527b03-8b82-4c18-934b-d3335fdc0048/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Tiefkühlung",
+              "color": "blue",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000102354006",
+      "name": "Funky American 500 ml, Chocolate Brown",
+      "brandName": "MUCCI",
+      "urlSlugText": "mucci-funky-american-500-ml-chocolate-brown",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,5 l",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000102354",
+      "price": {
+        "amount": 199,
+        "amountRelevant": 199,
+        "amountRelevantDisplay": "1,99 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 398,
+        "comparisonDisplay": "3,98 €/1 l",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "2,79 €",
+        "additionalInfo": null,
+        "savingsDisplay": "28 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467141",
+          "name": "Tiefkühlung",
+          "urlSlugText": "tiefkuehlung"
+        },
+        {
+          "id": "1588161425467153",
+          "name": "Eis",
+          "urlSlugText": "tiefkuehlung/eis"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/7f311729-deb3-4f4e-a082-930a380a9581/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Tiefkühlung",
+              "color": "blue",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000102354008",
+      "name": "Funky American 500 ml, Double Trouble",
+      "brandName": "MUCCI",
+      "urlSlugText": "mucci-funky-american-500-ml-double-trouble",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,5 l",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000102354",
+      "price": {
+        "amount": 199,
+        "amountRelevant": 199,
+        "amountRelevantDisplay": "1,99 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 398,
+        "comparisonDisplay": "3,98 €/1 l",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "2,79 €",
+        "additionalInfo": null,
+        "savingsDisplay": "28 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467141",
+          "name": "Tiefkühlung",
+          "urlSlugText": "tiefkuehlung"
+        },
+        {
+          "id": "1588161425467153",
+          "name": "Eis",
+          "urlSlugText": "tiefkuehlung/eis"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/62ec8d5b-7c3d-46e4-b259-e54735c91fef/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Tiefkühlung",
+              "color": "blue",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000184814001",
+      "name": "Premium Nuss-Mix 200 g, Fein",
+      "brandName": "FARMER NATURALS",
+      "urlSlugText": "farmer-naturals-premium-nuss-mix-200-g-fein",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,2 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000184814",
+      "price": {
+        "amount": 219,
+        "amountRelevant": 219,
+        "amountRelevantDisplay": "2,19 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 1095,
+        "comparisonDisplay": "10,95 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "3,79 €",
+        "additionalInfo": null,
+        "savingsDisplay": "42 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467162",
+          "name": "Süßigkeiten & salzige Snacks",
+          "urlSlugText": "suessigkeiten-salzige-snacks"
+        },
+        {
+          "id": "1588161425467168",
+          "name": "Nüsse & Trockenfrüchte",
+          "urlSlugText": "suessigkeiten-salzige-snacks/nuesse-trockenfruechte"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/73664109-18cb-4446-b2bd-9276a33c81c2/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Vegan",
+              "color": "yellow",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000184814002",
+      "name": "Premium Nuss-Mix 200 g, Extra",
+      "brandName": "FARMER NATURALS",
+      "urlSlugText": "farmer-naturals-premium-nuss-mix-200-g-extra",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,2 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000184814",
+      "price": {
+        "amount": 219,
+        "amountRelevant": 219,
+        "amountRelevantDisplay": "2,19 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 1095,
+        "comparisonDisplay": "10,95 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "3,79 €",
+        "additionalInfo": null,
+        "savingsDisplay": "42 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467162",
+          "name": "Süßigkeiten & salzige Snacks",
+          "urlSlugText": "suessigkeiten-salzige-snacks"
+        },
+        {
+          "id": "1588161425467168",
+          "name": "Nüsse & Trockenfrüchte",
+          "urlSlugText": "suessigkeiten-salzige-snacks/nuesse-trockenfruechte"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/595bcf4a-3ee2-468f-8547-ea5cb4b6b1ab/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Vegan",
+              "color": "yellow",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000187382001",
+      "name": "Butter Toast 500 g",
+      "brandName": "GOLDEN TOAST",
+      "urlSlugText": "golden-toast-butter-toast-500-g",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,5 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000187382",
+      "price": {
+        "amount": 189,
+        "amountRelevant": 189,
+        "amountRelevantDisplay": "1,89 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 378,
+        "comparisonDisplay": "3,78 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "EUR",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": null,
+        "additionalInfo": null,
+        "savingsDisplay": null,
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467101",
+          "name": "Backwaren, Aufstriche & Cerealien",
+          "urlSlugText": "backwaren-aufstriche-cerealien"
+        },
+        {
+          "id": "1588161425467102",
+          "name": "Brot",
+          "urlSlugText": "backwaren-aufstriche-cerealien/brot"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/131e2677-8915-4b9c-ae69-d603c1e7fdca/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": []
+    },
+    {
+      "sku": "000000000187382002",
+      "name": "Vollkorn Toast 500 g",
+      "brandName": "GOLDEN TOAST",
+      "urlSlugText": "golden-toast-vollkorn-toast-500-g",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,5 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000187382",
+      "price": {
+        "amount": 189,
+        "amountRelevant": 189,
+        "amountRelevantDisplay": "1,89 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 378,
+        "comparisonDisplay": "3,78 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "EUR",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": null,
+        "additionalInfo": null,
+        "savingsDisplay": null,
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467101",
+          "name": "Backwaren, Aufstriche & Cerealien",
+          "urlSlugText": "backwaren-aufstriche-cerealien"
+        },
+        {
+          "id": "1588161425467102",
+          "name": "Brot",
+          "urlSlugText": "backwaren-aufstriche-cerealien/brot"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/34e64bf8-b6e4-4d79-9d95-198758c3df9a/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": []
+    },
+    {
+      "sku": "000000000200250002",
+      "name": "My Moments 900 ml, Bananen Split",
+      "brandName": "MUCCI",
+      "urlSlugText": "mucci-my-moments-900-ml-bananen-split",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,9 l",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000200250",
+      "price": {
+        "amount": 159,
+        "amountRelevant": 159,
+        "amountRelevantDisplay": "1,59 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 177,
+        "comparisonDisplay": "1,77 €/1 l",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "1,99 €",
+        "additionalInfo": null,
+        "savingsDisplay": "20 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467141",
+          "name": "Tiefkühlung",
+          "urlSlugText": "tiefkuehlung"
+        },
+        {
+          "id": "1588161425467153",
+          "name": "Eis",
+          "urlSlugText": "tiefkuehlung/eis"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/01e0407c-91eb-49d6-ad2f-5b663e4d4eb9/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Tiefkühlung",
+              "color": "blue",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000200250004",
+      "name": "My Moments 900 ml, Double Choc",
+      "brandName": "MUCCI",
+      "urlSlugText": "mucci-my-moments-900-ml-double-choc",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,9 l",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000200250",
+      "price": {
+        "amount": 159,
+        "amountRelevant": 159,
+        "amountRelevantDisplay": "1,59 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 177,
+        "comparisonDisplay": "1,77 €/1 l",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "1,99 €",
+        "additionalInfo": null,
+        "savingsDisplay": "20 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467141",
+          "name": "Tiefkühlung",
+          "urlSlugText": "tiefkuehlung"
+        },
+        {
+          "id": "1588161425467153",
+          "name": "Eis",
+          "urlSlugText": "tiefkuehlung/eis"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/a169a4b2-7a36-4167-8556-02e65fbd7f85/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Tiefkühlung",
+              "color": "blue",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000200250010",
+      "name": "My Moments 900 ml, Nuss-Nougat",
+      "brandName": "MUCCI",
+      "urlSlugText": "mucci-my-moments-900-ml-nuss-nougat",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,9 l",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000200250",
+      "price": {
+        "amount": 159,
+        "amountRelevant": 159,
+        "amountRelevantDisplay": "1,59 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 177,
+        "comparisonDisplay": "1,77 €/1 l",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "1,99 €",
+        "additionalInfo": null,
+        "savingsDisplay": "20 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467141",
+          "name": "Tiefkühlung",
+          "urlSlugText": "tiefkuehlung"
+        },
+        {
+          "id": "1588161425467153",
+          "name": "Eis",
+          "urlSlugText": "tiefkuehlung/eis"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/c045c422-f4cf-4551-8f99-cf269f28868c/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Tiefkühlung",
+              "color": "blue",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000200250011",
+      "name": "My Moments 900 ml, Exotic",
+      "brandName": "MUCCI",
+      "urlSlugText": "mucci-my-moments-900-ml-exotic",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,9 l",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000200250",
+      "price": {
+        "amount": 159,
+        "amountRelevant": 159,
+        "amountRelevantDisplay": "1,59 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 177,
+        "comparisonDisplay": "1,77 €/1 l",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "1,99 €",
+        "additionalInfo": null,
+        "savingsDisplay": "20 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467141",
+          "name": "Tiefkühlung",
+          "urlSlugText": "tiefkuehlung"
+        },
+        {
+          "id": "1588161425467153",
+          "name": "Eis",
+          "urlSlugText": "tiefkuehlung/eis"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/990b1086-e1c0-44ff-a77c-1ae2ee1a34b4/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Tiefkühlung",
+              "color": "blue",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000200250013",
+      "name": "My Moments 900 ml, Spaghetti",
+      "brandName": "MUCCI",
+      "urlSlugText": "mucci-my-moments-900-ml-spaghetti",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,9 l",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000200250",
+      "price": {
+        "amount": 159,
+        "amountRelevant": 159,
+        "amountRelevantDisplay": "1,59 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 177,
+        "comparisonDisplay": "1,77 €/1 l",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "1,99 €",
+        "additionalInfo": null,
+        "savingsDisplay": "20 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467141",
+          "name": "Tiefkühlung",
+          "urlSlugText": "tiefkuehlung"
+        },
+        {
+          "id": "1588161425467153",
+          "name": "Eis",
+          "urlSlugText": "tiefkuehlung/eis"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/0d828395-e350-46d0-90e0-7efeea183f43/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Tiefkühlung",
+              "color": "blue",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000202839001",
+      "name": "Antipasti-Teller 210 g, Peperoni-Paprika",
+      "brandName": "WONNEMEYER",
+      "urlSlugText": "wonnemeyer-antipasti-teller-210-g-peperoni-paprika",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,21 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000202839",
+      "price": {
+        "amount": 279,
+        "amountRelevant": 279,
+        "amountRelevantDisplay": "2,79 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 1329,
+        "comparisonDisplay": "13,29 €/1 kg",
         "currencyCode": "EUR",
         "currencySymbol": "€",
         "perUnit": null,
@@ -1703,19 +2784,14 @@
       "countryExtensions": null,
       "categories": [
         {
-          "id": "1588161425467052",
-          "name": "Fleisch & Fisch",
-          "urlSlugText": "fleisch-fisch"
-        },
-        {
-          "id": "1588161425467053",
-          "name": "Bratwurst & Würstchen",
-          "urlSlugText": "fleisch-fisch/bratwurst-wuerstchen"
+          "id": "1588161425467039",
+          "name": "Vegetarisch & Vegan",
+          "urlSlugText": "vegetarisch-vegan"
         }
       ],
       "assets": [
         {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/03fae756-1583-4ad8-b943-068ce810c42f/{slug}",
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/3a5d36dc-2222-40fd-a178-6b52afe9b759/{slug}",
           "maxWidth": 1500,
           "maxHeight": 1500,
           "mimeType": "image/*",
@@ -1733,6 +2809,13 @@
               "alt": null,
               "displayText": "Kühlung",
               "color": "cyan",
+              "mimeType": "text/plain"
+            },
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Vegetarisch",
+              "color": "green",
               "mimeType": "text/plain"
             }
           ]
@@ -1935,7 +3018,7 @@
         "comparison": 396,
         "comparisonDisplay": "3,96 €/1 l",
         "currencyCode": "EUR",
-        "currencySymbol": "€",
+        "currencySymbol": "EUR",
         "perUnit": null,
         "perUnitDisplay": null,
         "wasPriceDisplay": null,
@@ -1971,170 +3054,10 @@
       "badges": []
     },
     {
-      "sku": "000000000211224001",
-      "name": "Landbaguette 175 g, Gartenkräuter",
-      "brandName": "BBQ",
-      "urlSlugText": "bbq-landbaguette-175-g-gartenkraeuter",
-      "urlSlugTextAlternatives": [],
-      "ageRestriction": null,
-      "alcohol": null,
-      "discontinued": false,
-      "discontinuedNote": null,
-      "notForSale": true,
-      "notForSaleReason": null,
-      "quantityMin": 1,
-      "quantityMax": 99,
-      "quantityInterval": 1,
-      "quantityDefault": 1,
-      "quantityUnit": "ea",
-      "weightType": "0",
-      "sellingSize": "0,18 kg",
-      "energyClass": null,
-      "onSaleDateDisplay": null,
-      "isAbstract": false,
-      "abstractSku": "000000000000211224",
-      "price": {
-        "amount": 129,
-        "amountRelevant": 129,
-        "amountRelevantDisplay": "1,29 €",
-        "bottleDeposit": 0,
-        "bottleDepositDisplay": "0,00 €",
-        "comparison": 737,
-        "comparisonDisplay": "7,37 €/1 kg",
-        "currencyCode": "EUR",
-        "currencySymbol": "€",
-        "perUnit": null,
-        "perUnitDisplay": null,
-        "wasPriceDisplay": null,
-        "additionalInfo": null,
-        "savingsDisplay": null,
-        "bottleDepositType": null,
-        "feeText": null
-      },
-      "countryExtensions": null,
-      "categories": [
-        {
-          "id": "1588161425467101",
-          "name": "Backwaren, Aufstriche & Cerealien",
-          "urlSlugText": "backwaren-aufstriche-cerealien"
-        },
-        {
-          "id": "1588161425467104",
-          "name": "Brötchen & Baguette",
-          "urlSlugText": "backwaren-aufstriche-cerealien/broetchen-baguette"
-        }
-      ],
-      "assets": [
-        {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/533d49e2-10f9-4012-a39a-a4ff99202ffd/{slug}",
-          "maxWidth": 1500,
-          "maxHeight": 1500,
-          "mimeType": "image/*",
-          "assetType": "FR01",
-          "alt": null,
-          "displayName": null
-        }
-      ],
-      "badges": [
-        {
-          "position": "4",
-          "items": [
-            {
-              "url": null,
-              "alt": null,
-              "displayText": "Kühlung",
-              "color": "cyan",
-              "mimeType": "text/plain"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "sku": "000000000211224002",
-      "name": "Landbaguette 175 g, Paprika",
-      "brandName": "BBQ",
-      "urlSlugText": "bbq-landbaguette-175-g-paprika",
-      "urlSlugTextAlternatives": [],
-      "ageRestriction": null,
-      "alcohol": null,
-      "discontinued": false,
-      "discontinuedNote": null,
-      "notForSale": true,
-      "notForSaleReason": null,
-      "quantityMin": 1,
-      "quantityMax": 99,
-      "quantityInterval": 1,
-      "quantityDefault": 1,
-      "quantityUnit": "ea",
-      "weightType": "0",
-      "sellingSize": "0,18 kg",
-      "energyClass": null,
-      "onSaleDateDisplay": null,
-      "isAbstract": false,
-      "abstractSku": "000000000000211224",
-      "price": {
-        "amount": 129,
-        "amountRelevant": 129,
-        "amountRelevantDisplay": "1,29 €",
-        "bottleDeposit": 0,
-        "bottleDepositDisplay": "0,00 €",
-        "comparison": 737,
-        "comparisonDisplay": "7,37 €/1 kg",
-        "currencyCode": "EUR",
-        "currencySymbol": "€",
-        "perUnit": null,
-        "perUnitDisplay": null,
-        "wasPriceDisplay": null,
-        "additionalInfo": null,
-        "savingsDisplay": null,
-        "bottleDepositType": null,
-        "feeText": null
-      },
-      "countryExtensions": null,
-      "categories": [
-        {
-          "id": "1588161425467101",
-          "name": "Backwaren, Aufstriche & Cerealien",
-          "urlSlugText": "backwaren-aufstriche-cerealien"
-        },
-        {
-          "id": "1588161425467104",
-          "name": "Brötchen & Baguette",
-          "urlSlugText": "backwaren-aufstriche-cerealien/broetchen-baguette"
-        }
-      ],
-      "assets": [
-        {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/9f634815-c21d-40bf-8ca6-d5745f81c41e/{slug}",
-          "maxWidth": 1500,
-          "maxHeight": 1500,
-          "mimeType": "image/*",
-          "assetType": "FR01",
-          "alt": null,
-          "displayName": null
-        }
-      ],
-      "badges": [
-        {
-          "position": "4",
-          "items": [
-            {
-              "url": null,
-              "alt": null,
-              "displayText": "Kühlung",
-              "color": "cyan",
-              "mimeType": "text/plain"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "sku": "000000000265290002",
-      "name": "Schoko Butterkeks 125 g, Vollmilch",
-      "brandName": "BISCOTTO",
-      "urlSlugText": "biscotto-schoko-butterkeks-125-g-vollmilch",
+      "sku": "000000000211359001",
+      "name": "Stremellachs 125 g, Pfeffer",
+      "brandName": "ALMARE",
+      "urlSlugText": "almare-stremellachs-125-g-pfeffer",
       "urlSlugTextAlternatives": [],
       "ageRestriction": null,
       "alcohol": null,
@@ -2152,41 +3075,41 @@
       "energyClass": null,
       "onSaleDateDisplay": null,
       "isAbstract": false,
-      "abstractSku": "000000000000265290",
+      "abstractSku": "000000000000211359",
       "price": {
-        "amount": 159,
-        "amountRelevant": 159,
-        "amountRelevantDisplay": "1,59 €",
+        "amount": 259,
+        "amountRelevant": 259,
+        "amountRelevantDisplay": "2,59 €",
         "bottleDeposit": 0,
         "bottleDepositDisplay": "0,00 €",
-        "comparison": 1272,
-        "comparisonDisplay": "12,72 €/1 kg",
+        "comparison": 2072,
+        "comparisonDisplay": "20,72 €/1 kg",
         "currencyCode": "EUR",
         "currencySymbol": "€",
         "perUnit": null,
         "perUnitDisplay": null,
-        "wasPriceDisplay": null,
+        "wasPriceDisplay": "3,29 €",
         "additionalInfo": null,
-        "savingsDisplay": null,
+        "savingsDisplay": "21 %",
         "bottleDepositType": null,
         "feeText": null
       },
       "countryExtensions": null,
       "categories": [
         {
-          "id": "1588161425467101",
-          "name": "Backwaren, Aufstriche & Cerealien",
-          "urlSlugText": "backwaren-aufstriche-cerealien"
+          "id": "1588161425467052",
+          "name": "Fleisch & Fisch",
+          "urlSlugText": "fleisch-fisch"
         },
         {
-          "id": "1588161425467108",
-          "name": "Fertigkuchen & Süßgebäck",
-          "urlSlugText": "backwaren-aufstriche-cerealien/fertigkuchen-suessgebaeck"
+          "id": "1588161425467055",
+          "name": "Fisch & Meeresfrüchte",
+          "urlSlugText": "fleisch-fisch/fisch-meeresfruechte"
         }
       ],
       "assets": [
         {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/19b3e0cd-7bef-4c2f-875a-f7773aea4f09/{slug}",
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/e1e5ef27-fc5e-4006-ae43-ffa020b06c88/{slug}",
           "maxWidth": 1500,
           "maxHeight": 1500,
           "mimeType": "image/*",
@@ -2195,13 +3118,26 @@
           "displayName": null
         }
       ],
-      "badges": []
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Kühlung",
+              "color": "cyan",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
     },
     {
-      "sku": "000000000265290003",
-      "name": "Schoko Butterkeks 125 g, Zartbitter",
-      "brandName": "BISCOTTO",
-      "urlSlugText": "biscotto-schoko-butterkeks-125-g-zartbitter",
+      "sku": "000000000211359002",
+      "name": "Stremellachs 125 g, Natur",
+      "brandName": "ALMARE SEAFOOD",
+      "urlSlugText": "almare-seafood-stremellachs-125-g-natur",
       "urlSlugTextAlternatives": [],
       "ageRestriction": null,
       "alcohol": null,
@@ -2219,89 +3155,22 @@
       "energyClass": null,
       "onSaleDateDisplay": null,
       "isAbstract": false,
-      "abstractSku": "000000000000265290",
+      "abstractSku": "000000000000211359",
       "price": {
-        "amount": 159,
-        "amountRelevant": 159,
-        "amountRelevantDisplay": "1,59 €",
+        "amount": 259,
+        "amountRelevant": 259,
+        "amountRelevantDisplay": "2,59 €",
         "bottleDeposit": 0,
         "bottleDepositDisplay": "0,00 €",
-        "comparison": 1272,
-        "comparisonDisplay": "12,72 €/1 kg",
+        "comparison": 2072,
+        "comparisonDisplay": "20,72 €/1 kg",
         "currencyCode": "EUR",
         "currencySymbol": "€",
         "perUnit": null,
         "perUnitDisplay": null,
-        "wasPriceDisplay": null,
+        "wasPriceDisplay": "3,29 €",
         "additionalInfo": null,
-        "savingsDisplay": null,
-        "bottleDepositType": null,
-        "feeText": null
-      },
-      "countryExtensions": null,
-      "categories": [
-        {
-          "id": "1588161425467101",
-          "name": "Backwaren, Aufstriche & Cerealien",
-          "urlSlugText": "backwaren-aufstriche-cerealien"
-        },
-        {
-          "id": "1588161425467108",
-          "name": "Fertigkuchen & Süßgebäck",
-          "urlSlugText": "backwaren-aufstriche-cerealien/fertigkuchen-suessgebaeck"
-        }
-      ],
-      "assets": [
-        {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/f1186c99-8ceb-4c70-bcb2-2b95ba9d0a5d/{slug}",
-          "maxWidth": 1500,
-          "maxHeight": 1500,
-          "mimeType": "image/*",
-          "assetType": "FR01",
-          "alt": null,
-          "displayName": null
-        }
-      ],
-      "badges": []
-    },
-    {
-      "sku": "000000000276558001",
-      "name": "Bruzzlkracher 400 g, Klassik",
-      "brandName": "GÜLDENHOF",
-      "urlSlugText": "gueldenhof-bruzzlkracher-400-g-klassik",
-      "urlSlugTextAlternatives": [],
-      "ageRestriction": null,
-      "alcohol": null,
-      "discontinued": false,
-      "discontinuedNote": null,
-      "notForSale": true,
-      "notForSaleReason": null,
-      "quantityMin": 1,
-      "quantityMax": 99,
-      "quantityInterval": 1,
-      "quantityDefault": 1,
-      "quantityUnit": "pac",
-      "weightType": "0",
-      "sellingSize": "0,4 kg",
-      "energyClass": null,
-      "onSaleDateDisplay": null,
-      "isAbstract": false,
-      "abstractSku": "000000000000276558",
-      "price": {
-        "amount": 369,
-        "amountRelevant": 369,
-        "amountRelevantDisplay": "3,69 €",
-        "bottleDeposit": 0,
-        "bottleDepositDisplay": "0,00 €",
-        "comparison": 923,
-        "comparisonDisplay": "9,23 €/1 kg",
-        "currencyCode": "EUR",
-        "currencySymbol": "€",
-        "perUnit": null,
-        "perUnitDisplay": null,
-        "wasPriceDisplay": null,
-        "additionalInfo": null,
-        "savingsDisplay": null,
+        "savingsDisplay": "21 %",
         "bottleDepositType": null,
         "feeText": null
       },
@@ -2313,14 +3182,14 @@
           "urlSlugText": "fleisch-fisch"
         },
         {
-          "id": "1588161425467053",
-          "name": "Bratwurst & Würstchen",
-          "urlSlugText": "fleisch-fisch/bratwurst-wuerstchen"
+          "id": "1588161425467055",
+          "name": "Fisch & Meeresfrüchte",
+          "urlSlugText": "fleisch-fisch/fisch-meeresfruechte"
         }
       ],
       "assets": [
         {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/3387ec7b-4065-47de-88db-d17c8949e805/{slug}",
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/b3fd8841-ec62-4d7a-bc00-70b16dbea5ca/{slug}",
           "maxWidth": 1500,
           "maxHeight": 1500,
           "mimeType": "image/*",
@@ -2343,354 +3212,6 @@
           ]
         }
       ]
-    },
-    {
-      "sku": "000000000276558002",
-      "name": "Bruzzlkracher 350 g, Mini",
-      "brandName": "GÜLDENHOF",
-      "urlSlugText": "gueldenhof-bruzzlkracher-350-g-mini",
-      "urlSlugTextAlternatives": [],
-      "ageRestriction": null,
-      "alcohol": null,
-      "discontinued": false,
-      "discontinuedNote": null,
-      "notForSale": true,
-      "notForSaleReason": null,
-      "quantityMin": 1,
-      "quantityMax": 99,
-      "quantityInterval": 1,
-      "quantityDefault": 1,
-      "quantityUnit": "pac",
-      "weightType": "0",
-      "sellingSize": "0,35 kg",
-      "energyClass": null,
-      "onSaleDateDisplay": null,
-      "isAbstract": false,
-      "abstractSku": "000000000000276558",
-      "price": {
-        "amount": 369,
-        "amountRelevant": 369,
-        "amountRelevantDisplay": "3,69 €",
-        "bottleDeposit": 0,
-        "bottleDepositDisplay": "0,00 €",
-        "comparison": 1054,
-        "comparisonDisplay": "10,54 €/1 kg",
-        "currencyCode": "EUR",
-        "currencySymbol": "€",
-        "perUnit": null,
-        "perUnitDisplay": null,
-        "wasPriceDisplay": null,
-        "additionalInfo": null,
-        "savingsDisplay": null,
-        "bottleDepositType": null,
-        "feeText": null
-      },
-      "countryExtensions": null,
-      "categories": [
-        {
-          "id": "1588161425467052",
-          "name": "Fleisch & Fisch",
-          "urlSlugText": "fleisch-fisch"
-        },
-        {
-          "id": "1588161425467053",
-          "name": "Bratwurst & Würstchen",
-          "urlSlugText": "fleisch-fisch/bratwurst-wuerstchen"
-        }
-      ],
-      "assets": [
-        {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/9e7415a3-945f-4eda-9cad-64fad0f1c880/{slug}",
-          "maxWidth": 1500,
-          "maxHeight": 1500,
-          "mimeType": "image/*",
-          "assetType": "FR01",
-          "alt": null,
-          "displayName": null
-        }
-      ],
-      "badges": [
-        {
-          "position": "4",
-          "items": [
-            {
-              "url": null,
-              "alt": null,
-              "displayText": "Kühlung",
-              "color": "cyan",
-              "mimeType": "text/plain"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "sku": "000000000288349001",
-      "name": "Deo Roll-on 50 ml, Men Dry Impact",
-      "brandName": "NIVEA",
-      "urlSlugText": "nivea-deo-roll-on-50-ml-men-dry-impact",
-      "urlSlugTextAlternatives": [],
-      "ageRestriction": null,
-      "alcohol": null,
-      "discontinued": false,
-      "discontinuedNote": null,
-      "notForSale": true,
-      "notForSaleReason": null,
-      "quantityMin": 1,
-      "quantityMax": 99,
-      "quantityInterval": 1,
-      "quantityDefault": 1,
-      "quantityUnit": "ea",
-      "weightType": "0",
-      "sellingSize": "0,05 l",
-      "energyClass": null,
-      "onSaleDateDisplay": null,
-      "isAbstract": false,
-      "abstractSku": "2883491588161422844418",
-      "price": {
-        "amount": 249,
-        "amountRelevant": 249,
-        "amountRelevantDisplay": "2,49 €",
-        "bottleDeposit": 0,
-        "bottleDepositDisplay": "0,00 €",
-        "comparison": 4980,
-        "comparisonDisplay": "49,80 €/1 l",
-        "currencyCode": "EUR",
-        "currencySymbol": "€",
-        "perUnit": null,
-        "perUnitDisplay": null,
-        "wasPriceDisplay": "3,25 €",
-        "additionalInfo": null,
-        "savingsDisplay": "23 %",
-        "bottleDepositType": null,
-        "feeText": null
-      },
-      "countryExtensions": null,
-      "categories": [
-        {
-          "id": "1588161425467233",
-          "name": "Drogerie & Kosmetik",
-          "urlSlugText": "drogerie-kosmetik"
-        },
-        {
-          "id": "1588161425467236",
-          "name": "Deodorant",
-          "urlSlugText": "drogerie-kosmetik/deodorant"
-        }
-      ],
-      "assets": [
-        {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/60286a27-3680-4f33-960b-67daac036ab1/{slug}",
-          "maxWidth": 1500,
-          "maxHeight": 1500,
-          "mimeType": "image/*",
-          "assetType": "FR01",
-          "alt": null,
-          "displayName": null
-        }
-      ],
-      "badges": []
-    },
-    {
-      "sku": "000000000288349002",
-      "name": "Deo Roll-on 50 ml, Dry Comfort",
-      "brandName": "NIVEA",
-      "urlSlugText": "nivea-deo-roll-on-50-ml-dry-comfort",
-      "urlSlugTextAlternatives": [],
-      "ageRestriction": null,
-      "alcohol": null,
-      "discontinued": false,
-      "discontinuedNote": null,
-      "notForSale": true,
-      "notForSaleReason": null,
-      "quantityMin": 1,
-      "quantityMax": 99,
-      "quantityInterval": 1,
-      "quantityDefault": 1,
-      "quantityUnit": "ea",
-      "weightType": "0",
-      "sellingSize": "0,05 l",
-      "energyClass": null,
-      "onSaleDateDisplay": null,
-      "isAbstract": false,
-      "abstractSku": "2883491588161422844438",
-      "price": {
-        "amount": 249,
-        "amountRelevant": 249,
-        "amountRelevantDisplay": "2,49 €",
-        "bottleDeposit": 0,
-        "bottleDepositDisplay": "0,00 €",
-        "comparison": 4980,
-        "comparisonDisplay": "49,80 €/1 l",
-        "currencyCode": "EUR",
-        "currencySymbol": "€",
-        "perUnit": null,
-        "perUnitDisplay": null,
-        "wasPriceDisplay": "3,25 €",
-        "additionalInfo": null,
-        "savingsDisplay": "23 %",
-        "bottleDepositType": null,
-        "feeText": null
-      },
-      "countryExtensions": null,
-      "categories": [
-        {
-          "id": "1588161425467233",
-          "name": "Drogerie & Kosmetik",
-          "urlSlugText": "drogerie-kosmetik"
-        },
-        {
-          "id": "1588161425467236",
-          "name": "Deodorant",
-          "urlSlugText": "drogerie-kosmetik/deodorant"
-        }
-      ],
-      "assets": [
-        {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/369a0266-bd8f-45e7-8da6-3fb317d5ef90/{slug}",
-          "maxWidth": 1500,
-          "maxHeight": 1500,
-          "mimeType": "image/*",
-          "assetType": "FR01",
-          "alt": null,
-          "displayName": null
-        }
-      ],
-      "badges": []
-    },
-    {
-      "sku": "000000000288349003",
-      "name": "Deo Roll-on 50 ml, Fresh Pure",
-      "brandName": "NIVEA",
-      "urlSlugText": "nivea-deo-roll-on-50-ml-fresh-pure",
-      "urlSlugTextAlternatives": [],
-      "ageRestriction": null,
-      "alcohol": null,
-      "discontinued": false,
-      "discontinuedNote": null,
-      "notForSale": true,
-      "notForSaleReason": null,
-      "quantityMin": 1,
-      "quantityMax": 99,
-      "quantityInterval": 1,
-      "quantityDefault": 1,
-      "quantityUnit": "ea",
-      "weightType": "0",
-      "sellingSize": "0,05 l",
-      "energyClass": null,
-      "onSaleDateDisplay": null,
-      "isAbstract": false,
-      "abstractSku": "2883491588161422844413",
-      "price": {
-        "amount": 249,
-        "amountRelevant": 249,
-        "amountRelevantDisplay": "2,49 €",
-        "bottleDeposit": 0,
-        "bottleDepositDisplay": "0,00 €",
-        "comparison": 4980,
-        "comparisonDisplay": "49,80 €/1 l",
-        "currencyCode": "EUR",
-        "currencySymbol": "€",
-        "perUnit": null,
-        "perUnitDisplay": null,
-        "wasPriceDisplay": "3,25 €",
-        "additionalInfo": null,
-        "savingsDisplay": "23 %",
-        "bottleDepositType": null,
-        "feeText": null
-      },
-      "countryExtensions": null,
-      "categories": [
-        {
-          "id": "1588161425467233",
-          "name": "Drogerie & Kosmetik",
-          "urlSlugText": "drogerie-kosmetik"
-        },
-        {
-          "id": "1588161425467236",
-          "name": "Deodorant",
-          "urlSlugText": "drogerie-kosmetik/deodorant"
-        }
-      ],
-      "assets": [
-        {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/6001cc1e-4d8e-4c7d-8545-25a1ba02d9de/{slug}",
-          "maxWidth": 1500,
-          "maxHeight": 1500,
-          "mimeType": "image/*",
-          "assetType": "FR01",
-          "alt": null,
-          "displayName": null
-        }
-      ],
-      "badges": []
-    },
-    {
-      "sku": "000000000288349005",
-      "name": "Deo Roll-on 50 ml, Men Black & White Invisible",
-      "brandName": "NIVEA",
-      "urlSlugText": "nivea-deo-roll-on-50-ml-men-black-white-invisible",
-      "urlSlugTextAlternatives": [],
-      "ageRestriction": null,
-      "alcohol": null,
-      "discontinued": false,
-      "discontinuedNote": null,
-      "notForSale": true,
-      "notForSaleReason": null,
-      "quantityMin": 1,
-      "quantityMax": 99,
-      "quantityInterval": 1,
-      "quantityDefault": 1,
-      "quantityUnit": "ea",
-      "weightType": "0",
-      "sellingSize": "0,05 l",
-      "energyClass": null,
-      "onSaleDateDisplay": null,
-      "isAbstract": false,
-      "abstractSku": "2883491588161422844433",
-      "price": {
-        "amount": 249,
-        "amountRelevant": 249,
-        "amountRelevantDisplay": "2,49 €",
-        "bottleDeposit": 0,
-        "bottleDepositDisplay": "0,00 €",
-        "comparison": 4980,
-        "comparisonDisplay": "49,80 €/1 l",
-        "currencyCode": "EUR",
-        "currencySymbol": "€",
-        "perUnit": null,
-        "perUnitDisplay": null,
-        "wasPriceDisplay": "3,25 €",
-        "additionalInfo": null,
-        "savingsDisplay": "23 %",
-        "bottleDepositType": null,
-        "feeText": null
-      },
-      "countryExtensions": null,
-      "categories": [
-        {
-          "id": "1588161425467233",
-          "name": "Drogerie & Kosmetik",
-          "urlSlugText": "drogerie-kosmetik"
-        },
-        {
-          "id": "1588161425467236",
-          "name": "Deodorant",
-          "urlSlugText": "drogerie-kosmetik/deodorant"
-        }
-      ],
-      "assets": [
-        {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/a5865b4d-31cf-4386-8c33-f877e55bafed/{slug}",
-          "maxWidth": 1500,
-          "maxHeight": 1500,
-          "mimeType": "image/*",
-          "assetType": "FR01",
-          "alt": null,
-          "displayName": null
-        }
-      ],
-      "badges": []
     },
     {
       "sku": "000000000357924001",
@@ -2724,7 +3245,7 @@
         "comparison": 595,
         "comparisonDisplay": "5,95 €/1 kg",
         "currencyCode": "EUR",
-        "currencySymbol": "€",
+        "currencySymbol": "EUR",
         "perUnit": null,
         "perUnitDisplay": null,
         "wasPriceDisplay": "1,99 €",
@@ -2786,7 +3307,7 @@
         "comparison": 793,
         "comparisonDisplay": "7,93 €/1 kg",
         "currencyCode": "EUR",
-        "currencySymbol": "€",
+        "currencySymbol": "EUR",
         "perUnit": null,
         "perUnitDisplay": null,
         "wasPriceDisplay": "1,99 €",
@@ -2848,7 +3369,7 @@
         "comparison": 595,
         "comparisonDisplay": "5,95 €/1 kg",
         "currencyCode": "EUR",
-        "currencySymbol": "€",
+        "currencySymbol": "EUR",
         "perUnit": null,
         "perUnitDisplay": null,
         "wasPriceDisplay": "1,99 €",
@@ -2868,6 +3389,624 @@
       "assets": [
         {
           "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/0e54b8a8-4ca6-4484-a130-6ffda0f9747e/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": []
+    },
+    {
+      "sku": "000000000451694001",
+      "name": "Ziegenfrischkäse, Rolle 180 g",
+      "brandName": "ROI DE TREFLE",
+      "urlSlugText": "roi-de-trefle-ziegenfrischkaese-rolle-180-g",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,18 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000451694",
+      "price": {
+        "amount": 159,
+        "amountRelevant": 159,
+        "amountRelevantDisplay": "1,59 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 883,
+        "comparisonDisplay": "8,83 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "1,99 €",
+        "additionalInfo": null,
+        "savingsDisplay": "20 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467083",
+          "name": "Käse",
+          "urlSlugText": "kaese"
+        },
+        {
+          "id": "1588161425467086",
+          "name": "Frischkäse",
+          "urlSlugText": "kaese/frischkaese"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/138c24a1-67b0-4d0e-9c88-58d83d728fe8/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Kühlung",
+              "color": "cyan",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000451694003",
+      "name": "Ziegenfrischkäse, Pyramide Natur 150 g",
+      "brandName": "ROI DE TREFLE",
+      "urlSlugText": "roi-de-trefle-ziegenfrischkaese-pyramide-natur-150-g",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,15 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000451694",
+      "price": {
+        "amount": 159,
+        "amountRelevant": 159,
+        "amountRelevantDisplay": "1,59 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 1060,
+        "comparisonDisplay": "10,60 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "1,99 €",
+        "additionalInfo": null,
+        "savingsDisplay": "20 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467083",
+          "name": "Käse",
+          "urlSlugText": "kaese"
+        },
+        {
+          "id": "1588161425467086",
+          "name": "Frischkäse",
+          "urlSlugText": "kaese/frischkaese"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/61a385cf-1cd3-4de7-b620-726a88be6080/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Kühlung",
+              "color": "cyan",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000451694004",
+      "name": "Ziegenfrischkäse, Pyramide Schnittlauch 150 g",
+      "brandName": "ROI DE TREFLE",
+      "urlSlugText": "roi-de-trefle-ziegenfrischkaese-pyramide-schnittlauch-150-g",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,15 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000451694",
+      "price": {
+        "amount": 159,
+        "amountRelevant": 159,
+        "amountRelevantDisplay": "1,59 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 1060,
+        "comparisonDisplay": "10,60 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "1,99 €",
+        "additionalInfo": null,
+        "savingsDisplay": "20 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467083",
+          "name": "Käse",
+          "urlSlugText": "kaese"
+        },
+        {
+          "id": "1588161425467086",
+          "name": "Frischkäse",
+          "urlSlugText": "kaese/frischkaese"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/3fc64d4c-fa6a-4d5d-b12e-565ceea94cb5/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Kühlung",
+              "color": "cyan",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000451694005",
+      "name": "Ziegenfrischkäse, Rolle 150 g",
+      "brandName": "ROI DE TREFLE",
+      "urlSlugText": "roi-de-trefle-ziegenfrischkaese-rolle-150-g",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,15 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000451694",
+      "price": {
+        "amount": 159,
+        "amountRelevant": 159,
+        "amountRelevantDisplay": "1,59 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 1060,
+        "comparisonDisplay": "10,60 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "1,99 €",
+        "additionalInfo": null,
+        "savingsDisplay": "20 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467083",
+          "name": "Käse",
+          "urlSlugText": "kaese"
+        },
+        {
+          "id": "1588161425467086",
+          "name": "Frischkäse",
+          "urlSlugText": "kaese/frischkaese"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/a5216ecd-b731-46b6-a620-3dbcd61ed573/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Kühlung",
+              "color": "cyan",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000512833001",
+      "name": "Veggie Grillwürste 190 g, Käsekrainer",
+      "brandName": "MEIN VEGGIE TAG",
+      "urlSlugText": "mein-veggie-tag-veggie-grillwuerste-190-g-kaesekrainer",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,19 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000512833",
+      "price": {
+        "amount": 249,
+        "amountRelevant": 249,
+        "amountRelevantDisplay": "2,49 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 1311,
+        "comparisonDisplay": "13,11 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": null,
+        "additionalInfo": null,
+        "savingsDisplay": null,
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467039",
+          "name": "Vegetarisch & Vegan",
+          "urlSlugText": "vegetarisch-vegan"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/8203df67-7ccf-41b0-be1b-9a48aced7a26/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Kühlung",
+              "color": "cyan",
+              "mimeType": "text/plain"
+            },
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Vegetarisch",
+              "color": "green",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000512833003",
+      "name": "Vegane Grillwürste 180 g, Rostbratwürstchen",
+      "brandName": "MY VAY",
+      "urlSlugText": "my-vay-vegane-grillwuerste-180-g-rostbratwuerstchen",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,18 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000512833",
+      "price": {
+        "amount": 249,
+        "amountRelevant": 249,
+        "amountRelevantDisplay": "2,49 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 1383,
+        "comparisonDisplay": "13,83 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": null,
+        "additionalInfo": null,
+        "savingsDisplay": null,
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467039",
+          "name": "Vegetarisch & Vegan",
+          "urlSlugText": "vegetarisch-vegan"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/968e7dfe-a541-4ecc-9d01-45219d04acdd/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Kühlung",
+              "color": "cyan",
+              "mimeType": "text/plain"
+            },
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Vegan",
+              "color": "yellow",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000519362001",
+      "name": "Mini-Waffeln 155 g, Natur",
+      "brandName": "MEINE KUCHENWELT",
+      "urlSlugText": "meine-kuchenwelt-mini-waffeln-155-g-natur",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,16 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000519362",
+      "price": {
+        "amount": 199,
+        "amountRelevant": 199,
+        "amountRelevantDisplay": "1,99 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 1284,
+        "comparisonDisplay": "12,84 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "2,49 €",
+        "additionalInfo": null,
+        "savingsDisplay": "20 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467101",
+          "name": "Backwaren, Aufstriche & Cerealien",
+          "urlSlugText": "backwaren-aufstriche-cerealien"
+        },
+        {
+          "id": "1588161425467108",
+          "name": "Fertigkuchen & Süßgebäck",
+          "urlSlugText": "backwaren-aufstriche-cerealien/fertigkuchen-suessgebaeck"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/2004e89c-8b65-4bd7-bdee-a3b29bf24ff6/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": []
+    },
+    {
+      "sku": "000000000519362002",
+      "name": "Mini-Waffeln 200 g, Schoko",
+      "brandName": "MEINE KUCHENWELT",
+      "urlSlugText": "meine-kuchenwelt-mini-waffeln-200-g-schoko",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,2 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000519362",
+      "price": {
+        "amount": 199,
+        "amountRelevant": 199,
+        "amountRelevantDisplay": "1,99 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 995,
+        "comparisonDisplay": "9,95 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "2,49 €",
+        "additionalInfo": null,
+        "savingsDisplay": "20 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467101",
+          "name": "Backwaren, Aufstriche & Cerealien",
+          "urlSlugText": "backwaren-aufstriche-cerealien"
+        },
+        {
+          "id": "1588161425467108",
+          "name": "Fertigkuchen & Süßgebäck",
+          "urlSlugText": "backwaren-aufstriche-cerealien/fertigkuchen-suessgebaeck"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/dd8dd150-f054-40c6-944e-6560995651f0/{slug}",
           "maxWidth": 1500,
           "maxHeight": 1500,
           "mimeType": "image/*",
@@ -2959,10 +4098,570 @@
       ]
     },
     {
-      "sku": "000000000614446001",
-      "name": "Perwoll Renew Feinwaschmittel 1,35 l, Wolle & Feines",
+      "sku": "000000000535588002",
+      "name": "Schweinekoteletts 700 g, Nackenkotelett",
+      "brandName": "MEINE METZGEREI",
+      "urlSlugText": "meine-metzgerei-schweinekoteletts-700-g-nackenkotelett",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,7 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000535588",
+      "price": {
+        "amount": 379,
+        "amountRelevant": 379,
+        "amountRelevantDisplay": "3,79 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 541,
+        "comparisonDisplay": "5,41 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "4,49 €",
+        "additionalInfo": null,
+        "savingsDisplay": "15 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467052",
+          "name": "Fleisch & Fisch",
+          "urlSlugText": "fleisch-fisch"
+        },
+        {
+          "id": "1588161425467066",
+          "name": "Schweinefleisch",
+          "urlSlugText": "fleisch-fisch/schweinefleisch"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/5315080d-f4ca-4d1a-b7c5-b5155fb875da/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Kühlung",
+              "color": "cyan",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000539264001",
+      "name": "Marinierter Grillmais 600 g, Kräuter",
+      "brandName": "BBQ",
+      "urlSlugText": "bbq-marinierter-grillmais-600-g-kraeuter",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,6 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000539264",
+      "price": {
+        "amount": 199,
+        "amountRelevant": 199,
+        "amountRelevantDisplay": "1,99 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 332,
+        "comparisonDisplay": "3,32 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": null,
+        "additionalInfo": null,
+        "savingsDisplay": null,
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467133",
+          "name": "Konserven & Fertiggerichte",
+          "urlSlugText": "konserven-fertiggerichte"
+        },
+        {
+          "id": "1588161425467137",
+          "name": "Gemüsekonserven",
+          "urlSlugText": "konserven-fertiggerichte/gemuesekonserven"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/b7284a19-59c3-4160-90e0-29fc0e18dd5f/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Vegan",
+              "color": "yellow",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000539264002",
+      "name": "Marinierter Grillmais 600 g, BBQ",
+      "brandName": "BBQ",
+      "urlSlugText": "bbq-marinierter-grillmais-600-g-bbq",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,6 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000539264",
+      "price": {
+        "amount": 199,
+        "amountRelevant": 199,
+        "amountRelevantDisplay": "1,99 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 332,
+        "comparisonDisplay": "3,32 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": null,
+        "additionalInfo": null,
+        "savingsDisplay": null,
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467133",
+          "name": "Konserven & Fertiggerichte",
+          "urlSlugText": "konserven-fertiggerichte"
+        },
+        {
+          "id": "1588161425467137",
+          "name": "Gemüsekonserven",
+          "urlSlugText": "konserven-fertiggerichte/gemuesekonserven"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/a7350579-bf0b-4355-baa8-9449b9d80e87/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Vegan",
+              "color": "yellow",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000539264003",
+      "name": "Marinierter Grillmais 600 g, Sweet Chili",
+      "brandName": "BBQ",
+      "urlSlugText": "bbq-marinierter-grillmais-600-g-sweet-chili",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "ea",
+      "weightType": "0",
+      "sellingSize": "0,6 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000539264",
+      "price": {
+        "amount": 199,
+        "amountRelevant": 199,
+        "amountRelevantDisplay": "1,99 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 332,
+        "comparisonDisplay": "3,32 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": null,
+        "additionalInfo": null,
+        "savingsDisplay": null,
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467133",
+          "name": "Konserven & Fertiggerichte",
+          "urlSlugText": "konserven-fertiggerichte"
+        },
+        {
+          "id": "1588161425467137",
+          "name": "Gemüsekonserven",
+          "urlSlugText": "konserven-fertiggerichte/gemuesekonserven"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/fa6fe525-add6-4ad1-9993-463696147dd1/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Vegan",
+              "color": "yellow",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000596189001",
+      "name": "Hähnchenbrust 150 g, gebacken",
+      "brandName": "GÜLDENHOF",
+      "urlSlugText": "gueldenhof-haehnchenbrust-150-g-gebacken",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "pac",
+      "weightType": "0",
+      "sellingSize": "0,15 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000596189",
+      "price": {
+        "amount": 199,
+        "amountRelevant": 199,
+        "amountRelevantDisplay": "1,99 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 1327,
+        "comparisonDisplay": "13,27 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "2,49 €",
+        "additionalInfo": null,
+        "savingsDisplay": "20 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467075",
+          "name": "Wurst & Aufschnitt",
+          "urlSlugText": "wurst-aufschnitt"
+        },
+        {
+          "id": "1588161425467079",
+          "name": "Geflügelwurst",
+          "urlSlugText": "wurst-aufschnitt/gefluegelwurst"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/8614c7a3-1955-45a2-ab49-7966e379ef1b/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Kühlung",
+              "color": "cyan",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000596189003",
+      "name": "Hähnchenbrust 150 g, Paprika",
+      "brandName": "GÜLDENHOF",
+      "urlSlugText": "gueldenhof-haehnchenbrust-150-g-paprika",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "pac",
+      "weightType": "0",
+      "sellingSize": "0,15 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000596189",
+      "price": {
+        "amount": 199,
+        "amountRelevant": 199,
+        "amountRelevantDisplay": "1,99 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 1327,
+        "comparisonDisplay": "13,27 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "2,49 €",
+        "additionalInfo": null,
+        "savingsDisplay": "20 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467075",
+          "name": "Wurst & Aufschnitt",
+          "urlSlugText": "wurst-aufschnitt"
+        },
+        {
+          "id": "1588161425467079",
+          "name": "Geflügelwurst",
+          "urlSlugText": "wurst-aufschnitt/gefluegelwurst"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/2a818089-bd88-422a-8164-74d14ca72448/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Kühlung",
+              "color": "cyan",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000596189004",
+      "name": "Hähnchenbrust 150 g, Curry",
+      "brandName": "GÜLDENHOF",
+      "urlSlugText": "gueldenhof-haehnchenbrust-150-g-curry",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "pac",
+      "weightType": "0",
+      "sellingSize": "0,15 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000596189",
+      "price": {
+        "amount": 199,
+        "amountRelevant": 199,
+        "amountRelevantDisplay": "1,99 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 1327,
+        "comparisonDisplay": "13,27 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "2,49 €",
+        "additionalInfo": null,
+        "savingsDisplay": "20 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467075",
+          "name": "Wurst & Aufschnitt",
+          "urlSlugText": "wurst-aufschnitt"
+        },
+        {
+          "id": "1588161425467079",
+          "name": "Geflügelwurst",
+          "urlSlugText": "wurst-aufschnitt/gefluegelwurst"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/ddaf5046-fbc8-4085-9cec-9b066cb74c5e/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Kühlung",
+              "color": "cyan",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000614446002",
+      "name": "Perwoll Renew Waschmittel 1,35 l, Color",
       "brandName": "PERWOLL",
-      "urlSlugText": "perwoll-perwoll-renew-feinwaschmittel-1-35-l-wolle-feines",
+      "urlSlugText": "perwoll-perwoll-renew-waschmittel-1-35-l-color",
       "urlSlugTextAlternatives": [],
       "ageRestriction": null,
       "alcohol": null,
@@ -2990,7 +4689,7 @@
         "comparison": 370,
         "comparisonDisplay": "3,70 €/1 l",
         "currencyCode": "EUR",
-        "currencySymbol": "€",
+        "currencySymbol": "EUR",
         "perUnit": null,
         "perUnitDisplay": null,
         "wasPriceDisplay": "5,95 €",
@@ -3014,7 +4713,7 @@
       ],
       "assets": [
         {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/1332292d-f218-474f-979d-bbffc12f7253/{slug}",
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/ebba25f0-14bf-4343-acbc-68f29b76ce51/{slug}",
           "maxWidth": 1500,
           "maxHeight": 1500,
           "mimeType": "image/*",
@@ -3024,6 +4723,156 @@
         }
       ],
       "badges": []
+    },
+    {
+      "sku": "000000000642894002",
+      "name": "Aufschnitt-Spezialitäten 200 g, Hähnchenbrust",
+      "brandName": null,
+      "urlSlugText": "no-brand-aufschnitt-spezialitaeten-200-g-haehnchenbrust",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "pac",
+      "weightType": "0",
+      "sellingSize": "0,2 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000642894",
+      "price": {
+        "amount": 239,
+        "amountRelevant": 239,
+        "amountRelevantDisplay": "2,39 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 1195,
+        "comparisonDisplay": "11,95 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "2,89 €",
+        "additionalInfo": null,
+        "savingsDisplay": "17 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467075",
+          "name": "Wurst & Aufschnitt",
+          "urlSlugText": "wurst-aufschnitt"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/8a2d123b-cf32-4114-95f3-7ad9d55c337e/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Kühlung",
+              "color": "cyan",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sku": "000000000642894003",
+      "name": "Aufschnitt-Spezialitäten 200 g, Putenbrust",
+      "brandName": null,
+      "urlSlugText": "no-brand-aufschnitt-spezialitaeten-200-g-putenbrust",
+      "urlSlugTextAlternatives": [],
+      "ageRestriction": null,
+      "alcohol": null,
+      "discontinued": false,
+      "discontinuedNote": null,
+      "notForSale": true,
+      "notForSaleReason": null,
+      "quantityMin": 1,
+      "quantityMax": 99,
+      "quantityInterval": 1,
+      "quantityDefault": 1,
+      "quantityUnit": "pac",
+      "weightType": "0",
+      "sellingSize": "0,2 kg",
+      "energyClass": null,
+      "onSaleDateDisplay": null,
+      "isAbstract": false,
+      "abstractSku": "000000000000642894",
+      "price": {
+        "amount": 239,
+        "amountRelevant": 239,
+        "amountRelevantDisplay": "2,39 €",
+        "bottleDeposit": 0,
+        "bottleDepositDisplay": "0,00 €",
+        "comparison": 1195,
+        "comparisonDisplay": "11,95 €/1 kg",
+        "currencyCode": "EUR",
+        "currencySymbol": "€",
+        "perUnit": null,
+        "perUnitDisplay": null,
+        "wasPriceDisplay": "2,89 €",
+        "additionalInfo": null,
+        "savingsDisplay": "17 %",
+        "bottleDepositType": null,
+        "feeText": null
+      },
+      "countryExtensions": null,
+      "categories": [
+        {
+          "id": "1588161425467075",
+          "name": "Wurst & Aufschnitt",
+          "urlSlugText": "wurst-aufschnitt"
+        }
+      ],
+      "assets": [
+        {
+          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/957b1df4-e920-4510-bb5f-a406e766b204/{slug}",
+          "maxWidth": 1500,
+          "maxHeight": 1500,
+          "mimeType": "image/*",
+          "assetType": "FR01",
+          "alt": null,
+          "displayName": null
+        }
+      ],
+      "badges": [
+        {
+          "position": "4",
+          "items": [
+            {
+              "url": null,
+              "alt": null,
+              "displayText": "Kühlung",
+              "color": "cyan",
+              "mimeType": "text/plain"
+            }
+          ]
+        }
+      ]
     },
     {
       "sku": "000000000670379001",
@@ -3258,7 +5107,7 @@
         "comparison": 508,
         "comparisonDisplay": "5,08 €/1 kg",
         "currencyCode": "EUR",
-        "currencySymbol": "€",
+        "currencySymbol": "EUR",
         "perUnit": null,
         "perUnitDisplay": null,
         "wasPriceDisplay": "2,29 €",
@@ -3338,7 +5187,7 @@
         "comparison": 508,
         "comparisonDisplay": "5,08 €/1 kg",
         "currencyCode": "EUR",
-        "currencySymbol": "€",
+        "currencySymbol": "EUR",
         "perUnit": null,
         "perUnitDisplay": null,
         "wasPriceDisplay": "2,29 €",
@@ -3418,7 +5267,7 @@
         "comparison": 508,
         "comparisonDisplay": "5,08 €/1 kg",
         "currencyCode": "EUR",
-        "currencySymbol": "€",
+        "currencySymbol": "EUR",
         "perUnit": null,
         "perUnitDisplay": null,
         "wasPriceDisplay": "2,29 €",
@@ -3498,7 +5347,7 @@
         "comparison": 660,
         "comparisonDisplay": "6,60 €/1 kg",
         "currencyCode": "EUR",
-        "currencySymbol": "€",
+        "currencySymbol": "EUR",
         "perUnit": null,
         "perUnitDisplay": null,
         "wasPriceDisplay": "2,29 €",
@@ -3578,7 +5427,7 @@
         "comparison": 566,
         "comparisonDisplay": "5,66 €/1 kg",
         "currencyCode": "EUR",
-        "currencySymbol": "€",
+        "currencySymbol": "EUR",
         "perUnit": null,
         "perUnitDisplay": null,
         "wasPriceDisplay": "2,29 €",
@@ -3620,246 +5469,6 @@
               "alt": null,
               "displayText": "Kühlung",
               "color": "cyan",
-              "mimeType": "text/plain"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "sku": "000000000717354001",
-      "name": "Grillsaucen 300 ml, Barbecue",
-      "brandName": "BBQ",
-      "urlSlugText": "bbq-grillsaucen-300-ml-barbecue",
-      "urlSlugTextAlternatives": [],
-      "ageRestriction": null,
-      "alcohol": null,
-      "discontinued": false,
-      "discontinuedNote": null,
-      "notForSale": true,
-      "notForSaleReason": null,
-      "quantityMin": 1,
-      "quantityMax": 99,
-      "quantityInterval": 1,
-      "quantityDefault": 1,
-      "quantityUnit": "ea",
-      "weightType": "0",
-      "sellingSize": "0,3 kg",
-      "energyClass": null,
-      "onSaleDateDisplay": null,
-      "isAbstract": false,
-      "abstractSku": "000000000000717354",
-      "price": {
-        "amount": 139,
-        "amountRelevant": 139,
-        "amountRelevantDisplay": "1,39 €",
-        "bottleDeposit": 0,
-        "bottleDepositDisplay": "0,00 €",
-        "comparison": 463,
-        "comparisonDisplay": "4,63 €/1 kg",
-        "currencyCode": "EUR",
-        "currencySymbol": "€",
-        "perUnit": null,
-        "perUnitDisplay": null,
-        "wasPriceDisplay": null,
-        "additionalInfo": null,
-        "savingsDisplay": null,
-        "bottleDepositType": null,
-        "feeText": null
-      },
-      "countryExtensions": null,
-      "categories": [
-        {
-          "id": "1588161425467254",
-          "name": "Grillen",
-          "urlSlugText": "grillen"
-        },
-        {
-          "id": "1588161425467257",
-          "name": "Grillsaucen",
-          "urlSlugText": "grillen/grillsaucen"
-        }
-      ],
-      "assets": [
-        {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/cd17e909-1a05-422d-aff0-93882b6ff20f/{slug}",
-          "maxWidth": 1500,
-          "maxHeight": 1500,
-          "mimeType": "image/*",
-          "assetType": "FR01",
-          "alt": null,
-          "displayName": null
-        }
-      ],
-      "badges": [
-        {
-          "position": "4",
-          "items": [
-            {
-              "url": null,
-              "alt": null,
-              "displayText": "Vegan",
-              "color": "yellow",
-              "mimeType": "text/plain"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "sku": "000000000717354002",
-      "name": "Grillsaucen 300 ml, Steakhouse",
-      "brandName": "BBQ",
-      "urlSlugText": "bbq-grillsaucen-300-ml-steakhouse",
-      "urlSlugTextAlternatives": [],
-      "ageRestriction": null,
-      "alcohol": null,
-      "discontinued": false,
-      "discontinuedNote": null,
-      "notForSale": true,
-      "notForSaleReason": null,
-      "quantityMin": 1,
-      "quantityMax": 99,
-      "quantityInterval": 1,
-      "quantityDefault": 1,
-      "quantityUnit": "ea",
-      "weightType": "0",
-      "sellingSize": "0,3 kg",
-      "energyClass": null,
-      "onSaleDateDisplay": null,
-      "isAbstract": false,
-      "abstractSku": "000000000000717354",
-      "price": {
-        "amount": 139,
-        "amountRelevant": 139,
-        "amountRelevantDisplay": "1,39 €",
-        "bottleDeposit": 0,
-        "bottleDepositDisplay": "0,00 €",
-        "comparison": 463,
-        "comparisonDisplay": "4,63 €/1 kg",
-        "currencyCode": "EUR",
-        "currencySymbol": "€",
-        "perUnit": null,
-        "perUnitDisplay": null,
-        "wasPriceDisplay": null,
-        "additionalInfo": null,
-        "savingsDisplay": null,
-        "bottleDepositType": null,
-        "feeText": null
-      },
-      "countryExtensions": null,
-      "categories": [
-        {
-          "id": "1588161425467254",
-          "name": "Grillen",
-          "urlSlugText": "grillen"
-        },
-        {
-          "id": "1588161425467257",
-          "name": "Grillsaucen",
-          "urlSlugText": "grillen/grillsaucen"
-        }
-      ],
-      "assets": [
-        {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/28aedfd0-ccd7-470d-a113-a13931f2e9d7/{slug}",
-          "maxWidth": 1500,
-          "maxHeight": 1500,
-          "mimeType": "image/*",
-          "assetType": "FR01",
-          "alt": null,
-          "displayName": null
-        }
-      ],
-      "badges": [
-        {
-          "position": "4",
-          "items": [
-            {
-              "url": null,
-              "alt": null,
-              "displayText": "Vegan",
-              "color": "yellow",
-              "mimeType": "text/plain"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "sku": "000000000717354003",
-      "name": "Grillsaucen 300 ml, Knoblauch pikant",
-      "brandName": "BBQ",
-      "urlSlugText": "bbq-grillsaucen-300-ml-knoblauch-pikant",
-      "urlSlugTextAlternatives": [],
-      "ageRestriction": null,
-      "alcohol": null,
-      "discontinued": false,
-      "discontinuedNote": null,
-      "notForSale": true,
-      "notForSaleReason": null,
-      "quantityMin": 1,
-      "quantityMax": 99,
-      "quantityInterval": 1,
-      "quantityDefault": 1,
-      "quantityUnit": "ea",
-      "weightType": "0",
-      "sellingSize": "0,3 kg",
-      "energyClass": null,
-      "onSaleDateDisplay": null,
-      "isAbstract": false,
-      "abstractSku": "000000000000717354",
-      "price": {
-        "amount": 139,
-        "amountRelevant": 139,
-        "amountRelevantDisplay": "1,39 €",
-        "bottleDeposit": 0,
-        "bottleDepositDisplay": "0,00 €",
-        "comparison": 463,
-        "comparisonDisplay": "4,63 €/1 kg",
-        "currencyCode": "EUR",
-        "currencySymbol": "€",
-        "perUnit": null,
-        "perUnitDisplay": null,
-        "wasPriceDisplay": null,
-        "additionalInfo": null,
-        "savingsDisplay": null,
-        "bottleDepositType": null,
-        "feeText": null
-      },
-      "countryExtensions": null,
-      "categories": [
-        {
-          "id": "1588161425467254",
-          "name": "Grillen",
-          "urlSlugText": "grillen"
-        },
-        {
-          "id": "1588161425467257",
-          "name": "Grillsaucen",
-          "urlSlugText": "grillen/grillsaucen"
-        }
-      ],
-      "assets": [
-        {
-          "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/9e0ddbea-9213-43b8-bb4b-5884d0cff5bd/{slug}",
-          "maxWidth": 1500,
-          "maxHeight": 1500,
-          "mimeType": "image/*",
-          "assetType": "FR01",
-          "alt": null,
-          "displayName": null
-        }
-      ],
-      "badges": [
-        {
-          "position": "4",
-          "items": [
-            {
-              "url": null,
-              "alt": null,
-              "displayText": "Vegan",
-              "color": "yellow",
               "mimeType": "text/plain"
             }
           ]
