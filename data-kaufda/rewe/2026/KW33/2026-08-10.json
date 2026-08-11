@@ -1,22 +1,22 @@
 {
   "source": "kaufda",
   "retailer": "rewe",
-  "fetchedAt": "2026-08-10T11:13:44Z",
+  "fetchedAt": "2026-08-11T07:02:56Z",
   "weekStart": "2026-08-10",
   "brochures": [
-    {
-      "id": "40cde722-ebee-4bc1-8e1e-c8c05881cf5b",
-      "legacyId": 2501217197,
-      "title": "Dein Markt",
-      "pageCount": 26,
-      "validFrom": "2026-08-09T22:00:00.000+0000",
-      "validUntil": "2026-08-15T21:00:00.000+0000"
-    },
     {
       "id": "82db899c-6c2a-44d7-9981-b7dd8a72fdc6",
       "legacyId": 2501216366,
       "title": "Dein Markt",
       "pageCount": 18,
+      "validFrom": "2026-08-09T22:00:00.000+0000",
+      "validUntil": "2026-08-15T21:00:00.000+0000"
+    },
+    {
+      "id": "40cde722-ebee-4bc1-8e1e-c8c05881cf5b",
+      "legacyId": 2501217197,
+      "title": "Dein Markt",
+      "pageCount": 26,
       "validFrom": "2026-08-09T22:00:00.000+0000",
       "validUntil": "2026-08-15T21:00:00.000+0000"
     },
@@ -32,7 +32,7 @@
   "offers": [
     {
       "id": "00fcb1d68af5",
-      "kaufdaId": "49c309dc-f6bb-43e7-a647-99bfd726c158",
+      "kaufdaId": "70b07a15-d8ec-4874-89e4-dd9d3cfbdece",
       "name": "Schweine-Bauchscheiben",
       "variants": [],
       "brand": "Butcher’s Barbecue",
@@ -48,7 +48,7 @@
         "Marken Lebensmittel",
         "Butchers"
       ],
-      "image": "https://content-media.bonial.biz/49c309dc-f6bb-43e7-a647-99bfd726c158/c6ed3b23-bf4c-4ec4-8378-b486e0f265ba.jpg",
+      "image": "https://content-media.bonial.biz/70b07a15-d8ec-4874-89e4-dd9d3cfbdece/b1df6679-1fcd-4710-bc01-7201a4a5ecd3.jpg",
       "page": 5
     },
     {
@@ -95,11 +95,11 @@
     },
     {
       "id": "0136dec94d13",
-      "kaufdaId": "f1e15621-9338-4eb7-9888-82fc86169628",
+      "kaufdaId": "9f1e43ad-4b10-472d-9c2f-b97a1d7d0371",
       "name": "Laugenstangen",
       "variants": [],
       "brand": "REWE frei von",
-      "description": "Glutenfrei, Laktosefrei 2 x 75-g-Pckg.",
+      "description": "Glutenfrei*, Laktosefrei* 2 x 75-g-Pckg.",
       "price": 1.59,
       "priceMax": null,
       "grundpreisText": "(1 kg = 10.60)",
@@ -112,8 +112,8 @@
         "Für Allergiker",
         "glutenfrei"
       ],
-      "image": "https://content-media.bonial.biz/f1e15621-9338-4eb7-9888-82fc86169628/b5f8a163-1156-4f86-a49e-ee4d72813424.jpg",
-      "page": 16
+      "image": "https://content-media.bonial.biz/9f1e43ad-4b10-472d-9c2f-b97a1d7d0371/1bf5ab40-092d-43d8-9a6d-bb8b3f28b199.jpg",
+      "page": 17
     },
     {
       "id": "023808fc8a51",
@@ -313,7 +313,7 @@
     },
     {
       "id": "03b97768945f",
-      "kaufdaId": "c70d4367-f2c6-4abe-af03-25b705fb1e7e",
+      "kaufdaId": "e1a966c6-c270-4fef-9b0a-73a21067535a",
       "name": "Chicken Nuggets",
       "variants": [],
       "brand": null,
@@ -331,7 +331,7 @@
         "Fast Food",
         "Chicken Nuggets"
       ],
-      "image": "https://content-media.bonial.biz/c70d4367-f2c6-4abe-af03-25b705fb1e7e/02b59f91-773b-406a-a92d-d8c7d30965c6.jpg",
+      "image": "https://content-media.bonial.biz/e1a966c6-c270-4fef-9b0a-73a21067535a/c6f0f23f-afdf-4d59-8173-47d20be17392.jpg",
       "page": 5
     },
     {
@@ -644,7 +644,7 @@
     },
     {
       "id": "0df80755833d",
-      "kaufdaId": "bdbac769-d61e-43b9-9220-2ba855915f7f",
+      "kaufdaId": "bb7a7deb-a03e-4d93-8aea-8953ddc771f4",
       "name": "Weizen",
       "variants": [],
       "brand": "Schöfferhofer",
@@ -663,8 +663,8 @@
         "Biermarken",
         "Schöfferhofer"
       ],
-      "image": "https://content-media.bonial.biz/bdbac769-d61e-43b9-9220-2ba855915f7f/40459466-52e1-41dc-90c7-4dac3c363880.jpg",
-      "page": 17
+      "image": "https://content-media.bonial.biz/bb7a7deb-a03e-4d93-8aea-8953ddc771f4/900788b5-7740-48d2-a5ab-3e8c5cee6175.jpg",
+      "page": 12
     },
     {
       "id": "0e8c5e16f7aa",
@@ -691,7 +691,7 @@
     },
     {
       "id": "0ea812a78860",
-      "kaufdaId": "5b95f1f2-22b6-41fc-bbbe-fa99cad8a8e1",
+      "kaufdaId": "a357d45e-6b33-42b7-a890-d484a875f545",
       "name": "Rote Speisezwiebeln",
       "variants": [],
       "brand": "REWE Beste Wahl",
@@ -707,7 +707,7 @@
         "REWE",
         "REWE Beste Wahl"
       ],
-      "image": "https://content-media.bonial.biz/5b95f1f2-22b6-41fc-bbbe-fa99cad8a8e1/90f2ef0a-1100-48cc-a714-b4c44a57e71a.jpg",
+      "image": "https://content-media.bonial.biz/a357d45e-6b33-42b7-a890-d484a875f545/90f2ef0a-1100-48cc-a714-b4c44a57e71a.jpg",
       "page": 2
     },
     {
@@ -810,7 +810,7 @@
     },
     {
       "id": "10a0d17153b1",
-      "kaufdaId": "bf637794-fb7e-4e47-81f6-a629a90f49f6",
+      "kaufdaId": "b3dad814-e59b-42c5-91fe-c53ffe8b8df0",
       "name": "Prinzen Rolle Taler",
       "variants": [
         "Prinzen Rolle Minis"
@@ -829,8 +829,8 @@
         "de Beukelaer",
         "Prinzenrolle"
       ],
-      "image": "https://content-media.bonial.biz/bf637794-fb7e-4e47-81f6-a629a90f49f6/8d2289a3-9187-469c-9f6f-d1c2be510db2.jpg",
-      "page": 12
+      "image": "https://content-media.bonial.biz/b3dad814-e59b-42c5-91fe-c53ffe8b8df0/f80990b5-7d95-48db-a5b7-7171ab0ad2b1.jpg",
+      "page": 14
     },
     {
       "id": "1108cb05a0ad",
@@ -854,7 +854,7 @@
     },
     {
       "id": "11a9843332af",
-      "kaufdaId": "d7067343-70ac-488f-82f8-76019425d0eb",
+      "kaufdaId": "e0c6cdb5-5430-489f-a3eb-8a3fce8a0d81",
       "name": "Mini Rispentomaten",
       "variants": [],
       "brand": "REWE Regional",
@@ -868,7 +868,7 @@
         "Tierbedarf und Tierfutter",
         "Marken für Tiere"
       ],
-      "image": "https://content-media.bonial.biz/d7067343-70ac-488f-82f8-76019425d0eb/9e2a3e8b-02e5-4629-89fe-4539d5a4f746.jpg",
+      "image": "https://content-media.bonial.biz/e0c6cdb5-5430-489f-a3eb-8a3fce8a0d81/9e2a3e8b-02e5-4629-89fe-4539d5a4f746.jpg",
       "page": 4
     },
     {
@@ -970,7 +970,7 @@
     },
     {
       "id": "153133c80ac8",
-      "kaufdaId": "3ae029c4-2d0a-406c-8e4c-0af726100a26",
+      "kaufdaId": "01145c48-0f0f-4545-8524-c579113ded86",
       "name": "Monte",
       "variants": [],
       "brand": "Zott",
@@ -986,7 +986,7 @@
         "Marken Lebensmittel",
         "Zott"
       ],
-      "image": "https://content-media.bonial.biz/3ae029c4-2d0a-406c-8e4c-0af726100a26/fb3cbd3c-b0f1-4fe1-9369-74db257a12bc.jpg",
+      "image": "https://content-media.bonial.biz/01145c48-0f0f-4545-8524-c579113ded86/b72fc7a4-9b78-4be7-867c-1920217e0a2c.jpg",
       "page": 9
     },
     {
@@ -1132,7 +1132,7 @@
     },
     {
       "id": "18bb178c704c",
-      "kaufdaId": "443db10e-73f1-4c09-bba7-98557263dc90",
+      "kaufdaId": "9b27a671-b661-4ff7-935a-420f0ce6e11e",
       "name": "Sweet Chili Pepper oder Chips",
       "variants": [],
       "brand": "Doritos oder Lay’s",
@@ -1148,12 +1148,12 @@
         "Marken Lebensmittel",
         "Frito-Lay"
       ],
-      "image": "https://content-media.bonial.biz/443db10e-73f1-4c09-bba7-98557263dc90/bd1073af-551f-49a0-a4e4-49e556ef3ada.jpg",
+      "image": "https://content-media.bonial.biz/9b27a671-b661-4ff7-935a-420f0ce6e11e/bd1073af-551f-49a0-a4e4-49e556ef3ada.jpg",
       "page": 0
     },
     {
       "id": "1a426c98505f",
-      "kaufdaId": "1755aa06-2c68-46b9-8fc7-ef46db2e58f4",
+      "kaufdaId": "80670674-1fde-40df-89aa-86737ec0e062",
       "name": "Backfischstäbchen",
       "variants": [
         "Fischstäbchen"
@@ -1167,13 +1167,13 @@
       "dealText": null,
       "categoryPath": [
         "Lebensmittel und Getränke",
-        "Produkte",
-        "Lebensmittel",
-        "Fisch",
-        "Fischzubereitung"
+        "Marken",
+        "Marken Lebensmittel",
+        "Iglo",
+        "Iglo Fischstäbchen"
       ],
-      "image": "https://content-media.bonial.biz/1755aa06-2c68-46b9-8fc7-ef46db2e58f4/4a37841b-47a6-4495-9194-dece5952d8ca.jpg",
-      "page": 15
+      "image": "https://content-media.bonial.biz/80670674-1fde-40df-89aa-86737ec0e062/0fe195c2-677b-4d47-a3b8-64fbe29853eb.jpg",
+      "page": 11
     },
     {
       "id": "1ac45929f7aa",
@@ -1568,7 +1568,7 @@
     },
     {
       "id": "21dcc41594af",
-      "kaufdaId": "1ec53b07-c06c-42e2-87e3-bb020ea60f31",
+      "kaufdaId": "cc232455-cc9c-42bd-a610-3818d3c46eff",
       "name": "IceTea",
       "variants": [],
       "brand": "Pfanner",
@@ -1585,12 +1585,12 @@
         "Softdrinks",
         "Softdrinkmarken"
       ],
-      "image": "https://content-media.bonial.biz/1ec53b07-c06c-42e2-87e3-bb020ea60f31/e80ff98f-ea99-4a60-9607-6444bd211b1e.jpg",
-      "page": 18
+      "image": "https://content-media.bonial.biz/cc232455-cc9c-42bd-a610-3818d3c46eff/e80ff98f-ea99-4a60-9607-6444bd211b1e.jpg",
+      "page": 12
     },
     {
       "id": "22315fea8dee",
-      "kaufdaId": "a05e0a6a-0c5c-4429-ab15-8d6e531d2c43",
+      "kaufdaId": "4102f126-914a-444b-aac0-8e776a617730",
       "name": "Tomaten-Avocado-Ecke",
       "variants": [],
       "brand": null,
@@ -1601,12 +1601,12 @@
       "dealType": "SALES_PRICE",
       "dealText": null,
       "categoryPath": [],
-      "image": "https://content-media.bonial.biz/a05e0a6a-0c5c-4429-ab15-8d6e531d2c43/67e39e66-a9ea-46f8-9156-3443098986a6.jpg",
+      "image": "https://content-media.bonial.biz/4102f126-914a-444b-aac0-8e776a617730/67e39e66-a9ea-46f8-9156-3443098986a6.jpg",
       "page": 7
     },
     {
       "id": "2249f7500ae7",
-      "kaufdaId": "1f450ecd-e0fd-40b3-b5e7-41562fea9bda",
+      "kaufdaId": "d18e3a4a-d089-4763-bb3e-7ae0e11c6ba0",
       "name": "Bananen",
       "variants": [],
       "brand": "REWE Beste Wahl",
@@ -1623,7 +1623,7 @@
         "Obst",
         "Bananen"
       ],
-      "image": "https://content-media.bonial.biz/1f450ecd-e0fd-40b3-b5e7-41562fea9bda/dbc52d2c-aa02-482f-a730-3e2a3e5e2875.jpg",
+      "image": "https://content-media.bonial.biz/d18e3a4a-d089-4763-bb3e-7ae0e11c6ba0/dd0134e3-ab2f-489e-bfb6-04d80a560231.jpg",
       "page": 0
     },
     {
@@ -1742,7 +1742,7 @@
     },
     {
       "id": "2507771057f8",
-      "kaufdaId": "afb55554-2429-4b6c-b531-247a5a610d58",
+      "kaufdaId": "c0c621e5-2f5e-4ac3-8155-85f3d0fbae2a",
       "name": "Sweet Ananas",
       "variants": [],
       "brand": "REWE to go",
@@ -1759,12 +1759,12 @@
         "Obst",
         "Ananas"
       ],
-      "image": "https://content-media.bonial.biz/afb55554-2429-4b6c-b531-247a5a610d58/27d23d97-f322-4709-8533-f6f1eeebd222.jpg",
+      "image": "https://content-media.bonial.biz/c0c621e5-2f5e-4ac3-8155-85f3d0fbae2a/27d23d97-f322-4709-8533-f6f1eeebd222.jpg",
       "page": 3
     },
     {
       "id": "255bee12821a",
-      "kaufdaId": "3b499203-9b92-45f3-8d83-3f0c6ceb17fc",
+      "kaufdaId": "c3322591-0f09-44ff-a2f0-ba5f2f5c0dd4",
       "name": "Schweinefilet",
       "variants": [],
       "brand": null,
@@ -1782,7 +1782,7 @@
         "Schweinefleisch",
         "Schweinefilet"
       ],
-      "image": "https://content-media.bonial.biz/3b499203-9b92-45f3-8d83-3f0c6ceb17fc/main.jpg",
+      "image": "https://content-media.bonial.biz/c3322591-0f09-44ff-a2f0-ba5f2f5c0dd4/main.jpg",
       "page": 0
     },
     {
@@ -1830,7 +1830,7 @@
     },
     {
       "id": "25d2c6592b4d",
-      "kaufdaId": "302b0f6e-8fd4-477c-8a23-edf0a25039db",
+      "kaufdaId": "ef586a92-e7f1-48fe-a6fb-9ac9ecf4fad4",
       "name": "Mandarinen",
       "variants": [],
       "brand": "REWE Beste Wahl",
@@ -1848,12 +1848,12 @@
         "Zitrusfrüchte",
         "Mandarinen"
       ],
-      "image": "https://content-media.bonial.biz/302b0f6e-8fd4-477c-8a23-edf0a25039db/f8b5afff-0247-440b-bb9b-7e08c0aeae6c.jpg",
+      "image": "https://content-media.bonial.biz/ef586a92-e7f1-48fe-a6fb-9ac9ecf4fad4/f8b5afff-0247-440b-bb9b-7e08c0aeae6c.jpg",
       "page": 3
     },
     {
       "id": "25e28544d8b8",
-      "kaufdaId": "74131c28-7b2f-48fe-bece-1c25c94e9ca7",
+      "kaufdaId": "0b301407-8c8d-4868-abfb-acbceec399fa",
       "name": "Speisekartoffeln",
       "variants": [],
       "brand": "REWE Beste Wahl",
@@ -1872,7 +1872,7 @@
         "Kartoffelsorten",
         "Speisekartoffeln"
       ],
-      "image": "https://content-media.bonial.biz/74131c28-7b2f-48fe-bece-1c25c94e9ca7/4ce11569-6fd6-4f4e-b8db-8389067cfcaf.jpg",
+      "image": "https://content-media.bonial.biz/0b301407-8c8d-4868-abfb-acbceec399fa/4ce11569-6fd6-4f4e-b8db-8389067cfcaf.jpg",
       "page": 4
     },
     {
@@ -1966,7 +1966,7 @@
     },
     {
       "id": "277a7dfbc66a",
-      "kaufdaId": "002c17ce-fbe2-4f56-b042-02bbe9ddd0e7",
+      "kaufdaId": "924814c1-dfd2-4c0e-bf0f-ececfff9a66a",
       "name": "Long Tex Mex Chicken",
       "variants": [],
       "brand": null,
@@ -1983,7 +1983,7 @@
         "Körperpflege",
         "Hygieneprodukte"
       ],
-      "image": "https://content-media.bonial.biz/002c17ce-fbe2-4f56-b042-02bbe9ddd0e7/6077d198-b392-498a-a006-4346c11d5c3c.jpg",
+      "image": "https://content-media.bonial.biz/924814c1-dfd2-4c0e-bf0f-ececfff9a66a/6077d198-b392-498a-a006-4346c11d5c3c.jpg",
       "page": 8
     },
     {
@@ -2265,7 +2265,7 @@
     },
     {
       "id": "2f2764ef4b4d",
-      "kaufdaId": "f67d154c-d663-46eb-afdb-04a4b0de16ca",
+      "kaufdaId": "6132e9ab-a0fb-46d0-a132-06b77e32f369",
       "name": "Joghurt",
       "variants": [],
       "brand": "Landliebe",
@@ -2281,12 +2281,12 @@
         "Marken Lebensmittel",
         "Landliebe"
       ],
-      "image": "https://content-media.bonial.biz/f67d154c-d663-46eb-afdb-04a4b0de16ca/524e1602-5bd4-472e-9ec2-eaf1bcfd7838.jpg",
+      "image": "https://content-media.bonial.biz/6132e9ab-a0fb-46d0-a132-06b77e32f369/524e1602-5bd4-472e-9ec2-eaf1bcfd7838.jpg",
       "page": 1
     },
     {
       "id": "2fa2c786d04e",
-      "kaufdaId": "25c68e9f-0a03-41dd-9af5-36b0f85fe895",
+      "kaufdaId": "b38bb2aa-eae4-4a2f-9552-a9b348d133aa",
       "name": "Bella Crema Speciale",
       "variants": [
         "Bella Crema La Crema"
@@ -2305,8 +2305,8 @@
         "Melitta",
         "Bella Crema"
       ],
-      "image": "https://content-media.bonial.biz/25c68e9f-0a03-41dd-9af5-36b0f85fe895/cbb3ca3a-4d77-4275-8da1-07cd46f78024.jpg",
-      "page": 20
+      "image": "https://content-media.bonial.biz/b38bb2aa-eae4-4a2f-9552-a9b348d133aa/cbb3ca3a-4d77-4275-8da1-07cd46f78024.jpg",
+      "page": 14
     },
     {
       "id": "356e5cfb6f70",
@@ -2331,7 +2331,7 @@
     },
     {
       "id": "3587ab3b7e2a",
-      "kaufdaId": "b37464eb-51c2-433a-ab02-8a57b0b25885",
+      "kaufdaId": "b23d4911-91ff-478f-8779-f16979f8f288",
       "name": "Schmetterlings-orchidee",
       "variants": [],
       "brand": null,
@@ -2353,7 +2353,7 @@
         "Orchidee",
         "Phalaenopsis"
       ],
-      "image": "https://content-media.bonial.biz/b37464eb-51c2-433a-ab02-8a57b0b25885/d22def2d-d9a9-4601-90b7-256fdbe26891.jpg",
+      "image": "https://content-media.bonial.biz/b23d4911-91ff-478f-8779-f16979f8f288/b13154b2-7b86-43a1-89ea-9181aedd7637.jpg",
       "page": 4
     },
     {
@@ -2513,14 +2513,14 @@
     },
     {
       "id": "3929bc7b9ae1",
-      "kaufdaId": "1c0cec10-89bd-4b2d-9327-0c02a53f1e54",
+      "kaufdaId": "2280ec1b-b13e-41a7-b00a-ee1511176828",
       "name": "Pflegedusche",
       "variants": [],
       "brand": "Kneipp",
-      "description": "Lebensfreude, je 200-ml-Tube",
+      "description": "Lebensfreude\nje 200-ml-Tube",
       "price": 2.49,
       "priceMax": null,
-      "grundpreisText": "1 l = 12.45",
+      "grundpreisText": "(1 l = 12.45)",
       "dealType": "SALES_PRICE",
       "dealText": null,
       "categoryPath": [
@@ -2529,8 +2529,8 @@
         "Marken Drogerie",
         "Kneipp"
       ],
-      "image": "https://content-media.bonial.biz/1c0cec10-89bd-4b2d-9327-0c02a53f1e54/c1bb5f42-4490-43b3-a51b-e968e16fb72a.jpg",
-      "page": 23
+      "image": "https://content-media.bonial.biz/2280ec1b-b13e-41a7-b00a-ee1511176828/a8e0d006-68a3-4fc2-9389-d7969e9aaf6b.jpg",
+      "page": 15
     },
     {
       "id": "394dd4f06d2a",
@@ -2579,7 +2579,7 @@
     },
     {
       "id": "3b994486d7cc",
-      "kaufdaId": "2114cf21-0d43-4681-ae88-67c89f745103",
+      "kaufdaId": "5ad76c4d-db70-44b7-9807-bb887b676987",
       "name": "Dolce Gusto Grande",
       "variants": [
         "Dolce Gusto Café au lait"
@@ -2597,8 +2597,8 @@
         "Marken Lebensmittel",
         "Dolce Gusto"
       ],
-      "image": "https://content-media.bonial.biz/2114cf21-0d43-4681-ae88-67c89f745103/a22493be-a3f8-4204-8eb7-201e0d750689.jpg",
-      "page": 12
+      "image": "https://content-media.bonial.biz/5ad76c4d-db70-44b7-9807-bb887b676987/98e8f64c-c7bb-4daf-8ad1-fc9304f4b9c1.jpg",
+      "page": 14
     },
     {
       "id": "3bab0d79fc2c",
@@ -2699,7 +2699,7 @@
     },
     {
       "id": "3dd539d0114a",
-      "kaufdaId": "1959bc61-b52e-47f0-a429-e568b26eca4d",
+      "kaufdaId": "8e894f7d-21e7-408b-be10-c1793029e590",
       "name": "Total Care Mundspülung",
       "variants": [],
       "brand": "Listerine",
@@ -2715,8 +2715,8 @@
         "Marken Drogerie",
         "Listerine"
       ],
-      "image": "https://content-media.bonial.biz/1959bc61-b52e-47f0-a429-e568b26eca4d/373dab8e-4cf2-4c44-940c-41a2e97cc5e4.jpg",
-      "page": 23
+      "image": "https://content-media.bonial.biz/8e894f7d-21e7-408b-be10-c1793029e590/3274dd7b-708e-4ad5-833c-c40bf28e1a80.jpg",
+      "page": 15
     },
     {
       "id": "3de9bd1762e6",
@@ -2764,11 +2764,11 @@
     },
     {
       "id": "401336cea161",
-      "kaufdaId": "6af89823-caa3-4b44-bb20-986feda49970",
+      "kaufdaId": "540eb8a6-fb99-4a72-b541-22ddedaf8cf9",
       "name": "Knoblauch",
       "variants": [],
       "brand": null,
-      "description": "Spanien Kl. I, 200-g-Netz",
+      "description": "Spanien Kl. I 200-g-Netz",
       "price": 0.99,
       "priceMax": null,
       "grundpreisText": "(1 kg = 4.95)",
@@ -2781,12 +2781,12 @@
         "Gemüse",
         "Knoblauch"
       ],
-      "image": "https://content-media.bonial.biz/6af89823-caa3-4b44-bb20-986feda49970/e57aa313-60ef-42e1-8ef0-ae29c7802439.jpg",
+      "image": "https://content-media.bonial.biz/540eb8a6-fb99-4a72-b541-22ddedaf8cf9/bce1cec4-a6c6-4849-9313-5d0cf504a39d.jpg",
       "page": 4
     },
     {
       "id": "401f03c8165c",
-      "kaufdaId": "d66bc61d-1cea-4e76-800c-12cb4c594aa6",
+      "kaufdaId": "07564265-0b37-4502-ad0e-5ebf3562118a",
       "name": "Kraft Aktiv",
       "variants": [],
       "brand": "WC Frisch",
@@ -2803,8 +2803,8 @@
         "Henkel",
         "WC Frisch"
       ],
-      "image": "https://content-media.bonial.biz/d66bc61d-1cea-4e76-800c-12cb4c594aa6/4ace72d3-6855-45b4-aca8-09db8f7b66fb.jpg",
-      "page": 22
+      "image": "https://content-media.bonial.biz/07564265-0b37-4502-ad0e-5ebf3562118a/4ace72d3-6855-45b4-aca8-09db8f7b66fb.jpg",
+      "page": 16
     },
     {
       "id": "40cb57dd8995",
@@ -2830,7 +2830,7 @@
     },
     {
       "id": "40f89a2bb1e7",
-      "kaufdaId": "ccdbccf3-d45b-4ed5-9198-bbc182bd3123",
+      "kaufdaId": "be557e13-71f1-4fe5-ad81-20ae668c28e5",
       "name": "5 Minuten Terrine Nudeln in Rahmsauce",
       "variants": [
         "Magic Asia Noodle Cup Chicken"
@@ -2850,12 +2850,12 @@
         "Teigwaren",
         "Nudeln"
       ],
-      "image": "https://content-media.bonial.biz/ccdbccf3-d45b-4ed5-9198-bbc182bd3123/21768681-db56-44b3-81c6-f6bc4f987fac.jpg",
-      "page": 19
+      "image": "https://content-media.bonial.biz/be557e13-71f1-4fe5-ad81-20ae668c28e5/96a5abd6-69bf-4e2c-bf5c-e4cd94407b6a.jpg",
+      "page": 13
     },
     {
       "id": "4171028c1a26",
-      "kaufdaId": "55490320-6c20-4d24-ba2e-aad823ead352",
+      "kaufdaId": "54cf3546-cd3e-4086-a3ee-725e9c4f6dda",
       "name": "Wassermelonen Würfel",
       "variants": [],
       "brand": "REWE to go",
@@ -2871,7 +2871,7 @@
         "REWE",
         "REWE to go"
       ],
-      "image": "https://content-media.bonial.biz/55490320-6c20-4d24-ba2e-aad823ead352/7a3afa01-172f-4468-b3c9-8a3c04bc01ad.jpg",
+      "image": "https://content-media.bonial.biz/54cf3546-cd3e-4086-a3ee-725e9c4f6dda/7a3afa01-172f-4468-b3c9-8a3c04bc01ad.jpg",
       "page": 2
     },
     {
@@ -2900,7 +2900,7 @@
     },
     {
       "id": "41ef790fff68",
-      "kaufdaId": "feac1851-6118-42d0-8433-a2d0d16c59f9",
+      "kaufdaId": "1d96ead2-1a4e-4d19-909f-d2aceea19a88",
       "name": "Croissant Toast",
       "variants": [],
       "brand": null,
@@ -2917,16 +2917,16 @@
         "Backwaren",
         "Croissant"
       ],
-      "image": "https://content-media.bonial.biz/feac1851-6118-42d0-8433-a2d0d16c59f9/51f062e8-53a3-466a-ad60-013613ca4cbf.jpg",
+      "image": "https://content-media.bonial.biz/1d96ead2-1a4e-4d19-909f-d2aceea19a88/51f062e8-53a3-466a-ad60-013613ca4cbf.jpg",
       "page": 8
     },
     {
       "id": "4232298474dc",
-      "kaufdaId": "2876918d-4608-435b-844c-903391e2fe1b",
+      "kaufdaId": "b0416864-1722-4c4c-b5e5-5a04c2fdbfee",
       "name": "Die Limo",
       "variants": [],
       "brand": "Granini",
-      "description": "Limette-Zitrone, je 0,33-l-Dose zzgl. 0.25 Pfand",
+      "description": "Limette-Zitrone 0,33-l-Dose zzgl. 0.25 Pfand",
       "price": 0.79,
       "priceMax": null,
       "grundpreisText": "(1 l = 2.39)",
@@ -2941,12 +2941,12 @@
         "Granini",
         "Die Limo "
       ],
-      "image": "https://content-media.bonial.biz/2876918d-4608-435b-844c-903391e2fe1b/99c3ae10-ee82-47fb-85db-06719d641296.jpg",
+      "image": "https://content-media.bonial.biz/b0416864-1722-4c4c-b5e5-5a04c2fdbfee/1a7973ab-bc04-46ee-b7cb-615eb1a4832b.jpg",
       "page": 10
     },
     {
       "id": "42495bb95bfc",
-      "kaufdaId": "093e1c41-59c3-4c0f-8408-0884775086a9",
+      "kaufdaId": "e5434c7c-6ee1-44b8-a25c-b92bb2476600",
       "name": "Tender",
       "variants": [
         "Choco & Cake"
@@ -2965,7 +2965,7 @@
         "Milchprodukte",
         "Milch"
       ],
-      "image": "https://content-media.bonial.biz/093e1c41-59c3-4c0f-8408-0884775086a9/235f25e4-fa48-4e8c-91c9-e3d0a203b439.jpg",
+      "image": "https://content-media.bonial.biz/e5434c7c-6ee1-44b8-a25c-b92bb2476600/235f25e4-fa48-4e8c-91c9-e3d0a203b439.jpg",
       "page": 9
     },
     {
@@ -3132,7 +3132,7 @@
     },
     {
       "id": "4756f80aaf87",
-      "kaufdaId": "efd07017-3b31-4ecf-b0e3-0bea9c32a88b",
+      "kaufdaId": "703f9771-05d5-455f-91fe-8d1b5fc465ba",
       "name": "Fleischkäse",
       "variants": [],
       "brand": null,
@@ -3151,7 +3151,7 @@
         "Brühwurst",
         "Fleischkäse"
       ],
-      "image": "https://content-media.bonial.biz/efd07017-3b31-4ecf-b0e3-0bea9c32a88b/5d0184e1-6bff-4c98-8455-47bda0385eae.jpg",
+      "image": "https://content-media.bonial.biz/703f9771-05d5-455f-91fe-8d1b5fc465ba/5d0184e1-6bff-4c98-8455-47bda0385eae.jpg",
       "page": 8
     },
     {
@@ -3223,7 +3223,7 @@
     },
     {
       "id": "4b1647da6693",
-      "kaufdaId": "8ca0dee8-3b3b-4746-a84c-4fee31892f2d",
+      "kaufdaId": "e0f29e28-111f-4d88-a996-43bb11d7f564",
       "name": "Ciabatta-Brötchen",
       "variants": [],
       "brand": "REWE frei von",
@@ -3242,8 +3242,8 @@
         "Weißbrot",
         "Ciabatta"
       ],
-      "image": "https://content-media.bonial.biz/8ca0dee8-3b3b-4746-a84c-4fee31892f2d/94765d7a-4a7f-4306-9497-c97c4ea8a163.jpg",
-      "page": 16
+      "image": "https://content-media.bonial.biz/e0f29e28-111f-4d88-a996-43bb11d7f564/2d8b7f5f-41a3-4328-b95d-21f1323bb8ca.jpg",
+      "page": 17
     },
     {
       "id": "4b2845f5d459",
@@ -3321,7 +3321,7 @@
     },
     {
       "id": "4ba82db056ad",
-      "kaufdaId": "29782474-e43c-4ede-8f13-e33673ff1875",
+      "kaufdaId": "78abf46b-3f9d-43b9-be0c-f7e846e87fe1",
       "name": "Rosa Aperitivo",
       "variants": [],
       "brand": "Sarti",
@@ -3338,12 +3338,12 @@
         "Alkoholische Getränke",
         "Aperitif"
       ],
-      "image": "https://content-media.bonial.biz/29782474-e43c-4ede-8f13-e33673ff1875/d6251f7e-f146-4a88-a911-051375fcdb9e.jpg",
-      "page": 18
+      "image": "https://content-media.bonial.biz/78abf46b-3f9d-43b9-be0c-f7e846e87fe1/d6251f7e-f146-4a88-a911-051375fcdb9e.jpg",
+      "page": 12
     },
     {
       "id": "4c01cf53c4c6",
-      "kaufdaId": "a8484e41-8258-4a92-a700-a2cd400cf08a",
+      "kaufdaId": "7241b6fb-58d9-41e5-b51d-fca751bbb0b8",
       "name": "Feinwaschmittel",
       "variants": [
         "Black Waschmittel"
@@ -3362,8 +3362,8 @@
         "Textilreinigung",
         "Waschmittel"
       ],
-      "image": "https://content-media.bonial.biz/a8484e41-8258-4a92-a700-a2cd400cf08a/67af9a2c-e616-4acc-97b0-2f5c106c1189.jpg",
-      "page": 22
+      "image": "https://content-media.bonial.biz/7241b6fb-58d9-41e5-b51d-fca751bbb0b8/67af9a2c-e616-4acc-97b0-2f5c106c1189.jpg",
+      "page": 16
     },
     {
       "id": "4e2f5e52b7be",
@@ -3390,7 +3390,7 @@
     },
     {
       "id": "4ec41d35d75a",
-      "kaufdaId": "5dc043b3-0b05-4781-bd98-a174fb0a8f58",
+      "kaufdaId": "510b9ecd-8a74-4d74-946f-ea172333559d",
       "name": "Passionsfrucht",
       "variants": [],
       "brand": null,
@@ -3407,7 +3407,7 @@
         "Obst",
         "Passionsfrucht"
       ],
-      "image": "https://content-media.bonial.biz/5dc043b3-0b05-4781-bd98-a174fb0a8f58/f8b4cd70-0d72-41d3-a187-3a7084d0c7f0.jpg",
+      "image": "https://content-media.bonial.biz/510b9ecd-8a74-4d74-946f-ea172333559d/f8b4cd70-0d72-41d3-a187-3a7084d0c7f0.jpg",
       "page": 3
     },
     {
@@ -3564,7 +3564,7 @@
     },
     {
       "id": "537c262ff3cb",
-      "kaufdaId": "5580f2df-0dd3-4ee1-8463-93093e6539c7",
+      "kaufdaId": "9eab7c27-a649-4116-ade7-4ee3e6fc8f5b",
       "name": "Rote Paprika",
       "variants": [],
       "brand": null,
@@ -3581,7 +3581,7 @@
         "Gemüse",
         "Paprika"
       ],
-      "image": "https://content-media.bonial.biz/5580f2df-0dd3-4ee1-8463-93093e6539c7/a6c82ee3-307a-413c-8f7f-51841898207a.jpg",
+      "image": "https://content-media.bonial.biz/9eab7c27-a649-4116-ade7-4ee3e6fc8f5b/a6c82ee3-307a-413c-8f7f-51841898207a.jpg",
       "page": 4
     },
     {
@@ -3660,7 +3660,7 @@
     },
     {
       "id": "5954d5241054",
-      "kaufdaId": "accd1fa1-6ecc-475b-835c-7e447d30b9e2",
+      "kaufdaId": "90c7a78b-12c5-48d4-a39b-440b111b73f8",
       "name": "Sammy’s Super Sandwich Vollkorn",
       "variants": [
         "Sammy’s Super Sandwich Super-Soft"
@@ -3678,7 +3678,7 @@
         "Marken Lebensmittel",
         "Harry"
       ],
-      "image": "https://content-media.bonial.biz/accd1fa1-6ecc-475b-835c-7e447d30b9e2/9399a063-999e-411f-a38b-f25a412b3bf6.jpg",
+      "image": "https://content-media.bonial.biz/90c7a78b-12c5-48d4-a39b-440b111b73f8/9399a063-999e-411f-a38b-f25a412b3bf6.jpg",
       "page": 8
     },
     {
@@ -3775,7 +3775,7 @@
     },
     {
       "id": "5d8874883457",
-      "kaufdaId": "530182bd-c8a6-42b2-b9dd-7969b5d8d732",
+      "kaufdaId": "a271c4f5-bebf-403f-98fa-bd97a76aad09",
       "name": "Bunte Tafelbirnen",
       "variants": [],
       "brand": "REWE Beste Wahl",
@@ -3792,12 +3792,12 @@
         "Obst",
         "Kernobst"
       ],
-      "image": "https://content-media.bonial.biz/530182bd-c8a6-42b2-b9dd-7969b5d8d732/9e110e03-34ec-430c-9ecd-8641872bef2a.jpg",
+      "image": "https://content-media.bonial.biz/a271c4f5-bebf-403f-98fa-bd97a76aad09/9e110e03-34ec-430c-9ecd-8641872bef2a.jpg",
       "page": 3
     },
     {
       "id": "5dbed34e6d52",
-      "kaufdaId": "af757c81-4a78-4262-a372-9850f7abba28",
+      "kaufdaId": "11189573-895b-41ff-a4f2-cb7b44ca5d52",
       "name": "Holländer Scheiben",
       "variants": [
         "Müritzer Scheiben"
@@ -3815,8 +3815,8 @@
         "Marken Lebensmittel",
         "Milram"
       ],
-      "image": "https://content-media.bonial.biz/af757c81-4a78-4262-a372-9850f7abba28/20e53735-b03e-40cc-bc6e-4b1440644400.jpg",
-      "page": 13
+      "image": "https://content-media.bonial.biz/11189573-895b-41ff-a4f2-cb7b44ca5d52/f7118ffe-32d1-4e6f-b4ce-419cac88d257.jpg",
+      "page": 6
     },
     {
       "id": "5dd6b1989936",
@@ -3893,7 +3893,7 @@
     },
     {
       "id": "5effd15dd752",
-      "kaufdaId": "3a866f45-d03c-4715-a441-e62e7f818822",
+      "kaufdaId": "dae64760-d5bf-44c1-9830-a8d70071057e",
       "name": "Einblatt",
       "variants": [],
       "brand": "REWE Beste Wahl",
@@ -3915,7 +3915,7 @@
         "Grünpflanzen",
         "Spathiphyllum"
       ],
-      "image": "https://content-media.bonial.biz/3a866f45-d03c-4715-a441-e62e7f818822/c71555c4-9135-4fcb-b54a-20e4f3b4921f.jpg",
+      "image": "https://content-media.bonial.biz/dae64760-d5bf-44c1-9830-a8d70071057e/1f5fddd7-63b7-4fcf-8974-460d4366b7e8.jpg",
       "page": 4
     },
     {
@@ -3990,7 +3990,7 @@
     },
     {
       "id": "6098403e2760",
-      "kaufdaId": "a0f44b66-74fb-44cf-b706-deafbf7d8431",
+      "kaufdaId": "d8d9bb1f-c8e4-4d6d-9727-efb7a84abafc",
       "name": "Sellerie mit Grün",
       "variants": [],
       "brand": "REWE Regional",
@@ -4008,7 +4008,7 @@
         "Wurzelgemüse",
         "Sellerie"
       ],
-      "image": "https://content-media.bonial.biz/a0f44b66-74fb-44cf-b706-deafbf7d8431/a57f5137-c8c2-437a-b200-ed6d9d641efa.jpg",
+      "image": "https://content-media.bonial.biz/d8d9bb1f-c8e4-4d6d-9727-efb7a84abafc/561a5a8f-8713-46a0-9055-33486a1ae0c0.jpg",
       "page": 4
     },
     {
@@ -4037,7 +4037,7 @@
     },
     {
       "id": "60b2db6cb1d4",
-      "kaufdaId": "c2dc168a-a318-42dd-845c-105fb7eccbf5",
+      "kaufdaId": "8a148fd7-c1ed-469e-a5d8-73c85288a3c5",
       "name": "Nektarinen",
       "variants": [],
       "brand": null,
@@ -4054,7 +4054,7 @@
         "Obst",
         "Steinobst"
       ],
-      "image": "https://content-media.bonial.biz/c2dc168a-a318-42dd-845c-105fb7eccbf5/3f65c2e2-f159-4fa2-8e7f-7ba64b02de8a.jpg",
+      "image": "https://content-media.bonial.biz/8a148fd7-c1ed-469e-a5d8-73c85288a3c5/3f65c2e2-f159-4fa2-8e7f-7ba64b02de8a.jpg",
       "page": 3
     },
     {
@@ -4573,7 +4573,7 @@
     },
     {
       "id": "69f9ee68f8db",
-      "kaufdaId": "2a3a4627-95e8-41c7-8b9b-606ba57d579e",
+      "kaufdaId": "3f3f52bb-0cbe-4173-ad88-5074f0028d5d",
       "name": "SunGold Kiwi",
       "variants": [],
       "brand": "Zespri",
@@ -4589,7 +4589,7 @@
         "Marken Lebensmittel",
         "Zespri"
       ],
-      "image": "https://content-media.bonial.biz/2a3a4627-95e8-41c7-8b9b-606ba57d579e/c2c92922-3c0d-4a32-a9a3-12f3116ac031.jpg",
+      "image": "https://content-media.bonial.biz/3f3f52bb-0cbe-4173-ad88-5074f0028d5d/c2c92922-3c0d-4a32-a9a3-12f3116ac031.jpg",
       "page": 3
     },
     {
@@ -4686,7 +4686,7 @@
     },
     {
       "id": "6e4e4c2a825f",
-      "kaufdaId": "36fa6c81-ce44-4173-a1f7-a7bcaf62435d",
+      "kaufdaId": "b41f8cde-347d-4813-ae77-68d3bce1f087",
       "name": "Laugenbogen",
       "variants": [],
       "brand": null,
@@ -4703,12 +4703,12 @@
         "Backwaren",
         "Gebäck"
       ],
-      "image": "https://content-media.bonial.biz/36fa6c81-ce44-4173-a1f7-a7bcaf62435d/8366d2f2-de93-4e77-959d-88cd2b7ba96c.jpg",
+      "image": "https://content-media.bonial.biz/b41f8cde-347d-4813-ae77-68d3bce1f087/8366d2f2-de93-4e77-959d-88cd2b7ba96c.jpg",
       "page": 7
     },
     {
       "id": "6e7536055d34",
-      "kaufdaId": "80f28702-f26a-4860-81de-6e8fbb7ffb2e",
+      "kaufdaId": "6647753e-546a-49ca-b3ec-72e9946f5791",
       "name": "Helle Tafeltrauben",
       "variants": [],
       "brand": null,
@@ -4724,7 +4724,7 @@
         "Zustand",
         "kernlos"
       ],
-      "image": "https://content-media.bonial.biz/80f28702-f26a-4860-81de-6e8fbb7ffb2e/f5ee04bf-b2ab-46ab-85e1-22fc0ad40b6e.jpg",
+      "image": "https://content-media.bonial.biz/6647753e-546a-49ca-b3ec-72e9946f5791/f5ee04bf-b2ab-46ab-85e1-22fc0ad40b6e.jpg",
       "page": 9
     },
     {
@@ -4774,7 +4774,7 @@
     },
     {
       "id": "6f70f103af40",
-      "kaufdaId": "e5834237-2c34-4a56-828c-ed0bd84cf0a2",
+      "kaufdaId": "14a5e742-a52f-4504-9da5-d455b8b45b62",
       "name": "Kaiserbrötchen",
       "variants": [],
       "brand": "REWE frei von",
@@ -4791,8 +4791,8 @@
         "Für Allergiker",
         "glutenfrei"
       ],
-      "image": "https://content-media.bonial.biz/e5834237-2c34-4a56-828c-ed0bd84cf0a2/c0bd13cd-90d4-4c2a-827b-c6147837fbea.jpg",
-      "page": 16
+      "image": "https://content-media.bonial.biz/14a5e742-a52f-4504-9da5-d455b8b45b62/c0bd13cd-90d4-4c2a-827b-c6147837fbea.jpg",
+      "page": 17
     },
     {
       "id": "6f7bf23c3dec",
@@ -4845,7 +4845,7 @@
     },
     {
       "id": "707a4b81b097",
-      "kaufdaId": "b1e57fb4-85ed-48af-834b-bdaddb5fb02c",
+      "kaufdaId": "fc133ea2-729c-4fd6-990c-82b3c5ae1b80",
       "name": "Butter-Croissant",
       "variants": [],
       "brand": "BROT & MEHR",
@@ -4861,7 +4861,7 @@
         "Marken Lebensmittel",
         "Brot & Mehr"
       ],
-      "image": "https://content-media.bonial.biz/b1e57fb4-85ed-48af-834b-bdaddb5fb02c/main.jpg",
+      "image": "https://content-media.bonial.biz/fc133ea2-729c-4fd6-990c-82b3c5ae1b80/main.jpg",
       "page": 7
     },
     {
@@ -5025,7 +5025,7 @@
     },
     {
       "id": "751a66eaf7e9",
-      "kaufdaId": "08730b54-bf53-4096-b057-988bd750dd17",
+      "kaufdaId": "b5e9bdd7-325e-4ee7-a078-0d52e112d33b",
       "name": "Softwaffeln",
       "variants": [],
       "brand": "REWE frei von",
@@ -5042,8 +5042,8 @@
         "Für Allergiker",
         "glutenfrei"
       ],
-      "image": "https://content-media.bonial.biz/08730b54-bf53-4096-b057-988bd750dd17/d48156f8-46b1-420d-aa30-5d4ab62fd1b0.jpg",
-      "page": 16
+      "image": "https://content-media.bonial.biz/b5e9bdd7-325e-4ee7-a078-0d52e112d33b/947f8d97-5e4b-468a-8527-ee46265b249c.jpg",
+      "page": 17
     },
     {
       "id": "754b6474c7b1",
@@ -5194,25 +5194,25 @@
     },
     {
       "id": "7afd1a534249",
-      "kaufdaId": "a30c5ddd-966c-4a18-a474-1414753dda46",
+      "kaufdaId": "788e0e3c-a1bc-4d49-a38a-0dc2404b5521",
       "name": "Fusion Peanuts",
       "variants": [
         "Erdnüsse"
       ],
       "brand": "ültje",
-      "description": "Paprika Flamed Style, je 150-g-Btl. geröstet & gesalzen, je 180-g-Dose",
+      "description": "Paprika Flamed Style 150-g-Btl. geröstet & gesalzen 180-g-Dose",
       "price": 1.69,
       "priceMax": null,
-      "grundpreisText": "1 kg = 11.27",
+      "grundpreisText": "(1 kg = 11.27)",
       "dealType": "SALES_PRICE",
-      "dealText": "Fusion Peanuts",
+      "dealText": null,
       "categoryPath": [
         "Lebensmittel und Getränke",
         "Marken",
         "Marken Lebensmittel",
         "ültje"
       ],
-      "image": "https://content-media.bonial.biz/a30c5ddd-966c-4a18-a474-1414753dda46/bf266a37-8b11-4650-8528-750bacad4ab4.jpg",
+      "image": "https://content-media.bonial.biz/788e0e3c-a1bc-4d49-a38a-0dc2404b5521/7f5cd78f-7012-45d2-bfb4-91d29f3a10d5.jpg",
       "page": 10
     },
     {
@@ -5240,7 +5240,7 @@
     },
     {
       "id": "7b9562d756c0",
-      "kaufdaId": "84bb40a6-a523-49d0-a4b5-8b9c6829275c",
+      "kaufdaId": "1fac9310-ee0f-4460-b8cd-3d63e86dec49",
       "name": "Spülmittel",
       "variants": [],
       "brand": "Pril",
@@ -5258,8 +5258,8 @@
         "Reinigungsmittel",
         "Spülmittel"
       ],
-      "image": "https://content-media.bonial.biz/84bb40a6-a523-49d0-a4b5-8b9c6829275c/eef177cf-f88b-459b-a4cc-51a621a1aa04.jpg",
-      "page": 22
+      "image": "https://content-media.bonial.biz/1fac9310-ee0f-4460-b8cd-3d63e86dec49/dacf39ca-2f63-43cf-aa8c-f69c2109a2d3.jpg",
+      "page": 16
     },
     {
       "id": "7bde9714f056",
@@ -5404,7 +5404,7 @@
     },
     {
       "id": "7e1c5eea8728",
-      "kaufdaId": "f9900626-61e7-486a-b865-4cc28a51640c",
+      "kaufdaId": "5cf8a07e-bcd6-4d31-afd2-ad5f8aae5f6f",
       "name": "Butter",
       "variants": [],
       "brand": "Landliebe",
@@ -5420,12 +5420,12 @@
         "Marken Lebensmittel",
         "Landliebe"
       ],
-      "image": "https://content-media.bonial.biz/f9900626-61e7-486a-b865-4cc28a51640c/5ac950da-b916-4c13-afa4-7433c2764499.jpg",
+      "image": "https://content-media.bonial.biz/5cf8a07e-bcd6-4d31-afd2-ad5f8aae5f6f/5ac950da-b916-4c13-afa4-7433c2764499.jpg",
       "page": 1
     },
     {
       "id": "7e786cfd902b",
-      "kaufdaId": "f9da7ae6-fa5e-4615-84c6-aa54d5178d04",
+      "kaufdaId": "8834ca4d-ee33-4d5a-be63-8ca6bc67d1e9",
       "name": "Wildkräutersalat",
       "variants": [
         "Kopfsalat"
@@ -5443,12 +5443,12 @@
         "Marken Lebensmittel",
         "Bonduelle"
       ],
-      "image": "https://content-media.bonial.biz/f9da7ae6-fa5e-4615-84c6-aa54d5178d04/82ce9b3c-405c-4209-a426-f960f3c2a2a1.jpg",
-      "page": 11
+      "image": "https://content-media.bonial.biz/8834ca4d-ee33-4d5a-be63-8ca6bc67d1e9/52c0ae59-4d7d-4bcf-a24e-2ff7f17f9fef.jpg",
+      "page": 3
     },
     {
       "id": "7e8d6b3de330",
-      "kaufdaId": "a1e8aabd-a6d3-475c-9701-5ba757160797",
+      "kaufdaId": "f7e8d5db-44ea-499e-8ddb-216e595f0528",
       "name": "Schaumfestiger",
       "variants": [
         "Haarspray"
@@ -5468,8 +5468,8 @@
         "Haarpflege",
         "Haarstylingprodukt"
       ],
-      "image": "https://content-media.bonial.biz/a1e8aabd-a6d3-475c-9701-5ba757160797/264021b5-4580-406a-b04a-e370245aa5e1.jpg",
-      "page": 22
+      "image": "https://content-media.bonial.biz/f7e8d5db-44ea-499e-8ddb-216e595f0528/264021b5-4580-406a-b04a-e370245aa5e1.jpg",
+      "page": 16
     },
     {
       "id": "8139d9932d42",
@@ -5492,7 +5492,7 @@
     },
     {
       "id": "815916bbf77a",
-      "kaufdaId": "7bdd1392-7634-4964-8710-63d0f595cb0e",
+      "kaufdaId": "1e9e1a89-02d8-4ecf-9925-a514d438dd59",
       "name": "Weichspüler Aromatherapie",
       "variants": [
         "Weichspüler Aprilfrisch"
@@ -5511,8 +5511,8 @@
         "Textilreinigung",
         "Weichspüler"
       ],
-      "image": "https://content-media.bonial.biz/7bdd1392-7634-4964-8710-63d0f595cb0e/dee109ab-2cdb-41f3-84e8-518285378d9e.jpg",
-      "page": 22
+      "image": "https://content-media.bonial.biz/1e9e1a89-02d8-4ecf-9925-a514d438dd59/dee109ab-2cdb-41f3-84e8-518285378d9e.jpg",
+      "page": 16
     },
     {
       "id": "81c3d863e227",
@@ -5726,11 +5726,11 @@
     },
     {
       "id": "878ef911111f",
-      "kaufdaId": "1aa5077b-2f3b-40ae-8a0a-dc1c856f40ab",
+      "kaufdaId": "6f8e2a4d-f10f-4ba9-b310-685f6d81bb52",
       "name": "Simit",
       "variants": [],
       "brand": "Ibis",
-      "description": "230 g Pckg.",
+      "description": "230-g-Pckg.",
       "price": 2.39,
       "priceMax": null,
       "grundpreisText": "(1 kg = 10.39)",
@@ -5742,8 +5742,8 @@
         "Marken Lebensmittel",
         "Ibis"
       ],
-      "image": "https://content-media.bonial.biz/1aa5077b-2f3b-40ae-8a0a-dc1c856f40ab/6a1a1790-cfd1-43f8-9907-f0aff4fd551f.jpg",
-      "page": 13
+      "image": "https://content-media.bonial.biz/6f8e2a4d-f10f-4ba9-b310-685f6d81bb52/62011152-0e89-4f86-9cd8-b112df6ea65b.jpg",
+      "page": 6
     },
     {
       "id": "87d602e16292",
@@ -5768,7 +5768,7 @@
     },
     {
       "id": "880ec3371b34",
-      "kaufdaId": "07332862-08d2-4e05-87af-8198fcdf51a9",
+      "kaufdaId": "e3e75f9d-fa29-400f-9f34-eae141d22659",
       "name": "Choco Minis",
       "variants": [
         "Mini Cookies"
@@ -5786,7 +5786,7 @@
         "Marken Lebensmittel",
         "Leibniz"
       ],
-      "image": "https://content-media.bonial.biz/07332862-08d2-4e05-87af-8198fcdf51a9/ee5837b6-0838-45a0-9745-c99f1b8cf0c7.jpg",
+      "image": "https://content-media.bonial.biz/e3e75f9d-fa29-400f-9f34-eae141d22659/10028a2a-4f4b-4a49-99e9-4acb7babfe14.jpg",
       "page": 10
     },
     {
@@ -5942,7 +5942,7 @@
     },
     {
       "id": "8e26577452a3",
-      "kaufdaId": "15aa2726-a413-4839-b5e1-0809f8853574",
+      "kaufdaId": "5384f89a-6249-4c38-ae20-16135ce85d4b",
       "name": "Grill- und Pfannenkäse Kräuter",
       "variants": [],
       "brand": "Gazi",
@@ -5954,14 +5954,12 @@
       "dealText": null,
       "categoryPath": [
         "Lebensmittel und Getränke",
-        "Produkte",
-        "Lebensmittel",
-        "Milchprodukte",
-        "Käse",
-        "Pfannenkäse"
+        "Marken",
+        "Marken Lebensmittel",
+        "Frico"
       ],
-      "image": "https://content-media.bonial.biz/15aa2726-a413-4839-b5e1-0809f8853574/a9a27e55-de2b-4cf4-8beb-3bdb78fa2997.jpg",
-      "page": 13
+      "image": "https://content-media.bonial.biz/5384f89a-6249-4c38-ae20-16135ce85d4b/main.jpg",
+      "page": 6
     },
     {
       "id": "8ec1f8f9608c",
@@ -5985,7 +5983,7 @@
     },
     {
       "id": "8fec6d94a45d",
-      "kaufdaId": "c9513d6e-64a6-4216-bb1f-2f7a1ceb6251",
+      "kaufdaId": "cffd0a29-bb3f-4ab7-821d-b97f773d1cd0",
       "name": "Bio-Laugensticks",
       "variants": [],
       "brand": "REWE frei von",
@@ -6002,12 +6000,12 @@
         "Knabberzeug",
         "Sticks"
       ],
-      "image": "https://content-media.bonial.biz/c9513d6e-64a6-4216-bb1f-2f7a1ceb6251/e89ee89d-b4e3-43df-aa66-0d6b07eb634d.jpg",
-      "page": 16
+      "image": "https://content-media.bonial.biz/cffd0a29-bb3f-4ab7-821d-b97f773d1cd0/c9132bde-d063-4d36-a872-61d20bc91b3e.jpg",
+      "page": 17
     },
     {
       "id": "901c729799ca",
-      "kaufdaId": "cc7ecdec-8328-4dd7-90bf-47c95a26ec78",
+      "kaufdaId": "879b60a0-de11-4acc-b30d-008cafb932ec",
       "name": "Rindfleischsalami",
       "variants": [],
       "brand": "Metten",
@@ -6023,16 +6021,16 @@
         "Marken Lebensmittel",
         "Metten"
       ],
-      "image": "https://content-media.bonial.biz/cc7ecdec-8328-4dd7-90bf-47c95a26ec78/c6ac3f4b-703f-4fea-9c83-139028253222.jpg",
-      "page": 6
+      "image": "https://content-media.bonial.biz/879b60a0-de11-4acc-b30d-008cafb932ec/b2564aa2-d9c9-450b-ab95-97d349f74ad3.jpg",
+      "page": 5
     },
     {
       "id": "90c120b106b0",
-      "kaufdaId": "848925b5-e56f-4b70-9b0b-3c0bb2042c34",
+      "kaufdaId": "61472b28-a18e-4ccd-b146-9b6b8af09844",
       "name": "Iced Coffee",
       "variants": [],
       "brand": "Mövenpick",
-      "description": "koffeinhaltig, versch. Sorten, 220-ml-Becher",
+      "description": "koffeinhaltig, versch. Sorten 220-ml-Becher",
       "price": 1.19,
       "priceMax": null,
       "grundpreisText": "(1 l = 5.41)",
@@ -6044,8 +6042,8 @@
         "Marken Lebensmittel",
         "Mövenpick"
       ],
-      "image": "https://content-media.bonial.biz/848925b5-e56f-4b70-9b0b-3c0bb2042c34/ff89fdcd-8fed-423c-bf44-a918a7fedc44.jpg",
-      "page": 14
+      "image": "https://content-media.bonial.biz/61472b28-a18e-4ccd-b146-9b6b8af09844/3388b7a1-63d8-42a0-9e6a-9940ddc0246e.jpg",
+      "page": 11
     },
     {
       "id": "9127e4b748f4",
@@ -6072,7 +6070,7 @@
     },
     {
       "id": "91d12420ed56",
-      "kaufdaId": "10824a91-af52-4e2d-8ade-cf8c39860c0c",
+      "kaufdaId": "5599eedc-b2bd-40e7-a69a-9036b0ccb987",
       "name": "Krakauer",
       "variants": [
         "Krakauer mit Käse"
@@ -6093,8 +6091,8 @@
         "Würstchen",
         "Krakauer"
       ],
-      "image": "https://content-media.bonial.biz/10824a91-af52-4e2d-8ade-cf8c39860c0c/547d33e5-215e-457d-a62f-93e35b38e3cf.jpg",
-      "page": 13
+      "image": "https://content-media.bonial.biz/5599eedc-b2bd-40e7-a69a-9036b0ccb987/bdc01779-d88a-42fd-ab17-b0e54284d03a.jpg",
+      "page": 6
     },
     {
       "id": "920fc11f4243",
@@ -6193,7 +6191,7 @@
     },
     {
       "id": "9284843ef22d",
-      "kaufdaId": "7009b92c-df85-469f-89a0-92877f9e9195",
+      "kaufdaId": "944df6fe-39c8-4e2b-a8bf-f5132bfd90e0",
       "name": "Dönerbrot",
       "variants": [],
       "brand": "Mangal",
@@ -6210,7 +6208,7 @@
         "Backwaren",
         "Brot"
       ],
-      "image": "https://content-media.bonial.biz/7009b92c-df85-469f-89a0-92877f9e9195/8cdb20ac-d851-4517-8bab-676e2ef4db2b.jpg",
+      "image": "https://content-media.bonial.biz/944df6fe-39c8-4e2b-a8bf-f5132bfd90e0/8cdb20ac-d851-4517-8bab-676e2ef4db2b.jpg",
       "page": 8
     },
     {
@@ -6312,7 +6310,7 @@
     },
     {
       "id": "96faba7ddc9c",
-      "kaufdaId": "cbdabcc2-9221-41e4-9d98-29f40a43819d",
+      "kaufdaId": "6c1f6c94-124a-46e7-ab59-69c8c60bf204",
       "name": "Kinder Bueno",
       "variants": [
         "Kinder Country"
@@ -6330,7 +6328,7 @@
         "Marken Lebensmittel",
         "Ferrero"
       ],
-      "image": "https://content-media.bonial.biz/cbdabcc2-9221-41e4-9d98-29f40a43819d/2e85763b-7d50-4262-8fff-f2389abd5f37.jpg",
+      "image": "https://content-media.bonial.biz/6c1f6c94-124a-46e7-ab59-69c8c60bf204/2e85763b-7d50-4262-8fff-f2389abd5f37.jpg",
       "page": 1
     },
     {
@@ -6403,7 +6401,7 @@
     },
     {
       "id": "9809c89427c7",
-      "kaufdaId": "0aa6ea86-c091-45cf-9d52-d6eaa710ddeb",
+      "kaufdaId": "7d8ea809-6d86-404b-b625-1280ce7e3c03",
       "name": "Rahmjoghurt",
       "variants": [],
       "brand": "Weihenstephan",
@@ -6419,8 +6417,8 @@
         "Marken Lebensmittel",
         "Weihenstephan"
       ],
-      "image": "https://content-media.bonial.biz/0aa6ea86-c091-45cf-9d52-d6eaa710ddeb/4a1bc69e-789b-442d-ae76-2586101ca90d.jpg",
-      "page": 14
+      "image": "https://content-media.bonial.biz/7d8ea809-6d86-404b-b625-1280ce7e3c03/4a1bc69e-789b-442d-ae76-2586101ca90d.jpg",
+      "page": 11
     },
     {
       "id": "9903eb26e11c",
@@ -6446,7 +6444,7 @@
     },
     {
       "id": "99250d26dced",
-      "kaufdaId": "be677c54-6156-416a-81c0-c1600a5fc53d",
+      "kaufdaId": "ee184f8d-d05e-4e82-a7ad-e14d12b1c8d9",
       "name": "Schnüre",
       "variants": [
         "Saure Drachenzungen"
@@ -6464,8 +6462,8 @@
         "Marken Lebensmittel",
         "Hitschler"
       ],
-      "image": "https://content-media.bonial.biz/be677c54-6156-416a-81c0-c1600a5fc53d/4c3b9d8f-9e2e-4e62-81b8-a43210faf05c.jpg",
-      "page": 20
+      "image": "https://content-media.bonial.biz/ee184f8d-d05e-4e82-a7ad-e14d12b1c8d9/34cac01d-c21d-4585-b3d3-3e06b050efa4.jpg",
+      "page": 14
     },
     {
       "id": "9a0948568881",
@@ -6517,7 +6515,7 @@
     },
     {
       "id": "9b3fc31820e3",
-      "kaufdaId": "5149da86-170d-49e8-8930-dc0af9d02355",
+      "kaufdaId": "45b7de52-5246-4127-a934-764570ff6294",
       "name": "Burgerstyle²",
       "variants": [],
       "brand": null,
@@ -6528,7 +6526,7 @@
       "dealType": "SALES_PRICE",
       "dealText": null,
       "categoryPath": [],
-      "image": "https://content-media.bonial.biz/5149da86-170d-49e8-8930-dc0af9d02355/7907e805-610a-4f5b-92da-02fec08c4dbe.jpg",
+      "image": "https://content-media.bonial.biz/45b7de52-5246-4127-a934-764570ff6294/7907e805-610a-4f5b-92da-02fec08c4dbe.jpg",
       "page": 7
     },
     {
@@ -6623,7 +6621,7 @@
     },
     {
       "id": "9c09af45618f",
-      "kaufdaId": "b4e6d376-2518-4b2a-be03-f1a0d9e0c360",
+      "kaufdaId": "3452e8c8-a15b-49e7-8bc2-bc6cc7a04cc4",
       "name": "Original Ungarische Salami",
       "variants": [],
       "brand": "Pick",
@@ -6641,7 +6639,7 @@
         "Wurst",
         "Salami"
       ],
-      "image": "https://content-media.bonial.biz/b4e6d376-2518-4b2a-be03-f1a0d9e0c360/bd98ff2c-8c88-412b-8e12-3735b5cdfa1f.jpg",
+      "image": "https://content-media.bonial.biz/3452e8c8-a15b-49e7-8bc2-bc6cc7a04cc4/bd98ff2c-8c88-412b-8e12-3735b5cdfa1f.jpg",
       "page": 9
     },
     {
@@ -6670,7 +6668,7 @@
     },
     {
       "id": "9c6051f5aedf",
-      "kaufdaId": "8faae9d9-985d-45c6-8c7d-d34fbf34d13e",
+      "kaufdaId": "c11c92a7-67fe-44ff-a8ef-550c5b855bec",
       "name": "Revelations Mousse mit Lachs",
       "variants": [
         "Revelations Mousse mit Huhn"
@@ -6687,8 +6685,8 @@
         "Marken für Tiere",
         "Gourmet"
       ],
-      "image": "https://content-media.bonial.biz/8faae9d9-985d-45c6-8c7d-d34fbf34d13e/9571106f-df6a-40c4-9b10-26e1a002eaf9.jpg",
-      "page": 24
+      "image": "https://content-media.bonial.biz/c11c92a7-67fe-44ff-a8ef-550c5b855bec/84828642-5270-4246-8750-4c2527933b11.jpg",
+      "page": 15
     },
     {
       "id": "9ce8b0c4026b",
@@ -6894,7 +6892,7 @@
     },
     {
       "id": "a034562abe62",
-      "kaufdaId": "39520cbb-9e3a-41c9-bba1-90411add0870",
+      "kaufdaId": "30fd1c47-332c-4f7e-9432-8da1b0dddd96",
       "name": "Gouda jung",
       "variants": [],
       "brand": "Frico",
@@ -6910,7 +6908,7 @@
         "Marken Lebensmittel",
         "Frico"
       ],
-      "image": "https://content-media.bonial.biz/39520cbb-9e3a-41c9-bba1-90411add0870/cf7b81fe-2e91-4df7-84bc-75f355eae32b.jpg",
+      "image": "https://content-media.bonial.biz/30fd1c47-332c-4f7e-9432-8da1b0dddd96/33750611-d318-4733-94a7-94fea6e67693.jpg",
       "page": 6
     },
     {
@@ -7027,7 +7025,7 @@
     },
     {
       "id": "a4e166068f93",
-      "kaufdaId": "338d2669-8e52-4cf9-8ea8-ec736480b902",
+      "kaufdaId": "62098365-8b7b-46d4-87c1-de3e9adab4c0",
       "name": "Ravioli",
       "variants": [],
       "brand": "Maggi",
@@ -7046,8 +7044,8 @@
         "Nudeln",
         "Ravioli"
       ],
-      "image": "https://content-media.bonial.biz/338d2669-8e52-4cf9-8ea8-ec736480b902/42ce56a9-a8f3-44ed-ab5d-6b50a213b8d8.jpg",
-      "page": 19
+      "image": "https://content-media.bonial.biz/62098365-8b7b-46d4-87c1-de3e9adab4c0/d4d7d805-9dcd-4c66-a8dd-b7e6f7873f60.jpg",
+      "page": 13
     },
     {
       "id": "a5002cbc301f",
@@ -7073,7 +7071,7 @@
     },
     {
       "id": "a528078d9c80",
-      "kaufdaId": "4ea26ad6-4905-4b98-842a-dd81f1abaa7a",
+      "kaufdaId": "65ec880d-a584-45de-91a8-895a007acbda",
       "name": "Kaffeepads Klassisch",
       "variants": [
         "Kaffeepads Caffè Crema"
@@ -7094,12 +7092,12 @@
         "Kaffeevariationen",
         "Caffè Crema"
       ],
-      "image": "https://content-media.bonial.biz/4ea26ad6-4905-4b98-842a-dd81f1abaa7a/c8af894d-d8b8-4d05-8c5d-9ea3a51d000f.jpg",
-      "page": 20
+      "image": "https://content-media.bonial.biz/65ec880d-a584-45de-91a8-895a007acbda/635840bd-cd39-4baa-aad6-4b05a31669c3.jpg",
+      "page": 14
     },
     {
       "id": "a52f470a5d48",
-      "kaufdaId": "41d8b84d-26ac-4135-b9ea-dfc987ebb1a5",
+      "kaufdaId": "721a0a86-5abb-4036-b64c-8e5140734e94",
       "name": "Mühlen Schinken",
       "variants": [],
       "brand": "Rügenwalder Mühle",
@@ -7117,12 +7115,12 @@
         "Schinken",
         "Kochschinken"
       ],
-      "image": "https://content-media.bonial.biz/41d8b84d-26ac-4135-b9ea-dfc987ebb1a5/3e0750f5-3e6b-467d-a195-9f5f84248ec8.jpg",
+      "image": "https://content-media.bonial.biz/721a0a86-5abb-4036-b64c-8e5140734e94/3e0750f5-3e6b-467d-a195-9f5f84248ec8.jpg",
       "page": 1
     },
     {
       "id": "a54b7867cd14",
-      "kaufdaId": "4378ba53-245a-493a-b6e0-65f19ed7e5a8",
+      "kaufdaId": "5dd3d2d4-91f2-44f1-b9bd-069152af6922",
       "name": "Frucht Zwerge",
       "variants": [],
       "brand": "Danone",
@@ -7138,8 +7136,8 @@
         "Marken Lebensmittel",
         "Danone"
       ],
-      "image": "https://content-media.bonial.biz/4378ba53-245a-493a-b6e0-65f19ed7e5a8/b374a42a-de5f-4c4e-a44d-0419d42e93b3.jpg",
-      "page": 14
+      "image": "https://content-media.bonial.biz/5dd3d2d4-91f2-44f1-b9bd-069152af6922/b374a42a-de5f-4c4e-a44d-0419d42e93b3.jpg",
+      "page": 11
     },
     {
       "id": "a5710215f642",
@@ -7190,7 +7188,7 @@
     },
     {
       "id": "a63fd18a5a7a",
-      "kaufdaId": "aafcdbd6-78d1-4583-a5c6-225e1b83a2d9",
+      "kaufdaId": "5fcb0da4-fbc4-4038-be3d-bba5817a7853",
       "name": "Bio-Knusperbrot Mais Glutenfrei",
       "variants": [],
       "brand": "REWE frei von",
@@ -7207,8 +7205,8 @@
         "Für Allergiker",
         "glutenfrei"
       ],
-      "image": "https://content-media.bonial.biz/aafcdbd6-78d1-4583-a5c6-225e1b83a2d9/90fbed13-9305-42b8-bf30-f89ba64c62db.jpg",
-      "page": 16
+      "image": "https://content-media.bonial.biz/5fcb0da4-fbc4-4038-be3d-bba5817a7853/3ab70314-1e1a-4319-9d7e-e39d89add570.jpg",
+      "page": 17
     },
     {
       "id": "a70ac6969844",
@@ -7319,7 +7317,7 @@
     },
     {
       "id": "a8b3183848b2",
-      "kaufdaId": "e2491f46-c032-4aa0-9c49-4df7ed378775",
+      "kaufdaId": "aedc4a47-1616-4fc7-97bc-06a81c0ac872",
       "name": "Dürüm Döner Brot",
       "variants": [],
       "brand": null,
@@ -7336,7 +7334,7 @@
         "Fertiggerichte",
         "Döner"
       ],
-      "image": "https://content-media.bonial.biz/e2491f46-c032-4aa0-9c49-4df7ed378775/e30dc707-c42a-4801-bf39-6a7aa9da3004.jpg",
+      "image": "https://content-media.bonial.biz/aedc4a47-1616-4fc7-97bc-06a81c0ac872/e30dc707-c42a-4801-bf39-6a7aa9da3004.jpg",
       "page": 8
     },
     {
@@ -7483,7 +7481,7 @@
     },
     {
       "id": "ae0564975076",
-      "kaufdaId": "4dfa4412-9daa-4dc0-bd89-e5b4cd35b966",
+      "kaufdaId": "7cbe94f5-a689-4a74-bf12-818dc2b415fb",
       "name": "Gold",
       "variants": [
         "Perle"
@@ -7500,8 +7498,8 @@
         "Marken für Tiere",
         "Gourmet"
       ],
-      "image": "https://content-media.bonial.biz/4dfa4412-9daa-4dc0-bd89-e5b4cd35b966/686be465-16c3-4013-9116-23e7fc45419a.jpg",
-      "page": 24
+      "image": "https://content-media.bonial.biz/7cbe94f5-a689-4a74-bf12-818dc2b415fb/2ce3412b-fa03-4baa-890a-505906a8fd01.jpg",
+      "page": 15
     },
     {
       "id": "ae83faae1637",
@@ -7676,7 +7674,7 @@
     },
     {
       "id": "b0b0e76d57af",
-      "kaufdaId": "d7299038-e5f7-495f-bb44-645b02535258",
+      "kaufdaId": "2d350d42-1314-411d-9bd1-93832f322875",
       "name": "Mozzarella Steinofenbrötchen",
       "variants": [],
       "brand": null,
@@ -7694,12 +7692,12 @@
         "Gebäck",
         "Feingebäck"
       ],
-      "image": "https://content-media.bonial.biz/d7299038-e5f7-495f-bb44-645b02535258/a7c0caa1-2ea5-4f76-9b6d-eb69575a4972.jpg",
+      "image": "https://content-media.bonial.biz/2d350d42-1314-411d-9bd1-93832f322875/a7c0caa1-2ea5-4f76-9b6d-eb69575a4972.jpg",
       "page": 8
     },
     {
       "id": "b0cd5b4fbcdf",
-      "kaufdaId": "8e06db25-73e0-48d6-b42f-5b6b34084925",
+      "kaufdaId": "6e32e4c2-8182-4c26-8818-fd798a46d8b5",
       "name": "Glockenblume",
       "variants": [],
       "brand": "REWE Beste Wahl",
@@ -7721,16 +7719,16 @@
         "Stauden",
         "Glockenblume"
       ],
-      "image": "https://content-media.bonial.biz/8e06db25-73e0-48d6-b42f-5b6b34084925/3dbd68d1-a5fa-4fcf-a2c2-9855c43f222c.jpg",
+      "image": "https://content-media.bonial.biz/6e32e4c2-8182-4c26-8818-fd798a46d8b5/4d529bd5-8a6b-443a-b0b3-ba1aba9ca760.jpg",
       "page": 4
     },
     {
       "id": "b1e7d6ba95e2",
-      "kaufdaId": "5ceea09a-e13f-4674-99e3-cc0b7aa03730",
+      "kaufdaId": "2117caae-86db-498c-8c51-6c96646a0645",
       "name": "Vodka",
       "variants": [],
       "brand": "Three Sixty",
-      "description": "37,5% Vol. je 0,7-l-Fl.",
+      "description": "37,5% Vol.  je 0,7-l-Fl.",
       "price": 9.99,
       "priceMax": null,
       "grundpreisText": "(1 l = 14.27)",
@@ -7745,8 +7743,8 @@
         "Wodka",
         "Three Sixty"
       ],
-      "image": "https://content-media.bonial.biz/5ceea09a-e13f-4674-99e3-cc0b7aa03730/17d2059d-331c-42c0-9b73-107793df3788.jpg",
-      "page": 18
+      "image": "https://content-media.bonial.biz/2117caae-86db-498c-8c51-6c96646a0645/0964f169-2e6e-428b-82e7-a4ed8eba3dfd.jpg",
+      "page": 12
     },
     {
       "id": "b22dd2208dd5",
@@ -8055,7 +8053,7 @@
     },
     {
       "id": "b70c08fba3c8",
-      "kaufdaId": "b7978a23-9dc2-485a-8824-fa3871330a1d",
+      "kaufdaId": "108adaec-784c-484f-b345-bb8fffc78243",
       "name": "Caesar",
       "variants": [
         "Orzo"
@@ -8073,7 +8071,7 @@
         "REWE",
         "REWE to go"
       ],
-      "image": "https://content-media.bonial.biz/b7978a23-9dc2-485a-8824-fa3871330a1d/7c4e2789-2ed4-4c03-9b4f-5f43225a593c.jpg",
+      "image": "https://content-media.bonial.biz/108adaec-784c-484f-b345-bb8fffc78243/2c535d3a-680a-4437-8f7f-02f7cfe78c71.jpg",
       "page": 3
     },
     {
@@ -8198,27 +8196,27 @@
     },
     {
       "id": "bb570aa0792b",
-      "kaufdaId": "5ba5c068-02c1-401a-af1d-a62cca6d07d4",
+      "kaufdaId": "2b861628-1885-4cf9-bf98-3b88e95b4848",
       "name": "Bueno",
       "variants": [
         "Country"
       ],
       "brand": "Kinder",
-      "description": "je 6 x 21,5-g-Pckg. je 9 x 23,5-g-Pckg.",
+      "description": "6 x 21,5-g-Pckg. 9 x 23,5-g-Pckg.",
       "price": 2.79,
       "priceMax": null,
-      "grundpreisText": "1 kg = 21.63",
+      "grundpreisText": "(1 kg = 21.63)",
       "dealType": "SALES_PRICE",
       "dealText": "Bueno",
       "categoryPath": [
         "Lebensmittel und Getränke",
-        "Marken",
-        "Marken Lebensmittel",
-        "Ferrero",
-        "Kinder"
+        "Produkte",
+        "Lebensmittel",
+        "Süßigkeiten",
+        "Schokolade"
       ],
-      "image": "https://content-media.bonial.biz/5ba5c068-02c1-401a-af1d-a62cca6d07d4/2fcf4212-2d9e-4004-aa7d-5f13f5f00275.jpg",
-      "page": 12
+      "image": "https://content-media.bonial.biz/2b861628-1885-4cf9-bf98-3b88e95b4848/7e407112-e8e8-4543-9a06-08b062afd635.jpg",
+      "page": 14
     },
     {
       "id": "bbcff1b95895",
@@ -8243,7 +8241,7 @@
     },
     {
       "id": "bbfb2e5262be",
-      "kaufdaId": "ad238e90-9f97-40af-9e64-b67cc5e07393",
+      "kaufdaId": "702d7424-2d50-4400-b0b2-3f9b88b3b0e6",
       "name": "Snack-Äpfel",
       "variants": [],
       "brand": "REWE Beste Wahl",
@@ -8259,7 +8257,7 @@
         "REWE",
         "REWE Beste Wahl"
       ],
-      "image": "https://content-media.bonial.biz/ad238e90-9f97-40af-9e64-b67cc5e07393/b3804633-8418-49f8-86e0-da4b8d430d04.jpg",
+      "image": "https://content-media.bonial.biz/702d7424-2d50-4400-b0b2-3f9b88b3b0e6/b3804633-8418-49f8-86e0-da4b8d430d04.jpg",
       "page": 3
     },
     {
@@ -8426,7 +8424,7 @@
     },
     {
       "id": "c2879dd8043e",
-      "kaufdaId": "ccc81509-39fd-4608-bd29-a750a6912d63",
+      "kaufdaId": "165486a8-7fbe-4104-b8c8-f87335b8d48f",
       "name": "Fruchtgummi",
       "variants": [],
       "brand": "HARIBO",
@@ -8443,7 +8441,7 @@
         "Süßigkeiten",
         "Fruchtgummi"
       ],
-      "image": "https://content-media.bonial.biz/ccc81509-39fd-4608-bd29-a750a6912d63/9890a0b6-f678-4f39-9103-eab4c0ec9beb.jpg",
+      "image": "https://content-media.bonial.biz/165486a8-7fbe-4104-b8c8-f87335b8d48f/9890a0b6-f678-4f39-9103-eab4c0ec9beb.jpg",
       "page": 2
     },
     {
@@ -8491,7 +8489,7 @@
     },
     {
       "id": "c3185cd624ff",
-      "kaufdaId": "31cda92d-225f-4867-9eb2-fdeee6d0daf3",
+      "kaufdaId": "e23df585-a8f5-49cb-8abd-59047e94b7d5",
       "name": "Franzbrötchen",
       "variants": [],
       "brand": null,
@@ -8510,7 +8508,7 @@
         "Feingebäck",
         "Franzbrötchen"
       ],
-      "image": "https://content-media.bonial.biz/31cda92d-225f-4867-9eb2-fdeee6d0daf3/bb477cc1-6ef0-49ca-a4ed-521e1f42fee9.jpg",
+      "image": "https://content-media.bonial.biz/e23df585-a8f5-49cb-8abd-59047e94b7d5/bb477cc1-6ef0-49ca-a4ed-521e1f42fee9.jpg",
       "page": 7
     },
     {
@@ -9089,11 +9087,11 @@
     },
     {
       "id": "cf1f728449ce",
-      "kaufdaId": "7c9efd87-ea72-44c6-a38d-5db1b6010755",
+      "kaufdaId": "4af39f98-05e0-40cf-bc40-c004f64d992f",
       "name": "Frischwurst-Aufschnitt",
       "variants": [],
       "brand": "Strohwohl",
-      "description": "versch. Sorten 100 g",
+      "description": "versch. Sorten, je 100 g",
       "price": 1.39,
       "priceMax": null,
       "grundpreisText": null,
@@ -9104,10 +9102,11 @@
         "Produkte",
         "Lebensmittel",
         "Wurstwaren",
-        "Wurst"
+        "Wurst",
+        "Wurstaufschnitt"
       ],
-      "image": "https://content-media.bonial.biz/7c9efd87-ea72-44c6-a38d-5db1b6010755/973bb0a0-4d93-4f3a-8b60-93184043ee2e.jpg",
-      "page": 6
+      "image": "https://content-media.bonial.biz/4af39f98-05e0-40cf-bc40-c004f64d992f/e4c483c2-97f5-46f8-8924-5a6ff1b07677.jpg",
+      "page": 5
     },
     {
       "id": "cf8b665dc54f",
@@ -9188,7 +9187,7 @@
     },
     {
       "id": "d07b92af5d6f",
-      "kaufdaId": "ce6e0ef5-c0c3-4287-abcb-a6041937ddeb",
+      "kaufdaId": "938175af-1eda-443e-ad97-d2d06d1d8294",
       "name": "Schokolade",
       "variants": [],
       "brand": "Ritter Sport",
@@ -9204,7 +9203,7 @@
         "Marken Lebensmittel",
         "Ritter Sport"
       ],
-      "image": "https://content-media.bonial.biz/ce6e0ef5-c0c3-4287-abcb-a6041937ddeb/eb420207-fc11-4ac7-96b8-0e5eca4fb8d0.jpg",
+      "image": "https://content-media.bonial.biz/938175af-1eda-443e-ad97-d2d06d1d8294/eb420207-fc11-4ac7-96b8-0e5eca4fb8d0.jpg",
       "page": 1
     },
     {
@@ -9233,7 +9232,7 @@
     },
     {
       "id": "d22756d364f5",
-      "kaufdaId": "298483a7-55b5-41e3-851a-445a7067bf5c",
+      "kaufdaId": "34e93c92-a6e6-4651-904b-7c7ec004faa9",
       "name": "Honigmelone",
       "variants": [],
       "brand": "REWE Beste Wahl",
@@ -9251,7 +9250,7 @@
         "Melone",
         "Honigmelone"
       ],
-      "image": "https://content-media.bonial.biz/298483a7-55b5-41e3-851a-445a7067bf5c/63cdeb26-30d1-4496-91f9-0d2d883a24c5.jpg",
+      "image": "https://content-media.bonial.biz/34e93c92-a6e6-4651-904b-7c7ec004faa9/54feaf99-d98e-4e41-b048-e892387c2e4d.jpg",
       "page": 10
     },
     {
@@ -9322,7 +9321,7 @@
     },
     {
       "id": "d2f23581533b",
-      "kaufdaId": "947490d2-33d7-4248-bb0e-536301fc3e37",
+      "kaufdaId": "5247b7c6-45e8-46df-8e35-203404fbd11e",
       "name": "Deospray",
       "variants": [],
       "brand": "Fa",
@@ -9339,8 +9338,8 @@
         "Henkel",
         "Fa"
       ],
-      "image": "https://content-media.bonial.biz/947490d2-33d7-4248-bb0e-536301fc3e37/cb431c87-fff3-4b61-b6ca-fb3db958884c.jpg",
-      "page": 22
+      "image": "https://content-media.bonial.biz/5247b7c6-45e8-46df-8e35-203404fbd11e/cb431c87-fff3-4b61-b6ca-fb3db958884c.jpg",
+      "page": 16
     },
     {
       "id": "d39ffc9d2986",
@@ -9390,34 +9389,32 @@
     },
     {
       "id": "d435262ec90d",
-      "kaufdaId": "3d14bb4b-58c1-4168-b35c-ab0275cdfd5f",
+      "kaufdaId": "62693e1f-6f87-4dce-8d6d-c0f0a8f9c10c",
       "name": "Deospray",
       "variants": [],
       "brand": "Hidrofugal",
-      "description": "versch. Sorten, je 150-ml-Dose",
+      "description": "versch. Sorten 150-ml-Dose",
       "price": 3.49,
       "priceMax": null,
-      "grundpreisText": "1 l = 23.27",
+      "grundpreisText": "(1 l = 23.27)",
       "dealType": "SALES_PRICE",
-      "dealText": null,
+      "dealText": "0,20 € Bonus",
       "categoryPath": [
         "Drogerie und Haushalt",
-        "Produkte",
-        "Drogerie",
-        "Körperpflege",
-        "Deodorant",
-        "Damen Deo"
+        "Marken",
+        "Marken Drogerie",
+        "Hidro Fugal"
       ],
-      "image": "https://content-media.bonial.biz/3d14bb4b-58c1-4168-b35c-ab0275cdfd5f/2b9de9d4-54af-40b2-bb85-31452cf0f09b.jpg",
-      "page": 23
+      "image": "https://content-media.bonial.biz/62693e1f-6f87-4dce-8d6d-c0f0a8f9c10c/6a2cf944-fc8f-456d-8418-e6153cfd09d5.jpg",
+      "page": 15
     },
     {
       "id": "d464a41398a5",
-      "kaufdaId": "55b53b9b-f69a-4e8f-a1ff-66d895e5ff87",
+      "kaufdaId": "6037f2cd-296d-4497-aff3-44bce1d15438",
       "name": "Sekt",
       "variants": [],
       "brand": "Freixenet",
-      "description": "versch. Sorten\nje 0,75-l-Fl.\nauch alkoholfrei",
+      "description": "versch. Sorten, auch alkoholfrei 0,75-l-Fl.",
       "price": 3.79,
       "priceMax": null,
       "grundpreisText": "(1 l = 5.05)",
@@ -9431,7 +9428,7 @@
         "Schaumwein",
         "Sekt"
       ],
-      "image": "https://content-media.bonial.biz/55b53b9b-f69a-4e8f-a1ff-66d895e5ff87/811d6960-db1f-4abe-9c35-95d6a434c5b9.jpg",
+      "image": "https://content-media.bonial.biz/6037f2cd-296d-4497-aff3-44bce1d15438/3a39f9ac-b682-4ab5-80ab-fe2af7291f72.jpg",
       "page": 0
     },
     {
@@ -9479,7 +9476,7 @@
     },
     {
       "id": "d540e627f885",
-      "kaufdaId": "ad3b983b-5f7c-4aec-bb42-cf37dea1f878",
+      "kaufdaId": "9e7ec495-9050-4805-bd66-6ddf1fec5a83",
       "name": "Gnocchi",
       "variants": [],
       "brand": "REWE frei von",
@@ -9497,8 +9494,8 @@
         "Teigwaren",
         "Gnocchi"
       ],
-      "image": "https://content-media.bonial.biz/ad3b983b-5f7c-4aec-bb42-cf37dea1f878/95b5153a-c766-44f6-9073-88c36caf6aab.jpg",
-      "page": 16
+      "image": "https://content-media.bonial.biz/9e7ec495-9050-4805-bd66-6ddf1fec5a83/7886f613-93a8-47f0-a8ea-fd2886db39d3.jpg",
+      "page": 17
     },
     {
       "id": "d546a04b2aec",
@@ -9620,7 +9617,7 @@
     },
     {
       "id": "d7abdcddeb9d",
-      "kaufdaId": "3466b9b7-152c-446e-8659-30e9039a44df",
+      "kaufdaId": "e2b536b5-88d4-4a0e-93c4-78f5811b8687",
       "name": "Bio-Schokomüsli",
       "variants": [],
       "brand": "REWE frei von",
@@ -9637,8 +9634,8 @@
         "Für Allergiker",
         "glutenfrei"
       ],
-      "image": "https://content-media.bonial.biz/3466b9b7-152c-446e-8659-30e9039a44df/03d416ca-80bc-47b6-9eb5-6ea24bca749a.jpg",
-      "page": 16
+      "image": "https://content-media.bonial.biz/e2b536b5-88d4-4a0e-93c4-78f5811b8687/5c5433a0-9593-42b6-aaaa-1477ac51975f.jpg",
+      "page": 17
     },
     {
       "id": "d7d4a351e822",
@@ -9730,7 +9727,7 @@
     },
     {
       "id": "d882ee516a10",
-      "kaufdaId": "8627fb22-7319-4d2a-9183-cec53dfe56df",
+      "kaufdaId": "304bf523-908d-4824-b9ab-fa7d321f0b12",
       "name": "Haselnusscreme",
       "variants": [],
       "brand": "Milka",
@@ -9739,7 +9736,7 @@
       "priceMax": null,
       "grundpreisText": "(1 kg = 7.40)",
       "dealType": "SALES_PRICE",
-      "dealText": null,
+      "dealText": "0,20 € Bonus",
       "categoryPath": [
         "Lebensmittel und Getränke",
         "Marken",
@@ -9747,12 +9744,12 @@
         "Milka",
         "Milka Haselnusscreme"
       ],
-      "image": "https://content-media.bonial.biz/8627fb22-7319-4d2a-9183-cec53dfe56df/5957b603-ddc4-4f21-a270-948a956fb44a.jpg",
-      "page": 12
+      "image": "https://content-media.bonial.biz/304bf523-908d-4824-b9ab-fa7d321f0b12/76615ae8-1c19-4df2-9d35-2ef91f9d47ca.jpg",
+      "page": 13
     },
     {
       "id": "d8cd9d5f718f",
-      "kaufdaId": "06f95f51-a13d-41f9-9b51-9e55440384aa",
+      "kaufdaId": "55d7fe7b-b217-4912-b69c-12f5147fa28c",
       "name": "Regional",
       "variants": [],
       "brand": "REWE",
@@ -9768,7 +9765,7 @@
         "Software",
         "App"
       ],
-      "image": "https://content-media.bonial.biz/06f95f51-a13d-41f9-9b51-9e55440384aa/cdd37c77-3adb-42a7-a865-570ac128cf95.jpg",
+      "image": "https://content-media.bonial.biz/55d7fe7b-b217-4912-b69c-12f5147fa28c/cdd37c77-3adb-42a7-a865-570ac128cf95.jpg",
       "page": 2
     },
     {
@@ -10156,7 +10153,7 @@
     },
     {
       "id": "e8fb99c3bc50",
-      "kaufdaId": "877abae9-6ad6-433c-9ce2-2103eadce6bf",
+      "kaufdaId": "8f6cfc00-4e76-433e-bd47-00fc8f9cd503",
       "name": "Ristorante Pizza Salame",
       "variants": [
         "Ristorante Pizza Spinaci"
@@ -10175,7 +10172,7 @@
         "Dr. Oetker",
         "Ristorante"
       ],
-      "image": "https://content-media.bonial.biz/877abae9-6ad6-433c-9ce2-2103eadce6bf/cca3fade-9be1-460a-a3a7-56e26fc4c7c8.jpg",
+      "image": "https://content-media.bonial.biz/8f6cfc00-4e76-433e-bd47-00fc8f9cd503/a8d22590-8827-4315-bba7-d8ebac5d3b0a.jpg",
       "page": 0
     },
     {
@@ -10405,7 +10402,7 @@
     },
     {
       "id": "ef27c9db059a",
-      "kaufdaId": "7be8afd2-64df-474e-a618-6831abb7d93b",
+      "kaufdaId": "ca29b5f8-b57c-4a98-ab1f-06fe8f0a3684",
       "name": "Minis",
       "variants": [],
       "brand": "Brandt",
@@ -10421,12 +10418,12 @@
         "Marken Lebensmittel",
         "Brandt"
       ],
-      "image": "https://content-media.bonial.biz/7be8afd2-64df-474e-a618-6831abb7d93b/23bf3f61-5aae-4733-92ed-5be139be4672.jpg",
-      "page": 13
+      "image": "https://content-media.bonial.biz/ca29b5f8-b57c-4a98-ab1f-06fe8f0a3684/ad117ad9-83e6-4a35-89df-f3e22e5ecfc7.jpg",
+      "page": 6
     },
     {
       "id": "f01d4868ac73",
-      "kaufdaId": "8ceab762-44d8-459c-8ec2-dfd1f89c04e9",
+      "kaufdaId": "6a43cbe1-5ac5-4da9-8edb-a303f8b6d96c",
       "name": "Mixery",
       "variants": [],
       "brand": "Karlsberg",
@@ -10445,8 +10442,8 @@
         "Biermarken",
         "Karlsberg "
       ],
-      "image": "https://content-media.bonial.biz/8ceab762-44d8-459c-8ec2-dfd1f89c04e9/4de1d788-3f62-4061-807a-77b1caf80517.jpg",
-      "page": 18
+      "image": "https://content-media.bonial.biz/6a43cbe1-5ac5-4da9-8edb-a303f8b6d96c/4de1d788-3f62-4061-807a-77b1caf80517.jpg",
+      "page": 12
     },
     {
       "id": "f0aa15904f3a",
@@ -10494,7 +10491,7 @@
     },
     {
       "id": "f13a890cb02d",
-      "kaufdaId": "d308ee57-ca0f-4e10-b6b0-5f278d263a28",
+      "kaufdaId": "63251fb4-74b6-47c8-9e51-c50464bb3f9a",
       "name": "Suppengrün",
       "variants": [],
       "brand": "REWE Beste Wahl",
@@ -10503,19 +10500,21 @@
       "priceMax": null,
       "grundpreisText": "(1 kg = 2.98)",
       "dealType": "SALES_PRICE",
-      "dealText": "Suppengrün",
+      "dealText": null,
       "categoryPath": [
-        "Marken",
-        "R",
-        "REWE",
-        "REWE to go"
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Fertiggerichte",
+        "Suppen",
+        "Suppengrün"
       ],
-      "image": "https://content-media.bonial.biz/d308ee57-ca0f-4e10-b6b0-5f278d263a28/1449701e-5ed8-4930-9dc7-90371abbdc29.jpg",
-      "page": 3
+      "image": "https://content-media.bonial.biz/63251fb4-74b6-47c8-9e51-c50464bb3f9a/55272258-1c3a-435b-addb-001e9c7143ec.jpg",
+      "page": 4
     },
     {
       "id": "f21ad1da6920",
-      "kaufdaId": "ff00f72f-d1d8-441c-b4c1-15878369e047",
+      "kaufdaId": "59c20737-a24f-4af0-94ab-c628c429a8fb",
       "name": "Delikatess Mayonnaise",
       "variants": [
         "Delikatess Remoulade"
@@ -10533,7 +10532,7 @@
         "Marken Lebensmittel",
         "Thomy"
       ],
-      "image": "https://content-media.bonial.biz/ff00f72f-d1d8-441c-b4c1-15878369e047/37fc3393-73b0-4bc6-bd45-b831f7434471.jpg",
+      "image": "https://content-media.bonial.biz/59c20737-a24f-4af0-94ab-c628c429a8fb/123a645c-9254-4b3f-b6d7-9eed9d2d01be.jpg",
       "page": 9
     },
     {
@@ -10772,13 +10771,13 @@
     },
     {
       "id": "f9168b3ef7d9",
-      "kaufdaId": "d02dec98-4afd-4660-994e-082ff2986d2f",
+      "kaufdaId": "311c3f49-5adb-4f9f-a19d-7c1386f663ea",
       "name": "Hefe-Weißbier Naturtrüb",
       "variants": [
         "Münchner Hell"
       ],
       "brand": "Paulaner",
-      "description": "0,5-L-Dose zzgl. 0.25 Pfand 0,5-L-Dose zzgl. 0.25 Pfand",
+      "description": "0,5-l-Dose zzgl. 0.25 Pfand 0,5-l-Dose zzgl. 0.25 Pfand",
       "price": 0.89,
       "priceMax": null,
       "grundpreisText": "(1 l = 1.78)",
@@ -10791,14 +10790,16 @@
         "Alkoholische Getränke",
         "Bier",
         "Biermarken",
-        "Warsteiner"
+        "Paulaner",
+        "Paulaner Hefe-Weißbier",
+        "Paulaner Hefe-Weißbier Naturtrüb"
       ],
-      "image": "https://content-media.bonial.biz/d02dec98-4afd-4660-994e-082ff2986d2f/main.jpg",
-      "page": 18
+      "image": "https://content-media.bonial.biz/311c3f49-5adb-4f9f-a19d-7c1386f663ea/c8300956-455d-4d77-8768-eece948570ae.jpg",
+      "page": 12
     },
     {
       "id": "f917dc8ebf5f",
-      "kaufdaId": "955f14f8-3495-4eb9-9922-6f2dccca1d50",
+      "kaufdaId": "77e0fa12-f845-41f0-b8d4-603a18819078",
       "name": "Polnischer Kesselschinken",
       "variants": [],
       "brand": "Tarczynski",
@@ -10808,13 +10809,19 @@
       "grundpreisText": null,
       "dealType": "SALES_PRICE",
       "dealText": null,
-      "categoryPath": [],
-      "image": "https://content-media.bonial.biz/955f14f8-3495-4eb9-9922-6f2dccca1d50/ab350571-c20b-46fa-95f7-97e0b69732a2.jpg",
-      "page": 6
+      "categoryPath": [
+        "Lebensmittel und Getränke",
+        "Produkte",
+        "Lebensmittel",
+        "Wurstwaren",
+        "Schinken"
+      ],
+      "image": "https://content-media.bonial.biz/77e0fa12-f845-41f0-b8d4-603a18819078/e586f61e-d363-4009-9c38-43bd8be05824.jpg",
+      "page": 5
     },
     {
       "id": "f97ee1a5213e",
-      "kaufdaId": "b4902f13-642a-457e-b827-b7465ea951fa",
+      "kaufdaId": "5f8b66c3-90c4-4be3-84e9-9bec9613359d",
       "name": "Buko Hirtenkäse",
       "variants": [
         "Buko Der Sahnige"
@@ -10835,12 +10842,12 @@
         "Weichkäse",
         "Hirtenkäse"
       ],
-      "image": "https://content-media.bonial.biz/b4902f13-642a-457e-b827-b7465ea951fa/e6f5d3e7-1713-440f-9903-d4bb3e9963d3.jpg",
+      "image": "https://content-media.bonial.biz/5f8b66c3-90c4-4be3-84e9-9bec9613359d/e6f5d3e7-1713-440f-9903-d4bb3e9963d3.jpg",
       "page": 0
     },
     {
       "id": "fa31b2a2b5b8",
-      "kaufdaId": "032284bb-652a-477b-be82-a93380d79a17",
+      "kaufdaId": "15f0e34e-a005-4a95-a1e7-6e84a27124a0",
       "name": "Börekstangen",
       "variants": [
         "Börekstangen"
@@ -10858,7 +10865,7 @@
         "Lebensmittel",
         "Halal"
       ],
-      "image": "https://content-media.bonial.biz/032284bb-652a-477b-be82-a93380d79a17/1616e270-33a1-4ca2-bb4e-dd4010d17b2e.jpg",
+      "image": "https://content-media.bonial.biz/15f0e34e-a005-4a95-a1e7-6e84a27124a0/1616e270-33a1-4ca2-bb4e-dd4010d17b2e.jpg",
       "page": 7
     },
     {
@@ -10887,7 +10894,7 @@
     },
     {
       "id": "fa81a06f3f95",
-      "kaufdaId": "bc175ed3-842e-4ee2-9105-1293879e0dda",
+      "kaufdaId": "b6abbeae-4b2c-482b-a776-8fc518b80d99",
       "name": "Mederano",
       "variants": [
         "Mia"
@@ -10907,8 +10914,8 @@
         "Wein",
         "Weinmarken"
       ],
-      "image": "https://content-media.bonial.biz/bc175ed3-842e-4ee2-9105-1293879e0dda/f72332e5-33f7-428b-aef9-2858367ba874.jpg",
-      "page": 18
+      "image": "https://content-media.bonial.biz/b6abbeae-4b2c-482b-a776-8fc518b80d99/f72332e5-33f7-428b-aef9-2858367ba874.jpg",
+      "page": 12
     },
     {
       "id": "fbb1db8b02ec",
@@ -10935,7 +10942,7 @@
     },
     {
       "id": "fbb935091713",
-      "kaufdaId": "f7c6ad06-829e-4dc8-a714-c78314963662",
+      "kaufdaId": "145813b9-f3a9-444e-9ee1-209cca076886",
       "name": "Pesto Rosso",
       "variants": [
         "Pasta Sauce Basilico"
@@ -10953,8 +10960,8 @@
         "Marken Lebensmittel",
         "Barilla"
       ],
-      "image": "https://content-media.bonial.biz/f7c6ad06-829e-4dc8-a714-c78314963662/17f83e8b-d181-4013-bfff-06cf80b02617.jpg",
-      "page": 19
+      "image": "https://content-media.bonial.biz/145813b9-f3a9-444e-9ee1-209cca076886/main.jpg",
+      "page": 13
     },
     {
       "id": "fbd1c455a0e5",
@@ -11050,7 +11057,7 @@
     },
     {
       "id": "fcbe322a68ed",
-      "kaufdaId": "97456efb-740b-4708-b7b9-0def51d9d8f2",
+      "kaufdaId": "61cdc39e-5a28-40bd-b4c8-c274bb4b92d8",
       "name": "Bio-Haferriegel Schokolade",
       "variants": [],
       "brand": "REWE frei von",
@@ -11068,8 +11075,8 @@
         "Bio Süßwaren",
         "Bio Schokolade"
       ],
-      "image": "https://content-media.bonial.biz/97456efb-740b-4708-b7b9-0def51d9d8f2/591c5053-9b02-4103-8bf8-f2e8c5892ff3.jpg",
-      "page": 16
+      "image": "https://content-media.bonial.biz/61cdc39e-5a28-40bd-b4c8-c274bb4b92d8/c70f06cd-8d0c-43f2-b5ff-13713568ff0d.jpg",
+      "page": 17
     },
     {
       "id": "fd6943bff77b",
@@ -11214,7 +11221,7 @@
     },
     {
       "id": "fe59eccc760c",
-      "kaufdaId": "7e5b2d3d-0e6e-4263-9027-096c61f68af0",
+      "kaufdaId": "f2eee55e-f995-495a-b43f-191332c75aff",
       "name": "Goldene Brustfilets",
       "variants": [],
       "brand": "REWE Feine Welt",
@@ -11230,7 +11237,7 @@
         "REWE",
         "REWE Feine Welt"
       ],
-      "image": "https://content-media.bonial.biz/7e5b2d3d-0e6e-4263-9027-096c61f68af0/75f0ec8c-3175-4fa1-8a99-8be83fd3c554.jpg",
+      "image": "https://content-media.bonial.biz/f2eee55e-f995-495a-b43f-191332c75aff/29a51c6a-0ebc-4f17-acab-01a4cc52711b.jpg",
       "page": 5
     },
     {
