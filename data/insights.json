@@ -1,179 +1,179 @@
 {
-  "generatedAt": "2026-08-10",
-  "weekLabel": "2026-KW33",
-  "summary": "Pom-Bär Chips sind diese Woche 61 % teurer als Tiefstpreis (23,87 €/kg). Top-Schnäppchen: Arla Kærgården 36 % günstiger (7,95 €/kg) und Spareribs 31 % Rabatt.",
+  "generatedAt": "2026-08-17",
+  "weekLabel": "2026-KW34",
+  "summary": "Äpfel sind diese Woche fast doppelt so teuer wie sonst. Delverde-Pasta und Getränke wie Fever-Tree erreichen Allzeittiefs mit bis zu 53 % Rabatt.",
   "pricier": [
     {
-      "title": "Pom-Bär",
-      "cat": "Knabbern & Naschen",
-      "current_gp": 23.87,
-      "unit": "kg",
-      "hist_min_gp": 14.8,
-      "pct_above_min": 61.3,
-      "note": "61 % teurer als Tiefstpreis"
-    },
-    {
-      "title": "Coca-Cola, Fanta, Sprite",
-      "cat": "Getränke",
-      "current_gp": 1.0,
-      "unit": "l",
-      "hist_min_gp": 0.66,
-      "pct_above_min": 51.5,
-      "note": "52 % über dem Minimum"
-    },
-    {
-      "title": "TUC Cracker",
-      "cat": "Knabbern & Naschen",
-      "current_gp": 14.9,
-      "unit": "kg",
-      "hist_min_gp": 9.9,
-      "pct_above_min": 50.5,
-      "note": "50 % teurer als Tiefstpreis"
-    },
-    {
-      "title": "Rasting - Frischer Fleischkäse",
-      "cat": "Fleisch & Wurst",
-      "current_gp": 6.99,
-      "unit": "kg",
-      "hist_min_gp": 5.0,
-      "pct_above_min": 39.8,
-      "note": "40 % über Tiefstpreis"
-    },
-    {
-      "title": "Pringles",
-      "cat": "Knabbern & Naschen",
-      "current_gp": 10.22,
-      "unit": "kg",
-      "hist_min_gp": 7.52,
-      "pct_above_min": 35.9,
-      "note": "36 % teurer als günstig"
-    },
-    {
-      "title": "Rasting - Schinkenwurst",
-      "cat": "Fleisch & Wurst",
-      "current_gp": 9.9,
-      "unit": "kg",
-      "hist_min_gp": 7.97,
-      "pct_above_min": 24.2,
-      "note": "24 % über Tiefstpreis"
-    },
-    {
-      "title": "EDEKA Regional - Frische Bratwurst",
-      "cat": "Fleisch & Wurst",
-      "current_gp": 8.97,
-      "unit": "kg",
-      "hist_min_gp": 7.49,
-      "pct_above_min": 19.8,
-      "note": "20 % über Tiefstpreis"
-    },
-    {
-      "title": "Bonne Maman Konfitüre",
-      "cat": "Grundnahrung",
-      "current_gp": 7.0,
-      "unit": "kg",
-      "hist_min_gp": 6.0,
-      "pct_above_min": 16.7,
-      "note": "17 % über Tiefstpreis"
-    },
-    {
-      "title": "Polen - Kulturheidelbeeren",
+      "title": "Deutschland - Tafeläpfel",
       "cat": "Obst & Gemüse",
-      "current_gp": 6.98,
+      "current_gp": 1.99,
       "unit": "kg",
-      "hist_min_gp": 5.98,
-      "pct_above_min": 16.7,
-      "note": "17 % teurer als günstig"
+      "hist_min_gp": 1.0,
+      "pct_above_min": 99.0,
+      "note": "fast doppelt so teuer wie das Tiefstgebot"
     },
     {
-      "title": "After Eight Classic",
+      "title": "Schulte Biskuitzungen",
       "cat": "Knabbern & Naschen",
-      "current_gp": 11.45,
+      "current_gp": 13.45,
       "unit": "kg",
-      "hist_min_gp": 9.95,
-      "pct_above_min": 15.1,
-      "note": "15 % über Tiefstpreis"
-    }
-  ],
-  "deals": [
-    {
-      "title": "Arla Kærgården",
-      "cat": "Molkerei & Käse",
-      "current_gp": 7.95,
-      "unit": "kg",
-      "hist_max_gp": 12.45,
-      "note": "36 % unter Höchstpreis"
+      "hist_min_gp": 7.96,
+      "pct_above_min": 69.0,
+      "note": "69 % teurer als günstigstes Angebot"
     },
     {
       "title": "Spareribs",
       "cat": "Fleisch & Wurst",
-      "current_gp": 7.7,
+      "current_gp": 11.1,
       "unit": "kg",
-      "hist_max_gp": 11.1,
-      "note": "31 % Rabatt zum Höchst"
+      "hist_min_gp": 7.7,
+      "pct_above_min": 44.2,
+      "note": "44 % über dem Tiefstpreis"
     },
     {
-      "title": "Maximilian Bayrisch Hell",
-      "cat": "Getränke",
-      "current_gp": 1.4,
+      "title": "Weihenstephan Haltbare Milch",
+      "cat": "Molkerei & Käse",
+      "current_gp": 1.19,
       "unit": "l",
-      "hist_max_gp": 1.97,
-      "note": "29 % unter Höchstpreis"
+      "hist_min_gp": 0.88,
+      "pct_above_min": 35.2,
+      "note": "35 % teurer als das Tiefstgebot"
     },
     {
-      "title": "Rasting - Fleischwurst",
-      "cat": "Fleisch & Wurst",
-      "current_gp": 4.98,
+      "title": "Deutschland - Speisekartoffeln",
+      "cat": "Obst & Gemüse",
+      "current_gp": 1.0,
       "unit": "kg",
-      "hist_max_gp": 6.98,
-      "note": "29 % unter Höchstpreis"
+      "hist_min_gp": 0.75,
+      "pct_above_min": 33.3,
+      "note": "33 % über dem Tiefstpreis"
     },
     {
-      "title": "Frisches Hähnchenbrustfilet",
+      "title": "Böklunder Echte Land-Bockwurst oder Gutfried Geflügel-Bockwurst",
+      "cat": "Grundnahrung",
+      "current_gp": 11.06,
+      "unit": "kg",
+      "hist_min_gp": 8.33,
+      "pct_above_min": 32.8,
+      "note": "33 % teurer als günstigstes Angebot"
+    },
+    {
+      "title": "effect Energy Drink",
+      "cat": "Getränke",
+      "current_gp": 2.09,
+      "unit": "l",
+      "hist_min_gp": 1.64,
+      "pct_above_min": 27.4,
+      "note": "27 % über dem Tiefstpreis"
+    },
+    {
+      "title": "Golden Toast",
+      "cat": "Grundnahrung",
+      "current_gp": 2.98,
+      "unit": "kg",
+      "hist_min_gp": 2.38,
+      "pct_above_min": 25.2,
+      "note": "25 % teurer als günstigstes Angebot"
+    },
+    {
+      "title": "Cambozola Classic oder Rougette",
+      "cat": "Molkerei & Käse",
+      "current_gp": 19.9,
+      "unit": "kg",
+      "hist_min_gp": 15.9,
+      "pct_above_min": 25.2,
+      "note": "25 % über dem Tiefstpreis"
+    },
+    {
+      "title": "EDEKA - Röstkaffee",
+      "cat": "Grundnahrung",
+      "current_gp": 11.98,
+      "unit": "kg",
+      "hist_min_gp": 9.98,
+      "pct_above_min": 20.0,
+      "note": "20 % teurer als das Tiefstgebot"
+    }
+  ],
+  "deals": [
+    {
+      "title": "Delverde Classica Pasta",
+      "cat": "Grundnahrung",
+      "current_gp": 1.58,
+      "unit": "kg",
+      "hist_max_gp": 3.38,
+      "note": "53 % günstiger als je zuvor"
+    },
+    {
+      "title": "Fever-Tree",
+      "cat": "Getränke",
+      "current_gp": 3.33,
+      "unit": "l",
+      "hist_max_gp": 6.24,
+      "note": "47 % unter dem Höchstpreis"
+    },
+    {
+      "title": "Bergader Bavaria blu oder Almzeit",
+      "cat": "Molkerei & Käse",
+      "current_gp": 9.93,
+      "unit": "kg",
+      "hist_max_gp": 17.09,
+      "note": "42 % günstiger als Höchstpreis"
+    },
+    {
+      "title": "Erdinger Weißbier",
+      "cat": "Getränke",
+      "current_gp": 1.5,
+      "unit": "l",
+      "hist_max_gp": 2.52,
+      "note": "41 % unter dem Höchstpreis"
+    },
+    {
+      "title": "alpro Hafer- oder Soyadrink",
+      "cat": "Molkerei & Käse",
+      "current_gp": 1.49,
+      "unit": "l",
+      "hist_max_gp": 1.99,
+      "note": "25 % günstiger als je zuvor"
+    },
+    {
+      "title": "Frisches Hähncheninnenfilet",
       "cat": "Fleisch & Wurst",
       "current_gp": 9.9,
       "unit": "kg",
       "hist_max_gp": 12.9,
-      "note": "23 % Rabatt zum Höchst"
+      "note": "23 % unter dem Höchstpreis"
     },
     {
-      "title": "AriZona Tea",
-      "cat": "Getränke",
-      "current_gp": 0.93,
-      "unit": "l",
-      "hist_max_gp": 1.19,
-      "note": "22 % unter Höchstpreis"
+      "title": "Frische Hähnchenschenkel",
+      "cat": "Fleisch & Wurst",
+      "current_gp": 2.9,
+      "unit": "kg",
+      "hist_max_gp": 3.5,
+      "note": "17 % günstiger als Höchstpreis"
     },
     {
-      "title": "Flensburger Pilsener",
-      "cat": "Getränke",
-      "current_gp": 1.97,
-      "unit": "l",
-      "hist_max_gp": 2.52,
-      "note": "22 % Rabatt zum Höchst"
-    },
-    {
-      "title": "Melitta Filterkaffee",
+      "title": "Yum Yum Instantnudeln",
       "cat": "Grundnahrung",
-      "current_gp": 11.98,
+      "current_gp": 8.17,
       "unit": "kg",
-      "hist_max_gp": 14.98,
-      "note": "20 % unter Höchstpreis"
+      "hist_max_gp": 9.83,
+      "note": "17 % unter dem Höchstpreis"
     },
     {
-      "title": "Portugal - Himbeeren",
-      "cat": "Obst & Gemüse",
-      "current_gp": 14.95,
-      "unit": "kg",
-      "hist_max_gp": 17.45,
-      "note": "14 % unter Höchstpreis"
+      "title": "Jakobus Mineralwasser",
+      "cat": "Getränke",
+      "current_gp": 0.33,
+      "unit": "l",
+      "hist_max_gp": 0.39,
+      "note": "15 % günstiger als je zuvor"
     },
     {
-      "title": "Deutschland - Spitzkohl",
-      "cat": "Obst & Gemüse",
-      "current_gp": 1.11,
+      "title": "Grillrippen",
+      "cat": "Fleisch & Wurst",
+      "current_gp": 5.9,
       "unit": "kg",
-      "hist_max_gp": 1.29,
-      "note": "14 % Rabatt zum Höchst"
+      "hist_max_gp": 6.9,
+      "note": "15 % unter dem Höchstpreis"
     }
   ],
   "model": "haiku"
