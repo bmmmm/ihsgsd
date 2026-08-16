@@ -1,109 +1,109 @@
 {
-  "generatedAt": "2026-08-10",
-  "weekLabel": "KW33",
-  "lead": "Der [[Deutschland - Chicorée|Chicorée]] liegt bei 3,58 € das Kilo und damit auf seinem Allzeit-Tief, was die Frage aufwirft, wer ihn sonst zu vollem Preis mitnimmt. Die [[Ägypten - Kartoffeln Drillinge|Drillinge]] sind mit 2,20 € pro Kilo ebenfalls so günstig wie nie, die [[Portugal - Himbeeren|Himbeeren]] für 2,99 € auch. Beim Bier steht das [[Flensburger Pilsener|Flensburger Pilsener]] für 12,99 € auf dem historischen Tiefstand, daneben die [[Bionade Limonade|Bionade]] für 10,49 €. Vegan wird es mit den [[EDEKA - My Veggie Vegane Frikadellen|veganen Frikadellen]] für 1,79 €. Kaffee gibt es diese Woche nur als [[Starbucks Kaffeespezialitäten|Starbucks-Kaffeespezialitäten]] für 1,49 € — Bohnen sucht man vergebens.",
+  "generatedAt": "2026-08-17",
+  "weekLabel": "KW34",
+  "lead": "Die [[Deutschland - Zucchini|Zucchini]] kosten diese Woche glatt einen Euro, was Preisschilder-technisch schon fast Understatement ist, und der [[Deutschland - Kohlrabi|Kohlrabi]] liegt bei 55 Cent. Beim [[Deutschland - Brokkoli|Brokkoli]] sind es 3,23 € das Kilo, beim [[Deutschland - EDEKA Regional - Mini-Pak-Choi|Mini-Pak-Choi]] 4,30 €. Zwei Kästen Pils stehen zu 11,99 € da — [[Warsteiner Pilsener|Warsteiner]] und [[Beck’s Pils, Blue Alkoholfrei oder weitere Sorten|Beck's, auch alkoholfrei]] —, macht 1,20 € der Liter, günstiger als das Mineralwasser daneben es verdient hätte. Der [[EDEKA - Röstkaffee|Röstkaffee]] liegt bei 11,98 € das Kilo, 20 % über seinem Tief, also solide statt spektakulär. Dazu [[Rügenwalder Mühle - Veganer Aufschnitt|veganer Aufschnitt]] für 1,29 €.",
   "sections": {
-    "vegan": "Genau ein pflanzlicher Kandidat: die [[EDEKA - My Veggie Vegane Frikadellen|veganen Frikadellen]] für 1,79 €, umgerechnet 10,85 € das Kilo.",
-    "obstgemuese": "Drei Allzeit-Tiefs auf einmal — [[Deutschland - Chicorée|Chicorée]], [[Ägypten - Kartoffeln Drillinge|Drillinge]] und [[Portugal - Himbeeren|Himbeeren]]. Dazu [[Deutschland - Bio-Zucchini|Bio-Zucchini]] für 1,77 €.",
-    "bierspezi": "[[Flensburger Pilsener|Flensburger]] für 12,99 € und [[Bionade Limonade|Bionade]] für 10,49 €, beide auf ihrem historischen Tiefstand. Spezi fehlt komplett.",
-    "knueller": "Unter den Knüllern halten vor allem [[Flensburger Pilsener|Flensburger]] und [[Bionade Limonade|Bionade]] stand; [[Heinz Beanz|Heinz Beanz]] für 1,99 € ist auch am Tief."
+    "vegan": "Genau ein pflanzlicher Kandidat diese Woche: [[Rügenwalder Mühle - Veganer Aufschnitt|veganer Aufschnitt]] für 1,29 €. Die Auswahl trifft sich damit von selbst.",
+    "obstgemuese": "[[Deutschland - Kohlrabi|Kohlrabi]] für 55 Cent, [[Deutschland - Zucchini|Zucchini]] für einen Euro, [[Peru - Bio-Avocados|Bio-Avocados]] für 1,29 € — die Gemüsetheke macht diese Woche den Großteil der Arbeit.",
+    "bierspezi": "[[Warsteiner Pilsener|Warsteiner]] und [[Beck’s Pils, Blue Alkoholfrei oder weitere Sorten|Beck's Pils]] je 11,99 € der Kasten, 1,20 € der Liter. Spezi fehlt, dafür gibt es Beck's Blue alkoholfrei.",
+    "knueller": "[[Delverde Classica Pasta|Delverde-Pasta]] für 79 Cent auf Allzeit-Tief, [[Jakobus Mineralwasser|Jakobus Mineralwasser]] bei 33 Cent den Liter. Vieles andere im Knüller-Block ist Spirituose."
   },
   "foryou": [
     {
-      "title": "Flensburger Pilsener",
+      "title": "Deutschland - Brokkoli",
       "rank": 1,
-      "reason": "Pils auf Allzeit-Tief, 1,97 € pro Liter, belegt über 4 Angebotswochen.",
-      "evidenceTag": "Allzeit-Tief"
+      "reason": "Steht auf deiner Daumen-hoch-Liste, 3,23 € das Kilo für deutschen Brokkoli",
+      "evidenceTag": "Favorit"
     },
     {
-      "title": "Bionade Limonade",
+      "title": "Deutschland - EDEKA Regional - Mini-Pak-Choi",
       "rank": 2,
-      "reason": "Bionade ist ein Daumen-hoch-Produkt und liegt auf ihrem tiefsten Preis bisher.",
-      "evidenceTag": "Allzeit-Tief"
+      "reason": "Daumen hoch von dir, 16 % über dem Tief — nah dran am besten Preis",
+      "evidenceTag": "Favorit"
     },
     {
-      "title": "Deutschland - Bio-Zucchini",
+      "title": "Deutschland - Zucchini",
       "rank": 3,
-      "reason": "Bio-Zucchini stehen auf der Daumen-hoch-Liste, 3,54 € das Kilo.",
-      "evidenceTag": "mag ich"
+      "reason": "Bio-Zucchini stehen bei dir hoch im Kurs, hier glatt ein Euro",
+      "evidenceTag": "Favorit"
     },
     {
-      "title": "Deutschland - Chicorée",
+      "title": "Deutschland - Kohlrabi",
       "rank": 4,
-      "reason": "Günstigster Chicorée-Preis der bisherigen Wochen: 3,58 € pro Kilo.",
-      "evidenceTag": "Allzeit-Tief"
+      "reason": "55 Cent, der günstigste Posten der ganzen Gemüseabteilung",
+      "evidenceTag": "mag ich"
     },
     {
-      "title": "EDEKA - My Veggie Vegane Frikadellen",
+      "title": "Deutschland - Bio-Staudensellerie",
       "rank": 5,
-      "reason": "Einziges vegan ausgewiesenes Produkt der Woche, 1,79 €.",
+      "reason": "Staudensellerie mag du, hier in Bio für 1,79 €",
       "evidenceTag": "Favorit"
     },
     {
-      "title": "Ägypten - Kartoffeln Drillinge",
+      "title": "Rügenwalder Mühle - Veganer Aufschnitt",
       "rank": 6,
-      "reason": "2,20 € das Kilo, laut Historie noch nie günstiger angeboten.",
-      "evidenceTag": "Allzeit-Tief"
+      "reason": "Einziger veganer Kandidat der Woche, 1,29 € die Packung",
+      "evidenceTag": "Favorit"
     },
     {
-      "title": "Deutschland - EDEKA Bio - Champignons",
+      "title": "Peru - Bio-Avocados",
       "rank": 7,
-      "reason": "Champignons stehen auf der Daumen-hoch-Liste, hier in Bio für 1,79 €.",
+      "reason": "Bio und Obst & Gemüse in einem, 1,29 € das Stück",
       "evidenceTag": "mag ich"
     },
     {
-      "title": "Portugal - Himbeeren",
+      "title": "Warsteiner Pilsener",
       "rank": 8,
-      "reason": "Himbeeren auf Allzeit-Tief, 2,99 € die Schale.",
-      "evidenceTag": "Allzeit-Tief"
+      "reason": "Pils zu 1,20 € der Liter, Kastenpreis 11,99 €",
+      "evidenceTag": "Favorit"
     },
     {
-      "title": "Beck's Pils oder Blue Lemon 0,0% Alkoholfrei",
+      "title": "Beck’s Pils, Blue Alkoholfrei oder weitere Sorten",
       "rank": 9,
-      "reason": "Alkoholfreies Pils, 4,49 € — passt zur Vorliebe für Pils 0,0%.",
+      "reason": "Pils und alkoholfreies Blue im selben Angebot, 11,99 € der Kasten",
       "evidenceTag": "Favorit"
     },
     {
-      "title": "Deutschland - Porree",
+      "title": "Deutschland - Bio-Basilikum",
       "rank": 10,
-      "reason": "Porree für 66 Cent, günstigster Posten in Obst & Gemüse.",
-      "evidenceTag": ""
-    },
-    {
-      "title": "Deutschland - Spitzkohl",
-      "rank": 11,
-      "reason": "Spitzkohl für 1,11 € — Gemüse zum Preis einer Packung Kaugummi.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Deutschland - Lauchzwiebeln",
-      "rank": 12,
-      "reason": "Lauchzwiebeln für 1,49 €, Standardware für die Gemüsepfanne.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Neuseeland - Bio-Kiwis Gold",
-      "rank": 13,
-      "reason": "Bio-Kiwis für 1,19 € — Bio steht auf der Mag-ich-Liste.",
+      "reason": "Bio-Kraut für 1,29 €, passt zu Zucchini und Tomatenmark",
       "evidenceTag": "mag ich"
     },
     {
-      "title": "Litauen - Pfifferlinge",
-      "rank": 14,
-      "reason": "Pfifferlinge für 1,29 €, saisonal und selten so niedrig ausgezeichnet.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "EDEKA Bio - Apfelmark",
-      "rank": 15,
-      "reason": "Bio-Apfelmark bei 1,70 € pro Kilo, im unteren Drittel seiner Preishistorie.",
+      "title": "EDEKA - Röstkaffee",
+      "rank": 11,
+      "reason": "Kaffee zu 11,98 € das Kilo, 20 % über dem Tief — brauchbar",
       "evidenceTag": "guter Preis"
     },
     {
-      "title": "Deutschland - Spitzpaprika-Mix",
+      "title": "Deutschland - Speisekartoffeln",
+      "rank": 12,
+      "reason": "1,00 € das Kilo, liegt aber 33 % über dem eigenen Tief",
+      "evidenceTag": ""
+    },
+    {
+      "title": "Delverde Classica Pasta",
+      "rank": 13,
+      "reason": "Allzeit-Tief bei 1,58 € das Kilo, belegt über vier Wochen",
+      "evidenceTag": "Allzeit-Tief"
+    },
+    {
+      "title": "Deutschland - Bundmöhren",
+      "rank": 14,
+      "reason": "Bundmöhren für 1,49 €, direkt aus Deutschland",
+      "evidenceTag": "mag ich"
+    },
+    {
+      "title": "Deutschland - meinLand Bio - Bio-Eisbergsalat",
+      "rank": 15,
+      "reason": "Bio-Salat für 1,79 €, deckt Bio und Gemüse zugleich ab",
+      "evidenceTag": "mag ich"
+    },
+    {
+      "title": "Jakobus Mineralwasser",
       "rank": 16,
-      "reason": "Spitzpaprika-Mix für 1,99 €, ohne Preishistorie aber im Interessenbereich.",
-      "evidenceTag": "Favorit"
+      "reason": "Allzeit-Tief, 33 Cent der Liter — günstigster Getränkeposten",
+      "evidenceTag": "Allzeit-Tief"
     }
   ],
   "model": "opus",
