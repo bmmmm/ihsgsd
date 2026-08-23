@@ -1,97 +1,35 @@
 {
-  "weekLabel": "KW34",
-  "generatedAt": "2026-08-17",
+  "weekLabel": "KW35",
+  "generatedAt": "2026-08-24",
   "generatedFor": "2026-06-30T10:27:37.023Z",
   "model": "sonnet",
-  "intro": "Diese Woche glänzen Pak-Choi und Brokkoli günstig im Regal, dazu der Kohlrabi für nur 55 Cent und cremige Bio-Avocados – reichlich Gemüse für eine ganz vegane Woche!",
+  "intro": "Diese Woche gibt's Bio-Zucchini zum absoluten Bestpreis und Auberginen für nur 99 Cent – ideal für eine bunte, vegane Genusswoche voller Gemüse.",
   "days": [
     {
       "day": "Mo",
       "meal": {
-        "slug": "asiatische-pak-choi-brokkoli-pfanne",
-        "title": "Asiatische Pak-Choi-Brokkoli-Pfanne",
-        "blurb": "Knackiges Gemüse aus der Pfanne mit Ingwer und Sojasauce – schnell und richtig sättigend.",
+        "slug": "bulgursalat-bowl-mit-bio-zucchini",
+        "title": "Bulgursalat-Bowl mit Bio-Zucchini",
+        "blurb": "Die Bio-Zucchini ist diese Woche günstig wie nie – perfekt kurz angebraten zum fertigen Bulgursalat.",
         "tags": [
-          "wok",
-          "asiatisch",
+          "bowl",
+          "bulgur",
           "schnell",
-          "gemüse"
+          "sommerlich"
         ],
         "ingredients": [
           {
-            "name": "Mini-Pak-Choi",
-            "offerTitle": "Deutschland - EDEKA Regional - Mini-Pak-Choi",
-            "price": "€1,29"
+            "name": "Bulgursalat",
+            "offerTitle": "Bulgursalat",
+            "price": "€2,99"
           },
           {
-            "name": "Brokkoli",
-            "offerTitle": "Deutschland - Brokkoli",
-            "price": "€1,29"
-          },
-          {
-            "name": "Bundmöhren",
-            "offerTitle": "Deutschland - Bundmöhren",
+            "name": "Bio-Zucchini",
+            "offerTitle": "Deutschland - Bio-Zucchini",
             "price": "€1,49"
           },
           {
-            "name": "Tofu",
-            "pantry": true
-          },
-          {
-            "name": "Reis",
-            "pantry": true
-          },
-          {
-            "name": "Sojasauce",
-            "pantry": true
-          },
-          {
-            "name": "Ingwer",
-            "pantry": true
-          },
-          {
-            "name": "Knoblauch",
-            "pantry": true
-          }
-        ],
-        "steps": [
-          "Tofu würfeln und in Rapsöl knusprig anbraten.",
-          "Pak-Choi, Brokkoli und Möhren klein schneiden.",
-          "Gemüse mit Ingwer und Knoblauch scharf anbraten.",
-          "Mit Sojasauce ablöschen und kurz köcheln lassen.",
-          "Mit Reis servieren."
-        ]
-      }
-    },
-    {
-      "day": "Di",
-      "meal": {
-        "slug": "zucchini-basilikum-pasta",
-        "title": "Zucchini-Basilikum-Pasta",
-        "blurb": "Cremige Pasta mit frischem Basilikum – in 20 Minuten fertig.",
-        "tags": [
-          "pasta",
-          "schnell",
-          "italienisch"
-        ],
-        "ingredients": [
-          {
-            "name": "Zucchini",
-            "offerTitle": "Deutschland - Zucchini",
-            "price": "€1,00"
-          },
-          {
-            "name": "Bio-Basilikum",
-            "offerTitle": "Deutschland - Bio-Basilikum",
-            "price": "€1,29"
-          },
-          {
-            "name": "Speisezwiebeln",
-            "offerTitle": "Deutschland - Speisezwiebeln",
-            "price": "€1,11"
-          },
-          {
-            "name": "Nudeln",
+            "name": "Kichererbsen",
             "pantry": true
           },
           {
@@ -99,131 +37,89 @@
             "pantry": true
           },
           {
-            "name": "Knoblauch",
+            "name": "Salz",
+            "pantry": true
+          },
+          {
+            "name": "Pfeffer",
             "pantry": true
           }
         ],
         "steps": [
-          "Nudeln nach Packungsanweisung kochen.",
-          "Zucchini in Scheiben schneiden und mit Zwiebel und Knoblauch anbraten.",
-          "Basilikum fein hacken und unterrühren.",
-          "Mit etwas Nudelwasser und Olivenöl zu einer Sauce binden.",
-          "Nudeln unterheben und servieren."
+          "Zucchini in Scheiben schneiden und in Olivenöl scharf anbraten.",
+          "Kichererbsen abtropfen lassen und kurz mitbraten.",
+          "Bulgursalat unterheben und warm werden lassen.",
+          "Mit Salz und Pfeffer abschmecken und servieren."
+        ]
+      }
+    },
+    {
+      "day": "Di",
+      "meal": {
+        "slug": "ofen-auberginen-mit-kichererbsen-und-tomatensauce",
+        "title": "Ofen-Auberginen mit Kichererbsen und Tomatensauce",
+        "blurb": "Auberginen für 99 Cent, im Ofen geschmort und mit würziger Tomatensauce serviert.",
+        "tags": [
+          "ofen",
+          "huelsenfruechte",
+          "mediterran"
+        ],
+        "ingredients": [
+          {
+            "name": "Auberginen",
+            "offerTitle": "Deutschland - Auberginen",
+            "price": "€0,99"
+          },
+          {
+            "name": "Kichererbsen",
+            "pantry": true
+          },
+          {
+            "name": "Passierte Tomaten",
+            "pantry": true
+          },
+          {
+            "name": "Tomatenmark",
+            "pantry": true
+          },
+          {
+            "name": "Knoblauch",
+            "pantry": true
+          },
+          {
+            "name": "Olivenöl",
+            "pantry": true
+          }
+        ],
+        "steps": [
+          "Auberginen längs halbieren, einritzen und mit Olivenöl bepinseln.",
+          "Bei 200°C ca. 25 Minuten im Ofen weich backen.",
+          "Passierte Tomaten mit Tomatenmark und Knoblauch aufkochen.",
+          "Kichererbsen unterrühren und kurz köcheln.",
+          "Sauce über die Auberginen geben und servieren."
         ]
       }
     },
     {
       "day": "Mi",
       "meal": {
-        "slug": "cremige-rote-linsen-suppe-mit-staudensellerie",
-        "title": "Cremige Rote-Linsen-Suppe mit Staudensellerie",
-        "blurb": "Wärmende Suppe mit Sellerie und roten Linsen – perfekt zum Vorkochen.",
+        "slug": "rote-linsen-dal-mit-bio-brokkoli",
+        "title": "Rote-Linsen-Dal mit Bio-Brokkoli",
+        "blurb": "Cremiges Dal mit Kokosmilch, verfeinert mit knackigem Bio-Brokkoli.",
         "tags": [
-          "suppe",
+          "dal",
+          "curry",
           "huelsenfruechte",
-          "cremig"
+          "indisch"
         ],
         "ingredients": [
           {
-            "name": "Bio-Staudensellerie",
-            "offerTitle": "Deutschland - Bio-Staudensellerie",
-            "price": "€1,79"
-          },
-          {
-            "name": "Bundmöhren",
-            "offerTitle": "Deutschland - Bundmöhren",
-            "price": "€1,49"
-          },
-          {
-            "name": "Speisezwiebeln",
-            "offerTitle": "Deutschland - Speisezwiebeln",
-            "price": "€1,11"
+            "name": "Bio-Brokkoli",
+            "offerTitle": "Deutschland - Bio-Brokkoli",
+            "price": "€1,99"
           },
           {
             "name": "Rote Linsen",
-            "pantry": true
-          },
-          {
-            "name": "Gemüsebrühe",
-            "pantry": true
-          },
-          {
-            "name": "Currypulver",
-            "pantry": true
-          }
-        ],
-        "steps": [
-          "Zwiebel, Sellerie und Möhren klein würfeln und andünsten.",
-          "Rote Linsen und Currypulver dazugeben.",
-          "Mit Gemüsebrühe ablöschen und 15 Minuten köcheln.",
-          "Mit dem Stabmixer fein oder grob pürieren.",
-          "Mit Salz und Pfeffer abschmecken."
-        ]
-      }
-    },
-    {
-      "day": "Do",
-      "meal": {
-        "slug": "ofen-kohlrabi-schnitzel-mit-kraeuterdip",
-        "title": "Ofen-Kohlrabi-Schnitzel mit Kräuterdip",
-        "blurb": "Knusprig paniert aus dem Ofen – ein günstiger Klassiker neu gedacht.",
-        "tags": [
-          "ofen",
-          "knusprig",
-          "günstig"
-        ],
-        "ingredients": [
-          {
-            "name": "Kohlrabi",
-            "offerTitle": "Deutschland - Kohlrabi",
-            "price": "€0,55"
-          },
-          {
-            "name": "Haferflocken",
-            "pantry": true
-          },
-          {
-            "name": "Sojadrink",
-            "pantry": true
-          },
-          {
-            "name": "Senf",
-            "pantry": true
-          }
-        ],
-        "steps": [
-          "Kohlrabi schälen und in Scheiben schneiden.",
-          "Scheiben durch Sojadrink ziehen und in gemahlenen Haferflocken wenden.",
-          "Bei 200°C im Ofen ca. 20 Minuten knusprig backen.",
-          "Für den Dip Senf mit etwas Sojadrink verrühren.",
-          "Warm servieren."
-        ]
-      }
-    },
-    {
-      "day": "Fr",
-      "meal": {
-        "slug": "kichererbsen-kokos-curry-mit-kohlrabi",
-        "title": "Kichererbsen-Kokos-Curry mit Kohlrabi",
-        "blurb": "Mild-cremiges Curry mit Kokosmilch – schnell und wärmend.",
-        "tags": [
-          "curry",
-          "huelsenfruechte",
-          "cremig"
-        ],
-        "ingredients": [
-          {
-            "name": "Kohlrabi",
-            "offerTitle": "Deutschland - Kohlrabi",
-            "price": "€0,55"
-          },
-          {
-            "name": "Speisezwiebeln",
-            "offerTitle": "Deutschland - Speisezwiebeln",
-            "price": "€1,11"
-          },
-          {
-            "name": "Kichererbsen",
             "pantry": true
           },
           {
@@ -235,248 +131,255 @@
             "pantry": true
           },
           {
-            "name": "Reis",
+            "name": "Kreuzkümmel",
+            "pantry": true
+          },
+          {
+            "name": "Zwiebeln",
+            "pantry": true
+          },
+          {
+            "name": "Ingwer",
             "pantry": true
           }
         ],
         "steps": [
-          "Zwiebel anbraten, Kohlrabi würfeln und dazugeben.",
-          "Currypulver kurz mitrösten.",
-          "Kichererbsen und Kokosmilch dazugeben.",
-          "10 Minuten köcheln lassen, bis der Kohlrabi weich ist.",
-          "Mit Reis servieren."
+          "Zwiebeln, Ingwer und Gewürze in Öl anschwitzen.",
+          "Rote Linsen zugeben, mit Wasser und Kokosmilch ablöschen.",
+          "Ca. 15 Minuten köcheln, bis die Linsen zerfallen.",
+          "Brokkoli in Röschen dazugeben und 5 Minuten mitgaren.",
+          "Mit Salz abschmecken und mit Reis servieren."
+        ]
+      }
+    },
+    {
+      "day": "Do",
+      "meal": {
+        "slug": "spitzkohl-tofu-wok-mit-lauchzwiebeln",
+        "title": "Spitzkohl-Tofu-Wok mit Lauchzwiebeln",
+        "blurb": "In 20 Minuten fertig: knackiger Spitzkohl und Lauchzwiebeln aus der Wok-Pfanne.",
+        "tags": [
+          "wok",
+          "asiatisch",
+          "schnell",
+          "tofu"
+        ],
+        "ingredients": [
+          {
+            "name": "Spitzkohl",
+            "offerTitle": "Deutschland - Spitzkohl",
+            "price": "€1,11"
+          },
+          {
+            "name": "Lauchzwiebeln",
+            "offerTitle": "Deutschland - Lauchzwiebeln",
+            "price": "€0,55"
+          },
+          {
+            "name": "Tofu",
+            "pantry": true
+          },
+          {
+            "name": "Sojasauce",
+            "pantry": true
+          },
+          {
+            "name": "Ingwer",
+            "pantry": true
+          },
+          {
+            "name": "Sriracha",
+            "pantry": true
+          }
+        ],
+        "steps": [
+          "Tofu würfeln und knusprig anbraten, herausnehmen.",
+          "Spitzkohl in Streifen im selben Wok anbraten.",
+          "Ingwer und Lauchzwiebeln kurz mitbraten.",
+          "Tofu zurück in den Wok geben.",
+          "Mit Sojasauce und Sriracha abschmecken."
+        ]
+      }
+    },
+    {
+      "day": "Fr",
+      "meal": {
+        "slug": "kartoffel-gemuese-curry-mit-gemuesezwiebeln",
+        "title": "Kartoffel-Gemüse-Curry mit Gemüsezwiebeln",
+        "blurb": "Wärmendes Curry mit den günstigen Speisekartoffeln und milden Gemüsezwiebeln.",
+        "tags": [
+          "curry",
+          "kartoffeln",
+          "waermend"
+        ],
+        "ingredients": [
+          {
+            "name": "Speisekartoffeln",
+            "offerTitle": "Deutschland - GUT & GÜNSTIG - Speisekartoffeln",
+            "price": "€2,22"
+          },
+          {
+            "name": "Gemüsezwiebeln",
+            "offerTitle": "Niederlande - Gemüsezwiebeln",
+            "price": "€1,29"
+          },
+          {
+            "name": "Kokosmilch",
+            "pantry": true
+          },
+          {
+            "name": "Currypulver",
+            "pantry": true
+          },
+          {
+            "name": "Kichererbsen",
+            "pantry": true
+          }
+        ],
+        "steps": [
+          "Kartoffeln würfeln, Zwiebeln in Ringe schneiden.",
+          "Zwiebeln glasig dünsten, Currypulver kurz mitrösten.",
+          "Kartoffeln zugeben, mit Kokosmilch und Wasser ablöschen.",
+          "Ca. 15 Minuten köcheln, bis die Kartoffeln weich sind.",
+          "Kichererbsen unterrühren und heiß servieren."
         ]
       }
     },
     {
       "day": "Sa",
       "meal": {
-        "slug": "avocado-kichererbsen-bowl-mit-zitrone",
-        "title": "Avocado-Kichererbsen-Bowl mit Zitrone",
-        "blurb": "Frische Bowl mit cremiger Avocado und Zitrone – ganz ohne Kochen des Belags.",
+        "slug": "moehren-porree-eintopf-mit-belugalinsen",
+        "title": "Möhren-Porree-Eintopf mit Belugalinsen",
+        "blurb": "Herzhafter Eintopf für kühle Abende, gebaut auf den günstigen Möhren und Porree.",
         "tags": [
-          "bowl",
-          "frisch",
-          "schnell"
+          "eintopf",
+          "suppe",
+          "huelsenfruechte",
+          "waermend"
         ],
         "ingredients": [
           {
-            "name": "Bio-Avocados",
-            "offerTitle": "Peru - Bio-Avocados",
-            "price": "€1,29"
-          },
-          {
-            "name": "Zitronen",
-            "offerTitle": "Südafrika - Outspan - Zitronen",
+            "name": "Möhren",
+            "offerTitle": "Deutschland - Möhren",
             "price": "€1,11"
           },
           {
-            "name": "Kichererbsen",
+            "name": "Porree",
+            "offerTitle": "Deutschland - Porree",
+            "price": "€0,66"
+          },
+          {
+            "name": "Belugalinsen",
             "pantry": true
           },
           {
-            "name": "Quinoa",
+            "name": "Gemüsebrühe",
             "pantry": true
           },
           {
-            "name": "Olivenöl",
+            "name": "Kartoffeln",
             "pantry": true
           }
         ],
         "steps": [
-          "Quinoa nach Packungsanweisung kochen und abkühlen lassen.",
-          "Avocado in Scheiben schneiden.",
-          "Kichererbsen abtropfen lassen und mit Olivenöl und Zitronensaft marinieren.",
-          "Alles in einer Bowl anrichten.",
-          "Mit Zitronenzesten toppen."
+          "Möhren, Porree und Kartoffeln in Stücke schneiden.",
+          "Alles kurz in Öl anschwitzen.",
+          "Belugalinsen und Gemüsebrühe zugeben.",
+          "Ca. 20 Minuten köcheln, bis alles gar ist.",
+          "Mit Salz und Pfeffer abschmecken."
         ]
       }
     },
     {
       "day": "So",
       "meal": {
-        "slug": "ofen-kartoffeln-mit-buntem-grillgemuese",
-        "title": "Ofen-Kartoffeln mit buntem Grillgemüse",
-        "blurb": "Rustikale Ofenkartoffeln mit fertiger Grillgemüse-Mischung – wenig Aufwand, viel Geschmack.",
+        "slug": "ofenkartoffeln-mit-bio-zwetschgen-chutney-und-raeuchertofu",
+        "title": "Ofenkartoffeln mit Bio-Zwetschgen-Chutney und Räuchertofu",
+        "blurb": "Süß-herzhafte Kombination: knusprige Ofenkartoffeln mit warmem Bio-Zwetschgen-Chutney.",
         "tags": [
           "ofen",
-          "gemüse",
-          "einfach"
+          "bio",
+          "suess-herzhaft",
+          "tofu"
         ],
         "ingredients": [
           {
             "name": "Speisekartoffeln",
-            "offerTitle": "Deutschland - Speisekartoffeln",
-            "price": "€1,99"
+            "offerTitle": "Deutschland - GUT & GÜNSTIG - Speisekartoffeln",
+            "price": "€2,22"
           },
           {
-            "name": "Grill-Gemüsemischung",
-            "offerTitle": "EDEKA Herzstücke - Grill-Gemüsemischung",
-            "price": "€2,99"
+            "name": "Bio-Zwetschgen",
+            "offerTitle": "Deutschland - Bio-Zwetschgen",
+            "price": "€2,49"
           },
           {
-            "name": "Speisezwiebeln",
-            "offerTitle": "Deutschland - Speisezwiebeln",
-            "price": "€1,11"
-          },
-          {
-            "name": "Olivenöl",
+            "name": "Räuchertofu",
             "pantry": true
           },
           {
-            "name": "Paprikapulver",
+            "name": "Zwiebeln",
+            "pantry": true
+          },
+          {
+            "name": "Agavendicksaft",
             "pantry": true
           }
         ],
         "steps": [
-          "Kartoffeln waschen, achteln und mit Öl und Paprikapulver vermengen.",
-          "Grillgemüse und Zwiebelringe dazugeben.",
-          "Alles auf einem Blech verteilen.",
-          "Bei 200°C ca. 30 Minuten rösten, einmal wenden."
+          "Kartoffeln in Spalten schneiden und im Ofen bei 200°C knusprig backen.",
+          "Zwetschgen entsteinen, würfeln und mit Zwiebeln andünsten.",
+          "Mit Agavendicksaft und etwas Wasser zu einem Chutney einkochen.",
+          "Räuchertofu würfeln und knusprig anbraten.",
+          "Alles zusammen anrichten."
         ]
       }
     }
   ],
   "bench": [
     {
-      "slug": "mango-kokos-reispfanne-mit-gemuese",
-      "title": "Mango-Kokos-Reispfanne mit Gemüse",
-      "blurb": "Fruchtig-exotische Reispfanne mit Mango und Kokos – ein Urlaubsgefühl zum Abendessen.",
+      "slug": "pasta-mit-spitzpaprika-und-tomatensauce",
+      "title": "Pasta mit Spitzpaprika und Tomatensauce",
+      "blurb": "Schnelle Alltagspasta mit süßer Spitzpaprika und würziger Tomatensauce.",
       "tags": [
-        "reis",
-        "exotisch",
-        "fruchtig"
+        "pasta",
+        "schnell",
+        "mediterran"
       ],
       "ingredients": [
         {
-          "name": "Mango",
-          "offerTitle": "Senegal - Mango „Ready-to-Eat“",
-          "price": "€2,99"
-        },
-        {
-          "name": "Speisezwiebeln",
-          "offerTitle": "Deutschland - Speisezwiebeln",
-          "price": "€1,11"
-        },
-        {
-          "name": "Kichererbsen",
-          "pantry": true
-        },
-        {
-          "name": "Kokosmilch",
-          "pantry": true
-        },
-        {
-          "name": "Reis",
-          "pantry": true
-        },
-        {
-          "name": "Ingwer",
-          "pantry": true
-        }
-      ],
-      "steps": [
-        "Reis kochen.",
-        "Zwiebel und Ingwer anbraten.",
-        "Kichererbsen und einen Schuss Kokosmilch dazugeben.",
-        "Mango würfeln und zum Schluss vorsichtig untermischen.",
-        "Mit dem Reis servieren."
-      ]
-    },
-    {
-      "slug": "herzhafter-moehren-kartoffel-eintopf",
-      "title": "Herzhafter Möhren-Kartoffel-Eintopf",
-      "blurb": "Deftiger Eintopf für kühle Abende – am nächsten Tag schmeckt er noch besser.",
-      "tags": [
-        "suppe",
-        "eintopf",
-        "deftig"
-      ],
-      "ingredients": [
-        {
-          "name": "Speisekartoffeln",
-          "offerTitle": "Deutschland - Speisekartoffeln",
-          "price": "€1,99"
-        },
-        {
-          "name": "Bundmöhren",
-          "offerTitle": "Deutschland - Bundmöhren",
+          "name": "Spitzpaprika",
+          "offerTitle": "Ungarn - Spitzpaprika",
           "price": "€1,49"
         },
         {
-          "name": "Speisezwiebeln",
-          "offerTitle": "Deutschland - Speisezwiebeln",
-          "price": "€1,11"
-        },
-        {
-          "name": "weiße Bohnen",
-          "pantry": true
-        },
-        {
-          "name": "Gemüsebrühe",
+          "name": "Nudeln",
           "pantry": true
         },
         {
           "name": "Tomatenmark",
           "pantry": true
-        }
-      ],
-      "steps": [
-        "Zwiebel andünsten, Kartoffeln und Möhren würfeln und dazugeben.",
-        "Tomatenmark kurz mitrösten.",
-        "Mit Gemüsebrühe auffüllen und 20 Minuten köcheln.",
-        "Weiße Bohnen dazugeben und 5 Minuten ziehen lassen.",
-        "Mit Salz und Pfeffer abschmecken."
-      ]
-    },
-    {
-      "slug": "kichererbsen-gemuese-curry-mit-blaubeeren-chutney",
-      "title": "Kichererbsen-Gemüse-Curry mit Blaubeeren-Chutney",
-      "blurb": "Mildes Curry trifft fruchtiges Heidelbeer-Chutney – ungewöhnlich lecker.",
-      "tags": [
-        "curry",
-        "huelsenfruechte",
-        "fruchtig"
-      ],
-      "ingredients": [
-        {
-          "name": "Kulturheidelbeeren",
-          "offerTitle": "Rumänien - Kulturheidelbeeren",
-          "price": "€1,99"
         },
         {
-          "name": "Speisezwiebeln",
-          "offerTitle": "Deutschland - Speisezwiebeln",
-          "price": "€1,11"
-        },
-        {
-          "name": "Kichererbsen",
+          "name": "Knoblauch",
           "pantry": true
         },
         {
-          "name": "Kokosmilch",
-          "pantry": true
-        },
-        {
-          "name": "Currypulver",
-          "pantry": true
-        },
-        {
-          "name": "Agaven-Dicksaft",
+          "name": "Hefeflocken",
           "pantry": true
         }
       ],
       "steps": [
-        "Für das Chutney Heidelbeeren mit etwas Agavendicksaft kurz einkochen.",
-        "Zwiebel anbraten und Currypulver mitrösten.",
-        "Kichererbsen und Kokosmilch dazugeben und köcheln lassen.",
-        "Mit dem Heidelbeer-Chutney servieren."
+        "Nudeln nach Packungsangabe kochen.",
+        "Spitzpaprika in Streifen schneiden und mit Knoblauch anbraten.",
+        "Tomatenmark zugeben, mit etwas Nudelwasser ablöschen.",
+        "Nudeln unterheben und mit Hefeflocken bestreuen."
       ]
     },
     {
-      "slug": "apfel-trauben-herbstsalat-mit-belugalinsen",
-      "title": "Apfel-Trauben-Herbstsalat mit Belugalinsen",
-      "blurb": "Süß-herzhafter Salat mit Linsen – frisch und trotzdem sättigend.",
+      "slug": "kichererbsen-avocado-salat-mit-limette",
+      "title": "Kichererbsen-Avocado-Salat mit Limette",
+      "blurb": "Frischer Salat mit cremiger Avocado, in wenigen Minuten fertig.",
       "tags": [
         "salat",
         "frisch",
@@ -484,22 +387,60 @@
       ],
       "ingredients": [
         {
-          "name": "Tafeläpfel",
-          "offerTitle": "Deutschland - Tafeläpfel",
+          "name": "Avocados",
+          "offerTitle": "Peru - Avocados",
+          "price": "€1,00"
+        },
+        {
+          "name": "Kichererbsen",
+          "pantry": true
+        },
+        {
+          "name": "Zwiebeln",
+          "pantry": true
+        },
+        {
+          "name": "Olivenöl",
+          "pantry": true
+        },
+        {
+          "name": "Salz",
+          "pantry": true
+        }
+      ],
+      "steps": [
+        "Avocado würfeln, Zwiebeln fein hacken.",
+        "Kichererbsen abtropfen lassen und alles vermengen.",
+        "Mit Olivenöl und Salz abschmecken.",
+        "Direkt servieren, solange die Avocado frisch ist."
+      ]
+    },
+    {
+      "slug": "cherry-tomaten-kichererbsen-pfanne",
+      "title": "Cherry-Tomaten-Kichererbsen-Pfanne",
+      "blurb": "Eine Pfanne, viel Geschmack: süße Rispentomaten treffen auf würzige Kichererbsen.",
+      "tags": [
+        "pfanne",
+        "huelsenfruechte",
+        "mediterran",
+        "schnell"
+      ],
+      "ingredients": [
+        {
+          "name": "Mini-Pflaumen- oder Cherry-Rispentomaten",
+          "offerTitle": "Niederlande - EDEKA GENUSSMOMENTE - Mini-Pflaumen- oder Cherry-Rispentomaten",
           "price": "€1,99"
         },
         {
-          "name": "Tafeltrauben Mix",
-          "offerTitle": "Italien - Tafeltrauben Mix",
-          "price": "€1,99"
+          "name": "Kichererbsen",
+          "pantry": true
         },
         {
-          "name": "Zitronen",
-          "offerTitle": "Südafrika - Outspan - Zitronen",
-          "price": "€1,11"
+          "name": "Knoblauch",
+          "pantry": true
         },
         {
-          "name": "Belugalinsen",
+          "name": "Paprikapulver",
           "pantry": true
         },
         {
@@ -508,51 +449,86 @@
         }
       ],
       "steps": [
-        "Belugalinsen nach Packungsanweisung kochen und abkühlen lassen.",
-        "Äpfel und Trauben waschen und klein schneiden.",
-        "Alles mit Zitronensaft und Olivenöl vermengen.",
-        "Kurz durchziehen lassen und servieren."
+        "Knoblauch in Olivenöl andünsten.",
+        "Kichererbsen zugeben und mit Paprikapulver würzen.",
+        "Tomaten dazugeben und bei mittlerer Hitze aufplatzen lassen.",
+        "Mit Salz abschmecken und mit Brot servieren."
       ]
     },
     {
-      "slug": "sommer-bowl-mit-himbeeren-avocado-und-quinoa",
-      "title": "Sommer-Bowl mit Himbeeren, Avocado und Quinoa",
-      "blurb": "Süß-herzhafte Bowl mit Himbeeren und Avocado – bunt und erfrischend.",
+      "slug": "sommerreis-bowl-mit-pfirsich-und-avocado",
+      "title": "Sommerreis-Bowl mit Pfirsich und Avocado",
+      "blurb": "Fruchtig-frische Bowl mit süßen Pfirsichen und cremiger Avocado.",
       "tags": [
         "bowl",
-        "frisch",
+        "reis",
+        "sommerlich",
+        "frisch"
+      ],
+      "ingredients": [
+        {
+          "name": "Nektarinen oder Pfirsiche",
+          "offerTitle": "Spanien - EDEKA Herzstücke - Nektarinen oder Pfirsiche",
+          "price": "€2,99"
+        },
+        {
+          "name": "Avocados",
+          "offerTitle": "Peru - Avocados",
+          "price": "€1,00"
+        },
+        {
+          "name": "Reis",
+          "pantry": true
+        },
+        {
+          "name": "Sojasauce",
+          "pantry": true
+        },
+        {
+          "name": "Ingwer",
+          "pantry": true
+        }
+      ],
+      "steps": [
+        "Reis kochen und abkühlen lassen.",
+        "Pfirsiche und Avocado in Spalten schneiden.",
+        "Ingwer fein reiben und mit Sojasauce zu einem Dressing verrühren.",
+        "Alles auf dem Reis anrichten und mit Dressing beträufeln."
+      ]
+    },
+    {
+      "slug": "heidelbeer-quinoa-salat-mit-geroestetem-gemuese",
+      "title": "Heidelbeer-Quinoa-Salat mit geröstetem Gemüse",
+      "blurb": "Bunter Salat mit Bio-Heidelbeeren – süß, sommerlich und proteinreich.",
+      "tags": [
+        "salat",
+        "quinoa",
         "sommerlich"
       ],
       "ingredients": [
         {
-          "name": "Himbeeren",
-          "offerTitle": "Deutschland - Himbeeren",
-          "price": "€1,49"
-        },
-        {
-          "name": "Bio-Avocados",
-          "offerTitle": "Peru - Bio-Avocados",
-          "price": "€1,29"
-        },
-        {
-          "name": "Zitronen",
-          "offerTitle": "Südafrika - Outspan - Zitronen",
-          "price": "€1,11"
+          "name": "Kulturheidelbeeren",
+          "offerTitle": "Polen - Kulturheidelbeeren",
+          "price": "€4,99"
         },
         {
           "name": "Quinoa",
           "pantry": true
         },
         {
-          "name": "Agaven-Dicksaft",
+          "name": "Zwiebeln",
+          "pantry": true
+        },
+        {
+          "name": "Olivenöl",
           "pantry": true
         }
       ],
       "steps": [
         "Quinoa kochen und abkühlen lassen.",
-        "Avocado in Scheiben schneiden.",
-        "Himbeeren vorsichtig unterheben.",
-        "Mit einem Spritzer Agavendicksaft und Zitrone abschmecken."
+        "Zwiebeln in Ringen in Olivenöl leicht anrösten.",
+        "Heidelbeeren und Zwiebeln unter die Quinoa heben.",
+        "Mit Olivenöl und Salz abschmecken."
       ]
     }
   ]

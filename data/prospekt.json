@@ -1,109 +1,109 @@
 {
-  "generatedAt": "2026-08-17",
-  "weekLabel": "KW34",
-  "lead": "Die [[Deutschland - Zucchini|Zucchini]] kosten diese Woche glatt einen Euro, was Preisschilder-technisch schon fast Understatement ist, und der [[Deutschland - Kohlrabi|Kohlrabi]] liegt bei 55 Cent. Beim [[Deutschland - Brokkoli|Brokkoli]] sind es 3,23 € das Kilo, beim [[Deutschland - EDEKA Regional - Mini-Pak-Choi|Mini-Pak-Choi]] 4,30 €. Zwei Kästen Pils stehen zu 11,99 € da — [[Warsteiner Pilsener|Warsteiner]] und [[Beck’s Pils, Blue Alkoholfrei oder weitere Sorten|Beck's, auch alkoholfrei]] —, macht 1,20 € der Liter, günstiger als das Mineralwasser daneben es verdient hätte. Der [[EDEKA - Röstkaffee|Röstkaffee]] liegt bei 11,98 € das Kilo, 20 % über seinem Tief, also solide statt spektakulär. Dazu [[Rügenwalder Mühle - Veganer Aufschnitt|veganer Aufschnitt]] für 1,29 €.",
+  "generatedAt": "2026-08-24",
+  "weekLabel": "KW35",
+  "lead": "Die [[Deutschland - Bio-Zucchini|Bio-Zucchini]] liegt bei 2,98 € das Kilo und damit auf ihrem Allzeit-Tief. [[Deutschland - Porree|Porree]] für 66 Cent und [[Deutschland - Auberginen|Auberginen]] für 99 Cent stehen daneben wie ein Vorwurf an die Tiefkühltruhe. [[Wiesenhof - Bruzzzler veggie Würstchen|Die veganen Bruzzzler]] sind für 2,79 € so günstig wie nie, [[alpro Soja-Joghurtalternative|die Soja-Joghurtalternative]] mit 1,69 € ebenfalls. Drei Pilsener liegen bei 11,99 €, darunter [[König Pilsener|König Pilsener]] und [[Radeberger Pilsner oder Pilsner Alkoholfrei|Radeberger, auch alkoholfrei]] — 1,20 € der Liter. [[Idee Kaffee Classic oder Eilles Kaffee Gourmet|Idee Kaffee]] steht bei 6,49 € auf seinem Allzeit-Tief.",
   "sections": {
-    "vegan": "Genau ein pflanzlicher Kandidat diese Woche: [[Rügenwalder Mühle - Veganer Aufschnitt|veganer Aufschnitt]] für 1,29 €. Die Auswahl trifft sich damit von selbst.",
-    "obstgemuese": "[[Deutschland - Kohlrabi|Kohlrabi]] für 55 Cent, [[Deutschland - Zucchini|Zucchini]] für einen Euro, [[Peru - Bio-Avocados|Bio-Avocados]] für 1,29 € — die Gemüsetheke macht diese Woche den Großteil der Arbeit.",
-    "bierspezi": "[[Warsteiner Pilsener|Warsteiner]] und [[Beck’s Pils, Blue Alkoholfrei oder weitere Sorten|Beck's Pils]] je 11,99 € der Kasten, 1,20 € der Liter. Spezi fehlt, dafür gibt es Beck's Blue alkoholfrei.",
-    "knueller": "[[Delverde Classica Pasta|Delverde-Pasta]] für 79 Cent auf Allzeit-Tief, [[Jakobus Mineralwasser|Jakobus Mineralwasser]] bei 33 Cent den Liter. Vieles andere im Knüller-Block ist Spirituose."
+    "vegan": "Genau ein veganer Kandidat diese Woche: [[Wiesenhof - Bruzzzler veggie Würstchen|die veggie Bruzzzler]] für 2,79 €, so günstig wie in keiner Woche zuvor.",
+    "obstgemuese": "[[Deutschland - Porree|Porree]] für 66 Cent, [[Deutschland - Auberginen|Auberginen]] für 99 Cent, [[Deutschland - Bio-Zucchini|Bio-Zucchini]] auf dem Allzeit-Tief. Die [[Polen - Kulturheidelbeeren|Heidelbeeren]] sind dagegen so teuer wie nie.",
+    "bierspezi": "Drei Pilsener zu 11,99 €, [[Bitburger Pils|Bitburger]] darunter. [[Paulaner Spezi oder Limo|Spezi]] für 69 Cent liegt 90 % über seinem Tief — der Durst entscheidet.",
+    "knueller": "[[Bionade|Bionade]] für 8,99 € und [[Idee Kaffee Classic oder Eilles Kaffee Gourmet|Idee Kaffee]] für 6,49 € stehen beide auf ihrem Allzeit-Tief, [[Noa Hummus oder Brotaufstrich|Noa Hummus]] mit 1,49 € ebenfalls."
   },
   "foryou": [
     {
-      "title": "Deutschland - Brokkoli",
+      "title": "Deutschland - Bio-Zucchini",
       "rank": 1,
-      "reason": "Steht auf deiner Daumen-hoch-Liste, 3,23 € das Kilo für deutschen Brokkoli",
-      "evidenceTag": "Favorit"
+      "reason": "Favorit und Bio: 2,98 €/kg sind das Allzeit-Tief.",
+      "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Deutschland - EDEKA Regional - Mini-Pak-Choi",
+      "title": "Bionade",
       "rank": 2,
-      "reason": "Daumen hoch von dir, 16 % über dem Tief — nah dran am besten Preis",
-      "evidenceTag": "Favorit"
+      "reason": "Daumen hoch von dir, und mit 2,27 €/l auf dem Allzeit-Tief.",
+      "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Deutschland - Zucchini",
+      "title": "Idee Kaffee Classic oder Eilles Kaffee Gourmet",
       "rank": 3,
-      "reason": "Bio-Zucchini stehen bei dir hoch im Kurs, hier glatt ein Euro",
-      "evidenceTag": "Favorit"
+      "reason": "Kaffee auf dem Allzeit-Tief: 12,98 € das Kilo.",
+      "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Deutschland - Kohlrabi",
+      "title": "Deutschland - Auberginen",
       "rank": 4,
-      "reason": "55 Cent, der günstigste Posten der ganzen Gemüseabteilung",
-      "evidenceTag": "mag ich"
+      "reason": "Steht auf deiner Daumen-hoch-Liste, hier für 99 Cent.",
+      "evidenceTag": "Favorit"
     },
     {
-      "title": "Deutschland - Bio-Staudensellerie",
+      "title": "Deutschland - Bio-Brokkoli",
       "rank": 5,
-      "reason": "Staudensellerie mag du, hier in Bio für 1,79 €",
+      "reason": "Daumen hoch für Brokkoli, hier in Bio für 1,99 €.",
       "evidenceTag": "Favorit"
     },
     {
-      "title": "Rügenwalder Mühle - Veganer Aufschnitt",
+      "title": "alpro Soja-Joghurtalternative",
       "rank": 6,
-      "reason": "Einziger veganer Kandidat der Woche, 1,29 € die Packung",
-      "evidenceTag": "Favorit"
+      "reason": "Pflanzliche Joghurtalternative, mit 4,23 €/kg auf dem Allzeit-Tief.",
+      "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Peru - Bio-Avocados",
+      "title": "Wiesenhof - Bruzzzler veggie Würstchen",
       "rank": 7,
-      "reason": "Bio und Obst & Gemüse in einem, 1,29 € das Stück",
-      "evidenceTag": "mag ich"
+      "reason": "Vegane Würstchen zu 13,95 €/kg, so günstig wie nie zuvor.",
+      "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Warsteiner Pilsener",
+      "title": "Noa Hummus oder Brotaufstrich",
       "rank": 8,
-      "reason": "Pils zu 1,20 € der Liter, Kastenpreis 11,99 €",
-      "evidenceTag": "Favorit"
+      "reason": "Veganer Brotaufstrich zum Allzeit-Tief von 8,51 €/kg.",
+      "evidenceTag": "Allzeit-Tief"
     },
     {
-      "title": "Beck’s Pils, Blue Alkoholfrei oder weitere Sorten",
+      "title": "König Pilsener",
       "rank": 9,
-      "reason": "Pils und alkoholfreies Blue im selben Angebot, 11,99 € der Kasten",
+      "reason": "Pils ist Favorit, hier für 1,20 € den Liter.",
       "evidenceTag": "Favorit"
     },
     {
-      "title": "Deutschland - Bio-Basilikum",
+      "title": "Radeberger Pilsner oder Pilsner Alkoholfrei",
       "rank": 10,
-      "reason": "Bio-Kraut für 1,29 €, passt zu Zucchini und Tomatenmark",
-      "evidenceTag": "mag ich"
+      "reason": "Pils, wahlweise alkoholfrei — beides steht auf deiner Liste.",
+      "evidenceTag": "Favorit"
     },
     {
-      "title": "EDEKA - Röstkaffee",
+      "title": "Mövenpick Der Himmlische",
       "rank": 11,
-      "reason": "Kaffee zu 11,98 € das Kilo, 20 % über dem Tief — brauchbar",
+      "reason": "Kaffee, nur 8 % über dem Tief aus sechs Wochen Historie.",
       "evidenceTag": "guter Preis"
     },
     {
-      "title": "Deutschland - Speisekartoffeln",
+      "title": "Deutschland - Bio-Zwetschgen",
       "rank": 12,
-      "reason": "1,00 € das Kilo, liegt aber 33 % über dem eigenen Tief",
-      "evidenceTag": ""
+      "reason": "Bio-Obst für 3,32 € das Kilo.",
+      "evidenceTag": "mag ich"
     },
     {
-      "title": "Delverde Classica Pasta",
+      "title": "Bitburger Pils",
       "rank": 13,
-      "reason": "Allzeit-Tief bei 1,58 € das Kilo, belegt über vier Wochen",
-      "evidenceTag": "Allzeit-Tief"
+      "reason": "Noch ein Pils zu 1,20 € den Liter.",
+      "evidenceTag": "Favorit"
     },
     {
-      "title": "Deutschland - Bundmöhren",
+      "title": "Paulaner Spezi oder Limo",
       "rank": 14,
-      "reason": "Bundmöhren für 1,49 €, direkt aus Deutschland",
-      "evidenceTag": "mag ich"
+      "reason": "Spezi ist Favorit, der Preis ist es nicht: 90 % über dem Tief.",
+      "evidenceTag": "Favorit"
     },
     {
-      "title": "Deutschland - meinLand Bio - Bio-Eisbergsalat",
+      "title": "Deutschland - Porree",
       "rank": 15,
-      "reason": "Bio-Salat für 1,79 €, deckt Bio und Gemüse zugleich ab",
+      "reason": "Gemüse für 66 Cent, günstiger wird der Korb nicht.",
       "evidenceTag": "mag ich"
     },
     {
-      "title": "Jakobus Mineralwasser",
+      "title": "Ungarn - Spitzpaprika",
       "rank": 16,
-      "reason": "Allzeit-Tief, 33 Cent der Liter — günstigster Getränkeposten",
-      "evidenceTag": "Allzeit-Tief"
+      "reason": "2,98 € das Kilo, ohne Preishistorie zum Vergleich.",
+      "evidenceTag": "mag ich"
     }
   ],
   "model": "opus",
