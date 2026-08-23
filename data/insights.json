@@ -1,179 +1,179 @@
 {
-  "generatedAt": "2026-08-17",
-  "weekLabel": "2026-KW34",
-  "summary": "Äpfel sind diese Woche fast doppelt so teuer wie sonst. Delverde-Pasta und Getränke wie Fever-Tree erreichen Allzeittiefs mit bis zu 53 % Rabatt.",
+  "generatedAt": "2026-08-24",
+  "weekLabel": "2026-KW35",
+  "summary": "Getränke sind diese Woche deutlich teurer: Spezi kostet 90 % mehr als der Tiefstpreis. Dafür gibt es hervorragende Deals bei Fleisch – Hähnchenpfanne ist 34 % günstiger als je zuvor.",
   "pricier": [
     {
-      "title": "Deutschland - Tafeläpfel",
-      "cat": "Obst & Gemüse",
-      "current_gp": 1.99,
-      "unit": "kg",
-      "hist_min_gp": 1.0,
-      "pct_above_min": 99.0,
-      "note": "fast doppelt so teuer wie das Tiefstgebot"
-    },
-    {
-      "title": "Schulte Biskuitzungen",
-      "cat": "Knabbern & Naschen",
-      "current_gp": 13.45,
-      "unit": "kg",
-      "hist_min_gp": 7.96,
-      "pct_above_min": 69.0,
-      "note": "69 % teurer als günstigstes Angebot"
-    },
-    {
-      "title": "Spareribs",
-      "cat": "Fleisch & Wurst",
-      "current_gp": 11.1,
-      "unit": "kg",
-      "hist_min_gp": 7.7,
-      "pct_above_min": 44.2,
-      "note": "44 % über dem Tiefstpreis"
-    },
-    {
-      "title": "Weihenstephan Haltbare Milch",
-      "cat": "Molkerei & Käse",
-      "current_gp": 1.19,
-      "unit": "l",
-      "hist_min_gp": 0.88,
-      "pct_above_min": 35.2,
-      "note": "35 % teurer als das Tiefstgebot"
-    },
-    {
-      "title": "Deutschland - Speisekartoffeln",
-      "cat": "Obst & Gemüse",
-      "current_gp": 1.0,
-      "unit": "kg",
-      "hist_min_gp": 0.75,
-      "pct_above_min": 33.3,
-      "note": "33 % über dem Tiefstpreis"
-    },
-    {
-      "title": "Böklunder Echte Land-Bockwurst oder Gutfried Geflügel-Bockwurst",
-      "cat": "Grundnahrung",
-      "current_gp": 11.06,
-      "unit": "kg",
-      "hist_min_gp": 8.33,
-      "pct_above_min": 32.8,
-      "note": "33 % teurer als günstigstes Angebot"
-    },
-    {
-      "title": "effect Energy Drink",
+      "title": "Paulaner Spezi oder Limo",
       "cat": "Getränke",
       "current_gp": 2.09,
       "unit": "l",
-      "hist_min_gp": 1.64,
-      "pct_above_min": 27.4,
-      "note": "27 % über dem Tiefstpreis"
+      "hist_min_gp": 1.1,
+      "pct_above_min": 90.0,
+      "note": "90 % teurer als Tiefstpreis (1,10 €/l)"
     },
     {
-      "title": "Golden Toast",
-      "cat": "Grundnahrung",
-      "current_gp": 2.98,
+      "title": "Polen - Kulturheidelbeeren",
+      "cat": "Obst & Gemüse",
+      "current_gp": 9.98,
       "unit": "kg",
-      "hist_min_gp": 2.38,
-      "pct_above_min": 25.2,
-      "note": "25 % teurer als günstigstes Angebot"
+      "hist_min_gp": 5.98,
+      "pct_above_min": 66.9,
+      "note": "67 % über Tiefstpreis von 5,98 €/kg"
     },
     {
-      "title": "Cambozola Classic oder Rougette",
+      "title": "Sensodyne Zahncreme",
+      "cat": "Drogerie",
+      "current_gp": 50.53,
+      "unit": "l",
+      "hist_min_gp": 30.53,
+      "pct_above_min": 65.5,
+      "note": "65 % teurer als Tiefstpreis (30,53 €)"
+    },
+    {
+      "title": "Deutschland - GUT & GÜNSTIG - Speisekartoffeln",
+      "cat": "Obst & Gemüse",
+      "current_gp": 0.89,
+      "unit": "kg",
+      "hist_min_gp": 0.6,
+      "pct_above_min": 48.3,
+      "note": "48 % über Tiefstpreis (0,60 €/kg)"
+    },
+    {
+      "title": "Gerolsteiner Mineralwasser",
+      "cat": "Getränke",
+      "current_gp": 0.52,
+      "unit": "l",
+      "hist_min_gp": 0.37,
+      "pct_above_min": 40.5,
+      "note": "41 % über Tiefstpreis von 0,37 €/l"
+    },
+    {
+      "title": "Rasting - Frischer Fleischkäse",
+      "cat": "Fleisch & Wurst",
+      "current_gp": 6.99,
+      "unit": "kg",
+      "hist_min_gp": 5.0,
+      "pct_above_min": 39.8,
+      "note": "40 % teurer, Tiefstpreis 5,00 €/kg"
+    },
+    {
+      "title": "Krombacher Pils oder Radler",
+      "cat": "Getränke",
+      "current_gp": 2.42,
+      "unit": "l",
+      "hist_min_gp": 1.76,
+      "pct_above_min": 37.5,
+      "note": "38 % über Tiefstpreis (1,76 €/l)"
+    },
+    {
+      "title": "müller Müllermilch",
       "cat": "Molkerei & Käse",
+      "current_gp": 1.98,
+      "unit": "l",
+      "hist_min_gp": 1.48,
+      "pct_above_min": 33.8,
+      "note": "34 % über Tiefstpreis von 1,48 €/l"
+    },
+    {
+      "title": "Arla Finello Reibekäse",
+      "cat": "Molkerei & Käse",
+      "current_gp": 13.27,
+      "unit": "kg",
+      "hist_min_gp": 9.93,
+      "pct_above_min": 33.6,
+      "note": "34 % teurer, Tiefstpreis 9,93 €/kg"
+    },
+    {
+      "title": "Schweinefilet",
+      "cat": "Fleisch & Wurst",
       "current_gp": 19.9,
       "unit": "kg",
-      "hist_min_gp": 15.9,
-      "pct_above_min": 25.2,
-      "note": "25 % über dem Tiefstpreis"
-    },
-    {
-      "title": "EDEKA - Röstkaffee",
-      "cat": "Grundnahrung",
-      "current_gp": 11.98,
-      "unit": "kg",
-      "hist_min_gp": 9.98,
-      "pct_above_min": 20.0,
-      "note": "20 % teurer als das Tiefstgebot"
+      "hist_min_gp": 14.99,
+      "pct_above_min": 32.8,
+      "note": "33 % über Tiefstpreis (14,99 €/kg)"
     }
   ],
   "deals": [
     {
-      "title": "Delverde Classica Pasta",
-      "cat": "Grundnahrung",
-      "current_gp": 1.58,
+      "title": "Hähnchenpfanne nach Gyros-Art",
+      "cat": "Fleisch & Wurst",
+      "current_gp": 9.9,
       "unit": "kg",
-      "hist_max_gp": 3.38,
-      "note": "53 % günstiger als je zuvor"
+      "hist_max_gp": 14.9,
+      "note": "34 % günstiger als je zuvor (14,90 €)"
     },
     {
-      "title": "Fever-Tree",
-      "cat": "Getränke",
-      "current_gp": 3.33,
-      "unit": "l",
-      "hist_max_gp": 6.24,
-      "note": "47 % unter dem Höchstpreis"
-    },
-    {
-      "title": "Bergader Bavaria blu oder Almzeit",
+      "title": "Noa Hummus oder Brotaufstrich",
       "cat": "Molkerei & Käse",
-      "current_gp": 9.93,
+      "current_gp": 8.51,
       "unit": "kg",
-      "hist_max_gp": 17.09,
-      "note": "42 % günstiger als Höchstpreis"
+      "hist_max_gp": 11.37,
+      "note": "25 % günstiger, Höchstpreis 11,37 €"
     },
     {
-      "title": "Erdinger Weißbier",
-      "cat": "Getränke",
-      "current_gp": 1.5,
+      "title": "Cottonelle Feuchtes Toilettenpapier",
+      "cat": "Drogerie",
+      "current_gp": 0.03,
+      "unit": "St",
+      "hist_max_gp": 0.04,
+      "note": "25 % gegenüber Höchstpreis (0,04 €)"
+    },
+    {
+      "title": "Drano Abflussreiniger",
+      "cat": "Drogerie",
+      "current_gp": 2.79,
       "unit": "l",
-      "hist_max_gp": 2.52,
-      "note": "41 % unter dem Höchstpreis"
+      "hist_max_gp": 3.69,
+      "note": "24 % Ersparnis, Höchstpreis 3,69 €/l"
     },
     {
-      "title": "alpro Hafer- oder Soyadrink",
-      "cat": "Molkerei & Käse",
-      "current_gp": 1.49,
-      "unit": "l",
-      "hist_max_gp": 1.99,
-      "note": "25 % günstiger als je zuvor"
-    },
-    {
-      "title": "Frisches Hähncheninnenfilet",
+      "title": "Frische Hähnchenschnitzel",
       "cat": "Fleisch & Wurst",
       "current_gp": 9.9,
       "unit": "kg",
       "hist_max_gp": 12.9,
-      "note": "23 % unter dem Höchstpreis"
+      "note": "23 % günstiger als Höchstpreis (12,90 €)"
     },
     {
-      "title": "Frische Hähnchenschenkel",
-      "cat": "Fleisch & Wurst",
-      "current_gp": 2.9,
-      "unit": "kg",
-      "hist_max_gp": 3.5,
-      "note": "17 % günstiger als Höchstpreis"
-    },
-    {
-      "title": "Yum Yum Instantnudeln",
-      "cat": "Grundnahrung",
-      "current_gp": 8.17,
-      "unit": "kg",
-      "hist_max_gp": 9.83,
-      "note": "17 % unter dem Höchstpreis"
-    },
-    {
-      "title": "Jakobus Mineralwasser",
+      "title": "albi Fruchtsaft, -nektar oder Fruchtsaftgetränk",
       "cat": "Getränke",
-      "current_gp": 0.33,
+      "current_gp": 1.33,
       "unit": "l",
-      "hist_max_gp": 0.39,
-      "note": "15 % günstiger als je zuvor"
+      "hist_max_gp": 1.72,
+      "note": "23 % Rabatt gegenüber 1,72 €/l"
     },
     {
-      "title": "Grillrippen",
-      "cat": "Fleisch & Wurst",
-      "current_gp": 5.9,
+      "title": "Ecuador - GUT & GÜNSTIG - Bananen",
+      "cat": "Obst & Gemüse",
+      "current_gp": 1.0,
       "unit": "kg",
-      "hist_max_gp": 6.9,
-      "note": "15 % unter dem Höchstpreis"
+      "hist_max_gp": 1.29,
+      "note": "23 % unter Höchstpreis (1,29 €)"
+    },
+    {
+      "title": "Vitamalz",
+      "cat": "Getränke",
+      "current_gp": 1.35,
+      "unit": "l",
+      "hist_max_gp": 1.72,
+      "note": "21 % günstiger, normaler Preis 1,72 €"
+    },
+    {
+      "title": "Deutschland - Bio-Zucchini",
+      "cat": "Obst & Gemüse",
+      "current_gp": 2.98,
+      "unit": "kg",
+      "hist_max_gp": 3.54,
+      "note": "16 % Ersparnis gegenüber 3,54 €"
+    },
+    {
+      "title": "alpro Soja-Joghurtalternative",
+      "cat": "Molkerei & Käse",
+      "current_gp": 4.23,
+      "unit": "kg",
+      "hist_max_gp": 4.98,
+      "note": "15 % unter Höchstpreis (4,98 €)"
     }
   ],
   "model": "haiku"
