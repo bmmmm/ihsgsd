@@ -1,109 +1,109 @@
 {
-  "generatedAt": "2026-08-24",
-  "weekLabel": "KW35",
-  "lead": "Die [[Deutschland - Bio-Zucchini|Bio-Zucchini]] liegt bei 2,98 € das Kilo und damit auf ihrem Allzeit-Tief. [[Deutschland - Porree|Porree]] für 66 Cent und [[Deutschland - Auberginen|Auberginen]] für 99 Cent stehen daneben wie ein Vorwurf an die Tiefkühltruhe. [[Wiesenhof - Bruzzzler veggie Würstchen|Die veganen Bruzzzler]] sind für 2,79 € so günstig wie nie, [[alpro Soja-Joghurtalternative|die Soja-Joghurtalternative]] mit 1,69 € ebenfalls. Drei Pilsener liegen bei 11,99 €, darunter [[König Pilsener|König Pilsener]] und [[Radeberger Pilsner oder Pilsner Alkoholfrei|Radeberger, auch alkoholfrei]] — 1,20 € der Liter. [[Idee Kaffee Classic oder Eilles Kaffee Gourmet|Idee Kaffee]] steht bei 6,49 € auf seinem Allzeit-Tief.",
+  "generatedAt": "2026-08-31",
+  "weekLabel": "KW36",
+  "lead": "[[Ungarn - Spitzpaprika|Die Spitzpaprika]] liegt bei 2,98 € das Kilo und damit auf ihrem Allzeit-Tief, was für eine Paprika ein bemerkenswerter Lebenslauf ist. [[Deutschland - GUT & GÜNSTIG - Tafeläpfel Jonagold|Die Jonagold-Äpfel]] kosten 75 Cent das Kilo, [[Deutschland - Kohlrabi|der Kohlrabi]] 55 Cent das Stück. Pflanzlich bleibt es übersichtlich: [[Like Meat - Rein pflanzlich aus Soja|Like Meat, rein pflanzlich aus Soja]] für 2,49 € und [[Oatly Haferdrink|der Oatly Haferdrink]] für 1,79 €. Beim Bier steht [[Veltins Pilsener|Veltins Pilsener]] bei 1,15 € den Liter, [[Jever Pilsener|Jever]] bei 1,30 €. Kaffee fehlt diese Woche komplett, dafür ist [[Kühne Schlemmertöpfchen|das Schlemmertöpfchen]] so günstig wie seit sechs Wochen nicht.",
   "sections": {
-    "vegan": "Genau ein veganer Kandidat diese Woche: [[Wiesenhof - Bruzzzler veggie Würstchen|die veggie Bruzzzler]] für 2,79 €, so günstig wie in keiner Woche zuvor.",
-    "obstgemuese": "[[Deutschland - Porree|Porree]] für 66 Cent, [[Deutschland - Auberginen|Auberginen]] für 99 Cent, [[Deutschland - Bio-Zucchini|Bio-Zucchini]] auf dem Allzeit-Tief. Die [[Polen - Kulturheidelbeeren|Heidelbeeren]] sind dagegen so teuer wie nie.",
-    "bierspezi": "Drei Pilsener zu 11,99 €, [[Bitburger Pils|Bitburger]] darunter. [[Paulaner Spezi oder Limo|Spezi]] für 69 Cent liegt 90 % über seinem Tief — der Durst entscheidet.",
-    "knueller": "[[Bionade|Bionade]] für 8,99 € und [[Idee Kaffee Classic oder Eilles Kaffee Gourmet|Idee Kaffee]] für 6,49 € stehen beide auf ihrem Allzeit-Tief, [[Noa Hummus oder Brotaufstrich|Noa Hummus]] mit 1,49 € ebenfalls."
+    "vegan": "Zwei Posten: [[Like Meat - Rein pflanzlich aus Soja|Like Meat aus Soja]] für 2,49 € und [[Oatly Haferdrink|Oatly Haferdrink]] für 1,79 €. Mehr Pflanzliches hat die Woche nicht hergegeben.",
+    "obstgemuese": "[[Ungarn - Spitzpaprika|Die Spitzpaprika]] steht auf dem Allzeit-Tief, [[Deutschland - GUT & GÜNSTIG - Tafeläpfel Jonagold|Jonagold]] kostet 75 Cent das Kilo. [[Peru - Bio-Avocados|Bio-Avocados]] gibt es für 1,29 €.",
+    "bierspezi": "[[Veltins Pilsener|Veltins]] liegt bei 1,15 € den Liter, [[Jever Pilsener|Jever]] bei 1,30 €. Spezi fehlt, [[Mio Mio Erfrischungsgetränk|Mio Mio]] steht für 89 Cent auf dem Allzeit-Tief.",
+    "knueller": "[[Kühne Schlemmertöpfchen|Das Schlemmertöpfchen]] für 2,22 € und [[EDEKA - Supersweet Mais|der Mais]] für 99 Cent sind beide auf ihrem tiefsten Stand, [[Seidel Bohnen|Bohnen]] ebenfalls."
   },
   "foryou": [
     {
-      "title": "Deutschland - Bio-Zucchini",
+      "title": "Veltins Pilsener",
       "rank": 1,
-      "reason": "Favorit und Bio: 2,98 €/kg sind das Allzeit-Tief.",
-      "evidenceTag": "Allzeit-Tief"
+      "reason": "Dein Pils, der Liter im Kasten für 1,15 €.",
+      "evidenceTag": "Favorit"
     },
     {
-      "title": "Bionade",
+      "title": "Kühne Schlemmertöpfchen",
       "rank": 2,
-      "reason": "Daumen hoch von dir, und mit 2,27 €/l auf dem Allzeit-Tief.",
+      "reason": "Steht auf deiner Liste und ist so günstig wie in sechs Wochen nicht.",
       "evidenceTag": "Allzeit-Tief"
-    },
-    {
-      "title": "Idee Kaffee Classic oder Eilles Kaffee Gourmet",
-      "rank": 3,
-      "reason": "Kaffee auf dem Allzeit-Tief: 12,98 € das Kilo.",
-      "evidenceTag": "Allzeit-Tief"
-    },
-    {
-      "title": "Deutschland - Auberginen",
-      "rank": 4,
-      "reason": "Steht auf deiner Daumen-hoch-Liste, hier für 99 Cent.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Deutschland - Bio-Brokkoli",
-      "rank": 5,
-      "reason": "Daumen hoch für Brokkoli, hier in Bio für 1,99 €.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "alpro Soja-Joghurtalternative",
-      "rank": 6,
-      "reason": "Pflanzliche Joghurtalternative, mit 4,23 €/kg auf dem Allzeit-Tief.",
-      "evidenceTag": "Allzeit-Tief"
-    },
-    {
-      "title": "Wiesenhof - Bruzzzler veggie Würstchen",
-      "rank": 7,
-      "reason": "Vegane Würstchen zu 13,95 €/kg, so günstig wie nie zuvor.",
-      "evidenceTag": "Allzeit-Tief"
-    },
-    {
-      "title": "Noa Hummus oder Brotaufstrich",
-      "rank": 8,
-      "reason": "Veganer Brotaufstrich zum Allzeit-Tief von 8,51 €/kg.",
-      "evidenceTag": "Allzeit-Tief"
-    },
-    {
-      "title": "König Pilsener",
-      "rank": 9,
-      "reason": "Pils ist Favorit, hier für 1,20 € den Liter.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Radeberger Pilsner oder Pilsner Alkoholfrei",
-      "rank": 10,
-      "reason": "Pils, wahlweise alkoholfrei — beides steht auf deiner Liste.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Mövenpick Der Himmlische",
-      "rank": 11,
-      "reason": "Kaffee, nur 8 % über dem Tief aus sechs Wochen Historie.",
-      "evidenceTag": "guter Preis"
-    },
-    {
-      "title": "Deutschland - Bio-Zwetschgen",
-      "rank": 12,
-      "reason": "Bio-Obst für 3,32 € das Kilo.",
-      "evidenceTag": "mag ich"
-    },
-    {
-      "title": "Bitburger Pils",
-      "rank": 13,
-      "reason": "Noch ein Pils zu 1,20 € den Liter.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Paulaner Spezi oder Limo",
-      "rank": 14,
-      "reason": "Spezi ist Favorit, der Preis ist es nicht: 90 % über dem Tief.",
-      "evidenceTag": "Favorit"
-    },
-    {
-      "title": "Deutschland - Porree",
-      "rank": 15,
-      "reason": "Gemüse für 66 Cent, günstiger wird der Korb nicht.",
-      "evidenceTag": "mag ich"
     },
     {
       "title": "Ungarn - Spitzpaprika",
-      "rank": 16,
-      "reason": "2,98 € das Kilo, ohne Preishistorie zum Vergleich.",
+      "rank": 3,
+      "reason": "2,98 € das Kilo, tiefer stand sie hier noch nie.",
+      "evidenceTag": "Allzeit-Tief"
+    },
+    {
+      "title": "Like Meat - Rein pflanzlich aus Soja",
+      "rank": 4,
+      "reason": "Rein pflanzlich für 2,49 €, die vegane Ecke ist diese Woche dünn.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Oatly Haferdrink",
+      "rank": 5,
+      "reason": "Haferdrink für 1,79 €, der pflanzliche Standard im Kühlregal.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Peru - Bio-Avocados",
+      "rank": 6,
+      "reason": "Bio und Obst & Gemüse in einem, 1,29 €.",
       "evidenceTag": "mag ich"
+    },
+    {
+      "title": "Jever Pilsener",
+      "rank": 7,
+      "reason": "Zweites Pils im Angebot, 1,30 € der Liter.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Spanien - Bio-Spitzpaprika",
+      "rank": 8,
+      "reason": "Bio-Variante für 1,99 €, preislich im Mittelfeld ihrer Historie.",
+      "evidenceTag": "mag ich"
+    },
+    {
+      "title": "Deutschland - GUT & GÜNSTIG - Tafeläpfel Jonagold",
+      "rank": 9,
+      "reason": "Ein Kilo Äpfel für 75 Cent, die Rechnung der Woche.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Deutschland - Kohlrabi",
+      "rank": 10,
+      "reason": "55 Cent, Gemüse zum Kleingeldpreis.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Niederlande - GUT & GÜNSTIG - Salatgurken",
+      "rank": 11,
+      "reason": "88 Cent für die Salatgurke, Obst & Gemüse steht bei dir oben.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Deutschland - Mini Möhren",
+      "rank": 12,
+      "reason": "88 Cent, umgerechnet 2,93 € das Kilo.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "Deutschland - Speisekürbis Hokkaido oder Butternut",
+      "rank": 13,
+      "reason": "Hokkaido oder Butternut für 1,29 €, die Kürbisrechnung geht auf.",
+      "evidenceTag": "Favorit"
+    },
+    {
+      "title": "EDEKA - Supersweet Mais",
+      "rank": 14,
+      "reason": "99 Cent, 3,47 € das Kilo und damit auf dem tiefsten Stand.",
+      "evidenceTag": "Allzeit-Tief"
+    },
+    {
+      "title": "Seidel Bohnen",
+      "rank": 15,
+      "reason": "4,03 € das Kilo, so günstig gab es die Bohnen bisher nicht.",
+      "evidenceTag": "Allzeit-Tief"
+    },
+    {
+      "title": "Mio Mio Erfrischungsgetränk",
+      "rank": 16,
+      "reason": "89 Cent auf dem Allzeit-Tief, der Spezi-Ersatz dieser Woche.",
+      "evidenceTag": "Allzeit-Tief"
     }
   ],
   "model": "opus",
