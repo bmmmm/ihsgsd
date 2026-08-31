@@ -1,7 +1,7 @@
 {
   "source": "kaufda",
   "retailer": "lidl",
-  "fetchedAt": "2026-08-31T11:12:42Z",
+  "fetchedAt": "2026-08-31T17:30:07Z",
   "weekStart": "2026-09-07",
   "brochures": [
     {
@@ -1249,6 +1249,26 @@
       ],
       "image": "https://content-media.bonial.biz/ce90641b-24d1-4fb0-b153-4e90bfbdad70/a54adff2-2004-435c-ab8d-826e7e3f1c5c.jpg",
       "page": 7
+    },
+    {
+      "id": "1fd5eed513b5",
+      "kaufdaId": "cd7e465b-dfbd-48a9-9251-cab76b0a6e82",
+      "name": "Österreich Salzburger Land",
+      "variants": [],
+      "brand": "lidl reisen",
+      "description": "Eigenanreise, 7 Nächte, Hotel Salzburgerhof, All Inclusive. Anreise z.B. im Dez. 26 & März 27. Weitere Termine online buchbar. Reiseveranstalter: Travel Partner GmbH",
+      "price": 444,
+      "priceMax": null,
+      "grundpreisText": null,
+      "dealType": "SALES_PRICE",
+      "dealText": null,
+      "categoryPath": [
+        "Dienstleistungen",
+        "weitere Dienstleistungen",
+        "Reiseangebote"
+      ],
+      "image": "https://content-media.bonial.biz/cd7e465b-dfbd-48a9-9251-cab76b0a6e82/5b908c0c-78d9-4490-88e2-7744dc414093.jpg",
+      "page": 59
     },
     {
       "id": "2027e5e33324",
