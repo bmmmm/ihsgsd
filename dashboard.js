@@ -845,7 +845,7 @@ function buildProductItem(o, opts) {
     price.textContent = pr === null ? '—' : formatEuro(pr);
     li.appendChild(price);
 
-    makeDetailClickable(li, { title: o.title, cat: catName, offer: o });
+    makeDetailClickable(li, { title: o.title, cat, offer: o });
     return li;
 }
 

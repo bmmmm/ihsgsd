@@ -226,6 +226,12 @@ elif python3 scripts/generate_prospekt.py && python3 scripts/generate_mealplan.p
   fi
 else
   echo "Phase B failed (generate_prospekt.py / generate_mealplan.py) for $LATEST_WEEK." >&2
+  # If generate_prospekt.py succeeded and only generate_mealplan.py failed, a
+  # regenerated prospekt.json is now sitting unstaged in the tree — and the
+  # dirty-tree guard at the top would then skip EVERY later run (data sync
+  # included) until someone cleans up by hand. Restore both files so the next
+  # run retries the whole phase instead of locking itself out.
+  git checkout -- data/prospekt.json data/mealplan.json
   notify_forgejo "weekly_sync: Prospekt/Mealplan-Generierung fehlgeschlagen ($LATEST_WEEK)" \
 "python3 scripts/generate_prospekt.py oder scripts/generate_mealplan.py ist fehlgeschlagen.
 Die Offer-Daten wurden trotzdem synchronisiert (Phase A lief durch, falls nötig).
