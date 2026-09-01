@@ -9,6 +9,10 @@ all ~17 MB of weekly JSON in the browser.
 Outputs (written into data/):
   - trend-index.json          per-week aggregates (category counts + KPIs)
   - price-history-index.json  per-product Grundpreis (€/unit) time series
+  - folder-structure.json     sorted list of weekly snapshot paths (normally
+                               produced by the fetch-offers.yml jq step; also
+                               written here so a local rebuild — after a rekey
+                               or a manually added week — never needs jq)
 
 The face price (price.rawValue) is NOT comparable across weeks for the same
 title (pack-size swaps make it jump), so cross-week comparison uses the
@@ -39,11 +43,16 @@ FACE_MAX = 500.0
 GP_RE = re.compile(
     r"1\s*([A-Za-z]{1,3})\s*=\s*(ab\s*)?€\s*([\d.,]+)(?:\s*/\s*€\s*([\d.,]+))?"
 )
-# First measurement in a baseUnit string, e.g. "je 250 ml Flasche" -> 250 ml.
+# Measurement(s) in a baseUnit/description string, e.g. "je 250 ml Flasche" ->
+# 250 ml. Used both with .search() for the first match (size_bucket) and with
+# .findall() to count how many candidate sizes a string carries (derive_gp's
+# ambiguity guard: one match is usable, two or more is not) — one pattern
+# serves both call shapes, so it is defined once.
 SIZE_RE = re.compile(r"(\d+(?:[.,]\d+)?)\s*(ml|l|g|kg)\b", re.IGNORECASE)
 # Count-based size, e.g. "je 36 - 64 Tabs", "27 WA", "16 - 36 Stück". Used as a
 # size class for products priced per wash-load / tab / piece, which carry no
-# ml/l/g/kg in baseUnit and would otherwise all collapse into the "?" bucket.
+# ml/l/g/kg in baseUnit and would otherwise all collapse into the "?" bucket;
+# same dual .search()/.findall() use as SIZE_RE above.
 COUNT_RE = re.compile(
     r"(\d+(?:[.,]\d+)?)\s*(WA|Tabs?|Caps?|St(?:ü|ue)ck|Stk|WL)\b", re.IGNORECASE
 )
@@ -60,12 +69,6 @@ UNIT_DISPLAY = {"wa": "WA", "tab": "Tab", "st": "St", "stk": "St"}
 # few to justify special-case maths, and a wrong price is worse than none.
 MULT_RE = re.compile(r"\d\s*[x×]\s*\d|\bà\b", re.IGNORECASE)
 LOOSE_RE = re.compile(r"offen", re.IGNORECASE)
-# All measurements in a baseUnit, to tell "500 g Beutel" (unambiguous) from
-# "je 200 g / 250 g Packung" (two candidate sizes — not derivable).
-SIZE_ALL_RE = re.compile(r"(\d+(?:[.,]\d+)?)\s*(ml|l|g|kg)\b", re.IGNORECASE)
-COUNT_ALL_RE = re.compile(
-    r"(\d+(?:[.,]\d+)?)\s*(WA|Tabs?|Caps?|St(?:ü|ue)ck|Stk|WL)\b", re.IGNORECASE
-)
 # Count units -> the canonical key used for the Grundpreis unit.
 COUNT_UNIT = {
     "stück": "st", "stueck": "st", "stk": "st", "st": "st",
@@ -127,12 +130,14 @@ def parse_gp(offer):
 
 def derive_from_text(text, face):
     """(value, unit) from face price ÷ the single pack size stated in `text`,
-    or (None, None) when it is missing, guarded, or ambiguous."""
+    or (None, None) when it is missing, guarded, or ambiguous — "500 g Beutel"
+    is unambiguous, but "je 200 g / 250 g Packung" carries two candidate sizes
+    and is declined."""
     t = norm(text)
     if not t or MULT_RE.search(t) or LOOSE_RE.search(t):
         return None, None
 
-    sizes = SIZE_ALL_RE.findall(t)
+    sizes = SIZE_RE.findall(t)
     if len(sizes) == 1:
         num, unit = sizes[0]
         try:
@@ -147,7 +152,7 @@ def derive_from_text(text, face):
     # Count-priced goods (4 Stück Packung) only when no weight/volume is given
     # at all — "20 Stück = 1000 g Beutel" must use the weight, not the count.
     if not sizes:
-        counts = COUNT_ALL_RE.findall(t)
+        counts = COUNT_RE.findall(t)
         if len(counts) == 1:
             num, unit = counts[0]
             try:
@@ -290,12 +295,14 @@ def build():
     # key -> {"title","cat","unit","obs":[...]}; obs grow per week.
     products = {}
     all_dates = set()
+    folder_files = []  # relative paths for folder-structure.json, below
 
     # Diagnostics.
     n_offers = n_gp = n_native = n_derived = 0
 
     for path in files:
         rel, week, date = parse_path(path)
+        folder_files.append(rel)
         all_dates.add(date)
         with open(path, encoding="utf-8") as fh:
             data = json.load(fh)
@@ -391,11 +398,18 @@ def build():
 
     trend_path = os.path.join(DATA_DIR, "trend-index.json")
     hist_path = os.path.join(DATA_DIR, "price-history-index.json")
+    folder_path = os.path.join(DATA_DIR, "folder-structure.json")
     with open(trend_path, "w", encoding="utf-8") as fh:
         json.dump(trend, fh, ensure_ascii=False, indent=1)
         fh.write("\n")
     with open(hist_path, "w", encoding="utf-8") as fh:
         json.dump(price_history, fh, ensure_ascii=False, separators=(",", ":"))
+        fh.write("\n")
+    # Mirrors the workflow's jq step byte-for-byte (compact array, sorted,
+    # trailing newline) so a local rebuild — after a rekey or a manually added
+    # week — needs no jq and produces an identical diff.
+    with open(folder_path, "w", encoding="utf-8") as fh:
+        json.dump(sorted(folder_files), fh, ensure_ascii=False, separators=(",", ":"))
         fh.write("\n")
 
     cov = 100 * n_gp / n_offers if n_offers else 0
@@ -405,6 +419,7 @@ def build():
     print(f"trend-index.json: {len(trend)} weeks -> {os.path.getsize(trend_path)//1024} KB")
     print(f"price-history-index.json: {len(history)} products "
           f"(>=2 weeks) -> {os.path.getsize(hist_path)//1024} KB")
+    print(f"folder-structure.json: {len(folder_files)} weekly files")
 
 
 if __name__ == "__main__":

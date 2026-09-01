@@ -60,7 +60,8 @@ import generate_prospekt as gp  # noqa: E402 — reuse the real prompt builder +
 # Do not "fix" this by flipping the opt-in at openrouter.ai/settings/privacy:
 # that switch is account-wide, and the weekly prompt is not anonymous. The
 # digest is diet-filtered BEFORE it is built (see generate_prospekt.py's
-# vetoedBy pass — 50 of 199 offers dropped in KW32), so even with the reader
+# diet_excluded()/muted_topics() pass — the JS-side equivalent is prospekt.js's
+# vetoedBy — 50 of 199 offers dropped in KW32), so even with the reader
 # preference block removed, the surviving selection still discloses the diet.
 # Keep the list so a run reports each model as blocked instead of omitting it.
 DEFAULT_MODELS = [
@@ -105,7 +106,10 @@ def build_prompt():
 
     price_map = gp.load_price_map()
     receipts = gp.load_receipts()
-    digest = gp.build_digest(offers, price_map, latest_date, receipts)
+    # Same diet-veto pass generate_prospekt.py's main() applies — see the
+    # DEFAULT_MODELS comment above for why this must not be skipped.
+    muted = gp.muted_topics(gp.load_prefs(gp.PREFS_PATH))
+    digest = gp.build_digest(offers, price_map, latest_date, receipts, muted)
     if sum(len(v) for v in digest.values()) == 0:
         sys.exit("bench-prospekt-free: no curated candidates in the latest week")
 
