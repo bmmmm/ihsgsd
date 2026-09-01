@@ -520,19 +520,34 @@ function isVetoed(o) { return vetoedBy(o) !== null; }
 // what stops the counter from disagreeing with what is actually rendered.
 function isHidden(o) { return isVetoed(o) || scoreOffer(o) < 0; }
 
-// Votes are keyed by the stable offer id (titles are neither unique — the data
-// has real duplicates — nor always present). The title is stored alongside so
-// the export stays human-readable for generate_prospekt.py.
+// Votes and 🛒 markers are keyed by offer id — but that id is NOT stable, which
+// this code assumed until 2026-08-31: a refetch of KW36 handed 214 of 215 ids
+// to their neighbouring product, so every stored entry silently described
+// something else. The title kept alongside each entry is what catches it. It
+// was originally stored only to keep the export readable for
+// generate_prospekt.py; here it is the guard.
+//
+// Entries written before the title was stored carry none, and are trusted as
+// before — dropping them would discard real votes to defend against a rare
+// event. Comparison is normalised so a punctuation tweak in EDEKA's title does
+// not throw a vote away.
+function prefEntry(store, o) {
+    const e = (store && o && o.id != null) ? store[o.id] : null;
+    if (!e) return null;
+    if (e.t && normTitle(e.t) !== normTitle(o.title || '')) return null;
+    return e;
+}
+
 function voteFor(o) {
-    const e = (prefs && prefs.votes && o) ? prefs.votes[o.id] : null;
+    const e = prefEntry(prefs && prefs.votes, o);
     return e && (e.v === 1 || e.v === -1) ? e.v : 0;
 }
 
 // "Bought" is a loyalty signal: set by the 🛒 marker on cards and, at Monday
-// time, by receipt OCR (scripts/ingest_receipt.py). Keyed by stable offer id
-// like votes; `c` aggregates repeat buys so the generator can weight regulars.
+// time, by receipt OCR (scripts/ingest_receipt.py); `c` aggregates repeat buys
+// so the generator can weight regulars.
 function boughtFor(o) {
-    const e = (prefs && prefs.bought && o) ? prefs.bought[o.id] : null;
+    const e = prefEntry(prefs && prefs.bought, o);
     return e && Number.isFinite(e.c) ? e.c : 0;
 }
 

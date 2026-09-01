@@ -140,6 +140,32 @@ jobs:
               echo "file=$FILE" >> $GITHUB_OUTPUT
               exit 0
             fi
+            # 3. EDEKA can RE-KEY a week. On 2026-08-31 a refetch of KW36 handed
+            #    214 of 215 ids to their neighbouring product (id 6329891 went
+            #    from "Cillit Bang" to "L'Oreal Elnett", and so on down the
+            #    list). Thumbnails are keyed by id and the archive step below
+            #    skips files that already exist, so every image kept describing
+            #    the PREVIOUS product -- wrong pictures on every surface of the
+            #    site, with nothing in the data diff pointing at images.
+            #
+            #    Delete exactly the thumbnails whose id now carries a different
+            #    product; the archive step refetches those and leaves the rest
+            #    alone. Not the whole img/ dir: EDEKA purges live images after
+            #    1-2 months, so an unnecessary mass delete could permanently
+            #    lose thumbnails that are still correct.
+            REKEYED=$(mktemp)
+            jq -n --slurpfile a "$FILE" --slurpfile b data.json -r '
+              ($a[0].offers | map({key:(.id|tostring), value:.title}) | from_entries) as $old
+              | ($b[0].offers | map({key:(.id|tostring), value:.title}) | from_entries) as $new
+              | $old | keys[] | select($new[.] != null and $new[.] != $old[.])
+            ' > "$REKEYED" || true
+            if [ -s "$REKEYED" ]; then
+              echo "WARN: $(wc -l < "$REKEYED") offer id(s) now carry a different product — dropping their stale thumbnails."
+              while IFS= read -r rid; do
+                [ -n "$rid" ] && rm -f "$FOLDER/img/${rid}.jpg"
+              done < "$REKEYED"
+            fi
+            rm -f "$REKEYED"
           fi
           mv data.json "$FILE"
           echo "folder=$FOLDER" >> $GITHUB_OUTPUT
