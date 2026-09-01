@@ -61,16 +61,6 @@ function gpDisplay(offer) {
   return gp.derived ? `≈ 1 ${gp.unit} = € ${gp.val.toFixed(2)}` : "";
 }
 
-// HTML-escape a string before it is interpolated into innerHTML.
-function escapeHtml(s) {
-  return String(s)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
-
 // Only allow http(s) image URLs; reject javascript:, data:, etc.
 function safeImageUrl(url) {
   if (typeof url !== "string") return "";
@@ -438,16 +428,23 @@ function applySort() {
   const tableBody = document.getElementById("offer-table");
   const getValue = SORT_VALUE[currentSort.key];
   const rows = [...tableBody.querySelectorAll("tr")];
-  rows.sort((a, b) => {
-    const va = getValue(currentOffers[Number(a.dataset.idx)]);
-    const vb = getValue(currentOffers[Number(b.dataset.idx)]);
+  // Decorate-sort-undecorate: compute each row's sort key once (O(n)) instead
+  // of inside the comparator, where an O(n log n) call count is expensive for
+  // "gp" — gpSortValue runs resolveGp's regex-based Grundpreis derivation.
+  const decorated = rows.map((row) => ({
+    row,
+    value: getValue(currentOffers[Number(row.dataset.idx)]),
+  }));
+  decorated.sort((a, b) => {
+    const va = a.value;
+    const vb = b.value;
     // Missing values (no price / no Grundpreis) always sink to the bottom.
     const aMissing = va === null || va === undefined || va === "";
     const bMissing = vb === null || vb === undefined || vb === "";
     if (aMissing || bMissing) return aMissing === bMissing ? 0 : aMissing ? 1 : -1;
     return (va < vb ? -1 : va > vb ? 1 : 0) * currentSort.dir;
   });
-  rows.forEach((row) => tableBody.appendChild(row));
+  decorated.forEach(({ row }) => tableBody.appendChild(row));
 }
 
 function copyVisibleProducts() {
@@ -507,6 +504,7 @@ function setupToggleImages() {
           img.src = src;
           img.alt = "Produktbild";
           img.style.cursor = "zoom-in";
+          img.loading = "lazy";
           if (localUrl && liveUrl) {
             img.onerror = function () {
               this.onerror = null; // fall back once, then keep broken image visible
