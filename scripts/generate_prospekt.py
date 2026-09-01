@@ -651,7 +651,51 @@ def extract_json(text):
 # discloses the reader's diet (see the CLAUDE.md note on the :free tier). A
 # hosted stand-in would defeat that; a local OpenAI-compatible engine does not.
 
-LOCAL_BASE_URL = (os.environ.get("OPENAI_BASE_URL") or "http://127.0.0.1:8000/v1").rstrip("/")
+# oMLX serves on :8010 and requires a key -- NOT the OpenAI client default
+# :8000 with no auth. Both facts live in ~/.env as OMLX_URL / OMLX_API_KEY, and
+# they are resolved from there rather than expected in the environment because
+# launchd hands weekly_sync.sh a bare environment: a fallback that works in a
+# shell would still report "no local engine" from the scheduler. That mismatch
+# is what made this fallback dead on arrival for KW34 and KW36 -- `claude -p`
+# timed out as designed, and the fallback then probed a port nothing listens on.
+
+
+def _dotenv(name):
+    """Resolve NAME from the environment, then ./.env, then ~/.env.
+
+    The oMLX convention (~/ops/reference/omlx.md): clients resolve the key
+    themselves so it never appears on a command line. The value is returned but
+    never logged -- error messages below name the URL, never the key.
+    """
+    val = os.environ.get(name)
+    if val:
+        return val
+    for candidate in (REPO_ROOT / ".env", Path.home() / ".env"):
+        try:
+            text = candidate.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        for line in text.splitlines():
+            key, sep, raw = line.strip().partition("=")
+            if sep and key.strip() == name:
+                return raw.strip().strip('"').strip("'")
+    return ""
+
+
+def _resolve_base_url():
+    """Base URL of the local engine, always ending in /v1.
+
+    OMLX_URL is written as a bare origin in ~/.env while OPENAI_BASE_URL
+    carries the /v1 by convention -- accept either rather than making a caller
+    remember which one this is.
+    """
+    url = (os.environ.get("OPENAI_BASE_URL") or _dotenv("OMLX_URL")
+           or "http://127.0.0.1:8010/v1").rstrip("/")
+    return url if url.endswith("/v1") else f"{url}/v1"
+
+
+LOCAL_BASE_URL = _resolve_base_url()
+LOCAL_API_KEY = _dotenv("OPENAI_API_KEY") or _dotenv("OMLX_API_KEY") or "local"
 LOCAL_MODEL = os.environ.get("LOCAL_MODEL", "")
 LOCAL_TIMEOUT = int(os.environ.get("LOCAL_MODEL_TIMEOUT", "900"))
 OMLX_BIN = Path.home() / ".omlx" / "bin" / "omlx"
@@ -666,7 +710,7 @@ def _local_models():
     """
     req = urllib.request.Request(
         f"{LOCAL_BASE_URL}/models",
-        headers={"Authorization": f"Bearer {os.environ.get('OPENAI_API_KEY', 'local')}"},
+        headers={"Authorization": f"Bearer {LOCAL_API_KEY}"},
     )
     try:
         with urllib.request.urlopen(req, timeout=5) as resp:
@@ -675,7 +719,8 @@ def _local_models():
         if exc.code in (401, 403):
             raise RuntimeError(
                 f"local engine at {LOCAL_BASE_URL} rejected the API key "
-                f"(HTTP {exc.code}) — set OPENAI_API_KEY to the engine's key"
+                f"(HTTP {exc.code}) — set OMLX_API_KEY in ~/.env "
+                f"(or OPENAI_API_KEY in the environment) to the engine's key"
             ) from exc
         return []
     except (urllib.error.URLError, OSError, json.JSONDecodeError, TimeoutError):
@@ -706,6 +751,47 @@ def _wake_local_engine():
     return []
 
 
+# Engines that are not chat completions at all. They answer /v1/models like any
+# other entry, so a fallback that indexes the list can silently pick one and
+# then fail on an off-spec reply instead of on a clear "wrong model".
+_NON_CHAT_MARKERS = ("bge", "embed", "rerank", "markitdown", "whisper", "clip")
+
+# Parameter counts as they appear in MLX model ids: "27B", "0.5b", "A3B" (the
+# active experts of a MoE), but never the "4bit" quantisation suffix -- hence
+# the word boundary after the b.
+_PARAM_RE = re.compile(r"(\d+(?:\.\d+)?)b\b", re.IGNORECASE)
+
+
+def _rank_models(models):
+    """Order served models best-first for this task: chat-capable, largest.
+
+    Size is a coarse proxy for the JSON-following these prompts need -- a 0.5B
+    model returns text the validators reject, which reads as a broken run
+    rather than as the wrong pick. LOCAL_MODEL overrides whenever the machine
+    knows better.
+    """
+    def key(model_id):
+        low = model_id.lower()
+        chat = not any(marker in low for marker in _NON_CHAT_MARKERS)
+        sizes = [float(m) for m in _PARAM_RE.findall(model_id)]
+        return (chat, max(sizes) if sizes else 0.0)
+
+    return sorted(models, key=key, reverse=True)
+
+
+# MEASURED 2026-09-01, against the 16-model oMLX roster on this machine:
+# the fallback carries generate_insights (2m13s, validators accept the reply)
+# but NOT this file's prospekt prompt. Two failure modes, neither a timeout:
+#   Qwen3.6-35B-A3B  2m56s -> valid JSON, but no non-empty 'lead' (a MoE with
+#                             3B active params; the 35B in the name is not the
+#                             size that matters for instruction-following)
+#   Qwen3.8-27B      13m47s -> no JSON at all; the reply opens with reasoning
+#                             prose ("We need answer user's request...")
+# So the blocker is reasoning preamble and prompt complexity, not model size
+# or LOCAL_TIMEOUT. Making the prospekt fall back for real needs a
+# non-thinking model or a prompt that strips the preamble -- until then a
+# `claude -p` outage costs the flyer copy, and the page's stale-editorial
+# banner is what tells the reader. Insights still degrade gracefully.
 def _run_local(prompt, max_tokens):
     """Ask the local engine for a completion. Returns (text, model_id).
 
@@ -715,11 +801,16 @@ def _run_local(prompt, max_tokens):
     if not models:
         raise RuntimeError(
             f"no local engine at {LOCAL_BASE_URL} — start one "
-            f"(`omlx start`, or any OpenAI-compatible server) or set OPENAI_BASE_URL"
+            f"(`omlx start`, or any OpenAI-compatible server), or point "
+            f"OMLX_URL / OPENAI_BASE_URL at one"
         )
     # Never hardcode a model: take what the engine actually serves, and let
-    # LOCAL_MODEL override when the machine hosts several.
-    model_id = LOCAL_MODEL or models[0]
+    # LOCAL_MODEL override when the machine hosts several. But "serves" is not
+    # "suitable" -- /v1/models returns the list alphabetically, so the old
+    # models[0] picked Qwen2.5-0.5B out of a 16-model roster, and would happily
+    # have picked the bge-m3 embedding model on a different machine. Rank
+    # instead of indexing.
+    model_id = LOCAL_MODEL or _rank_models(models)[0]
     if LOCAL_MODEL and LOCAL_MODEL not in models:
         raise RuntimeError(
             f"LOCAL_MODEL={LOCAL_MODEL!r} is not served at {LOCAL_BASE_URL}; "
@@ -736,7 +827,7 @@ def _run_local(prompt, max_tokens):
         data=payload,
         headers={
             "Content-Type": "application/json",
-            "Authorization": f"Bearer {os.environ.get('OPENAI_API_KEY', 'local')}",
+            "Authorization": f"Bearer {LOCAL_API_KEY}",
         },
     )
     try:
@@ -940,7 +1031,10 @@ def main():
     # hallucinated weekLabel/model and the page would render the wrong week.
     data["generatedAt"] = latest_date
     data["weekLabel"] = week_label
-    data["model"] = model
+    # `engine`, not `model`: on a fallback run the file was written by a local
+    # model while this field still claimed "opus". Nothing renders it, but it
+    # is the only record of who wrote a week's copy.
+    data["model"] = engine
     # Stamp which preferences snapshot this was generated for (metadata only;
     # reserved for a future client-side staleness check — nothing reads it yet).
     data["generatedFor"] = prefs_updated_at(prefs_path)

@@ -293,7 +293,8 @@ def main():
     # is prompted to emit these, so setdefault would keep a hallucinated value).
     data["generatedAt"] = latest
     data["weekLabel"] = week_label
-    data["model"] = model
+    # `engine`, not `model` -- see the note in generate_prospekt.py.
+    data["model"] = engine
 
     OUT_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {OUT_PATH.relative_to(REPO_ROOT)}: "

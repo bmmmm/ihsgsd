@@ -49,6 +49,26 @@ notify_forgejo() {
   tea issues create --repo bsz/ihsgsd --login fjbsz \
     --title "$title" --description "$body" >/dev/null 2>&1 \
     || echo "WARN: could not file Forgejo notification issue"
+  notify_wall "$title"
+}
+
+# Second channel for the same failure (issue #11). A Forgejo issue is the
+# durable record but nobody reads it -- KW32 sat broken for two days behind
+# four of them. A wall post surfaces in the SessionStart recap, which the
+# reader passes anyway.
+#
+# Called only from inside notify_forgejo, deliberately: that function already
+# carries the dedup, and this job runs a dozen+ times a week, so an
+# independently-gated wall post would file twelve copies of one broken week.
+#
+# Topic is `ops`, never the repo name -- wallii rejects topic==repo, and this
+# repo is not `ops`. Every title below is well inside wallii's 140-rune cap and
+# starts with a word, not a dash (a leading dash is read as a flag).
+notify_wall() {
+  # NOT swallowed with `|| true`: a silently rejected post would leave the
+  # recap implying a healthy week that is in fact broken.
+  wallii post -t ops --outcome failed --mood rough "$1" \
+    || echo "WARN: wallii post failed for: $1"
 }
 
 # git.6bm.de's proxy occasionally breaks on HTTP/2 for smart-HTTP pushes
@@ -83,11 +103,39 @@ if ! git diff --quiet || ! git diff --cached --quiet; then
   exit 0
 fi
 
-if ! git fetch github main --quiet; then
+# On 2026-08-30 the resolver hung for 702s per attempt on two consecutive runs
+# ("Resolving timed out after 702711 milliseconds"), so a transient network
+# fault cost the job 23 minutes of wall clock. Cap the wait. `timeout` is
+# Homebrew coreutils, reached via the PATH line at the top -- degrade to a
+# plain fetch rather than dying with 127 if that entry ever stops finding it.
+fetch_github() {
+  if command -v timeout >/dev/null 2>&1; then
+    timeout 180 git fetch github main --quiet
+  else
+    git fetch github main --quiet
+  fi
+}
+
+# One failed fetch is noise, not an incident: this job runs a dozen+ times a
+# week and the resolver hiccups. Only a SECOND consecutive failure files an
+# issue -- the 2026-08-30 outage healed itself two runs later but left issue
+# #14 open for weeks, which is the same "transient state is not an incident"
+# reasoning as the dirty-tree skip above. Same stamp pattern as the watchdog.
+FETCH_STAMP="$HOME/ops/logs/ihsgsd-fetch-failed.stamp"
+if ! fetch_github; then
   echo "git fetch github failed" >&2
-  notify_forgejo "weekly_sync: git fetch github fehlgeschlagen" "Log: $LOG_FILE"
+  if [ -f "$FETCH_STAMP" ]; then
+    notify_forgejo "weekly_sync: git fetch github fehlgeschlagen" \
+"git fetch github main ist mindestens zweimal in Folge fehlgeschlagen (Netz/DNS?).
+Log: $LOG_FILE"
+  else
+    mkdir -p "$(dirname "$FETCH_STAMP")"
+    touch "$FETCH_STAMP"
+    echo "git fetch github: first consecutive failure, not notifying yet."
+  fi
   exit 1
 fi
+rm -f "$FETCH_STAMP"
 
 LOCAL=$(git rev-parse main)
 REMOTE=$(git rev-parse github/main)

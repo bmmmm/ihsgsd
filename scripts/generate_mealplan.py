@@ -345,7 +345,8 @@ def main():
         "weekLabel": week_label,
         "generatedAt": latest_date,
         "generatedFor": gp.prefs_updated_at(prefs_path),
-        "model": model,
+        # `engine`, not `model` -- see the note in generate_prospekt.py.
+        "model": engine,
         "intro": intro,
         "days": [{"day": DAYS[i], "meal": meals[i]} for i in range(7)],
         "bench": meals[7:7 + BENCH_TARGET],
