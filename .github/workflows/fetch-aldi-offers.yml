@@ -23,6 +23,7 @@ concurrency:
 jobs:
   fetch-and-store:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     outputs:
       sha: ${{ steps.pushed.outputs.sha }}
 
