@@ -68,6 +68,13 @@ const api = new Function(src + `
 // it for as long as it existed.
 const meatTopic = api.TOPICS.find(t => t.key === 'fleisch');
 const fishTopic = api.TOPICS.find(t => t.key === 'fisch');
+// The positive topics the flyer generator builds its sections from. These
+// drifted silently for as long as they existed in two places: the generator
+// missed Weißbier and counted Gebäckspezialitäten as Spezi, so the flyer and
+// the page disagreed about the same offer.
+const bierTopic = api.TOPICS.find(t => t.key === 'bier');
+const speziTopic = api.TOPICS.find(t => t.key === 'spezi');
+const veganTopic = api.TOPICS.find(t => t.key === 'vegan');
 const offers = JSON.parse(fs.readFileSync(offersPath, 'utf8'));
 const out = offers.map(o => {
     const gp = api.resolveGp(o);
@@ -82,6 +89,9 @@ const out = offers.map(o => {
         vegan: api.looksVegan(o),
         vetoMeat: meatTopic.test(o),
         vetoFish: fishTopic.test(o),
+        bier: bierTopic.test(o),
+        spezi: speziTopic.test(o),
+        veganTopic: veganTopic.test(o),
     };
 });
 process.stdout.write(JSON.stringify(out));
@@ -107,6 +117,10 @@ def py_side(offer):
         # The composite rule, category included — see the JS harness above.
         "vetoMeat": gp.diet_excluded(offer, {"fleisch"}),
         "vetoFish": gp.diet_excluded(offer, {"fisch"}),
+        # The section topics — see the JS harness above.
+        "bier": gp.topic_bier(offer),
+        "spezi": gp.topic_spezi(offer),
+        "veganTopic": gp.topic_vegan(offer),
     }
 
 
@@ -162,8 +176,10 @@ def main():
     if len(js) != len(offers):
         sys.exit(f"JS returned {len(js)} verdicts for {len(offers)} offers")
 
+    # Adding a key to py_side() and the JS harness is not enough — a field only
+    # becomes a gate once it is named here.
     fields = ("gp", "unit", "derived", "key", "meat", "fish", "spirits", "vegan",
-              "vetoMeat", "vetoFish")
+              "vetoMeat", "vetoFish", "bier", "spezi", "veganTopic")
     mismatches = {f: [] for f in fields}
     for offer, j in zip(offers, js):
         p = py_side(offer)

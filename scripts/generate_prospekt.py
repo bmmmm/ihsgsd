@@ -137,6 +137,44 @@ DIET_TOPICS = {
     "spirituosen": (SPIRITS_RE, None),
 }
 
+# Positive topic detectors, ported from prospekt.js's TOPICS entries so the
+# flyer sections and the page agree on what a Bier or a Spezi is.
+# test_parity.py compares them offer by offer over the whole archive.
+#
+# Each of these three fixes a measured divergence. The generator used to match
+# a bare \bbier\b, which misses Weißbier/Schwarzbier/Landbier — 16 real beers
+# never reached the flyer. It matched an unbounded /spezi/, the exact bug
+# prospekt.js documents as fixed, pulling in Gebäckspezialitäten and
+# Kaffeespezialitäten. And it treated "alkoholfrei|0,0 %" as a beer signal,
+# which let Cachaça 0,0% and Tanqueray 0,0% into the candidates of a reader who
+# had muted spirits.
+#
+# The word boundaries are load-bearing, and the JS side spells them with
+# Unicode property escapes because its \b is ASCII-only. Python's \b and \w are
+# already Unicode-aware for str patterns, so plain \b carries the same meaning
+# here — with underscore as the only theoretical divergence, which no product
+# title contains. The parity test is what proves this over real data.
+TOPIC_BIER_RE = re.compile(r"\b(?:\w*(?<!cor)bier|pils\w*)\b", re.I)
+TOPIC_SPEZI_RE = re.compile(r"\bspezi\b", re.I)
+TOPIC_VEGAN_RE = re.compile(r"vegan|vegetar", re.I)
+
+
+def topic_bier(offer):
+    """prospekt.js TOPICS 'bier': category Getränke AND a beer word in the title."""
+    cat = (offer.get("category") or {}).get("name") or ""
+    return cat == "Getränke" and bool(TOPIC_BIER_RE.search(offer.get("title") or ""))
+
+
+def topic_spezi(offer):
+    """prospekt.js TOPICS 'spezi': the word Spezi, never a -spezialität."""
+    return bool(TOPIC_SPEZI_RE.search(offer.get("title") or ""))
+
+
+def topic_vegan(offer):
+    """prospekt.js TOPICS 'vegan': the title says so. Deliberately narrower than
+    the vegan SECTION below, which also curates plant-based staples by name."""
+    return bool(TOPIC_VEGAN_RE.search(offer.get("title") or ""))
+
 
 def muted_topics(prefs):
     """Topic keys the reader has set (or defaults) to 'aus'."""
@@ -472,6 +510,11 @@ def build_digest(offers, price_map=None, latest_date="", receipts=None, muted=fr
     # Broad enough to catch the reader's plant-based staples, not just titles
     # that literally say "vegan": tofu/tempeh, oat/soy/almond drinks, the big
     # meat-substitute brands. Obst & Gemüse is covered by its own section.
+    #
+    # Wider than topic_vegan() on purpose, and the one section that is: a chip
+    # only ranks what the page already shows, while this list decides what the
+    # model gets to see at all. Narrowing it to the chip would drop the oat
+    # drinks and the tofu from the flyer entirely.
     vegan = [
         o for o in offers
         if re.search(
@@ -482,14 +525,20 @@ def build_digest(offers, price_map=None, latest_date="", receipts=None, muted=fr
         )
     ]
     obst = [o for o in offers if cat_of(o) == "Obst & Gemüse"]
-    # The reader's drinks profile is wider than "Bier": alcohol-free beer,
-    # Radler, plus the Bionade / Booster / Spezi soft drinks they favour.
+    # Beer and Spezi come straight from the page's own topic tests, so the
+    # flyer never disagrees with the chips about what counts. Radler, Bionade
+    # and Booster are the generator's own additions — the reader's drinks
+    # profile is wider than beer — and they stay bound to Getränke so a
+    # Booster-flavoured anything else cannot slip in. Dropped on purpose:
+    # "alkoholfrei|0,0 %", which is a property of spirits as often as of beer.
     bier = [
         o for o in offers
-        if re.search(r"spezi|bionade|booster", title_of(o), re.I)
+        if topic_bier(o) or topic_spezi(o)
         or (
             cat_of(o) == "Getränke"
-            and re.search(r"\bbier\b|pils|radler|alkoholfrei|0[,.]0\s*%", title_of(o), re.I)
+            # Radler needs the same suffix/prefix freedom as beer: the archive
+            # writes it as "NaturRadler" and "Naturradler" inside one word.
+            and re.search(r"\w*radler\w*|\b(?:bionade|booster)\w*\b", title_of(o), re.I)
         )
     ]
     knueller = [o for o in offers if is_knuller(o)]

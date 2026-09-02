@@ -175,8 +175,11 @@ const SPIRITS_RE = dietRe(
 const SPEZI_RE = dietRe('spezi');
 const BIO_RE = dietRe('bio');
 // Beer is the one case where a suffix match is wanted: Landbier, Weißbier and
-// Kellerbier are beers, and Pilsener/Pilsner are pils.
-const BIER_RE = dietRe(`${W}bier|pils${W}`);
+// Kellerbier are beers, and Pilsener/Pilsner are pils. The suffix match has one
+// false friend in the archive — the Corbières wine "Grand Corbier", which ends
+// in the same four letters — so that one word is excluded explicitly. Verified
+// against every title in data/: no beer is named *corbier.
+const BIER_RE = dietRe(`${W}(?<!cor)bier|pils${W}`);
 // Coffee hides across title AND description: "Lavazza Espresso" and "Melitta
 // BellaCrema" never say "Kaffee", "Dallmayr prodomo" says it only in the
 // description ("gemahlener Bohnenkaffee"). Reading both is safe here — an
