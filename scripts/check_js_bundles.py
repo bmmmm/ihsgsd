@@ -16,6 +16,7 @@ stdlib only; exits non-zero with the offending page and node's message.
 import re
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -39,13 +40,14 @@ def main():
             continue
         bundle = "\n".join((REPO_ROOT / s).read_text(encoding="utf-8") for s in srcs)
         # node --check reads a file, not stdin, so the bundle needs a real path.
-        tmp = REPO_ROOT / f".bundle-check-{page}.js"
-        try:
+        # Outside the repo on purpose: an unclean exit between writing and
+        # unlinking would otherwise leave a stray .js in the working tree of a
+        # public repo, and nothing about parsing needs it to live here.
+        with tempfile.TemporaryDirectory(prefix="js-bundle-check-") as td:
+            tmp = Path(td) / f"{page}.bundle.js"
             tmp.write_text(bundle, encoding="utf-8")
             proc = subprocess.run(["node", "--check", str(tmp)],
                                   capture_output=True, text=True)
-        finally:
-            tmp.unlink(missing_ok=True)
         if proc.returncode == 0:
             print(f"ok   {page}: {' + '.join(srcs)} parse together")
         else:
