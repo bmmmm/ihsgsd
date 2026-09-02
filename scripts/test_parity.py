@@ -112,7 +112,10 @@ def py_side(offer):
         # exemption reads title+description, the meat/fish detectors title only.
         "meat": bool(gp.MEAT_RE.search(title)) and not gp.looks_vegan(offer),
         "fish": bool(gp.FISH_RE.search(title)) and not gp.looks_vegan(offer),
-        "spirits": bool(gp.SPIRITS_RE.search(title)),
+        # looks_spirits() reads the category as well as the title, so compare
+        # the function, not the bare regex — comparing the regex against the
+        # JS function would report a drift that is only this asymmetry.
+        "spirits": gp.looks_spirits(offer),
         "vegan": gp.looks_vegan(offer),
         # The composite rule, category included — see the JS harness above.
         "vetoMeat": gp.diet_excluded(offer, {"fleisch"}),

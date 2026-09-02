@@ -122,19 +122,83 @@ FISH_RE = re.compile(
     r"seelachs\w*|scholle|dorsch|zander|pangasius|tintenfisch\w*|muschel\w*|"
     r"krabben\w*|surimi|schlemmerfilet\w*|filegro|meeresfr[üu]chte|calamari|austern?)\b",
     re.I)
+DRINKS_CAT = "Getränke"
+# Word stems and brands, deliberately generous with prefixes and suffixes:
+# Eierlikör, Jahrgangssekt and Weingut are the same product class as Likör,
+# Sekt and Wein, and a bare-word list kept missing them. The breadth is only
+# safe because looks_spirits() binds all of this to the drinks category — see
+# there. Measured over the 88 archived weeks: 484 -> 895 offers, 0 misfires.
 SPIRITS_RE = re.compile(
-    r"\b(?:likör|liqueur|whisk\w+|vodka|wodka|gin|rum|tequila|brandy|cognac|weinbrand|"
-    r"schnaps|korn|aperitif|aperol|campari|jägermeister|fernet|branca|ouzo|grappa|"
-    r"sambuca|absinth|bacardi|jack\s*daniel\w*|sekt|prosecco|champagner|crémant|cava|"
-    r"winzersekt|wein|weine|weins|rotwein\w*|weißwein\w*|ros[eé]wein\w*|riesling|merlot|"
-    r"cabernet|syrah|chardonnay|sauvignon|primitivo|tempranillo|sangria|glühwein|"
-    r"portwein|sherry|vermouth|martini|baileys|amaretto)\b", re.I)
+    r"\b(?:"
+    # stems, suffix- and prefix-open
+    r"\w*lik[öo]r\w*|liqueur|\w*wein\w*|\w*sekt|\w*secco\w*|"
+    r"whisk(?:y|ey|ies)|vodka|wodka|gin|rum|tequila|brandy|cognac|schnaps|korn|"
+    r"aperitif|aperitivo|prosecco|spumante|champagner|crémant|cava|sangria|"
+    r"sherry|vermouth|martini|amaretto|licor|raki|obstbr[äa]nde?|"
+    r"mix-?getr[äa]nke?n?|cocktail\s*plant|clubtails|"
+    # grape varieties, which EDEKA prints instead of the word "Wein"
+    r"riesling|merlot|cabernet|syrah|chardonnay|sauvignon|primitivo|tempranillo|"
+    # brands
+    r"aperol|campari|jägermeister|fernet|branca|ouzo|grappa|sambuca|absinth|"
+    r"bacardi|baileys|jack\s*daniel\w*|limoncello|limonzero|freixenet|lillet|"
+    r"johnnie\s*walker|havana\s*club|ramazzotti|underberg|captain\s*morgan|"
+    r"ballantine|mo[eë]t|veuve|clicquot|heidsieck|osborne|jim\s*beam|tullamore|"
+    r"bombay|glenfiddich|glenmorangie|sarti|berentzen|puschkin|laphroaig|"
+    r"k[üu]e?mmerling|gracioso|klopfer|southern\s*comfort|fireball|kilbeggan|"
+    r"bushmills|connemara|asbach|averna|chivas|batida|cacha[çc]a|tanqueray|"
+    r"botucal|monkey\s*shoulder|highland\s*park|talisker|raunikar|pircher|"
+    r"katlenburger|malibu|hubertus-tropfen|becherovka|clan\s*campbell|don\s*papa|"
+    r"metaxa|feigling|noilly|scavi|vescovino|light\s*live"
+    r")\b", re.I)
 
-# topic key -> (title detector, category). Either match makes the offer a member.
+# EDEKA lists wine as "Land - Region - Erzeuger", usually without the word Wein
+# anywhere: "Spanien - Rioja - Rioja Vega Reserva". No word list reaches those,
+# but the shape does. The country vocabulary is closed and derived from the
+# archive, not guessed.
+WINE_ORIGIN_RE = re.compile(
+    r"^\s*(?:deutschland|italien|frankreich|spanien|luxemburg|portugal|usa|"
+    r"schottland|australien|österreich|nordmazedonien|japan|chile|argentinien|"
+    r"südafrika|neuseeland|griechenland|ungarn)\s*[-–]", re.I)
+
+
+def looks_spirits(offer):
+    r"""Alcohol, bound to the drinks category — mirrors looksSpirits() in prospekt.js.
+
+    The category is not a refinement, it carries the rule. German food titles
+    are full of alcohol words that name a flavour, not a drink: Rum-Rosinen,
+    Whiskey-Bratwurst, "Wein - Schwarzwälder Schinken", Brandy-Nuss-Joghurt.
+    Measured over the archive, every one of the 30 offers this detector used to
+    get wrong sat outside Getränke, and every one of the 484 it got right sat
+    inside it. The bind also makes the broad \w*wein\w* above safe: unbound it
+    would match 369 Schweinebraten, Weinsauerkraut and Weinbergkäse.
+    """
+    if ((offer.get("category") or {}).get("name") or "") != DRINKS_CAT:
+        return False
+    title = offer.get("title") or ""
+    return bool(SPIRITS_RE.search(title) or WINE_ORIGIN_RE.search(title))
+
+
+def looks_meat_topic(offer):
+    title = offer.get("title") or ""
+    cat = (offer.get("category") or {}).get("name") or ""
+    return bool(MEAT_RE.search(title) or cat == "Fleisch & Wurst")
+
+
+def looks_fish_topic(offer):
+    title = offer.get("title") or ""
+    cat = (offer.get("category") or {}).get("name") or ""
+    return bool(FISH_RE.search(title) or cat == "Fisch & Meeresfrüchte")
+
+
+# topic key -> membership test, one per diet topic. Predicates rather than
+# (regex, category) tuples because the tuple form could only express "title OR
+# category", and spirits needs "category AND title" — see looks_spirits(). Each
+# entry mirrors the matching `test` in prospekt.js's TOPICS, which is what
+# test_parity.py compares.
 DIET_TOPICS = {
-    "fleisch": (MEAT_RE, "Fleisch & Wurst"),
-    "fisch": (FISH_RE, "Fisch & Meeresfrüchte"),
-    "spirituosen": (SPIRITS_RE, None),
+    "fleisch": looks_meat_topic,
+    "fisch": looks_fish_topic,
+    "spirituosen": looks_spirits,
 }
 
 # Positive topic detectors, ported from prospekt.js's TOPICS entries so the
@@ -209,14 +273,9 @@ def looks_vegan(offer):
 def diet_excluded(offer, muted):
     """True when a muted diet topic matches — never for vegan/vegetarian items,
     or muting 'Fleisch' would drop the vegan sausages the reader wants most."""
-    title = offer.get("title") or ""
-    cat = (offer.get("category") or {}).get("name") or ""
     if looks_vegan(offer):
         return False
-    for key, (rx, category) in DIET_TOPICS.items():
-        if key in muted and (rx.search(title) or (category and cat == category)):
-            return True
-    return False
+    return any(key in muted and test(offer) for key, test in DIET_TOPICS.items())
 
 PROMPT_TEMPLATE = """You are the personal shopping recommender for a German supermarket (EDEKA) offers tracker. Return ONLY valid JSON — no prose, no markdown, no text outside the JSON.
 
@@ -534,8 +593,15 @@ def build_digest(offers, price_map=None, latest_date="", receipts=None, muted=fr
     # flyer never disagrees with the chips about what counts. Radler, Bionade
     # and Booster are the generator's own additions — the reader's drinks
     # profile is wider than beer — and they stay bound to Getränke so a
-    # Booster-flavoured anything else cannot slip in. Dropped on purpose:
-    # "alkoholfrei|0,0 %", which is a property of spirits as often as of beer.
+    # Booster-flavoured anything else cannot slip in.
+    #
+    # "alkoholfrei|0,0 %" is back, but only with `not looks_spirits(o)` in the
+    # condition itself. It was dropped once because it is a property of spirits
+    # as often as of beer, and it dragged Tanqueray 0,0% and Pitú Cachaça 0,0%
+    # into the beer section. The veto must be part of the rule and not merely a
+    # consequence of pre-filtering: the digest is built before the reader's
+    # mutes are known, so an implicit exclusion would come back the moment they
+    # switch "spirituosen" on again. Bound this way it yields real beers only.
     bier = [
         o for o in offers
         if topic_bier(o) or topic_spezi(o)
@@ -544,6 +610,11 @@ def build_digest(offers, price_map=None, latest_date="", receipts=None, muted=fr
             # Radler needs the same suffix/prefix freedom as beer: the archive
             # writes it as "NaturRadler" and "Naturradler" inside one word.
             and re.search(r"\w*radler\w*|\b(?:bionade|booster)\w*\b", title_of(o), re.I)
+        )
+        or (
+            cat_of(o) == "Getränke"
+            and not looks_spirits(o)
+            and re.search(r"alkoholfrei|\b0[,.]0\s*%", title_of(o), re.I)
         )
     ]
     knueller = [o for o in offers if is_knuller(o)]

@@ -159,14 +159,39 @@ const FISH_RE = dietRe(
 );
 // Spirits, wine and sparkling wine — deliberately NOT beer (verified: zero
 // overlap with the beer detector), since beer is a favourite.
+//
+// Deliberately generous with prefixes and suffixes: Eierlikör, Jahrgangssekt
+// and Weingut are the same product class as Likör, Sekt and Wein, and a
+// bare-word list kept missing them. The breadth is only safe because
+// looksSpirits() binds all of it to the drinks category — see there.
 const SPIRITS_RE = dietRe(
-    `likör|liqueur|whisk${W}|vodka|wodka|gin|rum|tequila|brandy|cognac|weinbrand|schnaps|korn|` +
-    `aperitif|aperol|campari|jägermeister|fernet|branca|ouzo|grappa|sambuca|absinth|bacardi|` +
-    `jack\\s*daniel${W}|sekt|prosecco|champagner|crémant|cava|winzersekt|wein|weine|weins|` +
-    `rotwein${W}|weißwein${W}|ros[eé]wein${W}|riesling|merlot|cabernet|syrah|chardonnay|` +
-    `sauvignon|primitivo|tempranillo|sangria|glühwein|portwein|sherry|vermouth|martini|` +
-    `baileys|amaretto`
+    // stems, suffix- and prefix-open
+    `${W}lik[öo]r${W}|liqueur|${W}wein${W}|${W}sekt|${W}secco${W}|` +
+    `whisk(?:y|ey|ies)|vodka|wodka|gin|rum|tequila|brandy|cognac|schnaps|korn|` +
+    `aperitif|aperitivo|prosecco|spumante|champagner|crémant|cava|sangria|` +
+    `sherry|vermouth|martini|amaretto|licor|raki|obstbr[äa]nde?|` +
+    `mix-?getr[äa]nke?n?|cocktail\\s*plant|clubtails|` +
+    // grape varieties, which EDEKA prints instead of the word "Wein"
+    `riesling|merlot|cabernet|syrah|chardonnay|sauvignon|primitivo|tempranillo|` +
+    // brands
+    `aperol|campari|jägermeister|fernet|branca|ouzo|grappa|sambuca|absinth|` +
+    `bacardi|baileys|jack\\s*daniel${W}|limoncello|limonzero|freixenet|lillet|` +
+    `johnnie\\s*walker|havana\\s*club|ramazzotti|underberg|captain\\s*morgan|` +
+    `ballantine|mo[eë]t|veuve|clicquot|heidsieck|osborne|jim\\s*beam|tullamore|` +
+    `bombay|glenfiddich|glenmorangie|sarti|berentzen|puschkin|laphroaig|` +
+    `k[üu]e?mmerling|gracioso|klopfer|southern\\s*comfort|fireball|kilbeggan|` +
+    `bushmills|connemara|asbach|averna|chivas|batida|cacha[çc]a|tanqueray|` +
+    `botucal|monkey\\s*shoulder|highland\\s*park|talisker|raunikar|pircher|` +
+    `katlenburger|malibu|hubertus-tropfen|becherovka|clan\\s*campbell|don\\s*papa|` +
+    `metaxa|feigling|noilly|scavi|vescovino|light\\s*live`
 );
+const DRINKS_CAT = 'Getränke';
+// EDEKA lists wine as "Land - Region - Erzeuger", usually without the word Wein
+// anywhere: "Spanien - Rioja - Rioja Vega Reserva". No word list reaches those,
+// but the shape does. The country vocabulary is closed and derived from the
+// archive, not guessed.
+const WINE_ORIGIN_RE =
+    /^\s*(?:deutschland|italien|frankreich|spanien|luxemburg|portugal|usa|schottland|australien|österreich|nordmazedonien|japan|chile|argentinien|südafrika|neuseeland|griechenland|ungarn)\s*[-–]/iu;
 
 // Positive topic detectors. These need boundaries just as badly as the diet
 // ones: a bare /spezi/ matched "GebäckSPEZIalitäten", "FischSPEZIalitäten" and
@@ -207,7 +232,19 @@ function looksMeat(o) {
     return (MEAT_RE.test(t) || WIENER_RE.test(t)) && !looksVegan(o);
 }
 function looksFish(o) { return FISH_RE.test((o && o.title) || '') && !looksVegan(o); }
-function looksSpirits(o) { return SPIRITS_RE.test((o && o.title) || ''); }
+// Alcohol, bound to the drinks category. The category is not a refinement, it
+// carries the rule. German food titles are full of alcohol words that name a
+// flavour, not a drink: Rum-Rosinen, Whiskey-Bratwurst, "Wein - Schwarzwälder
+// Schinken", Brandy-Nuss-Joghurt. Measured over the archive, every one of the
+// 30 offers this detector used to get wrong sat outside Getränke, and every one
+// of the 484 it got right sat inside it. The bind also makes the broad
+// ${W}wein${W} above safe: unbound it would match 369 Schweinebraten,
+// Weinsauerkraut and Weinbergkäse.
+function looksSpirits(o) {
+    if (catName(o) !== DRINKS_CAT) return false;
+    const t = (o && o.title) || '';
+    return SPIRITS_RE.test(t) || WINE_ORIGIN_RE.test(t);
+}
 
 // ── interest topics: the steering chips + the detectors used for scoring ──
 // `key` doubles as the localStorage interest key and (for the section topics)
