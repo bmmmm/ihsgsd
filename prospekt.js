@@ -280,6 +280,12 @@ function topicTest(key) {
     return o => { try { return !!(t && t.test(o)); } catch (e) { return false; } };
 }
 
+// The one section built from two topics — resolved once at load, since the
+// section predicate runs per offer.
+const isBierTopic = topicTest('bier');
+const isSpeziTopic = topicTest('spezi');
+function bierOrSpezi(o) { return isBierTopic(o) || isSpeziTopic(o); }
+
 // Interest levels and how each one weighs into an offer's score.
 const LEVELS = {
     '-1': { label: 'aus',     weight: -4, cls: 'lvl-off' },
@@ -499,6 +505,13 @@ function interestLevel(key) {
 // Non-diet topics yield to an explicitly liked one, so "Getränke aus" + "Bier
 // Favorit" still shows the pils; diet vetoes never yield.
 function vetoedBy(o) {
+    if (passCache && passCache.veto.has(o)) return passCache.veto.get(o);
+    const out = computeVetoedBy(o);
+    if (passCache) passCache.veto.set(o, out);
+    return out;
+}
+
+function computeVetoedBy(o) {
     let soft = null;
     let liked = false;
     for (const t of TOPICS) {
@@ -514,6 +527,26 @@ function vetoedBy(o) {
         }
     }
     return (soft && !liked) ? soft : null;
+}
+
+// Score and veto both walk all TOPICS detectors per offer, and one render pass
+// asks for them six to eight times over the whole week — the sections, the
+// "Für dich" picks, the discoveries, the hidden counter and the browse list all
+// ask independently. Caching them for the duration of ONE pass removes that
+// repetition without the staleness risk a long-lived memo would carry: a pass
+// is synchronous and never awaits, so prefs cannot change inside it, and the
+// cache is dropped at the end. Every future prefs mutation site is therefore
+// correct by construction rather than by remembering to invalidate.
+let passCache = null;
+let passDepth = 0;
+
+function inPass(fn) {
+    if (passDepth++ === 0) passCache = { score: new WeakMap(), veto: new WeakMap() };
+    try {
+        return fn();
+    } finally {
+        if (--passDepth === 0) passCache = null;
+    }
 }
 
 function isVetoed(o) { return vetoedBy(o) !== null; }
@@ -566,12 +599,14 @@ function toggleBought(o) {
 // An offer's relevance = matching interest weights + the explicit vote + a
 // small nudge for items the reader actually buys.
 function scoreOffer(o) {
+    if (passCache && passCache.score.has(o)) return passCache.score.get(o);
     let s = 0;
     for (const t of TOPICS) {
         if (t.test(o)) s += LEVELS[String(interestLevel(t.key))].weight;
     }
     s += voteFor(o) * VOTE_WEIGHT;
     if (boughtFor(o) > 0) s += BOUGHT_WEIGHT;
+    if (passCache) passCache.score.set(o, s);
     return s;
 }
 
@@ -723,6 +758,12 @@ async function loadPriceHistory() {
         priceHistory = await fetchJSON('data/price-history-index.json');
         phByKey = new Map();
         (priceHistory.products || []).forEach(p => { if (p && p.key) phByKey.set(p.key, p); });
+        // Hand the parsed index to the detail card, as dashboard.js does.
+        // Without this it fetches and parses the same 900 KB a second time on
+        // the first card the reader opens, and keeps a second copy alive.
+        if (typeof DetailCard !== 'undefined' && DetailCard.primeIndex) {
+            DetailCard.primeIndex(priceHistory);
+        }
     } catch (err) {
         priceHistory = null;
         phByKey = null;
@@ -808,10 +849,18 @@ function buildSteering() {
         });
     }
     const browseSearch = document.getElementById('browse-search');
-    if (browseSearch) browseSearch.addEventListener('input', () => {
-        browseFilter = browseSearch.value;
-        renderBrowse();
-    });
+    // Debounced like the table's search (script.js): a keystroke rebuilds up to
+    // 219 rows, so typing a word used to run that filter-sort-render cycle once
+    // per letter. 120 ms is below the gap between keystrokes while typing, so
+    // the list still feels immediate once the reader pauses.
+    if (browseSearch) {
+        let searchTimer = null;
+        browseSearch.addEventListener('input', () => {
+            browseFilter = browseSearch.value;
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(renderBrowse, 120);
+        });
+    }
 }
 
 // ── anti-drift "Alle Angebote" browser ──
@@ -920,6 +969,10 @@ function buildBrowseRow(o) {
 }
 
 function renderBrowse() {
+    return inPass(renderBrowseInner);
+}
+
+function renderBrowseInner() {
     const list = document.getElementById('browse-list');
     const body = document.getElementById('browse-body');
     if (!list) return;
@@ -944,15 +997,24 @@ function renderBrowse() {
     }
     // Still-shown items first, the ausgeblendeten (score < 0) sink to the bottom;
     // alphabetical within each group.
-    items.sort((a, b) => {
-        const ha = isHidden(a), hb = isHidden(b);
-        if (ha !== hb) return ha ? 1 : -1;
-        return String(a.title || '').localeCompare(String(b.title || ''));
+    //
+    // Decorate-sort-undecorate: isHidden runs once per offer, not once per
+    // comparison. A comparator that calls it sees O(n log n) invocations —
+    // 2704 for 219 offers instead of 219, and each one walks every topic
+    // detector twice (isVetoed, then scoreOffer).
+    const decorated = items.map(o => ({
+        o,
+        hidden: isHidden(o),
+        title: String(o.title || ''),
+    }));
+    decorated.sort((a, b) => {
+        if (a.hidden !== b.hidden) return a.hidden ? 1 : -1;
+        return a.title.localeCompare(b.title);
     });
 
     list.innerHTML = '';
     const frag = document.createDocumentFragment();
-    items.forEach(o => frag.appendChild(buildBrowseRow(o)));
+    decorated.forEach(({ o }) => frag.appendChild(buildBrowseRow(o)));
     list.appendChild(frag);
 }
 
@@ -2557,6 +2619,10 @@ function updateClusters() {
 }
 
 function renderAll() {
+    return inPass(renderAllInner);
+}
+
+function renderAllInner() {
     renderHero();
 
     // Personalised top picks (LLM-ranked + client fallback) followed by 1-2
@@ -2591,7 +2657,10 @@ function renderAll() {
         fillSection('pk-obst-grid', 'pk-obst-intro', offersWhere(except(topicTest('obstgemuese'))), 'obstgemuese', { limit: 12 }));
     wireCollapsible('pk-bier-grid',
         fillSection('pk-bier-grid', 'pk-bier-intro',
-            offersWhere(except(o => topicTest('bier')(o) || topicTest('spezi')(o))),
+            // Resolved once, not per offer: topicTest() runs a TOPICS.find, and
+            // calling it inside the predicate repeated that lookup for every
+            // offer in the week.
+            offersWhere(except(bierOrSpezi)),
             'bierspezi', { limit: 12 }));
     wireCollapsible('pk-knueller-grid',
         fillSection('pk-knueller-grid', 'pk-knueller-intro',
