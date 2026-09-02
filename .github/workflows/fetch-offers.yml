@@ -37,6 +37,8 @@ concurrency:
 jobs:
   fetch-and-store:
     runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.pushed.outputs.sha }}
 
     steps:
       - name: Checkout repository
@@ -56,11 +58,24 @@ jobs:
           # data. Retry both failure modes with increasing backoff before
           # finally giving up.
           SLEEPS=(30 120 300)
+          # A well-formed but near-empty list is a failure mode of its own: the
+          # API answers mid-switch with an `offers: []` that passes every type
+          # check. The never-shrink guard below cannot catch it either, because
+          # that one only compares against an existing week file — and the very
+          # first fetch of a new week has none. So refuse the response here and
+          # let it fall into the same retry loop as an HTTP error. The Python
+          # fetchers do this too (fetch_aldi.py MIN_OFFERS, fetch_kaufda.py
+          # MIN_OFFERS). The threshold is deliberately far below anything real:
+          # the smallest of the 88 archived weeks holds 140 offers, the largest
+          # 219, so 50 is a ~2.8x margin and has never rejected a real week.
+          MIN_OFFERS=50
           for attempt in 1 2 3 4; do
             if ! RESPONSE=$(curl -sf "$API_URL"); then
               echo "EDEKA API fetch failed (HTTP error or network failure) on attempt $attempt/4"
             elif ! echo "$RESPONSE" | jq -e '.offers | type == "array"' >/dev/null; then
               echo "EDEKA API returned no offers array on attempt $attempt/4"
+            elif [ "$(echo "$RESPONSE" | jq '.offers | length')" -lt "$MIN_OFFERS" ]; then
+              echo "EDEKA API returned only $(echo "$RESPONSE" | jq '.offers | length') offers (< $MIN_OFFERS) on attempt $attempt/4"
             else
               echo "$RESPONSE" > data.json
               exit 0
@@ -195,20 +210,11 @@ jobs:
           done < <(jq -r '.offers[] | "\(.id)\t\(.images.app // "")"' "$FILE")
           echo "Archived $ok image(s), $fail failure(s) into $IMG_DIR"
 
-      - name: Generate folder-structure.json
-        id: generate-structure
+      - name: Generate index files (folder structure + trend + price history)
         run: |
-          # Only the nested weekly snapshots (data/<year>/KW<nn>/<date>.json) —
-          # a path filter, not an exclusion list, so root-level generated
-          # artifacts (folder-structure/trend-index/price-history/insights/
-          # prospekt and any future one) can never leak into the week dropdown.
-          find data -type f -name "*.json" -path "data/*/KW*/*.json" | sed 's|^data/||' | sort | jq -R -s -c 'split("\n") | map(select(length > 0))' > data/folder-structure.json
-
-      - name: Generate index files (trend + price history)
-        id: generate-indexes
-        run: |
-          # One Python pass over all snapshots produces both precomputed indexes
-          # the dashboard loads instead of the ~17 MB of weekly JSON:
+          # One Python pass over all snapshots produces all three precomputed
+          # indexes the pages load instead of the ~17 MB of weekly JSON:
+          #   - folder-structure.json    the week dropdown's file list
           #   - trend-index.json         per-week category counts + KPIs
           #   - price-history-index.json per-product Grundpreis (€/unit) series
           # stdlib only; python3 is preinstalled on ubuntu-latest.
@@ -230,3 +236,21 @@ jobs:
           done
           echo "push failed after 3 attempts" >&2
           exit 1
+
+      - name: Record the pushed commit
+        id: pushed
+        # The checks job below has to gate what this run actually pushed. A
+        # called workflow's checkout otherwise pins to github.sha, which on a
+        # scheduled run is the tip from *before* the data commit — the audit
+        # would then pass on last week's snapshot and report green. Reading
+        # HEAD in a step of its own keeps the push step's early exits intact.
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  checks:
+    # GitHub starts no workflow run for a push made with the built-in
+    # GITHUB_TOKEN, so the repo's own gates never see a data commit through
+    # their push trigger. Calling them here is what makes them run at all.
+    needs: fetch-and-store
+    uses: ./.github/workflows/checks.yml
+    with:
+      ref: ${{ needs.fetch-and-store.outputs.sha }}

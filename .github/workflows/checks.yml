@@ -7,20 +7,35 @@ name: Checks
 # a drifted detector just quietly stops matching. test_parity.py is the only
 # thing that sees that, so it has to run unattended.
 #
-# Deliberately also on the data commits the fetch workflows push: audit_data.py
-# is a data-quality check, and a bad snapshot is exactly what it is for.
+# The data commits the fetch workflows push do NOT arrive here through the push
+# trigger: GitHub does not start a workflow run for a push made with the
+# built-in GITHUB_TOKEN, which is exactly how those workflows push. That is why
+# the fetch workflows call this one explicitly as a second job — and why they
+# pass the SHA they just pushed. A called workflow's checkout otherwise pins to
+# github.sha, which for a scheduled run is the tip from *before* the data
+# commit, so the audit would gate last week's snapshot and report green.
 
 on:
   push:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      ref:
+        description: "Commit to check out. Empty = the SHA that triggered the run."
+        type: string
+        required: false
+        default: ""
 
 permissions:
   contents: read
 
 concurrency:
-  group: checks-${{ github.ref }}
+  # Keyed on what is actually being checked, not on the caller's ref: all three
+  # fetch workflows call this from refs/heads/main, so grouping on github.ref
+  # would let them cancel each other — and a human push — mid-run.
+  group: checks-${{ inputs.ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -29,6 +44,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref }}
 
       # No dependencies to install: the site is vanilla JS and the scripts are
       # stdlib-only Python. python3 and node are preinstalled on ubuntu-latest,

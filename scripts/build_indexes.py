@@ -9,10 +9,11 @@ all ~17 MB of weekly JSON in the browser.
 Outputs (written into data/):
   - trend-index.json          per-week aggregates (category counts + KPIs)
   - price-history-index.json  per-product Grundpreis (€/unit) time series
-  - folder-structure.json     sorted list of weekly snapshot paths (normally
-                               produced by the fetch-offers.yml jq step; also
-                               written here so a local rebuild — after a rekey
-                               or a manually added week — never needs jq)
+  - folder-structure.json     sorted list of weekly snapshot paths, i.e. the
+                               week dropdown's file list. This is the only
+                               producer: fetch-offers.yml used to build it with
+                               jq one step before calling this script, which
+                               then overwrote the result identically.
 
 The face price (price.rawValue) is NOT comparable across weeks for the same
 title (pack-size swaps make it jump), so cross-week comparison uses the
@@ -31,7 +32,10 @@ import statistics
 import sys
 
 DATA_DIR = "data"
-# Same set the jq step matched: data/<year>/KW<n>/<date>.json
+# Only the nested weekly snapshots, data/<year>/KW<nn>/<date>.json — a path
+# filter, not an exclusion list, so root-level generated artifacts
+# (folder-structure/trend-index/price-history/insights/prospekt and any future
+# one) can never leak into the week dropdown.
 FILE_GLOB = os.path.join(DATA_DIR, "[0-9]" * 4, "KW*", "*.json")
 
 # A real data-entry outlier (a €47,150 Camembert) poisons every face-price

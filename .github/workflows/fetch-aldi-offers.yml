@@ -23,6 +23,8 @@ concurrency:
 jobs:
   fetch-and-store:
     runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.pushed.outputs.sha }}
 
     steps:
       - name: Checkout repository
@@ -55,3 +57,17 @@ jobs:
           done
           echo "push failed after 3 attempts" >&2
           exit 1
+
+      - name: Record the pushed commit
+        id: pushed
+        # Same reasoning as the EDEKA workflow: the checks job must gate the
+        # commit this run pushed, not the SHA that triggered it.
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  checks:
+    # A push made with the built-in GITHUB_TOKEN starts no workflow run, so the
+    # gates have to be called explicitly. See the EDEKA workflow.
+    needs: fetch-and-store
+    uses: ./.github/workflows/checks.yml
+    with:
+      ref: ${{ needs.fetch-and-store.outputs.sha }}
