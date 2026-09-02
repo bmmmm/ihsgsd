@@ -112,6 +112,7 @@ function buildOfferImage(o) {
     const img = document.createElement('img');
     img.src = src;
     img.alt = o.title || '';
+    img.loading = 'lazy';   // as prospekt.js does: only fetch what is scrolled to
     if (localUrl && liveUrl) img.onerror = function () { this.onerror = null; this.src = liveUrl; };
     return img;
 }
@@ -173,9 +174,13 @@ async function init() {
         loadWeek(weekSelect.value).catch(showLoadError);
     });
 
-    await loadAllTrendData();
-    await loadPriceHistory();
-    await loadInsights();
+    // The three loaders are independent — trend index, price history and the
+    // editorial insights touch different globals and different DOM. Awaiting
+    // them one after another cost three round trips before the first chart
+    // could appear, and the middle one is the 900 KB price-history index.
+    // buildFiltersBar needs the trend categories, so it still waits for all
+    // three; the wait is now as long as the slowest, not their sum.
+    await Promise.all([loadAllTrendData(), loadPriceHistory(), loadInsights()]);
     buildFiltersBar();
 
     if (files.length > 0) {
@@ -1496,12 +1501,20 @@ function populateGpPicker() {
         renderGpTrend(p);
     }
 
+    // An unfiltered dropdown would render every pickable product — 1403 of
+    // them, roughly 5600 nodes, built synchronously on focus and again on every
+    // keystroke. Nobody scrolls a list that long; they type. Showing the first
+    // 50 and saying how many are left keeps the list usable and the work flat.
+    const MAX_DROPDOWN_ITEMS = 50;
+
     function buildDropdown(query) {
         dropdown.innerHTML = '';
         const q = gpNorm(query || '');
-        const matched = q ? pickable.filter(x => x._norm.includes(q)) : pickable;
+        const allMatched = q ? pickable.filter(x => x._norm.includes(q)) : pickable;
+        const matched = allMatched.slice(0, MAX_DROPDOWN_ITEMS);
+        const overflow = allMatched.length - matched.length;
 
-        if (!matched.length) {
+        if (!allMatched.length) {
             const empty = document.createElement('div');
             empty.className = 'gp-dd-empty';
             empty.textContent = 'Keine Übereinstimmungen für „' + (query || '') + '"';
@@ -1538,6 +1551,7 @@ function populateGpPicker() {
                 item.setAttribute('role', 'option');
                 item.setAttribute('aria-selected', String(x.idx === selectedIdx));
                 item.dataset.idx = String(x.idx);
+                item.dataset.title = x.p.title;
 
                 const dot = document.createElement('span');
                 dot.className = 'gp-dd-cat-dot';
@@ -1553,11 +1567,8 @@ function populateGpPicker() {
                 weeksSpan.textContent = x.p._exWeeks + ' Wo.';
                 item.appendChild(weeksSpan);
 
-                item.addEventListener('mousedown', (e) => {
-                    // mousedown fires before blur — prevent the blur from closing before click.
-                    e.preventDefault();
-                    selectProduct(x.idx, x.p.title);
-                });
+                // No per-item listener: one delegated handler on the dropdown
+                // covers them all (see below), so a rebuild costs nodes only.
                 group.appendChild(item);
             });
 
@@ -1565,10 +1576,26 @@ function populateGpPicker() {
         });
 
         dropdown.appendChild(frag);
+        if (overflow > 0) {
+            const more = document.createElement('div');
+            more.className = 'gp-dd-empty';
+            more.textContent = `… und ${overflow} weitere — bitte weiter eingrenzen`;
+            dropdown.appendChild(more);
+        }
         activeItemEl = null;
         input.setAttribute('aria-expanded', 'true');
         dropdown.classList.add('open');
     }
+
+    // One listener for the whole dropdown, attached once. mousedown fires
+    // before blur, so preventDefault keeps the blur from closing the list
+    // before the selection lands.
+    dropdown.addEventListener('mousedown', (e) => {
+        const item = e.target.closest('.gp-dd-item');
+        if (!item || !dropdown.contains(item)) return;
+        e.preventDefault();
+        selectProduct(Number(item.dataset.idx), item.dataset.title);
+    });
 
     function closeDropdown() {
         dropdown.classList.remove('open');
