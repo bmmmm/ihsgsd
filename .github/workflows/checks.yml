@@ -1,0 +1,73 @@
+name: Checks
+
+# The repo's own gates, run on every push and pull request. Until this existed
+# they only ever ran when somebody remembered to run them by hand, which is the
+# same as not having them: the JS and Python copies of the Grundpreis logic and
+# the diet/topic detectors can drift apart without a single error anywhere, and
+# a drifted detector just quietly stops matching. test_parity.py is the only
+# thing that sees that, so it has to run unattended.
+#
+# Deliberately also on the data commits the fetch workflows push: audit_data.py
+# is a data-quality check, and a bad snapshot is exactly what it is for.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      # No dependencies to install: the site is vanilla JS and the scripts are
+      # stdlib-only Python. python3 and node are preinstalled on ubuntu-latest,
+      # and test_parity.py shells out to node itself.
+      - name: Show tool versions
+        run: |
+          python3 --version
+          node --version
+
+      - name: JS syntax
+        # Every page script must parse. Cheap, and it catches the failure mode
+        # that takes the whole page down silently: a redeclared const at global
+        # scope after code is moved into a shared file.
+        run: |
+          for f in *.js; do
+            echo "checking $f"
+            node --check "$f"
+          done
+
+      - name: JS/Python parity
+        # The full run, never --quick: --quick reads only the newest week and
+        # provably misses detector drift, which is the thing this guards.
+        run: python3 scripts/test_parity.py
+
+      - name: Data audit
+        # Non-zero exit means something new and fixable in the archives.
+        run: python3 scripts/audit_data.py
+
+      - name: weekly_sync Phase B recovery
+        # Guards the one branch of the unattended sync job that would otherwise
+        # lock it out of every later run. See the script's own header.
+        run: bash scripts/test_sync_recovery.sh
+
+      - name: Indexes are reproducible
+        # build_indexes.py writes folder-structure.json, trend-index.json and
+        # price-history-index.json. Regenerating them from the committed data
+        # must produce exactly what is committed — a diff here means the
+        # indexes and the snapshots have fallen out of step, which is invisible
+        # in the browser until a badge or a week silently disappears.
+        run: |
+          python3 scripts/build_indexes.py
+          git diff --exit-code -- data/folder-structure.json data/trend-index.json data/price-history-index.json

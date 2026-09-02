@@ -70,9 +70,18 @@ believing a schedule was missed; redundant cron slots only help against
 ## Before you change things
 
 - **Run `scripts/test_parity.py` after touching shared logic** — the Grundpreis
-  code and diet detectors exist in both JS and Python, and drift is silent (a
-  product key off by one character just stops returning history). Use the full
-  run; `--quick` provably misses detector drift.
+  code, the diet detectors and the Bier/Spezi/Vegan topic tests exist in both JS
+  and Python, and drift is silent (a product key off by one character just stops
+  returning history; a `\b` where the JS has a suffix match loses every
+  Weißbier). Use the full run; `--quick` provably misses detector drift.
+  Adding a comparison also means naming it in that file's `fields` tuple — the
+  harness compares only what is listed there, so a field added everywhere else
+  still gates nothing.
+- **`.github/workflows/checks.yml` runs those gates on every push and PR** —
+  JS syntax, parity, data audit, `scripts/test_sync_recovery.sh`, and a rebuild
+  of the three indexes that must leave no diff. Before it existed the gates only
+  ran when somebody remembered them, which for a silent-drift failure mode is
+  the same as not having them.
 - **Moving code into a shared file means deleting the local copy** — a second
   `const` at global scope is a redeclaration SyntaxError that takes the page
   down.
