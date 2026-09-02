@@ -1,7 +1,7 @@
 {
   "generatedAt": "2026-08-31",
   "weekLabel": "2026-KW36",
-  "summary": "Käsesorten sind deutlich teurer: Bergader Bavaria Blau kostet 55 % mehr als der Tiefstwert (15,37 EUR/kg), Gazi-Käse 50 % über Minimum. Beste Schnäppchen: Leibniz-Kekse 47 % unter Maximum, Trolli-Gummi 31 % günstiger.",
+  "summary": "Käse und Fleisch erreichen Spitzenwerte: Bergader Bavaria blu liegt 54,8 % über dem Jahrestief. Gegenpol sind süße Schnäppchen – Leibniz Choko Kekse sind 47,5 % billiger als je zuvor.",
   "pricier": [
     {
       "title": "Bergader Bavaria blu oder Almzeit",
@@ -10,7 +10,7 @@
       "unit": "kg",
       "hist_min_gp": 9.93,
       "pct_above_min": 54.8,
-      "note": "Von 9,93 auf 15,37 EUR/kg – 55 % teurer"
+      "note": "54,8 % teurer als Jahrestief"
     },
     {
       "title": "Gazi Grill- und Pfannenkäse",
@@ -19,7 +19,7 @@
       "unit": "kg",
       "hist_min_gp": 9.95,
       "pct_above_min": 50.3,
-      "note": "50 % über historischem Tiefstwert"
+      "note": "50,3 % über dem Minimum"
     },
     {
       "title": "Spareribs",
@@ -28,7 +28,7 @@
       "unit": "kg",
       "hist_min_gp": 7.7,
       "pct_above_min": 41.6,
-      "note": "42 % teurer als günstigster Preis"
+      "note": "41,6 % über historischem Tief"
     },
     {
       "title": "Activia",
@@ -37,7 +37,7 @@
       "unit": "kg",
       "hist_min_gp": 2.41,
       "pct_above_min": 34.4,
-      "note": "34 % über historischem Tiefstwert"
+      "note": "34,4 % über Jahrestief"
     },
     {
       "title": "Deutschland - Himbeeren",
@@ -46,7 +46,7 @@
       "unit": "kg",
       "hist_min_gp": 11.92,
       "pct_above_min": 33.6,
-      "note": "34 % über Tiefstwert"
+      "note": "33,6 % über Mindestpreis"
     },
     {
       "title": "Frischwurst-Aufschnitt",
@@ -55,7 +55,7 @@
       "unit": "kg",
       "hist_min_gp": 10.0,
       "pct_above_min": 29.0,
-      "note": "29 % über historischem Tiefstwert"
+      "note": "29,0 % teurer als günstigste"
     },
     {
       "title": "Vitamalz",
@@ -64,7 +64,7 @@
       "unit": "l",
       "hist_min_gp": 1.35,
       "pct_above_min": 27.4,
-      "note": "27 % über Tiefstwert"
+      "note": "27,4 % über historischem Tief"
     },
     {
       "title": "Käseaufschnitt",
@@ -73,7 +73,7 @@
       "unit": "kg",
       "hist_min_gp": 5.96,
       "pct_above_min": 26.8,
-      "note": "27 % über historischem Tiefstwert"
+      "note": "26,8 % über Mindestpreis"
     },
     {
       "title": "Hackfleisch",
@@ -82,7 +82,7 @@
       "unit": "kg",
       "hist_min_gp": 6.98,
       "pct_above_min": 26.1,
-      "note": "26 % über historischem Tiefstwert"
+      "note": "26,1 % teurer als Jahrestief"
     },
     {
       "title": "Frisches Maishähnchen",
@@ -91,7 +91,7 @@
       "unit": "kg",
       "hist_min_gp": 7.99,
       "pct_above_min": 25.0,
-      "note": "25 % über Tiefstwert"
+      "note": "25,0 % über historischem Tief"
     }
   ],
   "deals": [
@@ -101,7 +101,7 @@
       "current_gp": 15.92,
       "unit": "kg",
       "hist_max_gp": 30.32,
-      "note": "47 % günstiger als Maximum"
+      "note": "47,5 % billiger als je zuvor"
     },
     {
       "title": "Trolli Fruchtgummi",
@@ -109,7 +109,7 @@
       "current_gp": 5.27,
       "unit": "kg",
       "hist_max_gp": 7.67,
-      "note": "31 % unter Höchstpreis"
+      "note": "31,3 % unter Allzeithoch"
     },
     {
       "title": "EDEKA - Supersweet Mais",
@@ -117,7 +117,7 @@
       "current_gp": 3.47,
       "unit": "kg",
       "hist_max_gp": 4.93,
-      "note": "30 % günstiger als Maximum"
+      "note": "29,6 % billiger als Maximum"
     },
     {
       "title": "Ungarn - Spitzpaprika",
@@ -125,7 +125,7 @@
       "current_gp": 2.98,
       "unit": "kg",
       "hist_max_gp": 3.98,
-      "note": "25 % unter Höchstpreis"
+      "note": "25,1 % unter Allzeithoch"
     },
     {
       "title": "Schweinefilet",
@@ -133,7 +133,7 @@
       "current_gp": 14.99,
       "unit": "kg",
       "hist_max_gp": 19.9,
-      "note": "25 % günstiger als Maximum"
+      "note": "24,7 % billiger als je zuvor"
     },
     {
       "title": "Frisches Hähnchenbrustfilet",
@@ -141,7 +141,7 @@
       "current_gp": 9.9,
       "unit": "kg",
       "hist_max_gp": 12.9,
-      "note": "23 % unter Höchstpreis"
+      "note": "23,3 % unter Allzeithoch"
     },
     {
       "title": "Rheinfels Quelle Mineralwasser",
@@ -149,7 +149,7 @@
       "current_gp": 0.73,
       "unit": "l",
       "hist_max_gp": 0.93,
-      "note": "21 % günstiger als Maximum"
+      "note": "21,5 % billiger als Maximum"
     },
     {
       "title": "Zwiebelmettwurst oder Schinkenzwiebelmettwurst",
@@ -157,7 +157,7 @@
       "current_gp": 9.95,
       "unit": "kg",
       "hist_max_gp": 12.45,
-      "note": "20 % unter Höchstpreis"
+      "note": "20,1 % unter Allzeithoch"
     },
     {
       "title": "Frische Putenschnitzel oder frisches Putengulasch",
@@ -165,7 +165,7 @@
       "current_gp": 12.9,
       "unit": "kg",
       "hist_max_gp": 15.9,
-      "note": "19 % günstiger als Maximum"
+      "note": "18,9 % billiger als je zuvor"
     },
     {
       "title": "Beemster",
@@ -173,8 +173,8 @@
       "current_gp": 14.76,
       "unit": "kg",
       "hist_max_gp": 17.9,
-      "note": "18 % unter Höchstpreis"
+      "note": "17,5 % unter Allzeithoch"
     }
   ],
-  "model": "haiku"
+  "model": "claude -p --model haiku"
 }

@@ -2,26 +2,241 @@
   "weekLabel": "KW36",
   "generatedAt": "2026-08-31",
   "generatedFor": "2026-06-30T10:27:37.023Z",
-  "model": "sonnet",
-  "intro": "Spitzpaprika zum besten Preis seit Wochen und Bio-Kartoffeln machen diese Woche zur bunten, veganen Genusswoche – von Pasta bis Ofengemüse, ganz ohne Fleisch oder Käse.",
+  "model": "claude -p --model sonnet",
+  "intro": "Diese Woche glänzt die ungarische Spitzpaprika zum besten Preis seit Wochen, dazu jede Menge frisches Gemüse günstig wie selten – von Kohlrabi für 55 Cent bis Bio-Avocados für die Bowl.",
   "days": [
     {
       "day": "Mo",
       "meal": {
-        "slug": "paprika-tomaten-pasta-mit-basilikum",
-        "title": "Paprika-Tomaten-Pasta mit Basilikum",
-        "blurb": "Nutzt Spitzpaprika zum besten Preis seit Wochen – schnell, frisch, italienisch.",
+        "slug": "gefuellte-ofenpaprika-mit-reis-und-kichererbsen",
+        "title": "Gefüllte Ofenpaprika mit Reis und Kichererbsen",
+        "blurb": "Der Star der Woche: Spitzpaprika zum besten Preis seit Wochen, herzhaft gefüllt und ofenwarm serviert.",
         "tags": [
-          "pasta",
-          "italienisch",
-          "schnell",
-          "bestpreis"
+          "ofen",
+          "gefuellt",
+          "reis"
         ],
         "ingredients": [
           {
             "name": "Spitzpaprika",
             "offerTitle": "Ungarn - Spitzpaprika",
             "price": "€1,49"
+          },
+          {
+            "name": "Reis",
+            "pantry": true
+          },
+          {
+            "name": "Kichererbsen",
+            "pantry": true
+          },
+          {
+            "name": "Zwiebeln",
+            "pantry": true
+          },
+          {
+            "name": "Knoblauch",
+            "pantry": true
+          },
+          {
+            "name": "Paprikapulver",
+            "pantry": true
+          }
+        ],
+        "steps": [
+          "Paprika waschen, Deckel abschneiden und entkernen.",
+          "Reis kochen.",
+          "Zwiebel und Knoblauch andünsten, mit Kichererbsen und Paprikapulver mischen.",
+          "Paprika mit der Reis-Kichererbsen-Mischung füllen.",
+          "Im Ofen bei 200°C ca. 25 Minuten backen."
+        ]
+      }
+    },
+    {
+      "day": "Di",
+      "meal": {
+        "slug": "bunte-bio-bowl-mit-avocado-und-bio-paprika",
+        "title": "Bunte Bio-Bowl mit Avocado und Bio-Paprika",
+        "blurb": "Bio-Avocado und Bio-Paprika treffen auf knackige Mini-Gurken – frisch, bunt und in 15 Minuten fertig.",
+        "tags": [
+          "bowl",
+          "bio",
+          "schnell"
+        ],
+        "ingredients": [
+          {
+            "name": "Bio-Avocados",
+            "offerTitle": "Peru - Bio-Avocados",
+            "price": "€1,29"
+          },
+          {
+            "name": "Bio-Spitzpaprika",
+            "offerTitle": "Spanien - Bio-Spitzpaprika",
+            "price": "€1,99"
+          },
+          {
+            "name": "Mini-Gurken",
+            "offerTitle": "Deutschland - Mini-Gurken",
+            "price": "€0,49"
+          },
+          {
+            "name": "Quinoa",
+            "pantry": true
+          },
+          {
+            "name": "Kichererbsen",
+            "pantry": true
+          },
+          {
+            "name": "Senf",
+            "pantry": true
+          },
+          {
+            "name": "Rapsöl",
+            "pantry": true
+          },
+          {
+            "name": "Agavendicksaft",
+            "pantry": true
+          }
+        ],
+        "steps": [
+          "Quinoa kochen und abkühlen lassen.",
+          "Avocado, Paprika und Mini-Gurken klein schneiden.",
+          "Kichererbsen abtropfen lassen.",
+          "Dressing aus Senf, Rapsöl und Agavendicksaft anrühren.",
+          "Alles in einer Bowl anrichten und mit Dressing beträufeln."
+        ]
+      }
+    },
+    {
+      "day": "Mi",
+      "meal": {
+        "slug": "asia-wok-mit-like-meat-kohlrabi-und-mini-moehren",
+        "title": "Asia-Wok mit Like Meat, Kohlrabi und Mini-Möhren",
+        "blurb": "Schnell, würzig und proteinreich: Like Meat trifft auf knackigen Kohlrabi und süße Mini-Möhren.",
+        "tags": [
+          "wok",
+          "asiatisch",
+          "schnell"
+        ],
+        "ingredients": [
+          {
+            "name": "Like Meat",
+            "offerTitle": "Like Meat - Rein pflanzlich aus Soja",
+            "price": "€2,49"
+          },
+          {
+            "name": "Kohlrabi",
+            "offerTitle": "Deutschland - Kohlrabi",
+            "price": "€0,55"
+          },
+          {
+            "name": "Mini Möhren",
+            "offerTitle": "Deutschland - Mini Möhren",
+            "price": "€0,88"
+          },
+          {
+            "name": "Reis",
+            "pantry": true
+          },
+          {
+            "name": "Ingwer",
+            "pantry": true
+          },
+          {
+            "name": "Knoblauch",
+            "pantry": true
+          },
+          {
+            "name": "Sojasauce",
+            "pantry": true
+          },
+          {
+            "name": "Sriracha",
+            "pantry": true
+          }
+        ],
+        "steps": [
+          "Reis kochen.",
+          "Kohlrabi und Möhren in dünne Streifen schneiden.",
+          "Like Meat in der Pfanne knusprig anbraten.",
+          "Gemüse, Ingwer und Knoblauch dazugeben, kurz mitbraten.",
+          "Mit Sojasauce und Sriracha abschmecken, mit Reis servieren."
+        ]
+      }
+    },
+    {
+      "day": "Do",
+      "meal": {
+        "slug": "rote-linsen-dal-mit-ingwer-und-paprika",
+        "title": "Rote-Linsen-Dal mit Ingwer und Paprika",
+        "blurb": "Cremiges Dal mit Ingwerwärme – ein Teller, der von innen wärmt und günstig satt macht.",
+        "tags": [
+          "curry",
+          "huelsenfruechte",
+          "scharf"
+        ],
+        "ingredients": [
+          {
+            "name": "Paprika",
+            "offerTitle": "Niederlande - GUT & GÜNSTIG - Paprika",
+            "price": "€1,49"
+          },
+          {
+            "name": "Rote Linsen",
+            "pantry": true
+          },
+          {
+            "name": "Zwiebeln",
+            "pantry": true
+          },
+          {
+            "name": "Ingwer",
+            "pantry": true
+          },
+          {
+            "name": "Knoblauch",
+            "pantry": true
+          },
+          {
+            "name": "Currypulver",
+            "pantry": true
+          },
+          {
+            "name": "Kreuzkümmel",
+            "pantry": true
+          },
+          {
+            "name": "Kokosmilch",
+            "pantry": true
+          }
+        ],
+        "steps": [
+          "Zwiebel, Knoblauch und Ingwer andünsten.",
+          "Currypulver und Kreuzkümmel kurz mitrösten.",
+          "Paprika würfeln und dazugeben.",
+          "Rote Linsen und Kokosmilch zufügen.",
+          "Ca. 15 Minuten köcheln lassen, bis das Dal cremig ist."
+        ]
+      }
+    },
+    {
+      "day": "Fr",
+      "meal": {
+        "slug": "zucchini-tomaten-pasta-mit-basilikum",
+        "title": "Zucchini-Tomaten-Pasta mit Basilikum",
+        "blurb": "Sommerliche Pasta mit Zucchini, Mini-Tomaten und frischem Basilikum – schnell auf dem Tisch.",
+        "tags": [
+          "pasta",
+          "italienisch",
+          "schnell"
+        ],
+        "ingredients": [
+          {
+            "name": "Zucchini",
+            "offerTitle": "Deutschland - Zucchini",
+            "price": "€1,00"
           },
           {
             "name": "Mini Pflaumen Tomaten",
@@ -40,275 +255,9 @@
           {
             "name": "Tomatenmark",
             "pantry": true
-          }
-        ],
-        "steps": [
-          "Nudeln in Salzwasser kochen.",
-          "Paprika in Streifen schneiden und in Olivenöl anbraten.",
-          "Tomaten halbieren, mit Tomatenmark zugeben und kurz köcheln.",
-          "Mit den Nudeln vermischen und frischem Basilikum bestreuen."
-        ]
-      }
-    },
-    {
-      "day": "Di",
-      "meal": {
-        "slug": "bioland-kartoffel-gulasch",
-        "title": "Bioland-Kartoffel-Gulasch",
-        "blurb": "Herzhaftes Gulasch mit Bio-Kartoffeln – deftig, ohne Fleisch, ganz nach Bio-Vorliebe.",
-        "tags": [
-          "kartoffel",
-          "bio",
-          "herzhaft",
-          "eintopf"
-        ],
-        "ingredients": [
-          {
-            "name": "Bioland Speisekartoffeln",
-            "offerTitle": "Deutschland - Bioland Speisekartoffeln",
-            "price": "€1,99"
           },
           {
-            "name": "Zwiebelmix",
-            "offerTitle": "EU - Zwiebelmix",
-            "price": "€1,49"
-          },
-          {
-            "name": "Paprika",
-            "offerTitle": "Niederlande - GUT & GÜNSTIG - Paprika",
-            "price": "€1,49"
-          },
-          {
-            "name": "passierte Tomaten",
-            "pantry": true
-          },
-          {
-            "name": "Paprikapulver",
-            "pantry": true
-          },
-          {
-            "name": "Tomatenmark",
-            "pantry": true
-          }
-        ],
-        "steps": [
-          "Kartoffeln schälen und würfeln, Zwiebeln und Paprika klein schneiden.",
-          "Zwiebeln glasig dünsten, Paprikapulver kurz mitrösten.",
-          "Kartoffeln, Paprika, Tomatenmark und passierte Tomaten zugeben.",
-          "20-25 Minuten köcheln, bis die Kartoffeln gar sind."
-        ]
-      }
-    },
-    {
-      "day": "Mi",
-      "meal": {
-        "slug": "bonduelle-bohnen-bowl-mit-avocado",
-        "title": "Bonduelle-Bohnen-Bowl mit Avocado",
-        "blurb": "Bunte Bowl mit Mais-Bohnen-Mix und cremiger Avocado – schnell und mexikanisch angehaucht.",
-        "tags": [
-          "bowl",
-          "mexikanisch",
-          "bunt",
-          "bio"
-        ],
-        "ingredients": [
-          {
-            "name": "Mild & Wild",
-            "offerTitle": "Bonduelle - Mild & Wild",
-            "price": "€2,49"
-          },
-          {
-            "name": "Bio-Avocados",
-            "offerTitle": "Peru - Bio-Avocados",
-            "price": "€1,29"
-          },
-          {
-            "name": "Paprika",
-            "offerTitle": "Niederlande - GUT & GÜNSTIG - Paprika",
-            "price": "€1,49"
-          },
-          {
-            "name": "Reis",
-            "pantry": true
-          },
-          {
-            "name": "Sriracha",
-            "pantry": true
-          }
-        ],
-        "steps": [
-          "Reis kochen.",
-          "Mild & Wild-Mix erhitzen, Paprika in Streifen schneiden.",
-          "Avocado würfeln.",
-          "Alles auf dem Reis anrichten und mit Sriracha beträufeln."
-        ]
-      }
-    },
-    {
-      "day": "Do",
-      "meal": {
-        "slug": "ofenkuerbis-mit-kichererbsen-und-zwiebeln",
-        "title": "Ofenkürbis mit Kichererbsen und Zwiebeln",
-        "blurb": "Süßlicher Hokkaido aus dem Ofen, herzhaft mit Kichererbsen – wenig Aufwand, viel Geschmack.",
-        "tags": [
-          "ofen",
-          "kuerbis",
-          "huelsenfruechte",
-          "herbstlich"
-        ],
-        "ingredients": [
-          {
-            "name": "Speisekürbis Hokkaido oder Butternut",
-            "offerTitle": "Deutschland - Speisekürbis Hokkaido oder Butternut",
-            "price": "€1,29"
-          },
-          {
-            "name": "Zwiebelmix",
-            "offerTitle": "EU - Zwiebelmix",
-            "price": "€1,49"
-          },
-          {
-            "name": "Kichererbsen",
-            "pantry": true
-          },
-          {
-            "name": "Olivenöl",
-            "pantry": true
-          },
-          {
-            "name": "Currypulver",
-            "pantry": true
-          }
-        ],
-        "steps": [
-          "Kürbis waschen, entkernen und in Spalten schneiden (Hokkaido-Schale kann mitgegessen werden).",
-          "Mit Zwiebelspalten, Öl und Currypulver mischen und auf einem Blech verteilen.",
-          "20 Minuten bei 200°C rösten, Kichererbsen dazugeben.",
-          "Weitere 10 Minuten backen, bis alles goldbraun ist."
-        ]
-      }
-    },
-    {
-      "day": "Fr",
-      "meal": {
-        "slug": "bunte-avocado-gurken-bowl",
-        "title": "Bunte Avocado-Gurken-Bowl",
-        "blurb": "Frisch, cremig und in 15 Minuten fertig – perfekt für einen lauen Abend.",
-        "tags": [
-          "bowl",
-          "salat",
-          "frisch",
-          "bio"
-        ],
-        "ingredients": [
-          {
-            "name": "Bio-Avocados",
-            "offerTitle": "Peru - Bio-Avocados",
-            "price": "€1,29"
-          },
-          {
-            "name": "Salatgurken",
-            "offerTitle": "Niederlande - GUT & GÜNSTIG - Salatgurken",
-            "price": "€0,88"
-          },
-          {
-            "name": "Mini Möhren",
-            "offerTitle": "Deutschland - Mini Möhren",
-            "price": "€0,88"
-          },
-          {
-            "name": "Quinoa",
-            "pantry": true
-          },
-          {
-            "name": "Sojasauce",
-            "pantry": true
-          }
-        ],
-        "steps": [
-          "Quinoa nach Packungsanleitung kochen und abkühlen lassen.",
-          "Gurken und Möhren in feine Streifen schneiden.",
-          "Avocado würfeln und mit einem Spritzer Sojasauce marinieren.",
-          "Alles auf dem Quinoa anrichten und servieren."
-        ]
-      }
-    },
-    {
-      "day": "Sa",
-      "meal": {
-        "slug": "kohlrabi-kichererbsen-curry",
-        "title": "Kohlrabi-Kichererbsen-Curry",
-        "blurb": "Mildes Kokos-Curry mit Kohlrabi – wärmt an kühlen Abenden und ist super günstig.",
-        "tags": [
-          "curry",
-          "huelsenfruechte",
-          "herbstlich",
-          "guenstig"
-        ],
-        "ingredients": [
-          {
-            "name": "Kohlrabi",
-            "offerTitle": "Deutschland - Kohlrabi",
-            "price": "€0,55"
-          },
-          {
-            "name": "Rote Linsen",
-            "pantry": true
-          },
-          {
-            "name": "Kokosmilch",
-            "pantry": true
-          },
-          {
-            "name": "Ingwer",
-            "pantry": true
-          },
-          {
-            "name": "Currypulver",
-            "pantry": true
-          },
-          {
-            "name": "Reis",
-            "pantry": true
-          }
-        ],
-        "steps": [
-          "Kohlrabi schälen und würfeln.",
-          "Ingwer anbraten, Currypulver kurz mitrösten.",
-          "Kohlrabi, rote Linsen und Kokosmilch zugeben, 15 Minuten köcheln.",
-          "Mit Reis servieren."
-        ]
-      }
-    },
-    {
-      "day": "So",
-      "meal": {
-        "slug": "bio-paprika-kohlrabi-pasta",
-        "title": "Bio-Paprika-Kohlrabi-Pasta",
-        "blurb": "Cremige Pasta mit Hefeflocken statt Käse – Bio-Paprika macht sie besonders bunt.",
-        "tags": [
-          "pasta",
-          "bio",
-          "cremig",
-          "schnell"
-        ],
-        "ingredients": [
-          {
-            "name": "Bio-Spitzpaprika",
-            "offerTitle": "Spanien - Bio-Spitzpaprika",
-            "price": "€1,99"
-          },
-          {
-            "name": "Kohlrabi",
-            "offerTitle": "Deutschland - Kohlrabi",
-            "price": "€0,55"
-          },
-          {
-            "name": "Nudeln",
-            "pantry": true
-          },
-          {
-            "name": "Hefeflocken",
+            "name": "Knoblauch",
             "pantry": true
           },
           {
@@ -318,166 +267,144 @@
         ],
         "steps": [
           "Nudeln kochen.",
-          "Paprika und Kohlrabi in dünne Streifen schneiden und andünsten.",
-          "Mit etwas Nudelwasser, Hefeflocken und Öl zu einer Sauce verrühren.",
-          "Mit den Nudeln vermengen."
+          "Zucchini würfeln und in Olivenöl anbraten.",
+          "Knoblauch und Tomatenmark zugeben, kurz mitrösten.",
+          "Halbierte Mini-Tomaten dazugeben und kurz schmoren.",
+          "Mit den Nudeln vermengen und mit frischem Basilikum bestreuen."
+        ]
+      }
+    },
+    {
+      "day": "Sa",
+      "meal": {
+        "slug": "bratkartoffeln-mit-roestzwiebeln-und-gurkensalat",
+        "title": "Bratkartoffeln mit Röstzwiebeln und Gurkensalat",
+        "blurb": "Knusprige Bratkartoffeln mit süßen Röstzwiebeln und frischem Gurkensalat als kühler Gegenpart.",
+        "tags": [
+          "pfanne",
+          "kartoffeln",
+          "salat"
+        ],
+        "ingredients": [
+          {
+            "name": "Speisekartoffeln",
+            "offerTitle": "Deutschland - Bioland Speisekartoffeln",
+            "price": "€1,99"
+          },
+          {
+            "name": "Zwiebelmix",
+            "offerTitle": "EU - Zwiebelmix",
+            "price": "€1,49"
+          },
+          {
+            "name": "Salatgurken",
+            "offerTitle": "Niederlande - GUT & GÜNSTIG - Salatgurken",
+            "price": "€0,88"
+          },
+          {
+            "name": "Senf",
+            "pantry": true
+          },
+          {
+            "name": "Rapsöl",
+            "pantry": true
+          }
+        ],
+        "steps": [
+          "Kartoffeln kochen, pellen und in Scheiben schneiden.",
+          "In Rapsöl knusprig braten.",
+          "Zwiebelmix mitbraten, bis er goldbraun ist.",
+          "Gurke in Scheiben schneiden, mit Senf, Rapsöl und Salz zum Salat anmachen.",
+          "Zusammen servieren."
+        ]
+      }
+    },
+    {
+      "day": "So",
+      "meal": {
+        "slug": "kuerbis-apfel-suppe-mit-curry",
+        "title": "Kürbis-Apfel-Suppe mit Curry",
+        "blurb": "Samtige Kürbissuppe mit einer feinen Apfelnote – wärmend für die ersten kühlen Abende.",
+        "tags": [
+          "suppe",
+          "herbstlich",
+          "cremig"
+        ],
+        "ingredients": [
+          {
+            "name": "Speisekürbis",
+            "offerTitle": "Deutschland - Speisekürbis Hokkaido oder Butternut",
+            "price": "€1,29"
+          },
+          {
+            "name": "Tafeläpfel Jonagold",
+            "offerTitle": "Deutschland - GUT & GÜNSTIG - Tafeläpfel Jonagold",
+            "price": "€1,49"
+          },
+          {
+            "name": "Zwiebeln",
+            "pantry": true
+          },
+          {
+            "name": "Currypulver",
+            "pantry": true
+          },
+          {
+            "name": "Gemüsebrühe",
+            "pantry": true
+          },
+          {
+            "name": "Kokosmilch",
+            "pantry": true
+          }
+        ],
+        "steps": [
+          "Zwiebel andünsten.",
+          "Kürbis- und Apfelstücke dazugeben.",
+          "Mit Currypulver würzen, mit Gemüsebrühe ablöschen.",
+          "Weichkochen und mit Kokosmilch pürieren."
         ]
       }
     }
   ],
   "bench": [
     {
-      "slug": "gemuese-wok-mit-raeuchertofu",
-      "title": "Gemüse-Wok mit Räuchertofu",
-      "blurb": "Knackiges Wok-Gemüse mit rauchigem Tofu – eine Pfanne, in 20 Minuten fertig.",
+      "slug": "chili-sin-carne-mit-bonduelle-mild-wild",
+      "title": "Chili sin Carne mit Bonduelle Mild & Wild",
+      "blurb": "Herzhaftes Chili mit der bunten Bonduelle-Mischung – deftig, würzig, ideal zum Vorkochen.",
       "tags": [
-        "wok",
-        "asiatisch",
-        "schnell",
-        "tofu"
+        "eintopf",
+        "huelsenfruechte",
+        "herzhaft"
       ],
       "ingredients": [
         {
-          "name": "Paprika",
-          "offerTitle": "Niederlande - GUT & GÜNSTIG - Paprika",
-          "price": "€1,49"
-        },
-        {
-          "name": "Zucchini",
-          "offerTitle": "Deutschland - Zucchini",
-          "price": "€1,00"
-        },
-        {
-          "name": "Zwiebelmix",
-          "offerTitle": "EU - Zwiebelmix",
-          "price": "€1,49"
-        },
-        {
-          "name": "Räuchertofu",
-          "pantry": true
-        },
-        {
-          "name": "Sojasauce",
-          "pantry": true
-        },
-        {
-          "name": "Ingwer",
-          "pantry": true
-        }
-      ],
-      "steps": [
-        "Tofu würfeln und knusprig anbraten, beiseitestellen.",
-        "Paprika, Zucchini und Zwiebeln in Streifen schneiden.",
-        "Gemüse scharf anbraten, Ingwer zugeben.",
-        "Tofu zurück in die Pfanne geben und mit Sojasauce ablöschen."
-      ]
-    },
-    {
-      "slug": "cremige-moehren-ingwer-suppe",
-      "title": "Cremige Möhren-Ingwer-Suppe",
-      "blurb": "Samtige Suppe mit Hafercreme statt Sahne – wärmt und ist im Nu gemacht.",
-      "tags": [
-        "suppe",
-        "cremig",
-        "ingwer",
-        "schnell"
-      ],
-      "ingredients": [
-        {
-          "name": "Mini Möhren",
-          "offerTitle": "Deutschland - Mini Möhren",
-          "price": "€0,88"
-        },
-        {
-          "name": "Oatly Haferdrink",
-          "offerTitle": "Oatly Haferdrink",
-          "price": "€1,79"
-        },
-        {
-          "name": "Gemüsebrühe",
-          "pantry": true
-        },
-        {
-          "name": "Ingwer",
-          "pantry": true
-        }
-      ],
-      "steps": [
-        "Möhren klein schneiden und mit Gemüsebrühe weich kochen.",
-        "Ingwer reiben und mitkochen.",
-        "Mit Haferdrink aufgießen und fein pürieren.",
-        "Mit Salz und Pfeffer abschmecken."
-      ]
-    },
-    {
-      "slug": "bulgur-gurken-salat",
-      "title": "Bulgur-Gurken-Salat",
-      "blurb": "Leichter Salat mit Mini-Gurken und frischem Basilikum – ideal für laue Abende.",
-      "tags": [
-        "getreide",
-        "salat",
-        "frisch",
-        "guenstig"
-      ],
-      "ingredients": [
-        {
-          "name": "Mini-Gurken",
-          "offerTitle": "Deutschland - Mini-Gurken",
-          "price": "€0,49"
-        },
-        {
-          "name": "Basilikum",
-          "offerTitle": "Deutschland - Basilikum",
-          "price": "€1,49"
-        },
-        {
-          "name": "Bulgur",
-          "pantry": true
-        },
-        {
-          "name": "Kichererbsen",
-          "pantry": true
-        },
-        {
-          "name": "Olivenöl",
-          "pantry": true
-        }
-      ],
-      "steps": [
-        "Bulgur nach Packungsanleitung quellen lassen.",
-        "Gurken würfeln, Basilikum fein hacken.",
-        "Mit Kichererbsen und Bulgur vermengen.",
-        "Mit Olivenöl, Salz und Pfeffer abschmecken."
-      ]
-    },
-    {
-      "slug": "ofengemuese-mit-like-meat-streifen",
-      "title": "Ofengemüse mit Like Meat-Streifen",
-      "blurb": "Pflanzliche Streifen und Ofengemüse – proteinreich und richtig sättigend.",
-      "tags": [
-        "ofen",
-        "proteinreich",
-        "herzhaft",
-        "vegan-fleischersatz"
-      ],
-      "ingredients": [
-        {
-          "name": "Like Meat Rein pflanzlich aus Soja",
-          "offerTitle": "Like Meat - Rein pflanzlich aus Soja",
+          "name": "Mild & Wild",
+          "offerTitle": "Bonduelle - Mild & Wild",
           "price": "€2,49"
         },
         {
-          "name": "Zucchini",
-          "offerTitle": "Deutschland - Zucchini",
-          "price": "€1,00"
+          "name": "Zwiebeln",
+          "pantry": true
         },
         {
-          "name": "Spitzpaprika",
-          "offerTitle": "Ungarn - Spitzpaprika",
-          "price": "€1,49"
+          "name": "Knoblauch",
+          "pantry": true
         },
         {
-          "name": "Olivenöl",
+          "name": "Kidneybohnen",
+          "pantry": true
+        },
+        {
+          "name": "passierte Tomaten",
+          "pantry": true
+        },
+        {
+          "name": "Tomatenmark",
+          "pantry": true
+        },
+        {
+          "name": "Paprikapulver",
           "pantry": true
         },
         {
@@ -486,34 +413,148 @@
         }
       ],
       "steps": [
-        "Zucchini und Paprika in Stücke schneiden, mit Öl und Kreuzkümmel mischen.",
-        "Auf einem Blech 20 Minuten bei 200°C rösten.",
-        "Like Meat nach Packungsanleitung anbraten.",
-        "Zusammen servieren."
+        "Zwiebel und Knoblauch andünsten, Tomatenmark kurz mitrösten.",
+        "Bonduelle-Gemüsemischung, Kidneybohnen und passierte Tomaten dazugeben.",
+        "Mit Paprikapulver und Kreuzkümmel würzen.",
+        "Ca. 15 Minuten köcheln lassen."
       ]
     },
     {
-      "slug": "apfel-curry-mit-kichererbsen",
-      "title": "Apfel-Curry mit Kichererbsen",
-      "blurb": "Süß-scharfes Curry mit Jonagold-Äpfeln – ungewöhnlich und überraschend lecker.",
+      "slug": "tempeh-spiesse-mit-trauben-couscous-salat",
+      "title": "Tempeh-Spieße mit Trauben-Couscous-Salat",
+      "blurb": "Süß-herzhafte Kombination: gegrillter Tempeh mit fruchtigem Trauben-Couscous.",
       "tags": [
-        "curry",
-        "suess-scharf",
-        "herbstlich",
-        "guenstig"
+        "grill",
+        "obst",
+        "couscous"
       ],
       "ingredients": [
         {
-          "name": "Tafeläpfel Jonagold",
-          "offerTitle": "Deutschland - GUT & GÜNSTIG - Tafeläpfel Jonagold",
-          "price": "€1,49"
+          "name": "Tafeltrauben",
+          "offerTitle": "Italien - EDEKA Herzstücke - Tafeltrauben",
+          "price": "€3,99"
         },
         {
-          "name": "Kichererbsen",
+          "name": "Tempeh",
           "pantry": true
         },
         {
-          "name": "Kokosmilch",
+          "name": "Couscous",
+          "pantry": true
+        },
+        {
+          "name": "Gemüsebrühe",
+          "pantry": true
+        },
+        {
+          "name": "Olivenöl",
+          "pantry": true
+        },
+        {
+          "name": "Sojasauce",
+          "pantry": true
+        }
+      ],
+      "steps": [
+        "Tempeh würfeln, in Sojasauce marinieren und auf Spieße stecken.",
+        "Spieße in der Pfanne oder im Ofen grillen.",
+        "Couscous mit heißer Gemüsebrühe quellen lassen.",
+        "Halbierte Trauben untermengen, mit Olivenöl abschmecken.",
+        "Spieße dazu servieren."
+      ]
+    },
+    {
+      "slug": "cremiger-kartoffelstampf-mit-oatly-und-roestzwiebeln",
+      "title": "Cremiger Kartoffelstampf mit Oatly und Röstzwiebeln",
+      "blurb": "Cremiger Kartoffelstampf mit Hafercreme statt Milch – simpel, sättigend, herrlich cremig.",
+      "tags": [
+        "kartoffeln",
+        "cremig"
+      ],
+      "ingredients": [
+        {
+          "name": "Speisekartoffeln",
+          "offerTitle": "Deutschland - Bioland Speisekartoffeln",
+          "price": "€1,99"
+        },
+        {
+          "name": "Haferdrink",
+          "offerTitle": "Oatly Haferdrink",
+          "price": "€1,79"
+        },
+        {
+          "name": "Zwiebelmix",
+          "offerTitle": "EU - Zwiebelmix",
+          "price": "€1,49"
+        },
+        {
+          "name": "Olivenöl",
+          "pantry": true
+        }
+      ],
+      "steps": [
+        "Kartoffeln weichkochen und stampfen.",
+        "Mit Oatly Haferdrink und Olivenöl cremig rühren, salzen.",
+        "Zwiebelmix in der Pfanne knusprig rösten.",
+        "Über den Stampf geben und servieren."
+      ]
+    },
+    {
+      "slug": "kohlrabi-heidelbeer-salat",
+      "title": "Kohlrabi-Heidelbeer-Salat",
+      "blurb": "Erfrischender Salat aus knackigem Kohlrabi und süßen Heidelbeeren – schnell gemacht.",
+      "tags": [
+        "salat",
+        "obst",
+        "schnell"
+      ],
+      "ingredients": [
+        {
+          "name": "Kohlrabi",
+          "offerTitle": "Deutschland - Kohlrabi",
+          "price": "€0,55"
+        },
+        {
+          "name": "Kulturheidelbeeren",
+          "offerTitle": "Rumänien - Kulturheidelbeeren",
+          "price": "€1,99"
+        },
+        {
+          "name": "Senf",
+          "pantry": true
+        },
+        {
+          "name": "Rapsöl",
+          "pantry": true
+        },
+        {
+          "name": "Agavendicksaft",
+          "pantry": true
+        }
+      ],
+      "steps": [
+        "Kohlrabi schälen und in feine Streifen oder Scheiben hobeln.",
+        "Mit Heidelbeeren mischen.",
+        "Dressing aus Senf, Rapsöl und Agavendicksaft anrühren.",
+        "Unterheben und kurz ziehen lassen."
+      ]
+    },
+    {
+      "slug": "belugalinsen-eintopf-mit-mini-moehren",
+      "title": "Belugalinsen-Eintopf mit Mini-Möhren",
+      "blurb": "Wärmender Eintopf mit Belugalinsen und süßen Mini-Möhren – herzhaft und unkompliziert.",
+      "tags": [
+        "eintopf",
+        "huelsenfruechte"
+      ],
+      "ingredients": [
+        {
+          "name": "Mini Möhren",
+          "offerTitle": "Deutschland - Mini Möhren",
+          "price": "€0,88"
+        },
+        {
+          "name": "Belugalinsen",
           "pantry": true
         },
         {
@@ -521,15 +562,23 @@
           "pantry": true
         },
         {
-          "name": "Currypulver",
+          "name": "Knoblauch",
+          "pantry": true
+        },
+        {
+          "name": "Gemüsebrühe",
+          "pantry": true
+        },
+        {
+          "name": "Paprikapulver",
           "pantry": true
         }
       ],
       "steps": [
-        "Zwiebeln anschwitzen, Currypulver kurz mitrösten.",
-        "Äpfel schälen, würfeln und zugeben.",
-        "Kichererbsen und Kokosmilch zugeben, 10 Minuten köcheln.",
-        "Mit Salz abschmecken und servieren."
+        "Zwiebel und Knoblauch andünsten.",
+        "Mini-Möhren und Belugalinsen dazugeben.",
+        "Mit Gemüsebrühe aufgießen, mit Paprikapulver würzen.",
+        "Ca. 20 Minuten köcheln, bis die Linsen gar sind."
       ]
     }
   ]
