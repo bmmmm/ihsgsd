@@ -147,6 +147,12 @@ def receipt_fingerprint(parsed):
     return hashlib.sha256(blob).hexdigest()
 
 
+# FIXME: this rebuilds the `claude -p` branch of generate_prospekt.run_model()
+# and therefore has no local-engine fallback — if the CLI is missing or times
+# out, ingesting a receipt just fails, where every other generator falls back.
+# Switching to run_model() means importing generate_prospekt for its model
+# layer alone, which is why it has not happened yet; the right fix is to lift
+# that layer into a module of its own first.
 def call_claude(image_path, model):
     prompt = PROMPT_TEMPLATE.format(path=image_path)
     try:

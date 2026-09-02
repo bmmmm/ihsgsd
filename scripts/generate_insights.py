@@ -25,7 +25,6 @@ Flags:
 
 import json
 import math
-import re
 import sys
 from pathlib import Path
 
@@ -105,20 +104,6 @@ Rules:
 """
 
 
-def fail(msg):
-    """Print an actionable error and exit non-zero without touching outputs."""
-    sys.exit(f"generate_insights: {msg}")
-
-
-def load_json(path, hint):
-    if not path.exists():
-        fail(f"{path.relative_to(REPO_ROOT)} not found — {hint}")
-    try:
-        return json.loads(path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as exc:
-        fail(f"{path.relative_to(REPO_ROOT)} is not valid JSON: {exc}")
-
-
 def exact_per_week(product):
     """One exact Grundpreis per distinct week (min if several), date-sorted.
 
@@ -190,30 +175,6 @@ def week_label_for(trend, latest):
     return latest
 
 
-def extract_json(text):
-    """Parse the JSON object out of claude's reply, tolerating markdown code
-    fences and any prose before/after the object."""
-    text = text.strip()
-    if text.startswith("```"):
-        text = re.sub(r"^`+[a-zA-Z]*\s*", "", text)
-        text = re.sub(r"\s*`+$", "", text).strip()
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        pass
-    # Scan for the first '{' that begins a valid JSON object, so a stray brace
-    # in leading prose doesn't derail parsing.
-    decoder = json.JSONDecoder()
-    for i, ch in enumerate(text):
-        if ch == "{":
-            try:
-                obj, _ = decoder.raw_decode(text[i:])
-                return obj
-            except json.JSONDecodeError:
-                continue
-    raise json.JSONDecodeError("no JSON object found in output", text, 0)
-
-
 def main():
     args = sys.argv[1:]
     dry_run = "--dry-run" in args
@@ -221,15 +182,15 @@ def main():
     if "--model" in args:
         i = args.index("--model")
         if i + 1 >= len(args):
-            fail("--model needs a value, e.g. --model sonnet")
+            gp.fail("--model needs a value, e.g. --model sonnet")
         model = args[i + 1]
 
-    ph = load_json(PH_PATH, "run `python3 scripts/build_indexes.py` first")
-    trend = load_json(TREND_PATH, "run `python3 scripts/build_indexes.py` first")
+    ph = gp.load_json(PH_PATH, "run `python3 scripts/build_indexes.py` first")
+    trend = gp.load_json(TREND_PATH, "run `python3 scripts/build_indexes.py` first")
 
     latest = ph.get("latestDate")
     if not latest:
-        fail("price-history-index.json has no latestDate")
+        gp.fail("price-history-index.json has no latestDate")
     week_label = week_label_for(trend, latest)
 
     digest = build_digest(ph, latest, week_label)
@@ -238,7 +199,7 @@ def main():
     print(f"Latest week {week_label} ({latest}): "
           f"{n_pricier} pricier candidates, {n_deals} all-time-low candidates.")
     if n_pricier == 0 and n_deals == 0:
-        fail("no candidates found — nothing to summarize (is the latest week empty?)")
+        gp.fail("no candidates found — nothing to summarize (is the latest week empty?)")
 
     prompt = (PROMPT_TEMPLATE
               .replace("SLICE_PLACEHOLDER", json.dumps(digest, ensure_ascii=False, indent=1))
@@ -255,24 +216,24 @@ def main():
     raw, engine = gp.run_model(prompt, model, timeout=300)
 
     try:
-        data = extract_json(raw)
+        data = gp.extract_json(raw)
     except json.JSONDecodeError as exc:
-        fail(f"could not parse JSON from {engine} ({exc}). "
+        gp.fail(f"could not parse JSON from {engine} ({exc}). "
              f"Raw output starts with: {raw.strip()[:200]!r}")
 
     if not isinstance(data, dict):
-        fail(f"{engine} output was not a JSON object (got {type(data).__name__}). "
+        gp.fail(f"{engine} output was not a JSON object (got {type(data).__name__}). "
              f"Raw output starts with: {raw.strip()[:200]!r}")
 
     for key in ("summary", "pricier", "deals"):
         if key not in data:
-            fail(f"{engine} output is missing required key '{key}'")
+            gp.fail(f"{engine} output is missing required key '{key}'")
     if not isinstance(data.get("pricier"), list) or not isinstance(data.get("deals"), list):
-        fail("'pricier' and 'deals' must be JSON arrays")
+        gp.fail("'pricier' and 'deals' must be JSON arrays")
     for key in ("pricier", "deals"):
         for item in data[key]:
             if not isinstance(item, dict) or not item.get("title"):
-                fail(f"'{key}' has a malformed entry (expected objects with a title): {item!r}")
+                gp.fail(f"'{key}' has a malformed entry (expected objects with a title): {item!r}")
 
     # Sanitise the model's numeric fields: coerce a number or numeric string to a
     # finite float, drop anything else (null, NaN/Infinity, garbage). The dashboard

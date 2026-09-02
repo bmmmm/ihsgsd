@@ -31,6 +31,7 @@ Flags:
                   data/preferences.json; silently skipped if absent).
 """
 
+import functools
 import json
 import os
 import re
@@ -819,8 +820,24 @@ def _resolve_base_url():
     return url if url.endswith("/v1") else f"{url}/v1"
 
 
-LOCAL_BASE_URL = _resolve_base_url()
-LOCAL_API_KEY = _dotenv("OPENAI_API_KEY") or _dotenv("OMLX_API_KEY") or "local"
+# Lazy, and cached, because these two are the only settings that touch the
+# disk. As module constants they ran on every `import generate_prospekt`: three
+# uncached _dotenv() calls, each opening both <repo>/.env and ~/.env, so up to
+# six file reads before the importer did anything. Four modules import this one
+# — the mealplan and insights generators, the free-tier bench, and
+# test_parity.py, which means every CI run read .env twice over while comparing
+# regexes it has nothing to do with. Callers use local_base_url() and
+# local_api_key(); nothing outside the local-engine path calls either.
+@functools.lru_cache(maxsize=None)
+def local_base_url():
+    return _resolve_base_url()
+
+
+@functools.lru_cache(maxsize=None)
+def local_api_key():
+    return _dotenv("OPENAI_API_KEY") or _dotenv("OMLX_API_KEY") or "local"
+
+
 LOCAL_MODEL = os.environ.get("LOCAL_MODEL", "")
 LOCAL_TIMEOUT = int(os.environ.get("LOCAL_MODEL_TIMEOUT", "900"))
 OMLX_BIN = Path.home() / ".omlx" / "bin" / "omlx"
@@ -834,8 +851,8 @@ def _local_models():
     real cause instead of masquerading as "no local engine".
     """
     req = urllib.request.Request(
-        f"{LOCAL_BASE_URL}/models",
-        headers={"Authorization": f"Bearer {LOCAL_API_KEY}"},
+        f"{local_base_url()}/models",
+        headers={"Authorization": f"Bearer {local_api_key()}"},
     )
     try:
         with urllib.request.urlopen(req, timeout=5) as resp:
@@ -843,7 +860,7 @@ def _local_models():
     except urllib.error.HTTPError as exc:
         if exc.code in (401, 403):
             raise RuntimeError(
-                f"local engine at {LOCAL_BASE_URL} rejected the API key "
+                f"local engine at {local_base_url()} rejected the API key "
                 f"(HTTP {exc.code}) — set OMLX_API_KEY in ~/.env "
                 f"(or OPENAI_API_KEY in the environment) to the engine's key"
             ) from exc
@@ -925,7 +942,7 @@ def _run_local(prompt, max_tokens):
     models = _wake_local_engine()
     if not models:
         raise RuntimeError(
-            f"no local engine at {LOCAL_BASE_URL} — start one "
+            f"no local engine at {local_base_url()} — start one "
             f"(`omlx start`, or any OpenAI-compatible server), or point "
             f"OMLX_URL / OPENAI_BASE_URL at one"
         )
@@ -938,7 +955,7 @@ def _run_local(prompt, max_tokens):
     model_id = LOCAL_MODEL or _rank_models(models)[0]
     if LOCAL_MODEL and LOCAL_MODEL not in models:
         raise RuntimeError(
-            f"LOCAL_MODEL={LOCAL_MODEL!r} is not served at {LOCAL_BASE_URL}; "
+            f"LOCAL_MODEL={LOCAL_MODEL!r} is not served at {local_base_url()}; "
             f"available: {', '.join(models)}"
         )
     payload = json.dumps({
@@ -948,11 +965,11 @@ def _run_local(prompt, max_tokens):
         "temperature": 0.4,
     }).encode("utf-8")
     req = urllib.request.Request(
-        f"{LOCAL_BASE_URL}/chat/completions",
+        f"{local_base_url()}/chat/completions",
         data=payload,
         headers={
             "Content-Type": "application/json",
-            "Authorization": f"Bearer {LOCAL_API_KEY}",
+            "Authorization": f"Bearer {local_api_key()}",
         },
     )
     try:
@@ -990,7 +1007,7 @@ def run_model(prompt, model, timeout=300, max_tokens=8000):
     except subprocess.TimeoutExpired:
         claude_err = f"`claude -p` timed out after {timeout}s"
 
-    print(f"  {claude_err} — trying the local engine at {LOCAL_BASE_URL}.", file=sys.stderr)
+    print(f"  {claude_err} — trying the local engine at {local_base_url()}.", file=sys.stderr)
     try:
         text, model_id = _run_local(prompt, max_tokens)
     except RuntimeError as exc:
