@@ -152,8 +152,13 @@ DIET_TOPICS = {
 # The word boundaries are load-bearing, and the JS side spells them with
 # Unicode property escapes because its \b is ASCII-only. Python's \b and \w are
 # already Unicode-aware for str patterns, so plain \b carries the same meaning
-# here — with underscore as the only theoretical divergence, which no product
-# title contains. The parity test is what proves this over real data.
+# here. A differential fuzz over ~92k crafted titles found exactly two classes
+# of divergence, neither reachable from an EDEKA title: underscore (a \w
+# character on both sides but not a \p{L}/\p{N} one), and U+0130/U+0131, the
+# Turkish dotted and dotless I, which fold to "i" under Python's re.I but not
+# under JavaScript's simple case folding. Everything else agreed. The parity
+# test proves the rest over real data — but note it is archive-driven and so
+# structurally cannot see either class.
 TOPIC_BIER_RE = re.compile(r"\b(?:\w*(?<!cor)bier|pils\w*)\b", re.I)
 TOPIC_SPEZI_RE = re.compile(r"\bspezi\b", re.I)
 TOPIC_VEGAN_RE = re.compile(r"vegan|vegetar", re.I)

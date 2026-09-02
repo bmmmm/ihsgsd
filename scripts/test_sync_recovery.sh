@@ -36,7 +36,10 @@ echo "Checking weekly_sync.sh's Phase B recovery …"
 [ -f "$SYNC_SCRIPT" ] || fail "weekly_sync.sh not found at $SYNC_SCRIPT"
 
 fail_line=$(grep -n 'Phase B failed' "$SYNC_SCRIPT" | head -1 | cut -d: -f1)
-restore_line=$(grep -Fn "$RESTORE_CMD" "$SYNC_SCRIPT" | head -1 | cut -d: -f1)
+# Anchored at the start of the line: a plain substring match also finds the
+# command inside a comment, so commenting the restore out left this test green
+# while the recovery was dead.
+restore_line=$(grep -n "^[[:space:]]*${RESTORE_CMD}" "$SYNC_SCRIPT" | head -1 | cut -d: -f1)
 notify_line=$(awk -v s="${fail_line:-0}" 'NR > s && /notify_forgejo/ { print NR; exit }' "$SYNC_SCRIPT")
 
 [ -n "$fail_line" ] || fail "no 'Phase B failed' branch in weekly_sync.sh"

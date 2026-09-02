@@ -56,14 +56,21 @@ jobs:
           node --version
 
       - name: JS syntax
-        # Every page script must parse. Cheap, and it catches the failure mode
-        # that takes the whole page down silently: a redeclared const at global
-        # scope after code is moved into a shared file.
+        # Every script must parse on its own. scripts/ is included because a
+        # broken layout-probe.js would otherwise only surface by pasting it
+        # into a browser console.
         run: |
-          for f in *.js; do
+          for f in *.js scripts/*.js; do
             echo "checking $f"
             node --check "$f"
           done
+
+      - name: JS page bundles
+        # The step above cannot see the failure mode CLAUDE.md warns about:
+        # node --check reads one file at a time, so two `const X` in two files
+        # each pass alone and only collide when a page loads both. This one
+        # concatenates each page's scripts in document order and parses that.
+        run: python3 scripts/check_js_bundles.py
 
       - name: JS/Python parity
         # The full run, never --quick: --quick reads only the newest week and

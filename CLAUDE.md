@@ -78,13 +78,18 @@ believing a schedule was missed; redundant cron slots only help against
   harness compares only what is listed there, so a field added everywhere else
   still gates nothing.
 - **`.github/workflows/checks.yml` runs those gates on every push and PR** —
-  JS syntax, parity, data audit, `scripts/test_sync_recovery.sh`, and a rebuild
-  of the three indexes that must leave no diff. Before it existed the gates only
-  ran when somebody remembered them, which for a silent-drift failure mode is
-  the same as not having them.
+  JS syntax, page bundles, parity, data audit, `scripts/test_sync_recovery.sh`,
+  and a rebuild of the three indexes that must leave no diff. Before it existed
+  the gates only ran when somebody remembered them, which for a silent-drift
+  failure mode is the same as not having them. A push made with the built-in
+  `GITHUB_TOKEN` starts no run, so the fetch workflows **call** checks.yml as a
+  second job and pass the SHA they pushed — the push trigger alone never sees a
+  data commit.
 - **Moving code into a shared file means deleting the local copy** — a second
   `const` at global scope is a redeclaration SyntaxError that takes the page
-  down.
+  down. `node --check` cannot see this (it reads one file at a time);
+  `scripts/check_js_bundles.py` is what does, by parsing each page's scripts
+  concatenated in document order.
 - **Changing how `fetch_kaufda.py` mints an offer id means running
   `scripts/rekey_kaufda.py --apply`** — archived weeks cannot pick such a fix
   up from a refetch, because a better key collapses duplicates and the
